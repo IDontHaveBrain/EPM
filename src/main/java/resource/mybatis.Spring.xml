@@ -4,6 +4,6 @@
 <configuration>
 
 	<mappers>
-		<mapper resource="resource/mapper/GlobalMapper.xml"/>
+		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 	</mappers>
 </configuration>
