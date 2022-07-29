@@ -4,9 +4,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="pms.vo.Member" alias="member"/>
+		<typeAlias type="pms.vo.Notice" alias="notice"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
+		<mapper resource="resource/mapper/DashboardMapper.xml"/>
 	</mappers>
 </configuration>
