@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class GlobalController {
+	// http://localhost:7080/project06/test.do
     @RequestMapping("test.do")
     public String boardList(Model d){
         return "WEB-INF\\views\\test.jsp";
