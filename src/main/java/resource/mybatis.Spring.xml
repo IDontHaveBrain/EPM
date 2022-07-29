@@ -7,5 +7,6 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
+		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 	</mappers>
 </configuration>
