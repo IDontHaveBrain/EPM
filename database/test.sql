@@ -76,4 +76,6 @@ values (
         to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-28','YYYY-MM-DD'),
         null
 );
-select * from jobplan;
+select * 
+from jobplan
+WHERE jid = 1;

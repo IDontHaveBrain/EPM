@@ -11,7 +11,7 @@ import pms.vo.Notice;
 public class DashboardController {
     @Autowired(required = false)
     private DashboardService service;
-
+	// http://localhost:7080/project06/dashboard.do
     @RequestMapping("dashboard.do")
     public String dashboard(Model d){
         for(Notice n:service.getNoticeList(1)){

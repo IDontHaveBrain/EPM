@@ -53,8 +53,63 @@
 
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#schBtn").click(function(){
+		$.ajax({
+			url:"${path}/WorkPageList.do",
+			dataType:"json",
+			success:function(data){
+				// data.모델명  : m.addAttribute("empList", ser...)
+				var list = data.WorkPageList //이부분확인
+				var addHTML=""
+				$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
+					addHTML+="<tr>"
+								"<th>"+workpage.jname+"</th>"
+								"<th>"+workpage.content+"</th>"
+							 "</tr>"
+				});
+				console.log(addHTML)
+				$("#WorkPageList").html(addHTML)
+			}
+		});
+	});
+	$(".sch").keyup(function(){
+		var jnameVal = $("[name=jname]").val()
+		//$("h2").text("ename="+enameVal+"&job="+jobVal)
+		// 입력후, enter키를 입력시, 조회 처리..
+		if(event.keyCode==13){
+			$.ajax({
+				url:"${path}/WorkPageList.do",
+				data:"jname="+jnameVal,
+				dataType:"json",
+				success:function(data){
+					// data.모델명  : m.addAttribute("empList", ser...)
+					var list = data.WorkPageList
+					var addHTML=""
+						$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
+							addHTML+="<tr>"
+								"<th>"+workpage.jname+"</th>"
+								"<th>"+workpage.content+"</th>"
+							 "</tr>"
+						});
+					console.log(addHTML)
+					$("#WorkPageList").html(addHTML)
+				}
+			});			
+		}
+		
+	});
+	
+});
+</script>
+<form>
+	    <input class="sch form-control mr-sm-2" placeholder="이름" name="jname"/>
+	    <button type="button" id="schBtn">Search</button>
+	    
+	    <tr><th>이름</th></tr>
 
-
+</form>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -86,33 +141,18 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
+                	<tbody id="WorkPageList">
+    				</tbody>
                   <thead>
                   <tr>
-                    <th>업무이름</th>
-                    <th>담당자</th>
-                    <th>시작날짜</th>
-                    <th>마감날짜</th>
-                    <th>내용</th>
-                    <th>수정일</th>
-                    <th>진행률</th>
-                    <th>산출물</th>
-                    <th>승인여부</th>
+                    <th>Rendering engine</th>
+                    <th>Browser</th>
+                    <th>Platform(s)</th>
+                    <th>Engine version</th>
+                    <th>CSS grade</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach var="wl" items="${wlist}">
-                  <tr>
-                    <td>${wl.jname}</td>
-                    <td>담당자이름</td>
-                    <td><fmt:formatDate value="${wl.jstart}" type="both" />${wl.jstart}</td>
-                    <td><fmt:formatDate value="${wl.jend}" type="both"/>${wl.jend}</td>
-                    <td>${wl.content}</td>
-                    <td><fmt:formatDate value="${wl.juptdate}" type="both"/>${wl.juptdate}</td>
-                    <td>${wl.jprogress}</td>
-                    <td>파일등록일</td>
-                    <td>승인여부</td>
-                  </tr>
-                  </c:forEach>
                   <tr>
                     <td>Trident</td>
                     <td>Internet
