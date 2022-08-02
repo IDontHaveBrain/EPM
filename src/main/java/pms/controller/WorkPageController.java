@@ -15,13 +15,21 @@ public class WorkPageController {
 	// http://localhost:7080/project06/WorkPageList.do
 	@RequestMapping("WorkPageList.do")
 	public String WorkPageList(Model d) {
-		d.addAttribute("wlist",service.getWorkPageList(4));
+		d.addAttribute("wlist",service.getWorkPageList(1));
 		return "WEB-INF\\views\\WorkPage\\WorkPageList.jsp";
 	}
-	/*
-	public String WorkPageList2(WorkPage sch, Model d) {
-		d.addAttribute("WorkPageList",service.getWorkPageList(sch));
-		return "pageJsonReport";
+	
+	/*	
+	// http://localhost:7080/project06/workpage.do
+	@RequestMapping("workpage.do")
+	public String WorkPageList2(Model d) {
+		return "WEB-INF\\views\\WorkPage\\ajaxlist.jsp";
+	}
+
+	@RequestMapping("list.do")
+	public String WorkPageList3(Model d) {
+		 d.addAttribute("WorkPageList",service.getWorkPageList(4));
+		 return "pageJsonReport";
 	}
 	*/
 

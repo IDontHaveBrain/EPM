@@ -55,24 +55,26 @@
   <jsp:include page="sidebar.jsp"/>
 <script type="text/javascript">
 $(document).ready(function(){
+	$.ajax({
+		url:"${path}/list.do",
+		dataType:"json",
+		success:function(data){
+			// data.모델명  : m.addAttribute("empList", ser...)
+			var list = data.WorkPageList //이부분확인
+			console.log(list);
+			var addHTML=""
+			$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
+				addHTML+="<tr>"
+							"<th>"+workpage.jname+"</th>"
+							"<th>"+workpage.content+"</th>"
+						 "</tr>"
+			});
+			console.log(addHTML)
+			$("#WorkPageList").html(addHTML)
+		}
+	});
 	$("#schBtn").click(function(){
-		$.ajax({
-			url:"${path}/WorkPageList.do",
-			dataType:"json",
-			success:function(data){
-				// data.모델명  : m.addAttribute("empList", ser...)
-				var list = data.WorkPageList //이부분확인
-				var addHTML=""
-				$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-					addHTML+="<tr>"
-								"<th>"+workpage.jname+"</th>"
-								"<th>"+workpage.content+"</th>"
-							 "</tr>"
-				});
-				console.log(addHTML)
-				$("#WorkPageList").html(addHTML)
-			}
-		});
+		
 	});
 	$(".sch").keyup(function(){
 		var jnameVal = $("[name=jname]").val()

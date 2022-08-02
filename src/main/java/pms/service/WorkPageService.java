@@ -13,7 +13,7 @@ public class WorkPageService {
 	@Autowired(required=false)
 	private WorkPageDao dao;
 	
-	public List<WorkPage> getWorkPageList(int jid){
-		return dao.getWorkPageList(jid);
+	public List<WorkPage> getWorkPageList(int required){
+		return dao.getWorkPageList(required);
 	}
 }

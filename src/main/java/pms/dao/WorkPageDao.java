@@ -9,5 +9,5 @@ import pms.vo.WorkPage;
 
 @Repository
 public interface WorkPageDao {
-	public List<WorkPage> getWorkPageList(int jid);
+	public List<WorkPage> getWorkPageList(int required);
 }

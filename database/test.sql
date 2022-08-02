@@ -78,4 +78,4 @@ values (
 );
 select * 
 from jobplan
-WHERE jid = 1;
+where required = 4;

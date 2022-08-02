@@ -6,7 +6,7 @@
 	<select id="getWorkPageList" resultType="workpage" parameterType="int">
 		select * 
 		from jobplan
-		WHERE jid = #{jid}
+		WHERE required = #{required}
 	</select>
 
 </mapper>
