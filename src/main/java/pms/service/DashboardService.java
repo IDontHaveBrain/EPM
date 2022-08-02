@@ -3,9 +3,8 @@ package pms.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pms.dao.DashboardDao;
-import pms.dto.IssueDashDto;
-import pms.vo.Issue;
-import pms.vo.Member;
+import pms.dto.IssuesDashDto;
+import pms.dto.IssuesSch;
 import pms.vo.Notice;
 
 import java.util.List;
@@ -18,10 +17,13 @@ public class DashboardService {
     public List<Notice> getNoticeList(int pid) {
         return dao.noticeList(pid);
     }
-    public List<IssueDashDto> getIssueList(int pid) {
+    public List<IssuesDashDto> getIssueList(int pid) {
         return dao.issueList(pid);
     }
-    public List<IssueDashDto> issuePaging(IssueDashDto sch, int pid){
+    public List<IssuesDashDto> issuePaging(IssuesSch sch, int pid){
+
+        sch.setPid(pid);
+
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.issueTotCnt(1) ); // 프로젝트 선택파트 완료시 pid로 변경
         System.out.println("총건수:"+sch.getCount());

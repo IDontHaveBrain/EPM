@@ -2,7 +2,7 @@ package pms.vo;
 
 import java.util.Date;
 
-public class Issue {
+public class Issues {
     private int iid;
     private String ititle;
     private String icontent;
@@ -11,10 +11,10 @@ public class Issue {
     private Date iuptdate;
     private int jmid;
 
-    public Issue() {
+    public Issues() {
     }
 
-    public Issue(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid) {
+    public Issues(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid) {
         this.iid = iid;
         this.ititle = ititle;
         this.icontent = icontent;

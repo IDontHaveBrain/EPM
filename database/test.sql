@@ -20,10 +20,11 @@ create table member(
                        password varchar2(20),
                        name varchar2(30),
                        auth varchar2(10),
-                       accessdate date
+                       accessdate date,
+                       status varchar2(10)
 );
-insert into member values (1, 'skawns848@naver.com', '123123', '조남준', '관리자', sysdate);
-INSERT INTO MEMBER values(2, 'test@gmail.com', 'zxc!23123', '홍길동', 'ADMIN', sysdate);
+INSERT INTO MEMBER values(1, 'asdasd123@asdasd.com', '123123', '홍길동', 'ADMIN', sysdate, '승인');
+INSERT INTO MEMBER values(2, 'test@test.com', '123123', '마길동', 'ADMIN', sysdate, '승인');
 select * from member;
 
 create table project(
@@ -54,10 +55,12 @@ create table participants(
                              ppid number primary key,
                              pauth varchar2(10),
                              pid number,
-                             mid number
+                             mid number,
+                             joindate date,
+                             exitdate date
 );
-insert into participants values (1, 'PM', 1, 1);
-insert into participants values (2, 'Developer', 1, 2);
+insert into participants values (1, 'PM', 1, 1, sysdate, null);
+insert into participants values (2, 'Developer', 1, 2, sysdate, null);
 select * from participants;
 
 create table jobplan(
@@ -79,7 +82,7 @@ values (
            1, '대시보드 차트 적용',
            to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-30','YYYY-MM-DD'),
            to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-08-02','YYYY-MM-DD'),
-           '대시보드에 lib활용하여 데이터를 차트형식으로 표시하기', '진행중',
+           '대시보드에 lib활용하여 데이터를 차트형식으로 표시하기', 10,
            to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-28','YYYY-MM-DD'),
            null, 1
        );
@@ -95,7 +98,7 @@ insert into jobmember values (1, 1, 1, 50);
 insert into jobmember values (2, 1, 2, 70);
 select * from jobmember;
 
-create table issue(
+create table issues(
                       iid number primary key,
                       ititle varchar2(200),
                       icontent varchar2(1000),
@@ -104,23 +107,29 @@ create table issue(
                       iuptdate date,
                       jmid number
 );
-insert into issue
+insert into issues
 values (1, '차트구현 지연', '개인적인 사정으로 인한 대시보드 차트 일정 지연', '해결',
         to_date('2022-07-29','YYYY-MM-DD'), to_date('2022-08-02','YYYY-MM-DD'),
         1);
-insert into issue
+insert into issues
 values (2, '테스트 이슈1', '테스트 이슈사항 내용1', '해결중',
         to_date('2022-08-01','YYYY-MM-DD'), to_date('2022-08-01','YYYY-MM-DD'),
         1);
-insert into issue
+insert into issues
 values (3, '테스트 이슈2', '테스트 이슈사항 내용2', '해결중',
         to_date('2022-08-01','YYYY-MM-DD'), to_date('2022-08-03','YYYY-MM-DD'),
         2);
-select * from issue;
+select * from issues;
 --delete from issue where iid = 2;
 
 select iid, jname, ititle, iprogress, name, iuptdate
-from issue i, jobmember jm, jobplan jp,
+from issues i, jobmember jm, jobplan jp,
+     (select * from member m, participants pp where m.mid = pp.mid) m
+where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = 1
+order by iuptdate;
+
+select iid, jname, ititle, iprogress, name, iuptdate, rownum cnt
+from issues i, jobmember jm, jobplan jp,
      (select * from member m, participants pp where m.mid = pp.mid) m
 where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = 1
 order by iuptdate;
