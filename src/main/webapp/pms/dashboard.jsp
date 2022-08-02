@@ -60,12 +60,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -77,8 +77,108 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-        페이지 구성 시작!!
-        <button type="button" class="btn btn-block btn-default col-2">Default</button>
+        <div class="row">
+          <div> <h4>간트차트 영역</h4> </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title text-bold">최근 공지사항</h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm float-right">
+                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>제목</th>
+                    <th class="col-sm-3">수정일</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <c:forEach var="notice" items="${nlist}">
+                    <tr>
+                      <td>${notice.nid}</td>
+                      <td>${notice.ntitle}</td>
+                      <td><fmt:formatDate value="${notice.nuptdate}" type="date"/></td>
+                    </tr>
+                  </c:forEach>
+                  <tr>
+                    <td>1.</td>
+                    <td>Update software</td>
+                    <td><span class="badge bg-danger">55%</span></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title text-bold">최근 이슈사항</h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm float-right">
+                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>제목</th>
+                    <th class="col-sm-3">수정일</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <c:forEach var="notice" items="${nlist}">
+                    <tr>
+                      <td>${notice.nid}</td>
+                      <td>${notice.ntitle}</td>
+                      <td><fmt:formatDate value="${notice.nuptdate}" type="date"/></td>
+                    </tr>
+                  </c:forEach>
+                  <tr>
+                    <td>1.</td>
+                    <td>Update software</td>
+                    <td><span class="badge bg-danger">55%</span></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+        <div class="row">
+
+        </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>

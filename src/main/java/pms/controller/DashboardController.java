@@ -17,6 +17,7 @@ public class DashboardController {
         for(Notice n:service.getNoticeList(1)){
             System.out.println(n.getNtitle());
         }
+        d.addAttribute("nlist", service.getNoticeList(1));
         return "pms/dashboard.jsp";
     }
 }
