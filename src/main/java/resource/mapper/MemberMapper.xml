@@ -11,5 +11,12 @@
 		SELECT count(*)
 		FROM member
 		WHERE email = #{email}		
+	</select>
+	
+	<select id="loginMember" parameterType="member" resultType="member">
+		SELECT *
+		FROM member
+		WHERE email = #{email}
+		AND password = #{password}
 	</select>	
 </mapper>
