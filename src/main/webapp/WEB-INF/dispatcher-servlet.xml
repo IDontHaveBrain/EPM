@@ -44,12 +44,12 @@
     	  <property name="username" value="${jdbc.user}"/>
     	  <property name="password" value="${jdbc.pass}"/>
     </bean>
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource"  ref="dataSource"/>
-		<property name="configLocation" value="classpath:resource/mybatis.Spring.xml"/>
-	</bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:resource/mybatis.Spring.xml"/>
+    </bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="board.dao"/>
+		<property name="basePackage" value="pms.dao"/>
 	</bean>  
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="order" value="1"/>

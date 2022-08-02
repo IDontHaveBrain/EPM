@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pms.dao.DashboardDao">
+	<select id="noticeList" parameterType="int" resultType="notice">
+		select * from notice where pid = #{pid}
+	</select>
+	<select id="issueList" parameterType="int" resultType="issuedash">
+		select iid, jname, ititle, iprogress, name, iuptdate
+		from issue i, jobmember jm, jobplan jp,
+			 (select * from member m, participants pp where m.mid = pp.mid) m
+		where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = #{pid}
+		order by iuptdate
+	</select>
+</mapper>
