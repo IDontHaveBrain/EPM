@@ -149,16 +149,22 @@
                   <thead>
                   <tr>
                     <th style="width: 10px">#</th>
+                    <th>업무</th>
                     <th>제목</th>
-                    <th class="col-sm-3">수정일</th>
+                    <th>현황</th>
+                    <th>작성자</th>
+                    <th>수정일</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach var="notice" items="${nlist}">
+                  <c:forEach var="issue" items="${ilist}" varStatus="sts">
                     <tr>
-                      <td>${notice.nid}</td>
-                      <td>${notice.ntitle}</td>
-                      <td><fmt:formatDate value="${notice.nuptdate}" type="date"/></td>
+                      <td>${sts.index+1}</td>
+                      <td>${issue.jname}</td>
+                      <td>${issue.ititle}</td>
+                      <td>${issue.iprogress}</td>
+                      <td>${issue.name}</td>
+                      <td><fmt:formatDate value="${issue.iuptdate}" type="date"/></td>
                     </tr>
                   </c:forEach>
                   <tr>
