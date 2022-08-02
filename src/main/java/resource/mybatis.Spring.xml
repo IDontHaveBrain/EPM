@@ -7,15 +7,17 @@
 		<typeAlias type="pms.vo.Notice" alias="notice"/>
 		<typeAlias type="pms.vo.WorkPage" alias="workpage"/>
 		<typeAlias type="pms.vo.Issues" alias="issues"/>
+		<typeAlias type="pms.vo.Project" alias="project"/>
 		<typeAlias type="pms.dto.IssuesDashDto" alias="issuesdash"/>
 		<typeAlias type="pms.dto.IssuesSch" alias="issuessch"/>
+		
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/DashboardMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
-		<mapper resource="resource/mapper/prjMapper.xml"/>
+		<mapper resource="resource/mapper/ProjectMapper.xml"/>
 		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 	</mappers>
 </configuration>

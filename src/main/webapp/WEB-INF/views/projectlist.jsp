@@ -75,112 +75,90 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-     
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">새로운 프로젝트 등록</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            
-            <div class="card-body">
-             <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
-              <div class="form-group">
-                <label for="inputProjectCode">프로젝트 코드</label>
-                <input type="text" id="inputProjectCode" value="${param.number}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
-              </div>
-              <div class="form-group">           
-                <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select>              
-              </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select> 
-              </div>  
-              <div class="form-group">
-                <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
 
-			  </form>
-            </div>
-            <!-- /.card-body -->
-     
-          <!-- /.card -->
-       
-  	  </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
-
+          <div class="card-tools">
+            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+                     
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Project Name
+                      </th>
+                      <th style="width: 30%">
+                          Team Members
+                      </th>
+                      <th>
+                          Project Progress
+                      </th>
+                      <th class="text-center">
+                          Status
+                      </th>
+                    
+                   
+                      
+                                
+                  </tr>
+              </thead>
+              <tbody>
+              	<!-- controller에서 넘겨준 모델데이터 : blist -->
+    			
+                  <tr>
+                      <td>
+                          #
+                      </td>
+                      <td>
+                          <a>
+                              AdminLTE v3
+                          </a>
+                          <br/>
+                          <small>
+                              Created 01.01.2019
+                          </small>
+                      </td>
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              </div>
+                          </div>
+                          <small>
+                              57% Complete
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-success">Success</span>
+                      </td>
+                      <td class="project-actions text-right">
+                      	<button type="button" onclick="updateProc()" class="btn btn-info btn-sm">수정</button>
+						<button type="button" onclick="deleteProc()" class="btn btn-danger btn-sm">삭제</button>
+                 
+                      </td>
+                  </tr>
+                              
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
       </div>
-      
-      <script type="text/javascript">
-      /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
+      <!-- /.card -->
 
-      </script>
-    </section>
-        
-        
-     
-        <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>

@@ -103,8 +103,12 @@
             </div>
             <div class="card-body">
               <div class="form-group">
+                <label for="inputProjectCode"></label>
+                <input type="text" id="inputProjectCode" class="form-control">
+              </div>
+               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input type="text" id="inputName" class="form-control">
+                <input id="inputName" type="text" value="${param.pname}" class="form-control">
               </div>
               <div>
               <div class="form-group">           
@@ -128,7 +132,7 @@
               </div>
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">시작일</label>
