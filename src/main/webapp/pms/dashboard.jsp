@@ -183,7 +183,74 @@
         </div>
 
         <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">이슈 현황</h3>
 
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive">
+                      <canvas id="pieChart" height="150"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul class="chart-legend clearfix">
+                      <li><i class="far fa-circle text-success"></i> 해결</li>
+                      <li><i class="far fa-circle text-warning"></i> 해결중</li>
+                      <li><i class="far fa-circle text-danger"></i> 해결불가</li>
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <ul class="nav nav-pills flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결
+                      <span class="float-right text-success">
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]}" pattern="#.##"/>%
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결중
+                      <span class="float-right text-warning">
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]}" pattern="#.##"/>%
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결불가
+                      <span class="float-right text-danger">
+                        <i class="fas fa-arrow-down text-sm"></i>
+                        <fmt:formatNumber value="${iprog[2]/iprog[3]}" pattern="#.##"/>%</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.footer -->
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
@@ -233,5 +300,34 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<script>
+  var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+  var pieData = {
+    labels: [
+      '해결',
+      '해결중',
+      '해결불가',
+    ],
+    datasets: [
+      {
+        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}],
+        backgroundColor: ['#00a65a', '#f39c12', '#f56954']
+      }
+    ]
+  }
+  var pieOptions = {
+    legend: {
+      display: false
+    }
+  }
+  // Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  // eslint-disable-next-line no-unused-vars
+  var pieChart = new Chart(pieChartCanvas, {
+    type: 'doughnut',
+    data: pieData,
+    options: pieOptions
+  })
+</script>
 </body>
 </html>

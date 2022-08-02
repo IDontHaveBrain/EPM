@@ -10,6 +10,17 @@ public class IssueDashDto {
     private String name;
     private Date iuptdate;
 
+    // 페이징 처리
+    private int count; // 총데이터 건수
+    private int pageSize; // 한번에 보여줄 페이지 크기
+    private int pageCount; // 총 페이지 수
+    private int curPage; // 클릭한 현재 페이지 번호
+    private int start; // 시작번호(현재페이지)
+    private int end; // 마지막 번호(현재페이지)
+    private int blockSize; // 한번에 보여줄 block의 크기
+    private int startBlock; // block의 시작번호
+    private int endBlock; // block의 마지막번호
+
     public IssueDashDto() {
     }
 
