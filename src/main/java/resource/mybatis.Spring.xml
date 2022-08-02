@@ -4,11 +4,6 @@
 <configuration>
 
 	<mappers>
-		<mapper resource="resource/mapper/globalMapper.xml"/>
-		<mapper resource="resource/mapper/prjMapper.xml"/>
-	
+		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 	</mappers>
 </configuration>
-
-
-
