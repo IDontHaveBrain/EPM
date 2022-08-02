@@ -7,19 +7,21 @@ grant dba to p06;
 */
 
 drop table jobplan;
+drop table jobmember;
 drop table participants;
 drop table notice;
 drop table project;
 drop table member;
 
 create table member(
-    email varchar2(50) primary key,
+    mid number primary key,
+    email varchar2(50),
     password varchar2(20),
     name varchar2(30),
     auth varchar2(10),
     accessdate date
 );
-insert into member values ('skawns848@naver.com', '123123', '조남준', '관리자', sysdate);
+insert into member values (1, 'skawns848@naver.com', '123123', '조남준', '관리자', sysdate);
 select * from member;
 
 create table project(
@@ -47,11 +49,12 @@ insert into notice values (3, 1, '공지사항3', '세번째 테스트 데이터
 select * from notice;
 
 create table participants(
+    ppid number primary key,
+    pauth varchar2(10),
     pid number,
-    email varchar2(50),
-    pauth varchar2(10)
+    mid number
 );
-insert into participants values (1,'skawns848@naver.com', null);
+insert into participants values (1, 'PM', 1, 1);
 select * from participants;
 
 create table jobplan(
@@ -65,17 +68,20 @@ create table jobplan(
     jprogress varchar2(10),
     jregdate date,
     juptdate date,
-    required number
+    required number,
+    pid number
 );
 insert into jobplan
 values (
-        1, '대시보드 차트 적용', 1, 'skawns848@naver.com',
+        1, '대시보드 차트 적용',
         to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-30','YYYY-MM-DD'),
         to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-30','YYYY-MM-DD'),
         '대시보드에 lib활용하여 데이터를 차트형식으로 표시하기', null,
         to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-28','YYYY-MM-DD'),
         null
 );
+select * from jobplan;
+
 select * 
 from jobplan
 WHERE jid = 1;
