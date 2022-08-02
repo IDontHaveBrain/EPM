@@ -35,7 +35,7 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="../../index.html" method="post">
+      <form id="register" action="login.do" method="post">
         <div class="input-group mb-3">
           <input type="text" name="name" value="${param.name}" class="form-control" placeholder="Full name">
           <div class="input-group-append">
@@ -79,7 +79,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" id="submit" class="btn btn-primary btn-block">Register</button>
           </div>
           <!-- /.col -->
         </div>
