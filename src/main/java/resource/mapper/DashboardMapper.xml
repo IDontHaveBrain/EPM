@@ -13,4 +13,33 @@
 		where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = #{pid}
 		order by iuptdate
 	</select>
+	<select id="issueTotCnt" parameterType="int" resultType="int">
+		select count(*)
+		from issue i, jobmember jm, jobplan jp,
+			 (select * from member m, participants pp where m.mid = pp.mid) m
+		where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = #{pid}
+	</select>
+	<select id="issueListPage" parameterType="issuedash" resultType="issuedash">
+		select iid, jname, ititle, iprogress, name, iuptdate
+		from issue i, jobmember jm, jobplan jp,
+		(select * from member m, participants pp where m.mid = pp.mid) m
+		where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = #{pid}
+		order by iuptdate
+
+		select *
+		from (
+		select rownum cnt, level, b.*
+		from board b
+		WHERE 1=1
+		<if test="subject!=null">
+			AND subject LIKE '%'||#{subject}||'%'
+		</if>
+		<if test="writer!=null">
+			AND writer LIKE '%'||#{writer}||'%'
+		</if>
+		start with refno = 0
+		connect by prior no = refno
+		order siblings by no desc  )
+		where cnt between #{start} and #{end}
+	</select>
 </mapper>

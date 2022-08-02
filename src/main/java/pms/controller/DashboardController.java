@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pms.dao.GlobalDao;
 import pms.dto.IssueDashDto;
 import pms.service.DashboardService;
@@ -57,4 +58,19 @@ public class DashboardController {
         return "pms/dashboard.jsp";
     }
 
+    @RequestMapping("issueListAjax.do")
+    public String issueListAjax(IssueDashDto issueForm,
+                                @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
+
+        d.addAttribute("ilist", service.getIssueList(1));
+        return "pageJsonReport";
+    }
+
+    @RequestMapping("noticeListAjax.do")
+    public String noticeListAjax(IssueDashDto issueForm,
+                                @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
+
+        d.addAttribute("nlist", service.getNoticeList(1));
+        return "pageJsonReport";
+    }
 }

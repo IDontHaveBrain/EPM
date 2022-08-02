@@ -37,8 +37,57 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+  <!-- jQuery -->
+  <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+<script>
+  function updateIssue(){
+    $.ajax({
+      url: "${path}/issueListAjax.do",
+      data: "pid=" + 1,
+      dataType: "json",
+      success: function (data) {
+        //console.log(data)
+        var list = data.ilist;
+        var addHTML = "";
+        $(list).each(function (idx, rst) {
+          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.jname
+            + "</td><td>" + rst.ititle + "</td><td>" + rst.iprogress + "</td>";
+          addHTML += "<td>" + rst.name + "</td><td>" + new Date(rst.iuptdate).toLocaleDateString()+ "</td></tr>";
+        });
+        //console.log(addHTML);
+        $("#ilist").html(addHTML)
+      }
+    });
+  }
+
+  function updateNotice(){
+    $.ajax({
+      url: "${path}/noticeListAjax.do",
+      data: "pid=" + 1,
+      dataType: "json",
+      success: function (data) {
+        //console.log(data)
+        var list = data.nlist;
+        var addHTML = "";
+        $(list).each(function (idx, rst) {
+          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.ntitle
+            + "</td>";
+          addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
+        });
+        //console.log(addHTML);
+        $("#nlist").html(addHTML)
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    updateIssue();
+    updateNotice();
+  });
+</script>
+
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -107,7 +156,7 @@
                     <th class="col-sm-3">수정일</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="nlist">
                   <c:forEach var="notice" items="${nlist}">
                     <tr>
                       <td>${notice.nid}</td>
@@ -156,7 +205,7 @@
                     <th>수정일</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="ilist">
                   <c:forEach var="issue" items="${ilist}" varStatus="sts">
                     <tr>
                       <td>${sts.index+1}</td>
@@ -266,8 +315,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="${path}/pms/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

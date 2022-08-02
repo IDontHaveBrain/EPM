@@ -9,18 +9,28 @@ public class Member {
 	private String name;
 	private String auth;
 	private Date accessdate;
+	private String status;
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Member(int mid, String email, String password, String name, String auth, Date accessdate) {
+	public Member(int mid, String email, String password, String name, String auth, Date accessdate, String status) {
 		this.mid = mid;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.auth = auth;
 		this.accessdate = accessdate;
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public int getMid() {

@@ -11,4 +11,6 @@ import java.util.List;
 public interface DashboardDao {
     public List<Notice> noticeList(int pid);
     public List<IssueDashDto> issueList(int pid);
+    public int issueTotCnt(int pid);
+    public List<IssueDashDto> issueListPage(IssueDashDto sch);
 }
