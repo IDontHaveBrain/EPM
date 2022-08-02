@@ -15,5 +15,6 @@
 		<mapper resource="resource/mapper/DashboardMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/prjMapper.xml"/>
+		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 	</mappers>
 </configuration>
