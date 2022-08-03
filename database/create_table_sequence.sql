@@ -97,11 +97,11 @@ CREATE TABLE jobplan (					-- 업무 일정 테이블
 	realstart	date,					-- 실제 시작 날짜
 	realend		date,					-- 실제 마감 날짜
 	content		varchar2(1500),			-- 업무 상세 내용 설명 (한글 기준 최대 500자_
-	jprogress	number,					-- 업무 진행률 (백분율 표기), 업무담당 테이블의 진행률을 사용해 계산
 	jregdate	date,					-- 업무 등록일
 	juptdate	date,					-- 업무 수정일
 	required	number,					-- 선행 작업, 먼저 처리해야하는 업무 일정 아이디
-	pid			number					-- 프로젝트 아이디
+	pid			NUMBER,					-- 프로젝트 아이디
+	jstatus		varchar2(10)			-- 업무 진행 현황 (진행, 지연, 완료, ...)
 );
 
 CREATE SEQUENCE jobplan_seq
@@ -128,7 +128,8 @@ CREATE TABLE jobmember (								-- 업무 담당 테이블
 	jmid		number	PRIMARY KEY,					-- 업무 담당 아이디 (시퀀스를 사용해서 입력)
 	jid			number	REFERENCES jobplan(jid),		-- 업무 일정 아이디
 	ppid		number	REFERENCES participants(ppid),	-- 참여인원 아이디
-	progress	number									-- 진행률 (백분율 표기)
+	progress	NUMBER,									-- 진행률 (백분율 표기)
+	jmstatus	varchar2(10)							-- 업무 산출물 처리 현황 (승인 / 반려)
 );
 
 CREATE SEQUENCE jobmember_seq
