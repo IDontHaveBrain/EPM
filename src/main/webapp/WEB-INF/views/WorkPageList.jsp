@@ -133,7 +133,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th colspan="11">산출물 등록 진행중</th>
+                    <th colspan="10">산출물 등록 진행중</th>
                   </tr>
                   </tfoot>
                 </table>

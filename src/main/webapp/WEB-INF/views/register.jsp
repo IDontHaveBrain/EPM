@@ -35,9 +35,10 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form id="register" action="login.do" method="post">
+      <form id="register" action="register.do" method="post">
+        <input type="hidden" id="email_yn" name="email_yn" value="N"/>
         <div class="input-group mb-3">
-          <input type="text" name="name" value="${param.name}" class="form-control" placeholder="Full name">
+          <input type="text" name="name" id="name" class="form-control" placeholder="Full name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -45,15 +46,15 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" name="email" value="${param.email}" class="form-control" placeholder="Email">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+          <div class="col-4">
+          	<button type="button" id="dupCheck" class="btn btn-primary btn-block">중복체크</button>
+          </div>
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" value="${param.password}" class="form-control" placeholder="Password">
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -61,7 +62,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="confirmpassword" class="form-control" placeholder="Retype password">
+          <input type="password" name="confirmPassword" id="confirmPassword"class="form-control" placeholder="Retype password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -79,7 +80,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" id="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="fnSubmit(); return false;">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -111,28 +112,88 @@
 <script src="${path}/pms/dist/js/adminlte.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("[name=email]").keyup(function(){
-			if(event.keyCode==13){
-				$.ajax({
-					url:"${path}/dupCheck.do",
-					data:"email="+$(this).val(),
-					dataType:"json",
-					success:function(data){
-						console.log(data)
-						if(data.checkEmail){
-							alert("이미 등록된 이메일입니다.\n다른 이메일을 입력하세요")
-							$("[name=email]").val("").focus();
-						}else{
-							alert("등록가능한 이메일입니다!")
-						}
-					},
-					error:function(err){
-						console.log(err)
+		$("#dupCheck").click(function(){
+			$.ajax({
+				url:"${path}/dupCheck.do",
+				data:"email="+$("#email").val(),
+				dataType:"json",
+				success:function(data){
+					console.log(data)
+					if(data.dupCheck){
+						alert("이미 등록된 이메일입니다.\n다른 이메일을 입력하세요")
+						$("#email_yn").val("N");
+						$("[name=email]").val("").focus();
+					}else{
+						alert("등록가능한 이메일입니다!")
+						$("#email_yn").val("Y");
 					}
-				});
-			}
-		});
+				},
+				error:function(err){
+					console.log(err)
+				}
+			});
+		})
 	});
+	
+		function fnSubmit() {
+			
+			var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			
+			if ($("#name").val() == null || $("#name").val() == "") {
+				alert("이름을 입력해주세요.");
+				$("#name").focus();
+			 
+				return false;
+			}
+			 
+			if ($("#email").val() == null || $("#email").val() == "") {
+				alert("이메일을 입력해주세요.");
+				$("#email").focus();
+				 
+				return false;
+			}
+			 
+			if ($("#email_yn").val() != 'Y') {
+				alert("이메일 중복체크를 눌러주세요.");
+				$("#email_yn").focus();
+				 
+				return false;
+			}
+
+			
+			if ($("#password").val() == null || $("#password").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#password").focus();
+				 
+				return false;
+			}
+			 
+			if ($("#confirmPassword").val() == null || $("#confirmPassword").val() == "") {
+				alert("비밀번호 확인을 입력해주세요.");
+				$("#confirmPassword").focus();
+				 
+				return false;
+			}
+			 
+			if ($("#password").val() != $("#confirmPassword").val()) {
+				alert("비밀번호가 일치하지 않습니다.");
+				$("#confirmPassword").focus();
+				 
+				return false;
+			}
+			if(!email_rule.test($("#email").val())){
+				alert("이메일을 형식에 맞게 입력해주세요. ex) example@gmail.com");
+				$("#email").focus();
+				return false;
+				}
+			
+			if (confirm("회원가입하시겠습니까?")) {
+			 
+			$("#register").submit();
+			return false;
+			}
+			 
+		}
 </script>
 </body>
 </html>

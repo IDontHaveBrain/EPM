@@ -10,6 +10,7 @@ import pms.dto.IssuesSch;
 import pms.dto.NoticeSch;
 import pms.service.DashboardService;
 import pms.service.GlobalService;
+import pms.vo.Jobplan;
 import pms.vo.Member;
 import pms.vo.Notice;
 
@@ -28,37 +29,32 @@ public class DashboardController {
     @RequestMapping("dashboard.do")
     public String dashboard(IssuesSch isch, NoticeSch nsch,
                             Model d, HttpServletRequest request){
-        for(Notice n:service.getNoticeList(1)){
+        int pid = 1;
+        for(Notice n:service.getNoticeList(pid)){
             System.out.println(n.getNtitle());
         }
-        for(IssuesDashDto issue:service.getIssueList(1)){
+        for(IssuesDashDto issue:service.getIssueList(pid)){
             System.out.println(issue.getItitle());
         }
         HttpSession session = request.getSession();
-        session.setAttribute("mem", gservice.getMember("test@test.com"));
         Member curMem = (Member)request.getSession().getAttribute("mem");
         if(curMem == null){
             return "redirect:login.do";
         }
+        if(!gservice.isProjectMember(curMem.getMid(), pid))
+        {
+            return "redirect:test.do";
+        }
         System.out.println(curMem.getEmail());
 
-        List<IssuesDashDto> issueList = service.getIssueList(1);
-        Integer iprogCount[] = {0,0,0,0};
-        for(IssuesDashDto issue:issueList){
-            if(issue.getIprogress().equals("해결"))
-                iprogCount[0]++;
-            else if (issue.getIprogress().equals("해결중"))
-                iprogCount[1]++;
-            else if (issue.getIprogress().equals("해결불가"))
-                iprogCount[2]++;
-            iprogCount[3]++;
-        }
-
+        Integer iprogCount[] = service.issueProgCount(1);
+        Integer jprogCount[] = service.noticeProgCount(1);
 
         d.addAttribute("nlist", service.noticePaging(nsch,1));
         d.addAttribute("ilist", service.issuePaging(isch,1));
         d.addAttribute("iprog", iprogCount);
-        return "pms/dashboard.jsp";
+        d.addAttribute("jprog", jprogCount);
+        return "WEB-INF/views/dashboard/dashboard.jsp";
     }
 
     @RequestMapping("issueListAjax.do")

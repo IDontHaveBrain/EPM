@@ -16,21 +16,21 @@ public class WorkPageController {
 	@RequestMapping("WorkPageList.do")
 	public String WorkPageList(Model d) {
 		d.addAttribute("wlist",service.getWorkPageList(1));
-		return "WEB-INF\\views\\WorkPage\\WorkPageList.jsp";
+		return "WEB-INF\\views\\WorkPageList.jsp";
 	}
 	
 	@RequestMapping("WorkPageFileinsert.do")
 	public String WorkPageInsertForm(){
-		return "WEB-INF\\views\\WorkPage\\WorkPageFileinsert.jsp";
+		return "WEB-INF\\views\\WorkPageFileinsert.jsp";
 	}
 	// int pid, @RequestParam("pid") 
 	@RequestMapping("WorkPageDetail.do")
 	public String WorkPageDetail(Model d){
 		d.addAttribute("workpage",service.getWorkPageList(1));
 		
-		return "WEB-INF\\views\\WorkPage\\WorkPageDetail.jsp";
+		return "WEB-INF\\views\\WorkPageDetail.jsp";
 	}	
-	/*	
+	/*	g
 	// http://localhost:7080/project06/workpage.do
 	@RequestMapping("workpage.do")
 	public String WorkPageList2(Model d) {

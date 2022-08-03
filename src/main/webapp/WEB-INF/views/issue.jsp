@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: skawn
-  Date: 2022-07-28
-  Time: 오후 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -37,7 +30,6 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -53,65 +45,7 @@
 
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
-<script type="text/javascript">
-$(document).ready(function(){
-	$.ajax({
-		url:"${path}/list.do",
-		dataType:"json",
-		success:function(data){
-			// data.모델명  : m.addAttribute("empList", ser...)
-			var list = data.WorkPageList //이부분확인
-			console.log(list);
-			var addHTML=""
-			$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-				addHTML+="<tr>"
-							"<th>"+workpage.jname+"</th>"
-							"<th>"+workpage.content+"</th>"
-						 "</tr>"
-			});
-			console.log(addHTML)
-			$("#WorkPageList").html(addHTML)
-		}
-	});
-	$("#schBtn").click(function(){
-		
-	});
-	$(".sch").keyup(function(){
-		var jnameVal = $("[name=jname]").val()
-		//$("h2").text("ename="+enameVal+"&job="+jobVal)
-		// 입력후, enter키를 입력시, 조회 처리..
-		if(event.keyCode==13){
-			$.ajax({
-				url:"${path}/WorkPageList.do",
-				data:"jname="+jnameVal,
-				dataType:"json",
-				success:function(data){
-					// data.모델명  : m.addAttribute("empList", ser...)
-					var list = data.WorkPageList
-					var addHTML=""
-						$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-							addHTML+="<tr>"
-								"<th>"+workpage.jname+"</th>"
-								"<th>"+workpage.content+"</th>"
-							 "</tr>"
-						});
-					console.log(addHTML)
-					$("#WorkPageList").html(addHTML)
-				}
-			});			
-		}
-		
-	});
-	
-});
-</script>
-<form>
-	    <input class="sch form-control mr-sm-2" placeholder="이름" name="jname"/>
-	    <button type="button" id="schBtn">Search</button>
-	    
-	    <tr><th>이름</th></tr>
 
-</form>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -119,7 +53,6 @@ $(document).ready(function(){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -136,71 +69,78 @@ $(document).ready(function(){
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
+     
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">이슈사항 등록</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
               </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                	<tbody id="WorkPageList">
-    				</tbody>
-                  <thead>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>고</th>
-                    <th>정</th>
-                    <th>글</th>
-                    <th>인</th>
-                    <th>가</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+            
+            <div class="card-body">
+             <form id="frm01" enctype="multipart/form-data" action="${path}/issueInsert.do" class="form" method="post">
+              <div class="form-group">
+                <label for="inputName">이슈사항명</label>
+                <input id="inputName" type="text" value="${param.ititle}" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="inputDescription">이슈사항 내용</label>
+                <textarea id="inputDescription" class="form-control" rows="4">${param.icontent}</textarea>
+              </div>              
+              <div class="form-group"> 
+              	<label for="inputProjectLeader">처리현황</label>
+                <select id="iprogress" name="iprogress" class="form-control pm-select">
+                  <option selected disabled>처리현황 표기</option>
+                  <option>검토</option>
+                  <option>완료</option>
+                  <option>불가</option>
+                </select> 
+              </div>
+              <div class="form-group">
+                <label for="inputClientCompany">작성일자</label>
+                <input type="date" id="iregdate" name="iregdate" class="form-control">
+              </div>
+			  </form>
+            </div>
+  	  </div>
       </div>
-      <!-- /.container-fluid -->
+      <div class="row">
+        <div class="col-12">
+          <a href="#" class="btn btn-secondary">취소</a>    
+          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
+        </div>
+      </div>
+      
+      <script type="text/javascript">
+      
+      	$("#regBtn").click(function(){
+      		if(confirm("등록하시겠습니까?")){
+      			$("").attr("action","${path}/issueInsert.do");
+      			$("").submit();
+      		}
+      	});
+      	
+      	$("#uptBtn").click(function(){
+      		if(confirm("수정하시겠습니까?")){
+      			$("").attr("action","${path}/calUpdate.do");
+      			$("").submit();
+      		}
+      	});  
+      	
+      	$("#delBtn").click(function(){
+      		if(confirm("삭제하시겠습니까?")){
+      			$("").attr("action","${path}/calDelete.do");
+      			$("").submit();
+      		}
+      	});        
+      </script>
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
-    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -209,7 +149,6 @@ $(document).ready(function(){
   <!-- Control Sidebar -->
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
-</div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->

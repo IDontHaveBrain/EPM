@@ -11,6 +11,7 @@
 
 
  --%>
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -36,9 +37,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="pms\index.jsp" id="login" method="post">
+      <form action="login.do" id="login" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="email" value="${param.email}" class="form-control" placeholder="Email">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -46,7 +47,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" value="${param.password}" class="form-control" placeholder="Password">
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -64,7 +65,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" id="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="button" onclick="login(); return false;" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -99,5 +100,32 @@
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.min.js"></script>
+<script type="text/javascript">
+		//alert(name)
+	function login() {
+			
+		var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			
+		if ($("#email").val() == null || $("#email").val() == "") {
+			alert("이메일을 입력해주세요.");
+			$("#email").focus();
+			 
+			return false;
+		}
+		
+		if ($("#password").val() == null || $("#password").val() == "") {
+			alert("비밀번호를 입력해주세요.");
+			$("#password").focus();
+			
+			return false;		
+		}
+		
+		if (confirm("로그인하시겠습니까?")) {
+			 
+			$("#login").submit();
+			return false;
+			}
+	}
+</script>
 </body>
 </html>
