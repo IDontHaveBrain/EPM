@@ -152,3 +152,4 @@ CREATE SEQUENCE issues_seq
 	START WITH 1;
 	
 
+	SELECT * FROM jobfile;

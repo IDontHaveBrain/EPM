@@ -2,6 +2,8 @@ package pms.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class WorkPage {
 	private int jid;
 	private String jname;
@@ -14,6 +16,11 @@ public class WorkPage {
 	private Date jregdate;
 	private Date juptdate;
 	private int required;
+	private int pid;
+	// 파일내용
+	private MultipartFile report;
+	private String fname;
+	private int level;
 	public WorkPage() {
 		// TODO Auto-generated constructor stub
 	}
@@ -30,6 +37,7 @@ public class WorkPage {
 		this.jregdate = jregdate;
 		this.juptdate = juptdate;
 		this.required = required;
+		this.pid = pid;
 	}
 	public int getJid() {
 		return jid;
@@ -97,5 +105,30 @@ public class WorkPage {
 	public void setRequired(int required) {
 		this.required = required;
 	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public MultipartFile getReport() {
+		return report;
+	}
+	public void setReport(MultipartFile report) {
+		this.report = report;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
 	
 }

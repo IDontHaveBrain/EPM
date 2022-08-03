@@ -77,7 +77,6 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
             <div class="card">
@@ -89,25 +88,26 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th style="text-align:center;" width="7%">업무이름</th>
-                    <th style="text-align:center;" width="7%">담당자</th>
+
+                    <th style="text-align:center;" width="5%">담당자</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
-                    <th style="text-align:center;" width="15%">내용</th>
+                    <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="15%">첨부파일</th>
+  					<th style="text-align:center;" width="7%">산출물등록</th>
+                    <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr>
-                    <td style="text-align:center;">${wl.jname}</td>
+                  <tr ondblclick="location.href='WorkPageDetail.do'">
+
                     <td style="text-align:center;">이름</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;">${wl.content}</td>
+                    <td style="text-align:center;">${wl.jname}</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 			<!-- 진행률 -->
                       <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.jprogress}%</span></td>
@@ -115,46 +115,25 @@
                     <td>
              <!-- 진행률 -->       
            <!-- 파일등록 css -->
-          <div class="card card-info">
-            <div class="card-header">
-              <h3 class="card-title">산출물 등록</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="최소화">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body p-0">
-              <table class="table">
-                <thead>
-                  <tr>
-                  	<th style="text-align:center;" width="30%">등록</th>
-                    <th style="text-align:center;" width="70%">파일이름</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                  	<td>
-                  	
-                  	    <span class="btn btn-success col fileinput-button">
+                  	    <button class="btn btn-primary col fileinput-button" onclick="location.href='WorkPageFileinsert.do'">
                         <i class="fas fa-plus"></i>
                         <span></span>
-                      </span>
-                  	
-                  	</td>
-                    <td>Functional-requirements.docx</td>
-                </tbody>
-              </table>
-            </div>
-                    </td>
+                      </button>
           <!-- 파일등록 css -->
-                    <td style="text-align:center;" >검토</td>
+
+                    <td>
+                  	    <button class="btn btn-danger col fileinput-button">
+                        <i class="fas fa-plus"></i>
+                        <span></span>
+                      </button>
+					</td>
+				<td style="text-align:center;" >검토</td>
                   </tr>
                   </c:forEach>
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th colspan="10">산출물 등록 진행중</th>
+                    <th colspan="11">산출물 등록 진행중</th>
                   </tr>
                   </tfoot>
                 </table>
