@@ -7,13 +7,13 @@
 		INSERT INTO MEMBER values(#{email}, #{password}, #{name}, 'GUEST', sysdate)
 	</insert>
 	
-	<select id="checkEmail" parameterType="string" resultType="int">
+	<select id="checkEmail" parameterType="String" resultType="int">
 		SELECT count(*)
 		FROM member
 		WHERE email = #{email}		
 	</select>
 	
-	<select id="loginMember" parameterType="member" resultType="member">
+	<select id="memberLogin" resultType="member">
 		SELECT *
 		FROM member
 		WHERE email = #{email}

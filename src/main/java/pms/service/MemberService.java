@@ -1,7 +1,5 @@
 package pms.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +20,7 @@ public class MemberService {
 		return dao.checkEmail(email);
 	}
 	
-	public Member loginMember(Member m) {
-		return dao.loginMember(m);
+	public Member memberLogin(Member m){
+		return dao.memberLogin(m);
 	}
 }

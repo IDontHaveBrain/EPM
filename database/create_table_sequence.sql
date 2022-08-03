@@ -13,7 +13,6 @@ CREATE SEQUENCE member_seq
 	START WITH 1;
 
 
-
 CREATE TABLE project (					-- 프로젝트 테이블
 	pid			number PRIMARY KEY,		-- 프로젝트 아이디 (시퀀스 사용해서 입력)
 	pname		varchar2(300),			-- 프로젝트 이름 (한글 기준 최대 100자)

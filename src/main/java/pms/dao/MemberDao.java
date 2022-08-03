@@ -9,5 +9,6 @@ public interface MemberDao {
 	
 	public void register(Member ins);
 	public int checkEmail(String email);
-	public Member loginMember(Member m);
+	public Member memberLogin(Member m);
+	
 }
