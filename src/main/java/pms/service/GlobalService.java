@@ -6,7 +6,9 @@ import pms.dao.GlobalDao;
 import pms.vo.Jobplan;
 import pms.vo.Member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GlobalService {
@@ -18,5 +20,11 @@ public class GlobalService {
     }
     public List<Jobplan> jobplanListPrj(int pid) {
         return dao.jobplanListPrj(pid);
+    }
+    public boolean isProjectMember(Integer mid, Integer pid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("mid", mid);
+        map.put("pid", pid);
+        return dao.isProjectMember(map);
     }
 }

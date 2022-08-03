@@ -9,4 +9,7 @@
     <select id="jobplanListPrj" parameterType="int" resultType="jobplan">
         select * from jobplan where pid=#{pid}
     </select>
+    <select id="isProjectMember" parameterType="hashmap" resultType="boolean">
+        select count(*) from participants where mid=#{mid} and pid=#{pid}
+    </select>
 </mapper>
