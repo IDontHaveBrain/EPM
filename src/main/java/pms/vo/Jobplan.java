@@ -10,16 +10,16 @@ public class Jobplan {
     private Date realstart;
     private Date realend;
     private String content;
-    private String jprogress;
     private Date jregdate;
     private Date juptdate;
     private int required;
     private int pid;
+    private String jstatus;
 
     public Jobplan() {
     }
 
-    public Jobplan(int jid, String jname, Date jstart, Date jend, Date realstart, Date realend, String content, String jprogress, Date jregdate, Date juptdate, int required, int pid) {
+    public Jobplan(int jid, String jname, Date jstart, Date jend, Date realstart, Date realend, String content, Date jregdate, Date juptdate, int required, int pid, String jstatus) {
         this.jid = jid;
         this.jname = jname;
         this.jstart = jstart;
@@ -27,11 +27,11 @@ public class Jobplan {
         this.realstart = realstart;
         this.realend = realend;
         this.content = content;
-        this.jprogress = jprogress;
         this.jregdate = jregdate;
         this.juptdate = juptdate;
         this.required = required;
         this.pid = pid;
+        this.jstatus = jstatus;
     }
 
     public int getJid() {
@@ -90,14 +90,6 @@ public class Jobplan {
         this.content = content;
     }
 
-    public String getJprogress() {
-        return jprogress;
-    }
-
-    public void setJprogress(String jprogress) {
-        this.jprogress = jprogress;
-    }
-
     public Date getJregdate() {
         return jregdate;
     }
@@ -128,5 +120,13 @@ public class Jobplan {
 
     public void setPid(int pid) {
         this.pid = pid;
+    }
+
+    public String getJstatus() {
+        return jstatus;
+    }
+
+    public void setJstatus(String jstatus) {
+        this.jstatus = jstatus;
     }
 }
