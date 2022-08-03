@@ -12,7 +12,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-<fmt:requestEncoding value="utf-8"/>   
+<fmt:requestEncoding value="utf-8"/>
+<c:if test="${empty mem}">
+  <script>
+    location.href = "login.do";
+  </script>
+</c:if>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="${path}/pms/index3.html" class="brand-link">

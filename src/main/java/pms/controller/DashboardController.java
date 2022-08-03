@@ -29,22 +29,25 @@ public class DashboardController {
     @RequestMapping("dashboard.do")
     public String dashboard(IssuesSch isch, NoticeSch nsch,
                             Model d, HttpServletRequest request){
-        for(Notice n:service.getNoticeList(1)){
+        int pid = 1;
+        for(Notice n:service.getNoticeList(pid)){
             System.out.println(n.getNtitle());
         }
-        for(IssuesDashDto issue:service.getIssueList(1)){
+        for(IssuesDashDto issue:service.getIssueList(pid)){
             System.out.println(issue.getItitle());
         }
         HttpSession session = request.getSession();
-        session.setAttribute("mem", gservice.getMember("test@test.com"));
         Member curMem = (Member)request.getSession().getAttribute("mem");
         if(curMem == null){
             return "redirect:login.do";
         }
+        if(!gservice.isProjectMember(curMem.getMid(), pid))
+        {
+            return "redirect:test.do";
+        }
         System.out.println(curMem.getEmail());
 
         Integer iprogCount[] = service.issueProgCount(1);
-
         Integer jprogCount[] = service.noticeProgCount(1);
 
         d.addAttribute("nlist", service.noticePaging(nsch,1));

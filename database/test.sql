@@ -199,6 +199,4 @@ select *
 from (select nb.*, rownum cnt from (select * from notice where pid = 1 order by nuptdate desc) nb)
 where cnt between 1 and 3;
 
-select *
-from jobplan
-where pid = 1;
+select count(*) from participants where mid = 1 and pid = 1;
