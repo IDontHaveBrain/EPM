@@ -5,6 +5,7 @@ import pms.dto.IssuesDashDto;
 import pms.dto.IssuesSch;
 import pms.dto.NoticeSch;
 import pms.vo.Notice;
+import pms.vo.Project;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface DashboardDao {
     public List<IssuesDashDto> issueListPage(IssuesSch sch);
     public int noticeTotCnt(int pid);
     public List<Notice> noticeListPage(NoticeSch sch);
+    public List<Project> allProject();
 }

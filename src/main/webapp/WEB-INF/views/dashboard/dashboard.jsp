@@ -45,7 +45,7 @@
   function updateIssue(cnt){
     $.ajax({
       url: "${path}/issueListAjax.do",
-      data: "pid=" + 1 + "&curPage=" + cnt,
+      data: "pid=" + ${param.pid} + "&curPage=" + cnt,
       dataType: "json",
       success: function (data) {
         //console.log(data)
@@ -76,7 +76,7 @@
   function updateNotice(cnt){
     $.ajax({
       url: "${path}/noticeListAjax.do",
-      data: "pid=" + 1 + "&curPage=" + cnt,
+      data: "pid=" + ${param.pid} + "&curPage=" + cnt,
       dataType: "json",
       success: function (data) {
         //console.log(data)
@@ -134,8 +134,9 @@
   <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper pt-2">
     <!-- Content Header (Page header) -->
+    <c:if test="${empty param.hide}">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -151,6 +152,7 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
+    </c:if>
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -158,7 +160,9 @@
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
         <div class="row">
-          <div> <h4>간트차트 영역</h4> </div>
+          <div class="col-md-12">
+            <h4>간트차트 영역</h4>
+          </div>
         </div>
 
         <div class="row">

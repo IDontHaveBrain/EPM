@@ -3,7 +3,7 @@ package pms.vo;
 import java.util.Date;
 
 public class Project {
-	private int number;
+	private int pid;
 	private String pname;
 	private String pcomment;
 	private Date pstart;
@@ -12,11 +12,11 @@ public class Project {
 	public Project() {
 		// TODO Auto-generated constructor stub
 	}
-	public int getNumber() {
-		return number;
+	public int getPid() {
+		return pid;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 	public String getPname() {
 		return pname;

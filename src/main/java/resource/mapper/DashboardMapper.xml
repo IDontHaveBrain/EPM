@@ -35,4 +35,7 @@
 		select * from (select nb.*, rownum cnt from (select * from notice where pid = #{pid} order by nuptdate desc) nb)
 		where cnt between #{start} and #{end}
 	</select>
+	<select id="allProject" resultType="project">
+		select * from project
+	</select>
 </mapper>

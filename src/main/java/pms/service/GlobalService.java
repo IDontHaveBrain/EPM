@@ -27,4 +27,10 @@ public class GlobalService {
         map.put("pid", pid);
         return dao.isProjectMember(map);
     }
+    public boolean checkProjectAuth(Integer mid, Integer pid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("mid", mid);
+        map.put("pid", pid);
+        return dao.checkProjectAuth(map);
+    }
 }

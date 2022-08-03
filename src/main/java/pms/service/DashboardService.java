@@ -9,6 +9,7 @@ import pms.dto.IssuesSch;
 import pms.dto.NoticeSch;
 import pms.vo.Jobplan;
 import pms.vo.Notice;
+import pms.vo.Project;
 
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class DashboardService {
     }
     public List<IssuesDashDto> getIssueList(int pid) {
         return dao.issueList(pid);
+    }
+    public List<Project> getAllProjectList() {
+        return dao.allProject();
     }
     public Integer[] issueProgCount(int pid) {
         List<IssuesDashDto> issueList = getIssueList(pid);
@@ -56,7 +60,7 @@ public class DashboardService {
 
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.issueTotCnt(1) ); // 프로젝트 선택파트 완료시 pid로 변경
-        System.out.println("총건수:"+sch.getCount());
+        //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
         sch.setPageSize(3);
         // 3. 총페이지수 : 데이터건수/한번에 보여주페이지 크기  [1][2][3][4]
@@ -99,7 +103,7 @@ public class DashboardService {
 
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.noticeTotCnt(1) ); // 프로젝트 선택파트 완료시 pid로 변경
-        System.out.println("총건수:"+sch.getCount());
+        //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
         sch.setPageSize(3);
         // 3. 총페이지수 : 데이터건수/한번에 보여주페이지 크기  [1][2][3][4]

@@ -43,6 +43,9 @@ create table project
 insert into project
 values (1, 'PMS', '프로젝트 관리 시스템', to_date('2022-07-20', 'YYYY-MM-DD'), to_date('2022-08-23', 'YYYY-MM-DD'),
         to_date('2022-07-20', 'YYYY-MM-DD'));
+insert into project
+values (2, 'TEST 프로젝트', '테스트용 프로젝트입니다.', to_date('2022-08-03', 'YYYY-MM-DD'), to_date('2022-08-12', 'YYYY-MM-DD'),
+        to_date('2022-07-20', 'YYYY-MM-DD'));
 select *
 from project;
 
@@ -200,3 +203,6 @@ from (select nb.*, rownum cnt from (select * from notice where pid = 1 order by 
 where cnt between 1 and 3;
 
 select count(*) from participants where mid = 1 and pid = 1;
+select count(m.mid)
+from participants p, member m
+where p.mid = m.mid(+) and ((p.mid = 1 and p.pid = 1) or (m.auth = 'ADMIN'));
