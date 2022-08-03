@@ -3,9 +3,11 @@ package pms.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pms.dao.DashboardDao;
+import pms.dao.GlobalDao;
 import pms.dto.IssuesDashDto;
 import pms.dto.IssuesSch;
 import pms.dto.NoticeSch;
+import pms.vo.Jobplan;
 import pms.vo.Notice;
 
 import java.util.List;
@@ -14,12 +16,40 @@ import java.util.List;
 public class DashboardService {
     @Autowired(required = false)
     private DashboardDao dao;
+    @Autowired(required = false)
+    private GlobalDao gdao;
 
     public List<Notice> getNoticeList(int pid) {
         return dao.noticeList(pid);
     }
     public List<IssuesDashDto> getIssueList(int pid) {
         return dao.issueList(pid);
+    }
+    public Integer[] issueProgCount(int pid) {
+        List<IssuesDashDto> issueList = getIssueList(pid);
+        Integer iprogCount[] = {0,0,0,0};
+        for(IssuesDashDto issue:issueList){
+            if(issue.getIprogress().equals("해결"))
+                iprogCount[0]++;
+            else if (issue.getIprogress().equals("해결중"))
+                iprogCount[1]++;
+            else if (issue.getIprogress().equals("해결불가"))
+                iprogCount[2]++;
+            iprogCount[3]++;
+        }
+        return iprogCount;
+    }
+    public Integer[] noticeProgCount(int pid){
+        List<Jobplan> jobList = gdao.jobplanListPrj(1);
+        Integer jprogCount[] = {0,0,0,0};
+        for(Jobplan jobplan:jobList){
+            if(jobplan.getJstatus().equals("완료"))
+                jprogCount[0]++;
+            else if (jobplan.getJstatus().equals("진행중"))
+                jprogCount[1]++;
+            jprogCount[3]++;
+        }
+        return jprogCount;
     }
     public List<IssuesDashDto> issuePaging(IssuesSch sch, int pid){
         sch.setPid(pid);

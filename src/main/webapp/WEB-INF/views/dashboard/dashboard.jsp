@@ -15,7 +15,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>EPM Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -127,11 +127,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -297,7 +297,7 @@
                     <a href="#" class="nav-link">
                       해결
                       <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]*100}" pattern="#.##"/>%
                       </span>
                     </a>
                   </li>
@@ -305,7 +305,7 @@
                     <a href="#" class="nav-link">
                       해결중
                       <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]*100}" pattern="#.##"/>%
                       </span>
                     </a>
                   </li>
@@ -314,7 +314,7 @@
                       해결불가
                       <span class="float-right text-danger">
                         <i class="fas fa-arrow-down text-sm"></i>
-                        <fmt:formatNumber value="${iprog[2]/iprog[3]}" pattern="#.##"/>%</span>
+                        <fmt:formatNumber value="${iprog[2]/iprog[3]*100}" pattern="#.##"/>%</span>
                     </a>
                   </li>
                 </ul>
@@ -350,9 +350,8 @@
                   <!-- /.col -->
                   <div class="col-md-4">
                     <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> 해결</li>
-                      <li><i class="far fa-circle text-warning"></i> 해결중</li>
-                      <li><i class="far fa-circle text-danger"></i> 해결불가</li>
+                      <li><i class="far fa-circle text-success"></i> 완료</li>
+                      <li><i class="far fa-circle text-warning"></i> 진행중</li>
                     </ul>
                   </div>
                   <!-- /.col -->
@@ -364,26 +363,18 @@
                 <ul class="nav nav-pills flex-column">
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                      해결
+                      완료
                       <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[3]*100}" pattern="#.##"/>%
                       </span>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                      해결중
+                      진행중
                       <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[3]*100}" pattern="#.##"/>%
                       </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      해결불가
-                      <span class="float-right text-danger">
-                        <i class="fas fa-arrow-down text-sm"></i>
-                        <fmt:formatNumber value="${iprog[2]/iprog[3]}" pattern="#.##"/>%</span>
                     </a>
                   </li>
                 </ul>
@@ -399,10 +390,10 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -440,6 +431,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
+  // 이슈차트
   var pieChartCanvas = $('#issuePieChart').get(0).getContext('2d')
   var pieData = {
     labels: [
@@ -451,6 +443,33 @@
       {
         data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}],
         backgroundColor: ['#00a65a', '#f39c12', '#f56954']
+      }
+    ]
+  }
+  var pieOptions = {
+    legend: {
+      display: false
+    }
+  }
+  // Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  // eslint-disable-next-line no-unused-vars
+  var pieChart = new Chart(pieChartCanvas, {
+    type: 'doughnut',
+    data: pieData,
+    options: pieOptions
+  })
+  // 업무차트
+  var pieChartCanvas = $('#jobPieChart').get(0).getContext('2d')
+  var pieData = {
+    labels: [
+      '완료',
+      '진행중',
+    ],
+    datasets: [
+      {
+        data: [${jprog[0]}, ${jprog[1]}],
+        backgroundColor: ['#00a65a', '#f39c12']
       }
     ]
   }

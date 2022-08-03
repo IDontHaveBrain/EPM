@@ -6,4 +6,7 @@
     <select id="getMember" parameterType="string" resultType="member">
         select * from member where email=#{email}
     </select>
+    <select id="jobplanListPrj" parameterType="int" resultType="jobplan">
+        select * from jobplan where pid=#{pid}
+    </select>
 </mapper>
