@@ -49,6 +49,7 @@ create table notice(
 insert into notice values (1, 1, '공지사항1', '공지사항 게시판 테스트용 데이터 입니다.', sysdate, sysdate);
 insert into notice values (2, 1, '공지사항2', '두번째 테스트 데이터 입니다.', sysdate, sysdate);
 insert into notice values (3, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
+insert into notice values (4, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
 select * from notice;
 
 create table participants(
@@ -119,6 +120,22 @@ insert into issues
 values (3, '테스트 이슈2', '테스트 이슈사항 내용2', '해결중',
         to_date('2022-08-01','YYYY-MM-DD'), to_date('2022-08-03','YYYY-MM-DD'),
         2);
+insert into issues
+values (4, '테스트 이슈3', '테스트 이슈사항 내용33', '해결불가',
+        to_date('2022-08-02','YYYY-MM-DD'), to_date('2022-08-02','YYYY-MM-DD'),
+        2);
+insert into issues
+values (5, '테스트 이슈4', '테스트 이슈사항 내용44', '해결',
+        to_date('2022-08-02','YYYY-MM-DD'), to_date('2022-08-03','YYYY-MM-DD'),
+        2);
+insert into issues
+values (6, '테스트 이슈5', '테스트 이슈사항 내용55', '해결중',
+        to_date('2022-07-28','YYYY-MM-DD'), to_date('2022-07-29','YYYY-MM-DD'),
+        1);
+insert into issues
+values (7, '테스트 이슈6', '테스트 이슈사항 내용66', '해결중',
+        to_date('2022-08-01','YYYY-MM-DD'), to_date('2022-08-04','YYYY-MM-DD'),
+        2);
 select * from issues;
 --delete from issue where iid = 2;
 
@@ -128,8 +145,20 @@ from issues i, jobmember jm, jobplan jp,
 where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = 1
 order by iuptdate;
 
-select iid, jname, ititle, iprogress, name, iuptdate, rownum cnt
-from issues i, jobmember jm, jobplan jp,
-     (select * from member m, participants pp where m.mid = pp.mid) m
-where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = 1
-order by iuptdate;
+select * from ( select ib.*, rownum cnt from(select iid, jname, ititle, iprogress, name, iuptdate
+               from issues i,
+                    jobmember jm,
+                    jobplan jp,
+                    (select *
+                     from member m,
+                          participants pp
+                     where m.mid = pp.mid) m
+               where i.jmid = jm.jmid
+                 and jm.jid = jp.jid
+                 and jm.ppid = m.ppid
+                 and jp.pid = 1
+               order by iuptdate desc) ib)
+where cnt between 1 and 3;
+
+select * from (select nb.*, rownum cnt from (select * from notice where pid = 1 order by nuptdate desc) nb)
+where cnt between 1 and 3;

@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.IssuesDashDto;
+import pms.dto.IssuesSch;
+import pms.dto.NoticeSch;
 import pms.service.DashboardService;
 import pms.service.GlobalService;
 import pms.vo.Member;
@@ -24,7 +26,8 @@ public class DashboardController {
 
 	// http://localhost:7080/project06/dashboard.do
     @RequestMapping("dashboard.do")
-    public String dashboard(IssuesDashDto issueForm , Model d, HttpServletRequest request){
+    public String dashboard(IssuesSch isch, NoticeSch nsch,
+                            Model d, HttpServletRequest request){
         for(Notice n:service.getNoticeList(1)){
             System.out.println(n.getNtitle());
         }
@@ -51,25 +54,26 @@ public class DashboardController {
             iprogCount[3]++;
         }
 
-        d.addAttribute("nlist", service.getNoticeList(1));
-        d.addAttribute("ilist", issueList);
+
+        d.addAttribute("nlist", service.noticePaging(nsch,1));
+        d.addAttribute("ilist", service.issuePaging(isch,1));
         d.addAttribute("iprog", iprogCount);
         return "pms/dashboard.jsp";
     }
 
     @RequestMapping("issueListAjax.do")
-    public String issueListAjax(IssuesDashDto issueForm,
+    public String issueListAjax(IssuesSch sch,
                                 @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
 
-        d.addAttribute("ilist", service.getIssueList(1));
+        d.addAttribute("ilist", service.issuePaging(sch,1));
         return "pageJsonReport";
     }
 
     @RequestMapping("noticeListAjax.do")
-    public String noticeListAjax(IssuesDashDto issueForm,
+    public String noticeListAjax(NoticeSch sch,
                                  @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
 
-        d.addAttribute("nlist", service.getNoticeList(1));
+        d.addAttribute("nlist", service.noticePaging(sch ,1));
         return "pageJsonReport";
     }
 }

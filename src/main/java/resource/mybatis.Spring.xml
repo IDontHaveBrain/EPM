@@ -10,7 +10,8 @@
 		<typeAlias type="pms.vo.Project" alias="project"/>
 		<typeAlias type="pms.dto.IssuesDashDto" alias="issuesdash"/>
 		<typeAlias type="pms.dto.IssuesSch" alias="issuessch"/>
-		
+		<typeAlias type="pms.dto.NoticeSch" alias="noticesch"/>
+
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>

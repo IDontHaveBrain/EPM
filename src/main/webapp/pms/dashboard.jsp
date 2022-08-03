@@ -42,49 +42,80 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <script>
-  function updateIssue(){
+  function updateIssue(cnt){
     $.ajax({
       url: "${path}/issueListAjax.do",
-      data: "pid=" + 1,
+      data: "pid=" + 1 + "&curPage=" + cnt,
       dataType: "json",
       success: function (data) {
         //console.log(data)
         var list = data.ilist;
         var addHTML = "";
+        var addPage = "";
         $(list).each(function (idx, rst) {
           addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.jname
             + "</td><td>" + rst.ititle + "</td><td>" + rst.iprogress + "</td>";
           addHTML += "<td>" + rst.name + "</td><td>" + new Date(rst.iuptdate).toLocaleDateString()+ "</td></tr>";
         });
         //console.log(addHTML);
-        $("#ilist").html(addHTML)
+        $("#ilist").html(addHTML);
+        // Page 처리
+        var isch = data.issuesSch;
+        //console.log(isch.startBlock);
+        addPage += "<li class='page-item'><a class='page-link' href='javascript:goPageI(" + (isch.startBlock-1) + ")'>&laquo;</a></li>";
+        for(var i = isch.startBlock; i <= isch.endBlock; i++){
+          addPage += '<li class="page-item ' + (isch.curPage==i?'active':'') + '">';
+          addPage += '<a class="page-link" href="javascript:goPageI(' + i + ')">' + i + '</a></li>';
+        }
+        addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageI(' + (isch.endBlock+1) + ')">&raquo;</a></li>';
+        $("#ipage").html(addPage);
       }
     });
   }
 
-  function updateNotice(){
+  function updateNotice(cnt){
     $.ajax({
       url: "${path}/noticeListAjax.do",
-      data: "pid=" + 1,
+      data: "pid=" + 1 + "&curPage=" + cnt,
       dataType: "json",
       success: function (data) {
         //console.log(data)
         var list = data.nlist;
         var addHTML = "";
+        var addPage = "";
         $(list).each(function (idx, rst) {
           addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.ntitle
             + "</td>";
           addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
         });
         //console.log(addHTML);
-        $("#nlist").html(addHTML)
+        $("#nlist").html(addHTML);
+        // Page 처리
+        var nsch = data.noticeSch;
+        //console.log(isch.startBlock);
+        addPage += "<li class='page-item'><a class='page-link' href='javascript:goPageN(" + (nsch.startBlock-1) + ")'>&laquo;</a></li>";
+        for(var i = nsch.startBlock; i <= nsch.endBlock; i++){
+          addPage += '<li class="page-item ' + (nsch.curPage==i?'active':'') + '">';
+          addPage += '<a class="page-link" href="javascript:goPageN(' + i + ')">' + i + '</a></li>';
+        }
+        addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageN(' + (nsch.endBlock+1) + ')">&raquo;</a></li>';
+        $("#npage").html(addPage);
       }
     });
   }
 
+  function goPageI(cnt){
+    // 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
+    updateIssue(cnt);
+  }
+  function goPageN(cnt){
+    // 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
+    updateNotice(cnt);
+  }
+
   $(document).ready(function () {
-    updateIssue();
-    updateNotice();
+    updateIssue(1);
+    updateNotice(1);
   });
 </script>
 
@@ -131,13 +162,13 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title text-bold">최근 공지사항</h3>
 
                 <div class="card-tools">
-                  <ul class="pagination pagination-sm float-right">
+                  <ul id="npage" class="pagination pagination-sm float-right">
                     <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -164,11 +195,6 @@
                       <td><fmt:formatDate value="${notice.nuptdate}" type="date"/></td>
                     </tr>
                   </c:forEach>
-                  <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td><span class="badge bg-danger">55%</span></td>
-                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -177,18 +203,19 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title text-bold">최근 이슈사항</h3>
 
                 <div class="card-tools">
-                  <ul class="pagination pagination-sm float-right">
-                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                  <ul id="ipage" class="pagination pagination-sm float-right">
+                    <li class="page-item"><a class="page-link" href="javascript:goPage(${issueSch.startBlock-1})">&laquo;</a></li>
+                    <c:forEach var="cnt" begin="${issueSch.startBlock}" end="${issueSch.endBlock}">
+                      <li class="page-item ${issueSch.curPage==cnt?'active':''}">
+                        <a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+                    </c:forEach>
+                    <li class="page-item"><a class="page-link" href="javascript:goPage(${issueSch.endBlock+1})">&raquo;</a></li>
                   </ul>
                 </div>
               </div>
@@ -216,11 +243,6 @@
                       <td><fmt:formatDate value="${issue.iuptdate}" type="date"/></td>
                     </tr>
                   </c:forEach>
-                  <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td><span class="badge bg-danger">55%</span></td>
-                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -232,6 +254,7 @@
         </div>
 
         <div class="row">
+          <!-- 이슈 차트 -->
           <div class="col-md-6">
             <div class="card">
               <div class="card-header">
@@ -251,7 +274,76 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="chart-responsive">
-                      <canvas id="pieChart" height="150"></canvas>
+                      <canvas id="issuePieChart" height="150"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul class="chart-legend clearfix">
+                      <li><i class="far fa-circle text-success"></i> 해결</li>
+                      <li><i class="far fa-circle text-warning"></i> 해결중</li>
+                      <li><i class="far fa-circle text-danger"></i> 해결불가</li>
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+                <ul class="nav nav-pills flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결
+                      <span class="float-right text-success">
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]}" pattern="#.##"/>%
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결중
+                      <span class="float-right text-warning">
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]}" pattern="#.##"/>%
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      해결불가
+                      <span class="float-right text-danger">
+                        <i class="fas fa-arrow-down text-sm"></i>
+                        <fmt:formatNumber value="${iprog[2]/iprog[3]}" pattern="#.##"/>%</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- 업무 차트 -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">업무 현황</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive">
+                      <canvas id="jobPieChart" height="150"></canvas>
                     </div>
                     <!-- ./chart-responsive -->
                   </div>
@@ -348,7 +440,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
-  var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+  var pieChartCanvas = $('#issuePieChart').get(0).getContext('2d')
   var pieData = {
     labels: [
       '해결',
