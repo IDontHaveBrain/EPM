@@ -10,7 +10,7 @@ CREATE TABLE MEMBER (					-- 회원 테이블
 
 CREATE SEQUENCE member_seq
 	INCREMENT BY 1
-	START WITH 1;
+	START WITH 3;
 
 
 CREATE TABLE project (					-- 프로젝트 테이블
@@ -150,5 +150,3 @@ CREATE TABLE issues (								-- 업무 이슈 테이블
 CREATE SEQUENCE issues_seq
 	INCREMENT BY 1
 	START WITH 1;
-	
-

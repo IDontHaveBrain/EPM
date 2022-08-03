@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: skawn
-  Date: 2022-07-28
-  Time: 오후 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -37,8 +30,6 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -55,7 +46,6 @@
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
 
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -63,7 +53,6 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -80,102 +69,78 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th style="text-align:center;" width="7%">업무이름</th>
-                    <th style="text-align:center;" width="7%">담당자</th>
-                    <th style="text-align:center;" width="9%">시작날짜</th>
-                    <th style="text-align:center;" width="9%">마감날짜</th>
-                    <th style="text-align:center;" width="15%">내용</th>
-                    <th style="text-align:center;" width="9%">수정일</th>
-                    <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="15%">첨부파일</th>
-                    <th style="text-align:center;" width="5%">승인여부</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach var="wl" items="${wlist}">
-                  <tr>
-                    <td style="text-align:center;">${wl.jname}</td>
-                    <td style="text-align:center;">이름</td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;">${wl.content}</td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-			<!-- 진행률 -->
-                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.jprogress}%</span></td>
-                      
-                    <td>
-             <!-- 진행률 -->       
-           <!-- 파일등록 css -->
-          <div class="card card-info">
+     
+          <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">산출물 등록</h3>
+              <h3 class="card-title">이슈사항 등록</h3>
+
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="최소화">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
                 </button>
               </div>
             </div>
-            <div class="card-body p-0">
-              <table class="table">
-                <thead>
-                  <tr>
-                  	<th style="text-align:center;" width="30%">등록</th>
-                    <th style="text-align:center;" width="70%">파일이름</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                  	<td>
-                  	
-                  	    <span class="btn btn-success col fileinput-button">
-                        <i class="fas fa-plus"></i>
-                        <span></span>
-                      </span>
-                  	
-                  	</td>
-                    <td>Functional-requirements.docx</td>
-                </tbody>
-              </table>
-            </div>
-                    </td>
-          <!-- 파일등록 css -->
-                    <td style="text-align:center;" >검토</td>
-                  </tr>
-                  </c:forEach>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th colspan="10">산출물 등록 진행중</th>
-                  </tr>
-                  </tfoot>
-                </table>
+            
+            <div class="card-body">
+             <form id="frm01" enctype="multipart/form-data" action="${path}/issueInsert.do" class="form" method="post">
+              <div class="form-group">
+                <label for="inputName">이슈사항명</label>
+                <input id="inputName" type="text" value="${param.ititle}" class="form-control">
               </div>
-              <!-- /.card-body -->
+              <div class="form-group">
+                <label for="inputDescription">이슈사항 내용</label>
+                <textarea id="inputDescription" class="form-control" rows="4">${param.icontent}</textarea>
+              </div>              
+              <div class="form-group"> 
+              	<label for="inputProjectLeader">처리현황</label>
+                <select id="iprogress" name="iprogress" class="form-control pm-select">
+                  <option selected disabled>처리현황 표기</option>
+                  <option>검토</option>
+                  <option>완료</option>
+                  <option>불가</option>
+                </select> 
+              </div>
+              <div class="form-group">
+                <label for="inputClientCompany">작성일자</label>
+                <input type="date" id="iregdate" name="iregdate" class="form-control">
+              </div>
+			  </form>
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+  	  </div>
       </div>
-      <!-- /.container-fluid -->
+      <div class="row">
+        <div class="col-12">
+          <a href="#" class="btn btn-secondary">취소</a>    
+          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
+        </div>
+      </div>
+      
+      <script type="text/javascript">
+      
+      	$("#regBtn").click(function(){
+      		if(confirm("등록하시겠습니까?")){
+      			$("").attr("action","${path}/issueInsert.do");
+      			$("").submit();
+      		}
+      	});
+      	
+      	$("#uptBtn").click(function(){
+      		if(confirm("수정하시겠습니까?")){
+      			$("").attr("action","${path}/calUpdate.do");
+      			$("").submit();
+      		}
+      	});  
+      	
+      	$("#delBtn").click(function(){
+      		if(confirm("삭제하시겠습니까?")){
+      			$("").attr("action","${path}/calDelete.do");
+      			$("").submit();
+      		}
+      	});        
+      </script>
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
-    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -184,7 +149,6 @@
   <!-- Control Sidebar -->
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
-</div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->

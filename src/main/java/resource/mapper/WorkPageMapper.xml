@@ -6,9 +6,19 @@
 	<select id="getWorkPageList" resultType="workpage" parameterType="int">
 		select * 
 		from jobplan
-		WHERE required = #{required}
+		WHERE pid = #{pid}
 	</select>
 
+	<insert id="insertFile" parameterType="workpagefile">
+		insert into jobfile values(jobfile_seq.currval,
+		#{jmid},sysdate,#{PATH},#{fname});
+	</insert>
+	
+	<select id="getWokrPageDetail" resultType="workpage" parameterType="int" >
+		select * 
+		from jobplan
+		WHERE pid = #{pid}
+	</select>
 </mapper>
         
         

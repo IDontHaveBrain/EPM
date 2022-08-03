@@ -38,6 +38,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -53,65 +54,8 @@
 
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
-<script type="text/javascript">
-$(document).ready(function(){
-	$.ajax({
-		url:"${path}/list.do",
-		dataType:"json",
-		success:function(data){
-			// data.모델명  : m.addAttribute("empList", ser...)
-			var list = data.WorkPageList //이부분확인
-			console.log(list);
-			var addHTML=""
-			$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-				addHTML+="<tr>"
-							"<th>"+workpage.jname+"</th>"
-							"<th>"+workpage.content+"</th>"
-						 "</tr>"
-			});
-			console.log(addHTML)
-			$("#WorkPageList").html(addHTML)
-		}
-	});
-	$("#schBtn").click(function(){
-		
-	});
-	$(".sch").keyup(function(){
-		var jnameVal = $("[name=jname]").val()
-		//$("h2").text("ename="+enameVal+"&job="+jobVal)
-		// 입력후, enter키를 입력시, 조회 처리..
-		if(event.keyCode==13){
-			$.ajax({
-				url:"${path}/WorkPageList.do",
-				data:"jname="+jnameVal,
-				dataType:"json",
-				success:function(data){
-					// data.모델명  : m.addAttribute("empList", ser...)
-					var list = data.WorkPageList
-					var addHTML=""
-						$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-							addHTML+="<tr>"
-								"<th>"+workpage.jname+"</th>"
-								"<th>"+workpage.content+"</th>"
-							 "</tr>"
-						});
-					console.log(addHTML)
-					$("#WorkPageList").html(addHTML)
-				}
-			});			
-		}
-		
-	});
-	
-});
-</script>
-<form>
-	    <input class="sch form-control mr-sm-2" placeholder="이름" name="jname"/>
-	    <button type="button" id="schBtn">Search</button>
-	    
-	    <tr><th>이름</th></tr>
 
-</form>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -133,7 +77,6 @@ $(document).ready(function(){
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
             <div class="card">
@@ -143,44 +86,54 @@ $(document).ready(function(){
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
-                	<tbody id="WorkPageList">
-    				</tbody>
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+
+                    <th style="text-align:center;" width="5%">담당자</th>
+                    <th style="text-align:center;" width="9%">시작날짜</th>
+                    <th style="text-align:center;" width="9%">마감날짜</th>
+                    <th style="text-align:center;" width="15%">업무이름</th>
+                    <th style="text-align:center;" width="9%">수정일</th>
+                    <th style="text-align:center;" width="5%">진행률</th>
+  					<th style="text-align:center;" width="7%">산출물등록</th>
+                    <th style="text-align:center;" width="7%">이슈사항</th>
+                    <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
+                  <c:forEach var="wl" items="${wlist}">
+                  <tr ondblclick="location.href='WorkPageDetail.do'">
+
+                    <td style="text-align:center;">이름</td>
+                    <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;">${wl.jname}</td>
+                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+			<!-- 진행률 -->
+                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.jprogress}%</span></td>
+                      
+                    <td>
+             <!-- 진행률 -->       
+           <!-- 파일등록 css -->
+                  	    <button class="btn btn-primary col fileinput-button" onclick="location.href='WorkPageFileinsert.do'">
+                        <i class="fas fa-plus"></i>
+                        <span></span>
+                      </button>
+          <!-- 파일등록 css -->
+
+                    <td>
+                  	    <button class="btn btn-danger col fileinput-button">
+                        <i class="fas fa-plus"></i>
+                        <span></span>
+                      </button>
+					</td>
+				<td style="text-align:center;" >검토</td>
                   </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
+                  </c:forEach>
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>고</th>
-                    <th>정</th>
-                    <th>글</th>
-                    <th>인</th>
-                    <th>가</th>
+                    <th colspan="10">산출물 등록 진행중</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -198,6 +151,7 @@ $(document).ready(function(){
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>
