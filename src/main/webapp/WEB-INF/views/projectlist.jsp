@@ -144,16 +144,19 @@
                           </a>
                           <br/>
                           <small>
-                              Created ${project.pregdate}
+                          	Created <fmt:formatDate value="${project.pregdate}"/>
+                             
                           </small>
                       </td>
                       <td>
                           <a>
-                            ${project.pstart}  
+                          <fmt:formatDate value="${project.pstart}"/>
+                          
                           </a>
                           <br/>
                           <a>
-                           ~ ${project.pend}  
+                          ~ <fmt:formatDate value="${project.pend}"/>
+                         
                           </a>
                       </td>                     
                       <td class="project_progress">
