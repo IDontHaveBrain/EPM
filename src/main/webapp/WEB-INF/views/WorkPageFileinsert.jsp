@@ -76,8 +76,41 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+<script type="text/javascript">
+<script type="text/javascript">
+var isInsert = "${isInsert}"
+	if(isInsert=="Y"){
+		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
+			// 취소 입력시 조회화면 이동..
+			location.href="${path}/boardList.do"
+		}else{
+			location.href="${path}/boardInsertForm.do"
+		}
+	}
+function insertProc(){
+	if(confirm("등록하시겠습니까?")){
+		var subjectVal = $("[name=subject]").val();		
+		if(	subjectVal == ""){
+			alert("제목을 등록하세요");
+			$("[name=subject]").focus();
+			return; // 프로세스를 중단 처리
+		}	
+		var writerVal = $("[name=writer]").val();		
+		if(	writerVal == ""){
+			alert("작성자를 등록하세요");
+			$("[name=writer]").focus();
+			return; // 프로세스를 중단 처리
+		}	
+		document.querySelector("form").submit();
+	}
+}
+
+</script>
+</script>
         <!-- 페이지 구성 시작!! -->
 <!-- /.card -->
+	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
+		 class="form"  method="post">
 		<div class="container">
           <div class="card card-info">
             <div class="card-header">
@@ -93,56 +126,53 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>파일명</th>
-                    <th>등록일</th>
+                    <th>업무이름</th>
+                    <th>등록시간</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
 
                   <tr>
-                    <td>Functional-requirements.docx</td>
-                    <td>2017/01/01</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right py-0 align-middle">
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+
+			<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />	
+
                       </div>
                     </td>
                   <tr>
-                    <td>UAT.pdf</td>
-                    <td>2017/01/01</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right py-0 align-middle">
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+				
                       </div>
                     </td>
                   <tr>
-                    <td>Email-from-flatbal.mln</td>
-                    <td>2017/01/01</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right py-0 align-middle">
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+			
                       </div>
                     </td>
                   <tr>
-                    <td>Logo.png</td>
-                    <td>2017/01/01</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right py-0 align-middle">
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+			
                       </div>
                     </td>
                   <tr>
-                    <td>Contract-10_12_2014.docx</td>
-                    <td>2017/01/01</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right py-0 align-middle">
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+			
                       </div>
                     </td>
 				<tr><td>
@@ -167,7 +197,7 @@
 
           <!-- /.card -->
           </div>
-
+</form>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>

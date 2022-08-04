@@ -10,8 +10,11 @@
 	</select>
 
 	<insert id="insertFile" parameterType="workpagefile">
-		insert into jobfile values(jobfile_seq.currval,
-		#{jmid},sysdate,#{PATH},#{fname});
+		insert into jobfile values(jobfile_seq.nextval,
+									#{jmid},
+									sysdate,
+									#{path},
+									#{fname} )
 	</insert>
 	
 	<select id="getWokrPageDetail" resultType="workpage" parameterType="int" >

@@ -20,7 +20,6 @@ public class WorkPage {
 	// 파일내용
 	private MultipartFile report;
 	private String fname;
-	private int level;
 	public WorkPage() {
 		// TODO Auto-generated constructor stub
 	}
@@ -122,12 +121,6 @@ public class WorkPage {
 	}
 	public void setFname(String fname) {
 		this.fname = fname;
-	}
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
 	}
 	
 	
