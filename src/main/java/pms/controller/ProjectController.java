@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import pms.service.ProjectService;
 import pms.vo.Project;
+
 
 @Controller
 public class ProjectController {
@@ -18,7 +18,8 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectList.do
 	@RequestMapping("projectList.do")
-	public String projectList() {
+	public String projectList(Model d) {
+		d.addAttribute("projectList", service.getProjectList());
 		return "WEB-INF\\views\\projectlist.jsp";
 	}
 	
@@ -26,6 +27,21 @@ public class ProjectController {
 	@RequestMapping("projectInsertForm.do")
 	public String projectInsertForm(){
 		return "WEB-INF\\views\\project.jsp";
+	}
+	
+	@RequestMapping("projectInsert.do")
+	public String projectInsert(Project ins, Model d){
+		service.insertProject(ins);
+		d.addAttribute("isInsert","Y");
+		
+		return "WEB-INF\\views\\project.jsp";
+	}
+	
+	@RequestMapping("projectDetail.do")
+	public String projectDetail(@RequestParam("number") int number, Model d){
+		d.addAttribute("project",service.getProjectDetail(number));
+		
+		return "WEB-INF\\views\\projectedit.jsp";
 	}
 	
 	/*

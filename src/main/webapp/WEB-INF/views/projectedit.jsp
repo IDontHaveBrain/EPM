@@ -80,7 +80,7 @@
      
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">새로운 프로젝트 등록</h3>
+              <h3 class="card-title">프로젝트 수정</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -93,11 +93,11 @@
              <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
               <div class="form-group">
                 <label for="inputProjectCode">프로젝트 코드</label>
-                <input type="text" id="inputProjectCode" value="${param.number}" class="form-control">
+                <input type="text" id="inputProjectCode" value="${project.pid}" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
+                <input id="inputName" type="text" value="${project.pname}" class="form-control">
               </div>
               <div class="form-group">           
                 <label for="inputProjectLeader">PM</label>
@@ -119,7 +119,7 @@
               </div>  
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
+                <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">시작일</label>
@@ -140,24 +140,14 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
-
+          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+          <button type="button" id="regBtn" class="btn btn-success float-right">수정</button>
         </div>
       </div>
       
       <script type="text/javascript">
       /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
+
       	
       	$("#uptBtn").click(function(){
       		if(confirm("수정하시겠습니까?")){
