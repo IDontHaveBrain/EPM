@@ -87,7 +87,7 @@
           <div> <h4>간트차트 영역</h4> </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-3">
           <div class="col-md-8 offset-md-2">
             <form action="adminDashboard.do">
               <div class="input-group">
@@ -103,7 +103,7 @@
           </div>
         </div>
 
-        <div class="row mt-3">
+        <div class="row">
           <c:forEach var="prj" items="${prjList}">
             <div class="col-lg-12">
               <div class="card card-primary collapsed-card">
@@ -111,16 +111,17 @@
                   <h3 class="card-title">${prj.pname}</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                    <button onclick="loaddash(${prj.pid});" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
                     </button>
                   </div>
                   <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="dashboard.do?pid=${prj.pid}&hide=1"></iframe>
-                  </div>
+                  <!--<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">-->
+                    <div id="pp${prj.pid}" class="iframe-mode" data-widget="iframe" data-loading-screen="750">
+                    </div>
+                  <!--</div>-->
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -187,6 +188,26 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
+  $(document).ready(function(){
+    <%--
+
+    --%>
+    var addHTMLz = "";
+    <c:forEach var="prj" items="${prjList}">
+      addHTMLz = "";
+      addHTMLz += '<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">';
+      addHTMLz += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ ${prj.pid} +'&hide=1"></iframe>';
+      addHTMLz += '</div>';
+      $("#pp${prj.pid}").html(addHTMLz);
+      console.log(addHTMLz);
+    </c:forEach>
+  });
+  function loaddash2(pid){
+    var addHTML = "";
+    addHTML += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ pid +'&hide=1"></iframe>';
+    $("#pp"+pid).html(addHTML);
+  }
+
   function goPageP(cnt) {
     var f = document.createElement('form');
     f.setAttribute('method','post');
