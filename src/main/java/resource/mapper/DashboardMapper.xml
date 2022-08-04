@@ -47,10 +47,16 @@
 		</if>
 	</select>
 	<select id="projectListPage" parameterType="projectsch" resultType="project">
-		select * from (select prj.*, rownum cnt from (select * from project) prj)
+		select *
+		from
+		    (select prj.*, rownum cnt
+		     from
+		         (select *
+		          from project where 1=1
+		          <if test="pname != null">
+					  and lower(pname) like '%'||lower(#{pname})||'%'
+				  </if>
+		          ) prj)
 		where cnt between #{start} and #{end}
-		<if test="pname != null">
-		  and lower(pname) like '%'||lower(#{pname})||'%'
-		</if>
 	</select>
 </mapper>

@@ -91,6 +91,7 @@
           <div class="col-md-8 offset-md-2">
             <form action="adminDashboard.do">
               <div class="input-group">
+                <input type="hidden" name="tab" value="${param.tab}">
                 <input name="pname" value="${param.pname}"
                        type="search" class="form-control form-control-lg" placeholder="검색할 프로젝트명 입력">
                 <div class="input-group-append">
@@ -119,7 +120,7 @@
                 <!-- /.card-header -->
                 <div class="card-body p-0">
                   <!--<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">-->
-                  <div id="pp${prj.pid}" <c:if test="${empty param.tab}">class="iframe-mode" data-widget="iframe" data-loading-screen="750"</c:if>>
+                  <div id="pp${prj.pid}" <c:if test="${param.tab != 1}">class="iframe-mode" data-widget="iframe" data-loading-screen="750"</c:if>>
                     </div>
                   <!--</div>-->
                 </div>
