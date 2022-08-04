@@ -45,7 +45,11 @@ values (1, 'PMS', '프로젝트 관리 시스템', to_date('2022-07-20', 'YYYY-M
         to_date('2022-07-20', 'YYYY-MM-DD'));
 insert into project
 values (2, 'TEST 프로젝트', '테스트용 프로젝트입니다.', to_date('2022-08-03', 'YYYY-MM-DD'), to_date('2022-08-12', 'YYYY-MM-DD'),
-        to_date('2022-07-20', 'YYYY-MM-DD'));
+        to_date('2022-07-20', 'YYYY-MM-DD'));  
+       
+insert into project 
+values(project_seq.nextval, '테스트 프로젝트', '테스트', sysdate, sysdate, sysdate);
+
 select *
 from project;
 

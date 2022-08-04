@@ -23,6 +23,6 @@ public class ProjectService {
     }
     
     public void insertProject(Project ins) {
-    	dao.insertProject(ins); // 기본정보가 등록  key(no)->pid
+    	dao.insertProject(ins);
     }	
 }

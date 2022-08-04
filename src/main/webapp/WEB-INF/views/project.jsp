@@ -54,6 +54,7 @@
 </script>
 
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -134,34 +135,30 @@
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">시작일</label>
-               <input type="date" id="startDate" class="form-control" autocomplete="off"/>               
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="date" id="endDate" class="form-control" autocomplete="off"/>
-
-			  
+               	<input type="date" id="startDate" class="form-control" autocomplete="off"/>               
+				  <div class="form-group">
+	                <label for="inputClientCompany">종료일</label>
+	                <input type="date" id="endDate" class="form-control" autocomplete="off"/>
+				  </div>
+			  </div>
             </div>
             <!-- /.card-body -->
      
           <!-- /.card -->
        
   	  </div>
-      </div>
+  	
+   
       <div class="row">
         <div class="col-12">    
           <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
           <button type="button" id="regBtn" onclick="insertProc()" class="btn btn-success float-right">등록</button>
-          <!--           
-
-          -->
-
-        </div>
-        </form>
+        </div>       
       </div>
-    </section>
+    
         
         
-     
+       </form>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>
@@ -211,7 +208,8 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 </body>
-<script>
+
+<script type="text/javascript">
 var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
