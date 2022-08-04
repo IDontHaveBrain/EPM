@@ -77,8 +77,12 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
+        	<div class="container">
+            <div class="card">
+              <div class="card-header">        	
              <div class="card-body">
-                <table class="table table-bordered">
+                <table id="example1" class="table table-bordered table-striped">
+                <h2 style="text-align:center">프로젝트이름</h2><br>
                   <thead>
                     <tr>
                       <th style="width: 300px">업무이름</th>
@@ -102,15 +106,27 @@
                       <td><span class="badge bg-primary">90%</span></td>
                       <td>시작날짜</td><td>마감날짜</td><td>수정일</td>
                     </tr>
-                    <tr>
+                  <tr>
                     <td style="text-align:center" colspan="7">내용</td>
+                  </tr>
+                    <tr>
+                    <td style="text-align:center" colspan="7">
+                    	<textarea rows="10" class="form-control"></textarea></td>
                     </tr>
                     <tr>
                     <td style="text-align:center" colspan="7">파일</td>
                     </tr>
+                    <td style="text-align:center" colspan="7">
+                    	등록된 파일</td>
+                    </tr>
                   </tbody>
                 </table>
-              </div>
+              </div>             
+             </div>              
+            </div>
+            
+            
+            </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>
