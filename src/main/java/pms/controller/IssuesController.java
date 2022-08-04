@@ -1,10 +1,14 @@
 package pms.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pms.service.IssuesService;
+import pms.vo.Issues;
 
 @Controller
 public class IssuesController {
@@ -14,8 +18,9 @@ public class IssuesController {
 	
 	// http://localhost:7080/project06/insertIssue.do
 	@RequestMapping("insertIssue.do")
-	public String insertIssue() { // 이슈사항 등록
-		
+	public String insertIssue(Model d, Issues ins, HttpServletRequest request) { // 이슈사항 등록
+		service.insertIssue(ins);
+		d.addAttribute("isInsert","Y");
 		return "WEB-INF\\views\\issue.jsp";
 	}
 	
@@ -35,8 +40,8 @@ public class IssuesController {
 	
 	// http://localhost:7080/project06/issueList.do
 	@RequestMapping("issueList.do")
-	public String issueList() { // 이슈사항 리스트 (이슈사항명, 작성자, status 확인 가능, 수정 및 삭제)
-		
+	public String getIssuesList(Model d, Issues sch, HttpServletRequest request) { // 이슈사항 리스트 (이슈사항명, 작성자, status 확인 가능, 수정 및 삭제)
+		d.addAttribute("issues", service.getIssuesList(sch));
 		return "WEB-INF\\views\\issuelist.jsp";
 	}
 }
