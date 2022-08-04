@@ -126,13 +126,22 @@
                       </td>
                       <td>
                           <a>
-                              AdminLTE v3
+                            ${project.pname}  
                           </a>
                           <br/>
                           <small>
-                              Created 01.01.2019
+                              Created ${project.pregdate}
                           </small>
                       </td>
+                      <td>
+                          <a>
+                            22-08-02
+                          </a>
+                          <br/>
+                         <a>
+                            ~ 22-08-13  
+                          </a>
+                      </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
                               <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">

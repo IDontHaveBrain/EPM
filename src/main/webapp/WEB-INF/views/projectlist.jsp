@@ -37,6 +37,21 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+	});
+	function goInsert(){
+		location.href="${path}/projectInsertForm.do"
+	}
+	function goDetail(pid){
+		location.href="${path}/projectDetail.do?pid="+pid;
+	}	
+
+</script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -103,7 +118,7 @@
                           Project Name
                       </th>
                       <th style="width: 30%">
-                          Team Members
+                          Project Period
                       </th>
                       <th>
                           Project Progress
@@ -118,21 +133,29 @@
                   </tr>
               </thead>
               <tbody>
-              	<!-- controller에서 넘겨준 모델데이터 : blist -->
-    			
+              <c:forEach var="project" items="${projectList}">
                   <tr>
                       <td>
                           #
                       </td>
                       <td>
                           <a>
-                              AdminLTE v3
+                            ${project.pname}  
                           </a>
                           <br/>
                           <small>
-                              Created 01.01.2019
+                              Created ${project.pregdate}
                           </small>
                       </td>
+                      <td>
+                          <a>
+                            ${project.pstart}  
+                          </a>
+                          <br/>
+                          <a>
+                           ~ ${project.pend}  
+                          </a>
+                      </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
                               <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
@@ -146,12 +169,12 @@
                           <span class="badge badge-success">Success</span>
                       </td>
                       <td class="project-actions text-right">
-                      	<button type="button" onclick="updateProc()" class="btn btn-info btn-sm">수정</button>
+                      	<button type="button" onclick="goDetail()" class="btn btn-info btn-sm">수정</button>
 						<button type="button" onclick="deleteProc()" class="btn btn-danger btn-sm">삭제</button>
                  
                       </td>
                   </tr>
-                              
+              </c:forEach>                
               </tbody>
           </table>
         </div>
