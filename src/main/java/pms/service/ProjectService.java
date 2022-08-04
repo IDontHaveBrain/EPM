@@ -18,11 +18,15 @@ public class ProjectService {
     public List<Project> getProjectList(){
     	return dao.getProjectList();
 	}
-    public Project getProjectDetail(int number){
-      	return dao.getProjectDetail(number);
+    public Project getProjectDetail(int pid){
+      	return dao.getProjectDetail(pid);
     }
     
     public void insertProject(Project ins) {
     	dao.insertProject(ins);
     }	
+    
+	public void deleteProject(int pid) {
+		dao.deleteProject(pid);
+	}
 }

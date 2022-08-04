@@ -60,7 +60,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">프로젝트 수정</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -77,7 +77,7 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     
+        <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">             
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">프로젝트 수정</h3>
@@ -90,11 +90,6 @@
             </div>
             
             <div class="card-body">
-             <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
-              <div class="form-group">
-                <label for="inputProjectCode">프로젝트 코드</label>
-                <input type="text" id="inputProjectCode" value="${project.pid}" class="form-control">
-              </div>
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
                 <input id="inputName" type="text" value="${project.pname}" class="form-control">
@@ -122,55 +117,33 @@
                 <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
+                <label for="inputClientCompany">시작일 :</label>
+                <fmt:formatDate value="${project.pstart}"/>
+                <input type="date" id="inputClientCompany" class="form-control">
               </div>
 			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-
-			  </form>
+                <label for="inputClientCompany">종료일 :</label>
+                <fmt:formatDate value="${project.pend}"/>
+                <input type="date" id="inputClientCompany" value="${project.pstart}" class="form-control">
+              </div> 
             </div>
             <!-- /.card-body -->
-     
+     	   </div>
           <!-- /.card -->
-       
-  	  </div>
-      </div>
+      
       <div class="row">
         <div class="col-12">
           <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <button type="button" id="regBtn" class="btn btn-success float-right">수정</button>
+          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
+          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
+
         </div>
       </div>
-      
-      <script type="text/javascript">
-      /*
-
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
-
-      </script>
-    </section>
-        
-        
-     
+   
+     </form>
         <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
@@ -217,5 +190,43 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+
+
+<script type="text/javascript">
+/*
+ function updateProc(){
+	if(confirm("수정하시겠습니까?")){
+		// 유효성 check
+		$("form").attr("action","${path}/updateProject.do");
+		$("form").submit();
+	}
+}
+
+
+function deleteProc(){
+	if(confirm("삭제하시겠습니까?")){
+		$("form").attr("action","${path}/deleteProject.do");
+		$("form").submit();		
+	}
+}
+var proc = "${proc}"
+	if(proc=="upt"){
+		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
+			location.href="${path}/boardList.do";
+		}
+	}
+	if(proc=="del"){
+		alert("삭제성공\n조회 리스트화면으로 이동!")
+		location.href="${path}/boardList.do";
+	}	
+
+ */
+
+ function goMain(){
+		location.href="${path}/projectList.do";
+	}
+
+
+</script>
 </body>
 </html>

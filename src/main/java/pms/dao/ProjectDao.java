@@ -11,7 +11,7 @@ import pms.vo.Project;
 @Repository
 public interface ProjectDao {
 	public List<Project> getProjectList();
-	public Project getProjectDetail(int number);
+	public Project getProjectDetail(int pid);
 	public void insertProject(Project ins);
-
+	public void deleteProject(int pid);
 }

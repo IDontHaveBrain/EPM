@@ -160,7 +160,8 @@
         
        </form>
         <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>

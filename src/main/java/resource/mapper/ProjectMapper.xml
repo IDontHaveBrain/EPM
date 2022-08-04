@@ -6,12 +6,20 @@
 <mapper namespace="pms.dao.ProjectDao">
 	<select id="getProjectList" resultType="project" parameterType="project">
 		SELECT * 
-		FROM project
-	 
+		FROM project	 
 	</select>
 	<insert id="insertProject" parameterType="project">
 		insert into project values(project_seq.nextval, #{pname},
 				#{pcomment}, sysdate, sysdate, sysdate)			
 	</insert>
-
+	<select id="getProjectDetail" parameterType="int" resultType="project">
+		select pid, pname, pcomment, pstart, pend
+		from project
+		where pid = #{pid}
+	</select>
+	<delete id="deleteProject" parameterType="int">
+		delete
+		from project
+		where pid = #{pid}	
+	</delete>	
 </mapper>

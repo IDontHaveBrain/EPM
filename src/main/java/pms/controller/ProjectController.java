@@ -38,11 +38,20 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("projectDetail.do")
-	public String projectDetail(@RequestParam("number") int number, Model d){
-		d.addAttribute("project",service.getProjectDetail(number));
+	public String projectDetail(@RequestParam("pid") int pid, Model d){
+		d.addAttribute("project",service.getProjectDetail(pid));
 		
-		return "WEB-INF\\views\\projectedit.jsp";
+		return "WEB-INF\\views\\projectdetail.jsp";
 	}
+	
+	@RequestMapping("deleteProject.do")
+	public String deleteProject(@RequestParam("pid") int pid, Model d){	
+		service.deleteProject(pid);
+		d.addAttribute("proc","del");
+		
+		return "WEB-INF\\views\\projectlist.jsp";	
+	}
+
 	
 	/*
 	@RequestMapping("updateProject.do")
@@ -53,13 +62,6 @@ public class ProjectController {
 		return "WEB-INF\\views\\projectedit.jsp";
 	}
 	
-	@RequestMapping("delete.do")
-	public String deleteProject(@RequestParam("number") int number, Model d){
-		service.deleteProject(number);
-		d.addAttribute("proc","del");
-		
-		return "WEB-INF\\views\\projectedit.jsp";
-	}
 	 */
 
 }

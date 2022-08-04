@@ -49,6 +49,7 @@ values (2, 'TEST 프로젝트', '테스트용 프로젝트입니다.', to_date('
 select *
 from project;
 
+
 create table notice
 (
     nid      number primary key,

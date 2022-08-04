@@ -49,6 +49,15 @@
 	function goDetail(pid){
 		location.href="${path}/projectDetail.do?pid="+pid;
 	}	
+	function deleteProc(){
+		if(confirm("삭제하시겠습니까?")){
+			$("form").attr("action","${path}/deleteProject.do?pid="+pid);
+			$("form").submit();		
+		}
+	}
+	if(proc=="del"){
+		alert("삭제성공!")
+	}	
 
 </script>
 
@@ -93,6 +102,7 @@
 
       <!-- Default box -->
       <div class="card">
+      <form>
         <div class="card-header">
           <h3 class="card-title">Projects</h3>
 
@@ -132,7 +142,7 @@
                                 
                   </tr>
               </thead>
-              <tbody>
+              <tbody>  
               <c:forEach var="project" items="${projectList}">
                   <tr>
                       <td>
@@ -171,17 +181,19 @@
                       <td class="project-state">
                           <span class="badge badge-success">Success</span>
                       </td>
-                      <td class="project-actions text-right">
-                      	<button type="button" onclick="goDetail()" class="btn btn-info btn-sm">수정</button>
-						<button type="button" onclick="deleteProc()" class="btn btn-danger btn-sm">삭제</button>
                  
+                      <td class="project-actions text-right">
+                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-info btn-sm">수정</button>
+						<button type="button" onclick="deleteProc(${project.pid})" class="btn btn-danger btn-sm">삭제</button>
                       </td>
+                  
                   </tr>
               </c:forEach>                
               </tbody>
           </table>
         </div>
         <!-- /.card-body -->
+        </form>
       </div>
       <!-- /.card -->
 
