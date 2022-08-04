@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Issues</title>
+  <title>Effective PM | Issues</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -72,7 +72,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Projects</h3>
+          <h3 class="card-title">Issues</h3>
 
           <div class="card-tools">
             <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
@@ -142,9 +142,8 @@
                       <td>
                           ${iss.name}
                       </td>
-                      <td class="project-actions text-right">
-                      	<button type="button" onclick="updateProc()" class="btn btn-info btn-sm">수정</button>
-						<button type="button" onclick="deleteProc()" class="btn btn-danger btn-sm">삭제</button>
+                      <td class="project-actions text-right" style="width: 10%">
+                      	<button type="button" onclick="goDetail(${iss.iid})" class="btn btn-info btn-sm">상세보기</button>
                       </td>
                   </tr>
               </c:forEach>            
@@ -165,8 +164,15 @@
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-
+<!-- ./wrapper -->  
+<script type="text/javascript">
+		function goDetail(iid) {
+			location.href="${path}/issueDetail.do?iid="+iid;
+		}
+		function goInsert() {
+			location.href="${path}/issueInsertForm.do"
+		}
+</script>    
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

@@ -146,3 +146,8 @@ CREATE TABLE issues (								-- 업무 이슈 테이블
 	iuptdate	date,								-- 수정일
 	jmid		number	REFERENCES jobmember(jmid)	-- 업무 담당 아이디
 );
+
+SELECT iid, name, jname, ititle, icontent, iprogress, iregdate, iuptdate
+		FROM issues i, jobmember jm, jobplan jp,
+			(SELECT * FROM MEMBER m, participants pp WHERE m.mid = pp.mid) m
+		WHERE i.jmid = jm.jmid AND jm.ppid = m.ppid;

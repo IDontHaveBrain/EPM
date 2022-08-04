@@ -18,7 +18,15 @@ public class IssuesService {
 		dao.insertIssue(ins);
 	}
 	
-	public List<Issues> getIssuesList(Issues sch){
+	public void deleteIssue(int iid) {
+		dao.deleteIssue(iid);
+	}
+	
+	public List<Issues> getIssuesList(Issues sch) {
 		return dao.getIssuesList(sch);
+	}
+	
+	public List<Issues> getIssueDetail(int iid) {
+		return dao.getIssueDetail(iid);
 	}
 }

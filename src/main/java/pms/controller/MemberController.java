@@ -43,22 +43,20 @@ public class MemberController {
 
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
-			if (mem != null) { // DB에 데이터가 있을 때, session 처리
+			if (mem != null) {
 				session.setAttribute("mem", mem);
 				return "WEB-INF\\views\\default.jsp";
 			}
-			// 로그아웃시
-			// session.removeAttribute("mem");
 
 		}
 		return "WEB-INF\\views\\login.jsp";
 	}
-/*
-	@RequestMapping("logout.do")
-	public String logout(HttpServletRequest request) {
-		Member mem = service.memberLogin(m);
-		HttpSession session = request.getSession();
-		return "";
-	}
-*/
+
+	// 로그아웃시
+	// session.removeAttribute("mem");
+	/*
+	 * @RequestMapping("logout.do") public String logout(HttpServletRequest request)
+	 * { Member mem = service.memberLogin(m); HttpSession session =
+	 * request.getSession(); return ""; }
+	 */
 }

@@ -82,18 +82,18 @@
             </div>
             
             <div class="card-body">
-             <form id="issueInsert" enctype="multipart/form-data" action="${path}/issueInsert.do" class="form" method="post">
+             <form id="issueInsert" action="${path}/insertIssue.do" class="form" method="post">
               <div class="form-group">
                 <label for="inputName">이슈사항명</label>
-                <input id="inputName" type="text" value="${param.ititle}" class="form-control">
+                <input type="text" name="ititle" value="${param.ititle}" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputDescription">이슈사항 내용</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.icontent}</textarea>
+                <textarea name="icontent" class="form-control" rows="4">${param.icontent}</textarea>
               </div>              
               <div class="form-group"> 
               	<label for="inputProjectLeader">처리현황</label>
-                <select id="iprogress" name="iprogress" class="form-control pm-select">
+                <select name="iprogress" class="form-control pm-select">
                   <option selected disabled>처리현황 표기</option>
                   <option>검토</option>
                   <option>완료</option>
@@ -102,7 +102,7 @@
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">작성일자</label>
-                <input type="date" id="iregdate" name="iregdate" class="form-control">
+                <input type="date" name="iregdate" value="${param.iregdate}" class="form-control">
               </div>
 			  </form>
             </div>
@@ -111,33 +111,11 @@
       <div class="row">
         <div class="col-12">
           <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
+          <button type="button" onclick="insertProc()" class="btn btn-success float-right">등록</button>
         </div>
       </div>
       
-      <script type="text/javascript">
-      
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/issueInsert.do");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-      </script>
+
     </section>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
@@ -150,7 +128,20 @@
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 <!-- ./wrapper -->
-
+<script type="text/javascript">
+	var isInsert = "${isInsert}"
+		if(isInsert=="Y"){
+			if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
+				// 취소 입력시 조회화면 이동..
+				location.href="${path}/issueList.do"
+			}
+		}
+	function insertProc(){
+		if(confirm("등록하시겠습니까?")){	
+			document.querySelector("form").submit();
+		}
+	}
+</script>
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
