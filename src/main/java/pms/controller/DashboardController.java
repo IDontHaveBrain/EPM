@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pms.dto.IssuesDashDto;
-import pms.dto.IssuesSch;
-import pms.dto.NoticeSch;
-import pms.dto.ProjectListDto;
+import pms.dto.*;
 import pms.service.DashboardService;
 import pms.service.GlobalService;
 import pms.vo.Jobplan;
@@ -55,12 +52,12 @@ public class DashboardController {
     }
 
     @RequestMapping("adminDashboard.do")
-    public String adminDashboard(
+    public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
         session.setAttribute("mem", gservice.getMember("test@test.com"));
 
-        List<Project> prjList = service.getAllProjectList();
+        List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 
         d.addAttribute("prjList", prjList);
         return "WEB-INF/views/dashboard/adminDashboard.jsp";

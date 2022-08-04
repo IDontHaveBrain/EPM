@@ -12,6 +12,7 @@
 		<typeAlias type="pms.dto.IssuesDashDto" alias="issuesdash"/>
 		<typeAlias type="pms.dto.IssuesSch" alias="issuessch"/>
 		<typeAlias type="pms.dto.NoticeSch" alias="noticesch"/>
+		<typeAlias type="pms.dto.ProjectSch" alias="projectsch"/>
 		<typeAlias type="pms.vo.WorkPageFile" alias="workpagefile"/>
 
 	</typeAliases>

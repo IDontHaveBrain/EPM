@@ -42,81 +42,7 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <script>
-  function updateIssue(cnt){
-    $.ajax({
-      url: "${path}/issueListAjax.do",
-      data: "pid=" + 1 + "&curPage=" + cnt,
-      dataType: "json",
-      success: function (data) {
-        //console.log(data)
-        var list = data.ilist;
-        var addHTML = "";
-        var addPage = "";
-        $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.jname
-            + "</td><td>" + rst.ititle + "</td><td>" + rst.iprogress + "</td>";
-          addHTML += "<td>" + rst.name + "</td><td>" + new Date(rst.iuptdate).toLocaleDateString()+ "</td></tr>";
-        });
-        //console.log(addHTML);
-        $("#ilist").html(addHTML);
-        // Page 처리
-        var isch = data.issuesSch;
-        //console.log(isch.startBlock);
-        addPage += "<li class='page-item'><a class='page-link' href='javascript:goPageI(" + (isch.startBlock-1) + ")'>&laquo;</a></li>";
-        for(var i = isch.startBlock; i <= isch.endBlock; i++){
-          addPage += '<li class="page-item ' + (isch.curPage==i?'active':'') + '">';
-          addPage += '<a class="page-link" href="javascript:goPageI(' + i + ')">' + i + '</a></li>';
-        }
-        addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageI(' + (isch.endBlock+1) + ')">&raquo;</a></li>';
-        $("#ipage").html(addPage);
-      }
-    });
-  }
 
-  function updateNotice(cnt){
-    $.ajax({
-      url: "${path}/noticeListAjax.do",
-      data: "pid=" + 1 + "&curPage=" + cnt,
-      dataType: "json",
-      success: function (data) {
-        //console.log(data)
-        var list = data.nlist;
-        var addHTML = "";
-        var addPage = "";
-        $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.ntitle
-            + "</td>";
-          addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
-        });
-        //console.log(addHTML);
-        $("#nlist").html(addHTML);
-        // Page 처리
-        var nsch = data.noticeSch;
-        //console.log(isch.startBlock);
-        addPage += "<li class='page-item'><a class='page-link' href='javascript:goPageN(" + (nsch.startBlock-1) + ")'>&laquo;</a></li>";
-        for(var i = nsch.startBlock; i <= nsch.endBlock; i++){
-          addPage += '<li class="page-item ' + (nsch.curPage==i?'active':'') + '">';
-          addPage += '<a class="page-link" href="javascript:goPageN(' + i + ')">' + i + '</a></li>';
-        }
-        addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageN(' + (nsch.endBlock+1) + ')">&raquo;</a></li>';
-        $("#npage").html(addPage);
-      }
-    });
-  }
-
-  function goPageI(cnt){
-    // 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
-    updateIssue(cnt);
-  }
-  function goPageN(cnt){
-    // 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
-    updateNotice(cnt);
-  }
-
-  $(document).ready(function () {
-    updateIssue(1);
-    updateNotice(1);
-  });
 </script>
 
 <div class="wrapper">
@@ -162,6 +88,22 @@
         </div>
 
         <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <form action="adminDashboard.do">
+              <div class="input-group">
+                <input name="pname" value="${param.pname}"
+                       type="search" class="form-control form-control-lg" placeholder="검색할 프로젝트명 입력">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-lg btn-default">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row mt-3">
           <c:forEach var="prj" items="${prjList}">
             <div class="col-lg-12">
               <div class="card card-primary collapsed-card">
@@ -185,7 +127,18 @@
               <!-- /.card -->
             </div>
           </c:forEach>
-
+        </div>
+        <div class="row">
+          <div class="col">
+          <ul class="pagination justify-content-center m-0">
+            <li class="page-item"><a class="page-link" href="javascript:goPageP(${projectSch.startBlock-1})">&laquo;</a></li>
+            <c:forEach var="cnt" begin="${projectSch.startBlock}" end="${projectSch.endBlock}">
+              <li class="page-item ${projectSch.curPage==cnt?'active':''}">
+                <a class="page-link" href="javascript:goPageP(${cnt})">${cnt}</a></li>
+            </c:forEach>
+            <li class="page-item"><a class="page-link" href="javascript:goPageP(${projectSch.endBlock+1})">&raquo;</a></li>
+          </ul>
+          </div>
         </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
@@ -234,61 +187,18 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
-  // 이슈차트
-  var pieChartCanvas = $('#issuePieChart').get(0).getContext('2d')
-  var pieData = {
-    labels: [
-      '해결',
-      '해결중',
-      '해결불가',
-    ],
-    datasets: [
-      {
-        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}],
-        backgroundColor: ['#00a65a', '#f39c12', '#f56954']
-      }
-    ]
+  function goPageP(cnt) {
+    var f = document.createElement('form');
+    f.setAttribute('method','post');
+
+    var obj = document.createElement('input');
+    obj.setAttribute('type','hidden');
+    obj.setAttribute('name','curPage');
+    obj.setAttribute('value',cnt);
+    f.appendChild(obj);
+    document.body.appendChild(f);
+    f.submit();
   }
-  var pieOptions = {
-    legend: {
-      display: false
-    }
-  }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
-  var pieChart = new Chart(pieChartCanvas, {
-    type: 'doughnut',
-    data: pieData,
-    options: pieOptions
-  })
-  // 업무차트
-  var pieChartCanvas = $('#jobPieChart').get(0).getContext('2d')
-  var pieData = {
-    labels: [
-      '완료',
-      '진행중',
-    ],
-    datasets: [
-      {
-        data: [${jprog[0]}, ${jprog[1]}],
-        backgroundColor: ['#00a65a', '#f39c12']
-      }
-    ]
-  }
-  var pieOptions = {
-    legend: {
-      display: false
-    }
-  }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
-  var pieChart = new Chart(pieChartCanvas, {
-    type: 'doughnut',
-    data: pieData,
-    options: pieOptions
-  })
 </script>
 </body>
 </html>

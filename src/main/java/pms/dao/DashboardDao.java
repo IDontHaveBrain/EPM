@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pms.dto.IssuesDashDto;
 import pms.dto.IssuesSch;
 import pms.dto.NoticeSch;
+import pms.dto.ProjectSch;
 import pms.vo.Notice;
 import pms.vo.Project;
 
@@ -18,4 +19,6 @@ public interface DashboardDao {
     public int noticeTotCnt(int pid);
     public List<Notice> noticeListPage(NoticeSch sch);
     public List<Project> allProject();
+    public int projectTotCnt(ProjectSch sch);
+    public List<Project> projectListPage(ProjectSch sch);
 }

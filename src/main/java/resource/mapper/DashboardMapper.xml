@@ -38,4 +38,19 @@
 	<select id="allProject" resultType="project">
 		select * from project
 	</select>
+	<select id="projectTotCnt" parameterType="projectsch" resultType="int">
+		select count(*)
+		from project
+		where 1=1
+		<if test="pname !=null">
+		  and lower(pname) like '%'||lower(#{pname})||'%'
+		</if>
+	</select>
+	<select id="projectListPage" parameterType="projectsch" resultType="project">
+		select * from (select prj.*, rownum cnt from (select * from project) prj)
+		where cnt between #{start} and #{end}
+		<if test="pname != null">
+		  and lower(pname) like '%'||lower(#{pname})||'%'
+		</if>
+	</select>
 </mapper>
