@@ -44,11 +44,11 @@ public class DashboardController {
         }
         System.out.println(curMem.getEmail());
 
-        Integer iprogCount[] = service.issueProgCount(1);
-        Integer jprogCount[] = service.noticeProgCount(1);
+        Integer iprogCount[] = service.issueProgCount(pid);
+        Integer jprogCount[] = service.jobProgCount(pid);
 
-        d.addAttribute("nlist", service.noticePaging(nsch,1));
-        d.addAttribute("ilist", service.issuePaging(isch,1));
+        d.addAttribute("nlist", service.noticePaging(nsch,pid));
+        d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);
         d.addAttribute("jprog", jprogCount);
         return "WEB-INF/views/dashboard/dashboard.jsp";

@@ -66,6 +66,10 @@ insert into notice
 values (3, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
 insert into notice
 values (4, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
+insert into notice
+values (5, 2, 'p2 테스트공지', '프로젝트2 테스트 공지사항 입니다..', sysdate, sysdate);
+insert into notice
+values (6, 2, 'p2 테스트공지', '프로젝트2 테스트 공지사항 입니다..', sysdate, sysdate);
 select *
 from notice;
 

@@ -61,7 +61,7 @@
         $("#ilist").html(addHTML);
         // Page 처리
         var isch = data.issuesSch;
-        //console.log(isch.startBlock);
+        console.log(isch);
         addPage += "<li class='page-item'><a class='page-link' href='javascript:goPageI(" + (isch.startBlock-1) + ")'>&laquo;</a></li>";
         for(var i = isch.startBlock; i <= isch.endBlock; i++){
           addPage += '<li class="page-item ' + (isch.curPage==i?'active':'') + '">';
@@ -296,32 +296,44 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer p-0">
-                <ul class="nav nav-pills flex-column">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      해결
-                      <span class="float-right text-success">
+                <c:choose>
+                  <c:when test="${iprog[3] == 0}">
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
+                      </li>
+                    </ul>
+                  </c:when>
+                  <c:otherwise>
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          해결
+                          <span class="float-right text-success">
                         <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]*100}" pattern="#.##"/>%
                       </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      해결중
-                      <span class="float-right text-warning">
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          해결중
+                          <span class="float-right text-warning">
                         <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]*100}" pattern="#.##"/>%
                       </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      해결불가
-                      <span class="float-right text-danger">
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          해결불가
+                          <span class="float-right text-danger">
                         <i class="fas fa-arrow-down text-sm"></i>
                         <fmt:formatNumber value="${iprog[2]/iprog[3]*100}" pattern="#.##"/>%</span>
-                    </a>
-                  </li>
-                </ul>
+                        </a>
+                      </li>
+                    </ul>
+                  </c:otherwise>
+                </c:choose>
+
               </div>
               <!-- /.footer -->
             </div>
@@ -364,24 +376,35 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer p-0">
-                <ul class="nav nav-pills flex-column">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      완료
-                      <span class="float-right text-success">
+                <c:choose>
+                  <c:when test="${jprog[3] == 0}">
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
+                      </li>
+                    </ul>
+                  </c:when>
+                  <c:otherwise>
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          완료
+                          <span class="float-right text-success">
                         <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[3]*100}" pattern="#.##"/>%
                       </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      진행중
-                      <span class="float-right text-warning">
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          진행중
+                          <span class="float-right text-warning">
                         <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[3]*100}" pattern="#.##"/>%
                       </span>
-                    </a>
-                  </li>
-                </ul>
+                        </a>
+                      </li>
+                    </ul>
+                  </c:otherwise>
+                </c:choose>
               </div>
               <!-- /.footer -->
             </div>

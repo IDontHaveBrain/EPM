@@ -43,8 +43,8 @@ public class DashboardService {
         }
         return iprogCount;
     }
-    public Integer[] noticeProgCount(int pid){
-        List<Jobplan> jobList = gdao.jobplanListPrj(1);
+    public Integer[] jobProgCount(int pid){
+        List<Jobplan> jobList = gdao.jobplanListPrj(pid);
         Integer jprogCount[] = {0,0,0,0};
         for(Jobplan jobplan:jobList){
             if(jobplan.getJstatus().equals("완료"))
@@ -59,7 +59,7 @@ public class DashboardService {
         sch.setPid(pid);
 
         // 1. 전체 데이터 건수 설정
-        sch.setCount(	dao.issueTotCnt(1) ); // 프로젝트 선택파트 완료시 pid로 변경
+        sch.setCount(	dao.issueTotCnt(pid) ); // 프로젝트 선택파트 완료시 pid로 변경
         //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
         sch.setPageSize(3);
@@ -81,7 +81,11 @@ public class DashboardService {
         }else {
             sch.setEnd(end);
         }
-        sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+        if(end == 0) {
+            sch.setStart(0);
+        } else {
+            sch.setStart((sch.getCurPage() - 1) * sch.getPageSize() + 1);
+        }
 
 
         // 1. 블럭의 크기 지정.
@@ -93,8 +97,13 @@ public class DashboardService {
         if(endBlock>sch.getPageCount()) {
             endBlock = sch.getPageCount();
         }
-        sch.setEndBlock(endBlock);
-        sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+        if(endBlock == 0) {
+            sch.setEndBlock(1);
+            sch.setStartBlock(1);
+        } else {
+            sch.setEndBlock(endBlock);
+            sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
+        }
 
         return dao.issueListPage(sch);
     }
@@ -102,7 +111,7 @@ public class DashboardService {
         sch.setPid(pid);
 
         // 1. 전체 데이터 건수 설정
-        sch.setCount(	dao.noticeTotCnt(1) ); // 프로젝트 선택파트 완료시 pid로 변경
+        sch.setCount(	dao.noticeTotCnt(pid) ); // 프로젝트 선택파트 완료시 pid로 변경
         //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
         sch.setPageSize(3);
@@ -124,7 +133,11 @@ public class DashboardService {
         }else {
             sch.setEnd(end);
         }
-        sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+        if(end == 0) {
+            sch.setStart(0);
+        } else {
+            sch.setStart((sch.getCurPage() - 1) * sch.getPageSize() + 1);
+        }
 
 
         // 1. 블럭의 크기 지정.
@@ -136,8 +149,13 @@ public class DashboardService {
         if(endBlock>sch.getPageCount()) {
             endBlock = sch.getPageCount();
         }
-        sch.setEndBlock(endBlock);
-        sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+        if(endBlock == 0) {
+            sch.setEndBlock(1);
+            sch.setStartBlock(1);
+        } else {
+            sch.setEndBlock(endBlock);
+            sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
+        }
 
         return dao.noticeListPage(sch);
     }
