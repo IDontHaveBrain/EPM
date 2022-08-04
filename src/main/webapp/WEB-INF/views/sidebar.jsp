@@ -106,6 +106,15 @@
           </ul>
         </li>
         <li class="nav-item">
+          <a href="WorkPageList.do" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              개인업무페이지
+
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>

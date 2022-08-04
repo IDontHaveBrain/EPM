@@ -89,8 +89,8 @@
                       <th>담당자이름</th>
                       <th>진행상황</th>
                       <th style="width: 40px">%</th>
-                      <th>시작날짜</th>
-                      <th>마감날짜</th>
+                      <th>실제시작날짜</th>
+                      <th>실제마감날짜</th>
                       <th>수정일</th>
                     </tr>
                   </thead>
@@ -104,7 +104,9 @@
                         </div>
                       </td>
                       <td><span class="badge bg-primary">90%</span></td>
-                      <td>시작날짜</td><td>마감날짜</td><td>수정일</td>
+                      <td>실제시작날짜</td>
+                      <td>실제마감날짜</td>
+                      <td>수정일</td>
                     </tr>
                   <tr>
                     <td style="text-align:center" colspan="7">내용</td>
@@ -119,6 +121,16 @@
                     <td style="text-align:center" colspan="7">
                     	등록된 파일</td>
                     </tr>
+                    
+    <tr><td colspan="7">
+	  <div class="row">
+        <div class="col-12">
+          <a href="WorkPageList.do" class="btn btn-secondary">뒤로가기</a>
+      	
+			<input type="submit" value="승인요청" class="btn btn-success float-right">
+			</div>
+        </div>
+	</td></tr>
                   </tbody>
                 </table>
               </div>             

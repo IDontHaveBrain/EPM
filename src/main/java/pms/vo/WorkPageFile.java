@@ -2,12 +2,16 @@ package pms.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class WorkPageFile {
 	private int fid;
 	private String path;
 	private String fname;
 	private Date fregdate;
 	private int jmid;
+	// 파일내용 혹시?
+	private MultipartFile report;
 	public WorkPageFile() {
 		// TODO Auto-generated constructor stub
 	}
@@ -15,14 +19,6 @@ public class WorkPageFile {
 	public WorkPageFile(String path, String fname) {
 		this.path = path;
 		this.fname = fname;
-	}
-
-	public WorkPageFile(int fid, String path, String fname, Date fregdate, int jmid) {
-		this.fid = fid;
-		this.path = path;
-		this.fname = fname;
-		this.fregdate = fregdate;
-		this.jmid = jmid;
 	}
 	public int getFid() {
 		return fid;
@@ -53,6 +49,14 @@ public class WorkPageFile {
 	}
 	public void setJmid(int jmid) {
 		this.jmid = jmid;
+	}
+
+	public MultipartFile getReport() {
+		return report;
+	}
+
+	public void setReport(MultipartFile report) {
+		this.report = report;
 	}
 
 	

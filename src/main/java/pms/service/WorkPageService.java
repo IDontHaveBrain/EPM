@@ -18,6 +18,8 @@ public class WorkPageService {
 	@Autowired(required=false)
 	private WorkPageDao dao;
 	
+	
+	
 	public List<WorkPage> getWorkPageList(int pid){
 		return dao.getWorkPageList(pid);
 	}
@@ -33,8 +35,7 @@ public class WorkPageService {
 	// 파일서버 정보(공통정보)
 	@Value("${upload}")
 	private String path;
-	
-	public void insertWorkPageFile(WorkPage ins) {
+	public void insertWorkPageFile(WorkPageFile ins) {
 		MultipartFile mpf = ins.getReport();
 		String fname = mpf.getOriginalFilename();
 		

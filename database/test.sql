@@ -45,11 +45,7 @@ values (1, 'PMS', '프로젝트 관리 시스템', to_date('2022-07-20', 'YYYY-M
         to_date('2022-07-20', 'YYYY-MM-DD'));
 insert into project
 values (2, 'TEST 프로젝트', '테스트용 프로젝트입니다.', to_date('2022-08-03', 'YYYY-MM-DD'), to_date('2022-08-12', 'YYYY-MM-DD'),
-        to_date('2022-07-20', 'YYYY-MM-DD'));  
-       
-insert into project 
-values(project_seq.nextval, '테스트 프로젝트', '테스트', sysdate, sysdate, sysdate);
-
+        to_date('2022-07-20', 'YYYY-MM-DD'));
 select *
 from project;
 
@@ -70,10 +66,6 @@ insert into notice
 values (3, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
 insert into notice
 values (4, 1, '공지사항3', '세번째 테스트 데이터 입니다.', sysdate, sysdate);
-insert into notice
-values (5, 2, 'p2 테스트공지', '프로젝트2 테스트 공지사항 입니다..', sysdate, sysdate);
-insert into notice
-values (6, 2, 'p2 테스트공지', '프로젝트2 테스트 공지사항 입니다..', sysdate, sysdate);
 select *
 from notice;
 
@@ -214,3 +206,13 @@ select count(*) from participants where mid = 1 and pid = 1;
 select count(m.mid)
 from participants p, member m
 where p.mid = m.mid(+) and ((p.mid = 1 and p.pid = 1) or (m.auth = 'ADMIN'));
+
+		insert into jobfile values(jobfile_seq.nextval,
+									1,
+									sysdate,
+									1,
+									1) ;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
