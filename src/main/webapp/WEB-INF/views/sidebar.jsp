@@ -21,8 +21,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="${path}/pms/index3.html" class="brand-link">
+    <!--
     <img src="${path}/pms/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    -->
+    <span class="brand-text font-weight-light">Effective Porject Management</span>
   </a>
 
   <!-- Sidebar -->
@@ -68,7 +70,7 @@
           <ul class="nav nav-treeview">
             <c:if test="${mem.auth eq 'ADMIN'}">
             <li class="nav-item">
-              <a href="adminDashboard.do" class="nav-link">
+              <a href="adminDashboard.do?tab=1" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Admin Dashboard</p>
               </a>
