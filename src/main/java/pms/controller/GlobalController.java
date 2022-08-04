@@ -12,4 +12,9 @@ public class GlobalController {
     public String boardList(Model d){
         return "WEB-INF\\views\\test.jsp";
     }
+
+    @RequestMapping("tabdefault.do")
+    public String tabdefault(Model d){
+        return "WEB-INF\\views\\tabdefault.jsp";
+    }
 }

@@ -45,7 +45,7 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			if (mem != null) {
 				session.setAttribute("mem", mem);
-				return "WEB-INF\\views\\default.jsp";
+				return "redirect:tabdefault.do";
 			}
 
 		}

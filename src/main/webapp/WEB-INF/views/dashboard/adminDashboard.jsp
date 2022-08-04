@@ -119,7 +119,7 @@
                 <!-- /.card-header -->
                 <div class="card-body p-0">
                   <!--<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">-->
-                    <div id="pp${prj.pid}" class="iframe-mode" data-widget="iframe" data-loading-screen="750">
+                  <div id="pp${prj.pid}" <c:if test="${empty param.tab}">class="iframe-mode" data-widget="iframe" data-loading-screen="750"</c:if>>
                     </div>
                   <!--</div>-->
                 </div>
