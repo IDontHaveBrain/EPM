@@ -82,7 +82,7 @@
             </div>
             
             <div class="card-body">
-             <form id="frm01" enctype="multipart/form-data" action="${path}/issueInsert.do" class="form" method="post">
+             <form id="issueInsert" enctype="multipart/form-data" action="${path}/issueInsert.do" class="form" method="post">
               <div class="form-group">
                 <label for="inputName">이슈사항명</label>
                 <input id="inputName" type="text" value="${param.ititle}" class="form-control">

@@ -10,7 +10,8 @@ public class Issues {
     private Date iregdate;
     private Date iuptdate;
     private int jmid;
-
+    private String name;
+    private String jname;
     public Issues() {
     }
 
@@ -23,7 +24,7 @@ public class Issues {
         this.iuptdate = iuptdate;
         this.jmid = jmid;
     }
-
+    
     public int getIid() {
         return iid;
     }
@@ -79,4 +80,20 @@ public class Issues {
     public void setJmid(int jmid) {
         this.jmid = jmid;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getJname() {
+		return jname;
+	}
+
+	public void setJname(String jname) {
+		this.jname = jname;
+	}
 }

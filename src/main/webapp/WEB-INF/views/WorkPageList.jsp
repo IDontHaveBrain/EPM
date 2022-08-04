@@ -122,7 +122,7 @@
           <!-- 파일등록 css -->
 
                     <td>
-                  	    <button class="btn btn-danger col fileinput-button">
+                  	    <button class="btn btn-danger col fileinput-button" onclick="location.href='issueList.do'">
                         <i class="fas fa-plus"></i>
                         <span></span>
                       </button>
@@ -133,7 +133,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th colspan="10">산출물 등록 진행중</th>
+                    <th colspan="10">승인요청은 해당업무 더블클릭</th>
                   </tr>
                   </tfoot>
                 </table>
