@@ -68,6 +68,7 @@
       <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
     </div>
     <div class="tab-content">
+      <div class="tab-pane fade active show" id="panel-index" role="tabpanel" aria-labelledby="tab-index"><iframe src="adminDashboard.do?tab=1" style="height: 671px;"></iframe></div>
       <div class="tab-empty">
         <h2 class="display-4">No tab selected!</h2>
       </div>

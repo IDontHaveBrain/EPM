@@ -108,6 +108,20 @@ values (1, '대시보드 차트 적용',
         '대시보드에 lib활용하여 데이터를 차트형식으로 표시하기',
         to_date('2022-07-28', 'YYYY-MM-DD'), to_date('2022-07-28', 'YYYY-MM-DD'),
         null, 1, '진행중');
+insert into jobplan
+values (2, '원형차트 도입',
+        to_date('2022-08-02', 'YYYY-MM-DD'), to_date('2022-08-04', 'YYYY-MM-DD'),
+        to_date('2022-08-02', 'YYYY-MM-DD'), to_date('2022-08-04', 'YYYY-MM-DD'),
+        '원형차트 대시보드에 도입(업무,이슈)',
+        to_date('2022-08-04', 'YYYY-MM-DD'), to_date('2022-08-04', 'YYYY-MM-DD'),
+        1, 1, '완료');
+insert into jobplan
+values (3, '간트차트 도입',
+        to_date('2022-08-05', 'YYYY-MM-DD'), to_date('2022-08-05', 'YYYY-MM-DD'),
+        to_date('2022-08-05', 'YYYY-MM-DD'), null,
+        '간트차트를 통한 업무현황 표시',
+        to_date('2022-08-05', 'YYYY-MM-DD'), to_date('2022-08-05', 'YYYY-MM-DD'),
+        2, 1, '진행중');
 select *
 from jobplan;
 
