@@ -21,7 +21,6 @@
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/DashboardMapper.xml"/>
-		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/ProjectMapper.xml"/>
 		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 		<mapper resource="resource/mapper/IssuesMapper.xml"/>

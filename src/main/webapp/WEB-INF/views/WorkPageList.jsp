@@ -93,24 +93,24 @@
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
                     <th style="text-align:center;" width="15%">업무이름</th>
-                    <th style="text-align:center;" width="9%">등록일</th>
+                    <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="7%">산출물등록</th>
+  					<th style="text-align:center;" width="7%">보류</th>
                     <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr ondblclick="location.href='WorkPageDetail.do'">
+                  <tr ondblclick="location.href='WorkPageDetail.do?jid=${wl.jid}'">
 
-                    <td style="text-align:center;">이름</td>
+                    <td style="text-align:center;">${wl.name}</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;">업무이름 1</td> <!-- ${wl.jname} -->
+                    <td style="text-align:center;">${wl.jname}</td> 
                     <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 			<!-- 진행률 -->
-                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">90%</span></td> <!-- ${wl.jprogress} -->
+                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.progress}%</span></td>
                       
                     <td>
              <!-- 진행률 -->       
@@ -127,7 +127,7 @@
                         <span></span>
                       </button>
 					</td>
-				<td style="text-align:center;" >검토</td>
+				<td style="text-align:center;" >${wl.jmstatus}</td>
                   </tr>
                   </c:forEach>
                   </tbody>

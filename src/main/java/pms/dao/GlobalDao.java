@@ -13,4 +13,6 @@ public interface GlobalDao {
     public List<Jobplan> jobplanListPrj(int pid);
     public boolean isProjectMember(Map check);
     public boolean checkProjectAuth(Map check);
+    public boolean testMember(Map check);
+    public Member getTestMember(int mid);
 }

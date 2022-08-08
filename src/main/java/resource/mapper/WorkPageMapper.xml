@@ -4,9 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="pms.dao.WorkPageDao">
 	<select id="getWorkPageList" resultType="workpage" parameterType="int">
-		select * 
-		from jobplan
-		WHERE pid = #{pid}
+		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate
+		FROM
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname
+		FROM 
+		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid
+		FROM 
+		(SELECT a.name,b.ppid,b.pid,a.mid
+		FROM MEMBER a, participants b
+		WHERE a.mid=b.mid
+		AND a.mid=#{mid}) c, project d
+		WHERE c.pid=d.pid
+		AND c.pid=#{pid}) e,jobmember f
+		WHERE e.ppid=f.ppid) g,jobplan h
+		WHERE g.jid=h.jid
 	</select>
 
 	<insert id="insertFile" parameterType="workpagefile">
@@ -18,10 +29,56 @@
 	</insert>
 	
 	<select id="getWokrPageDetail" resultType="workpage" parameterType="int" >
-		select * 
-		from jobplan
-		WHERE pid = #{pid}
+		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid
+		FROM
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname
+		FROM 
+		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname
+		FROM 
+		(SELECT a.name,b.ppid,b.pid,a.mid
+		FROM MEMBER a, participants b
+		WHERE a.mid=b.mid
+		AND a.mid=#{mid}) c, project d
+		WHERE c.pid=d.pid) e,jobmember f
+		WHERE e.ppid=f.ppid) g,jobplan h
+		WHERE g.jid=h.jid
+		AND h.jid=#{jid}
 	</select>
+	<select id="WorkPageList" resultType="workpage" >
+		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate
+		FROM
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname
+		FROM 
+		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid
+		FROM 
+		(SELECT a.name,b.ppid,b.pid,a.mid
+		FROM MEMBER a, participants b
+		WHERE a.mid=b.mid
+		AND a.mid=#{mid}) c, project d
+		WHERE c.pid=d.pid
+		AND c.pid=#{pid}) e,jobmember f
+		WHERE e.ppid=f.ppid) g,jobplan h
+		WHERE g.jid=h.jid
+	</select>
+<!--  페이징처리
+	<select id="WorkPageing" parameterType="workpagesch" resultType="workpage">
+		select * from ( select ib.*, rownum cnt from (
+			select iid, jname, ititle, iprogress, name, iuptdate
+			from issues i, jobmember jm, jobplan jp,
+				(select * from member m, participants pp where m.mid = pp.mid) m
+			where i.jmid = jm.jmid and jm.jid = jp.jid and jm.ppid = m.ppid and jp.pid = #{pid}
+			order by iuptdate desc) ib)
+		where cnt between #{start} and #{end}
+	</select>
+	 -->
+<!-- 		
+		SELECT j.*, f.* 
+		FROM jobplan j, jobfile f
+		WHERE j.pid =f.fid
+		and j.pid = #{pid}
+-->
+	
+	
 </mapper>
         
         

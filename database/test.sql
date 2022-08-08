@@ -233,3 +233,39 @@ where p.mid = m.mid(+) and ((p.mid = 1 and p.pid = 1) or (m.auth = 'ADMIN'));
 		SELECT * FROM jobfile;
 
 select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
+		SELECT jobfile_seq.nextval FROM dual;
+		DROP TABLE jobfile;
+		DROP SEQUENCE jobfile_seq;
+		SELECT * FROM jobfile;
+
+select * from CALENDARMEMBER;
