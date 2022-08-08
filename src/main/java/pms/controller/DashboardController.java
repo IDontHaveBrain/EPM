@@ -44,7 +44,6 @@ public class DashboardController {
         Integer iprogCount[] = service.issueProgCount(pid);
         Integer jprogCount[] = service.jobProgCount(pid);
 
-        d.addAttribute("jlist", gservice.jobplanListPrj(pid));
         d.addAttribute("nlist", service.noticePaging(nsch,pid));
         d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);
@@ -56,7 +55,7 @@ public class DashboardController {
     public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
-        session.setAttribute("mem", gservice.getMember("test@test.com"));
+        //session.setAttribute("mem", gservice.getMember("test@test.com"));
 
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 

@@ -18,19 +18,19 @@ public class WorkPageService {
 	@Autowired(required=false)
 	private WorkPageDao dao;
 	
-	
-	
-	public List<WorkPage> getWorkPageList(int pid){
-		return dao.getWorkPageList(pid);
+    public List<WorkPage> WorkPageList(int mid,int pid) {
+        return dao.WorkPageList(mid,pid);
+    }
+	public List<WorkPage> getWorkPageList(WorkPage sch,int mid,int pid){
+		sch.setMid(mid);
+		sch.setPid(pid);
+		return dao.getWorkPageList(sch);
 	}
 	
 	// 상세화면
-	public WorkPage getWokrPageDetail(int pid){
-		return dao.getWorkPageDetail(pid);
+	public WorkPage getWokrPageDetail(int mid,int jid){
+		return dao.getWorkPageDetail(mid,jid);
 	}	
-	
-	
-	
 	
 	// 파일서버 정보(공통정보)
 	@Value("${upload}")

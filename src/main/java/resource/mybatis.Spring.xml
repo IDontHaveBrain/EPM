@@ -14,13 +14,13 @@
 		<typeAlias type="pms.dto.NoticeSch" alias="noticesch"/>
 		<typeAlias type="pms.dto.ProjectSch" alias="projectsch"/>
 		<typeAlias type="pms.vo.WorkPageFile" alias="workpagefile"/>
+		<typeAlias type="pms.vo.CalendarMember" alias="calendar"/>
 
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
 		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/DashboardMapper.xml"/>
-		<mapper resource="resource/mapper/WorkPageMapper.xml"/>
 		<mapper resource="resource/mapper/ProjectMapper.xml"/>
 		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 		<mapper resource="resource/mapper/IssuesMapper.xml"/>
