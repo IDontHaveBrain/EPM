@@ -31,7 +31,7 @@ public class WorkPageController {
 			@RequestParam(value = "pid", defaultValue = "0") int pid, Model d, HttpServletRequest request) {
 		// 임시 프로젝트 선택
 
-		pid = 1;
+		pid = 2;
 		HttpSession session = request.getSession();
 		Member curMem3 = (Member) request.getSession().getAttribute("mem");
 
@@ -64,7 +64,7 @@ public class WorkPageController {
 
 	// int pid, @RequestParam("pid")
 	@RequestMapping("WorkPageDetail.do")
-	public String WorkPageDetail(@RequestParam(value = "mid", defaultValue = "0") int mid, Model d,
+	public String WorkPageDetail(WorkPage sch,@RequestParam(value = "mid", defaultValue = "0") int mid, Model d,
 			@RequestParam(value = "jid", defaultValue = "0") int jid, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Member curMem = (Member) request.getSession().getAttribute("mem");
@@ -73,12 +73,10 @@ public class WorkPageController {
 		}
 
 		if (!gservice.checkProjectAuth(curMem.getMid(), jid)) {
-			return "redirect:WorkPageList.do";
+			return "redirect:WorkPageDetail.do";
 		}
-		// 파일연결
-		jid = 0;
-		d.addAttribute("workpage", service.getWokrPageDetail(curMem.getMid(), jid));
-
+		d.addAttribute("workpage", service.getWokrPageDetail(sch,curMem.getMid(), jid));
+		
 		return "WEB-INF\\views\\WorkPageDetail.jsp";
 	}
 

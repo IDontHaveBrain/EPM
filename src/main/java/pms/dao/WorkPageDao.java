@@ -15,7 +15,8 @@ public interface WorkPageDao {
 	public List<WorkPage> getWorkPageList(WorkPage sch);
 
 	// 상세화면
-	public WorkPage getWorkPageDetail(int mid,int jid);
+	public List<WorkPage> WorkPageDetailList(int mid,int jid);
+	public List<WorkPage> getWorkPageDetailList(WorkPage sch);
 
 	// 파일등록
 	public void insertFile(WorkPageFile file);

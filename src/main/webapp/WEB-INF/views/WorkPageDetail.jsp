@@ -81,44 +81,48 @@
             <div class="card">
               <div class="card-header">        	
              <div class="card-body">
+             
                 <table id="example1" class="table table-bordered table-striped">
-                <h2 style="text-align:center">#{workpage.pname}</h2><br>
+                <c:forEach var="wl" items="${workpage}">
+                <h2 style="text-align:center">${wl.pname}</h2><br>
                   <thead>
                     <tr>
-                      <th style="width: 300px">업무이름</th>
-                      <th>담당자이름</th>
-                      <th>진행상황</th>
-                      <th style="width: 40px">%</th>
-                      <th>실제시작날짜</th>
-                      <th>실제마감날짜</th>
-                      <th>수정일</th>
+                      <th style="text-align:center;" style="width: 150px">업무이름</th>
+                      <th style="text-align:center;" style="width: 150px">담당자이름</th>
+                      <th style="text-align:center;" style="width: 200px">진행상황</th>
+                      <th style="text-align:center;" style="width: 40px">%</th>
+                      <th style="text-align:center;" style="width: 160px">시작날짜</th>
+                      <th style="text-align:center;" style="width: 160px">마감날짜</th>
+                      <th style="text-align:center;" style="width: 160px">수정일</th>
                     </tr>
                   </thead>
                   <tbody>
+                  
                     <tr>
-                     <td>#{workpage.jname}</td>
-                      <td>#{workpage.name}</td>
+                     <td style="text-align:center;">${wl.jname}</td>
+                      <td style="text-align:center;">${wl.name}</td>
                       <td>
                         <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: #{workpage.progress}%"></div>
+                          <div class="progress-bar progress-bar-danger" style="width: ${wl.progress}%"></div>
                         </div>
                       </td>
-                      <td><span class="badge bg-primary">#{workpage.progress}%</span></td>
-                      <td>#{workpage.jstart}</td>
-                      <td>#{workpage.jend}</td>
-                      <td>#{workpage.juptdate}</td>
+                      <td style="text-align:center;"><span class="badge bg-primary">${wl.progress}%</span></td>
+                      <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                      <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                      <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     </tr>
                   <tr>
-                    <td style="text-align:center" colspan="7">#{workpage.content}</td>
+                    <td style="text-align:center" colspan="7" >내용</td>
                   </tr>
                     <tr>
                     <td style="text-align:center" colspan="7">
-                    	<textarea rows="10" class="form-control"></textarea></td>
+                    	<textarea rows="10" class="form-control" readonly>${wl.content}</textarea></td>
                     </tr>
                     <tr>
                     <td style="text-align:center" colspan="7">파일</td>
                     </tr>
                     <td style="text-align:center" colspan="7">
+                 
 	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
 		 class="form"  method="post">
 			<div class="input-group-prepend">
@@ -134,6 +138,7 @@
 	</form>
                     </td>
                     </tr>
+           </c:forEach>
                     
     <tr><td colspan="7">
 	  <div class="row">

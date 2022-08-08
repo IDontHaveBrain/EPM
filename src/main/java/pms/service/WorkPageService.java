@@ -28,8 +28,13 @@ public class WorkPageService {
 	}
 	
 	// 상세화면
-	public WorkPage getWokrPageDetail(int mid,int jid){
-		return dao.getWorkPageDetail(mid,jid);
+	public List<WorkPage> WorkPageDetailList(int mid,int jid){
+		return dao.WorkPageDetailList(mid, jid);
+	}
+	public List<WorkPage> getWokrPageDetail(WorkPage sch,int mid,int jid){
+		sch.setMid(mid);
+		sch.setJid(jid);
+		return dao.getWorkPageDetailList(sch);
 	}	
 	
 	// 파일서버 정보(공통정보)
