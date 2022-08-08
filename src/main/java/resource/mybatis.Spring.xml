@@ -15,6 +15,9 @@
 		<typeAlias type="pms.dto.ProjectSch" alias="projectsch"/>
 		<typeAlias type="pms.vo.WorkPageFile" alias="workpagefile"/>
 		<typeAlias type="pms.vo.WorkPageSch" alias="workpagesch"/>
+		<typeAlias type="pms.dto.JobMemberDTO" alias="jmdto"/>
+		<typeAlias type="pms.dto.JobDTO" alias="jobdto"/>
+
 
 	</typeAliases>
 	<mappers>
@@ -24,5 +27,6 @@
 		<mapper resource="resource/mapper/ProjectMapper.xml"/>
 		<mapper resource="resource/mapper/GlobalMapper.xml"/>
 		<mapper resource="resource/mapper/IssuesMapper.xml"/>
+		<mapper resource="resource/mapper/PMmapper.xml"/>
 	</mappers>
 </configuration>

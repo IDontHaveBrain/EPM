@@ -144,3 +144,20 @@ CREATE TABLE issues (								-- 업무 이슈 테이블
 	iuptdate	date,								-- 수정일
 	jmid		number	REFERENCES jobmember(jmid)	-- 업무 담당 아이디
 );
+
+CREATE TABLE calendarmember(
+    mcid number primary key,
+    mid number,
+    title varchar2(100),
+    cstart date,
+    cend date,
+    content varchar2(500),
+    bordercolor varchar2(20),
+    backgroundcolor varchar2(20),
+    textcolor varchar2(20),
+    allday number
+);
+
+CREATE SEQUENCE calendarmember_seq
+    INCREMENT BY 1
+    START WITH 1;
