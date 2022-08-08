@@ -1,7 +1,7 @@
 package pms.vo;
 
 public class WorkPageSch {
-    private int pid;
+    private int pid; // 프로젝트아이디 기준
 
     private int count; // 총데이터 건수
     private int pageSize; // 한번에 보여줄 페이지 크기

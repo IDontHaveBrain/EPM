@@ -8,6 +8,8 @@ public class WorkPage {
 	// 리스트
 	private int mid;
 	private int pid;
+	private int jid;
+	
 	private String name;
 	private int progress;
 	private String jmstatus;
@@ -27,7 +29,7 @@ public class WorkPage {
 	}
 
 	public WorkPage(int mid, int pid, String name, int progress, String jmstatus, String jname, Date jstart, Date jend,
-			MultipartFile report, String fname,Date juptdate,String pname,String content,Date fregdate) {
+			MultipartFile report, String fname,Date juptdate,String pname,String content,Date fregdate,int jid) {
 		this.mid = mid;
 		this.pid = pid;
 		this.name = name;
@@ -42,6 +44,7 @@ public class WorkPage {
 		this.juptdate = juptdate;
 		this.pname = pname;
 		this.content = content;
+		this.jid = jid;
 	}
 
 	public String getName() {
@@ -139,6 +142,14 @@ public class WorkPage {
 
 	public void setFregdate(Date fregdate) {
 		this.fregdate = fregdate;
+	}
+
+	public int getJid() {
+		return jid;
+	}
+
+	public void setJid(int jid) {
+		this.jid = jid;
 	}
 	
 	

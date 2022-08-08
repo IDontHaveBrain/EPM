@@ -22,14 +22,14 @@ public class WorkPageService {
         return dao.WorkPageList(mid,pid);
     }
 	public List<WorkPage> getWorkPageList(WorkPage sch,int mid,int pid){
-		sch.setMid(5);
-		sch.setPid(2);
+		sch.setMid(mid);
+		sch.setPid(pid);
 		return dao.getWorkPageList(sch);
 	}
 	
 	// 상세화면
-	public WorkPage getWokrPageDetail(int mid){
-		return dao.getWorkPageDetail(mid);
+	public WorkPage getWokrPageDetail(int mid,int jid){
+		return dao.getWorkPageDetail(mid,jid);
 	}	
 	
 	// 파일서버 정보(공통정보)

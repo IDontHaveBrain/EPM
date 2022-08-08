@@ -102,7 +102,7 @@
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr ondblclick="location.href='WorkPageDetail.do'">
+                  <tr ondblclick="location.href='WorkPageDetail.do?jid=${wl.jid}'">
 
                     <td style="text-align:center;">${wl.name}</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
