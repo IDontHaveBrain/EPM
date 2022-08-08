@@ -1,17 +1,23 @@
 CREATE TABLE MEMBER (					-- 회원 테이블
 	mid 		number PRIMARY KEY,		-- 회원 아이디 (시퀀스 사용해서 입력)
-	email		varchar2(50),			-- 이메일주소 (로그인시 사용하는 아이디)
+	email		varchar2(50),			-- 이메일주소
 	password	varchar2(20),			-- 비밀번호
 	name		varchar2(30),			-- 회원 이름
 	auth		varchar2(10),			-- 회원 권한 (ceo, pm, 일반회원... 제가 임의로 쓴거니까 권한 꼭 이렇게 나누지 않으셔도 돼요)
 	accessdate	date,					-- 최근 접속일
-	status		varchar2(10)			-- 가입 상태 (대기 / 승인 / 탈퇴)
+	status		varchar2(10),			-- 가입 상태 (대기 / 승인 / 탈퇴)
+	empno		NUMBER					-- 사원번호 (로그인시 사용하는 아이디)
 );
 
 CREATE SEQUENCE member_seq
 	INCREMENT BY 1
-	START WITH 3;
+	START WITH 1;
 
+CREATE SEQUENCE empno_seq
+	INCREMENT BY 1
+	START WITH 7000;
+DELETE FROM MEMBER, log, participants
+USING 
 
 CREATE TABLE project (					-- 프로젝트 테이블
 	pid			number PRIMARY KEY,		-- 프로젝트 아이디 (시퀀스 사용해서 입력)
@@ -120,7 +126,7 @@ CREATE TABLE jobfile (					-- 업무 첨부파일 테이블 (업무 산출물)
 CREATE SEQUENCE jobfile_seq
 	INCREMENT BY 1
 	START WITH 1;
-
+SELECT * FROM jobfile;
 
 
 CREATE TABLE jobmember (								-- 업무 담당 테이블
@@ -146,3 +152,5 @@ CREATE TABLE issues (								-- 업무 이슈 테이블
 	iuptdate	date,								-- 수정일
 	jmid		number	REFERENCES jobmember(jmid)	-- 업무 담당 아이디
 );
+
+SELECT * FROM MEMBER;

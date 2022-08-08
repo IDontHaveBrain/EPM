@@ -9,6 +9,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+  
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -30,7 +37,17 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+	});
+
+</script>
+
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -53,6 +70,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
+            <h1 class="m-0">사원 상세정보</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -69,79 +87,74 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     
+     	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">이슈사항 등록</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
+              <h3 class="card-title">${member.name}님 사원정보</h3>
             </div>
-            
+            <input id="mid" name="mid" type="hidden" value="${member.mid}" class="form-control" readonly>
             <div class="card-body">
-             <form id="issueInsert" action="${path}/insertIssue.do" class="form" method="post">
               <div class="form-group">
-                <label for="inputName">이슈사항명</label>
-                <input type="text" name="ititle" value="${param.ititle}" class="form-control">
+                <label for="inputName">사원번호</label>
+                <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
               </div>
               <div class="form-group">
-                <label for="inputDescription">이슈사항 내용</label>
-                <textarea name="icontent" class="form-control" rows="4">${param.icontent}</textarea>
-              </div>              
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">처리현황</label>
-                <select name="iprogress" class="form-control pm-select">
-                  <option selected disabled>처리현황 표기</option>
-                  <option>검토</option>
-                  <option>완료</option>
-                  <option>불가</option>
+                <label for="inputName">이메일</label>
+                <input id="email" name="email" type="text" value="${member.email}" class="form-control" readonly>
+              </div>
+              <div class="form-group">
+                <label for="inputName">이름</label>
+                <input id="name" name="name" type="text" value="${member.name}" class="form-control">
+              </div>
+                <label for="inputProjectLeader">권한</label>
+              <div class="form-group">
+                <select id="auth" name="auth" class="form-control pm-select">
+                  <option>${member.auth}</option>
+			      <option>ADMIN</option>
+			      <option>PM</option>
+			      <option>MEMBER</option>
+			      <option>GUEST</option>
                 </select> 
               </div>
+              <div class="form-group"> 
+              	<label for="inputProjectLeader">승인 여부</label>
+                <select id="status" name="status" class="form-control pm-select">
+				  <option>${member.status}</option>
+			      <option>승인</option>
+			      <option>대기</option>
+                </select> 
+              </div>    
               <div class="form-group">
-                <label for="inputClientCompany">작성일자</label>
-                <input type="date" name="iregdate" value="${param.iregdate}" class="form-control">
+              	<label for="inputProjectLeader">마지막 접속시간</label>
+                	<fmt:formatDate value="${member.accessdate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+              </div>                                    
               </div>
-			  </form>
             </div>
-  	  </div>
-      </div>
+            <!-- /.card-body -->
+          <!-- /.card -->
       <div class="row">
-        <div class="col-12">
-          <a href="issueList.do" class="btn btn-secondary">취소</a>    
-          <button type="button" onclick="insertProc()" class="btn btn-success float-right">등록</button>
-        </div>
+        <div class="col-12" style="text-align:right">    
+          <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">권한변경 및 승인</button>
+          <button type="button" id="sendBtn" class="btn btn-info btn-sm">사원번호 발급</button>
+          <button type="button" onclick="deleteMember(${memlist.mid})" class="btn btn-danger btn-sm">탈퇴</button>
+        </div>       
       </div>
-      
-
-    </section>
+       </form>
         <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  </div>
   <jsp:include page="footer.jsp"/>
 
   <!-- Control Sidebar -->
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 <!-- ./wrapper -->
-<script type="text/javascript">
-	var isInsert = "${isInsert}"
-		if(isInsert=="Y"){
-			if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
-				// 취소 입력시 조회화면 이동..
-				location.href="${path}/issueList.do"
-			}
-		}
-	function insertProc(){
-		if(confirm("등록하시겠습니까?")){	
-			document.querySelector("form").submit();
-		}
-	}
-</script>
+
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -177,4 +190,60 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 </body>
+
+<script type="text/javascript">
+	function authorize(mid){
+		if(confirm("해당 사원정보를 수정하시겠습니까?")){
+			$("form").attr("action","${path}/authorize.do");
+			$("form").submit();
+		}
+	} 
+	function deleteMember(){
+		var mid = $("[name=mid]").val()
+		
+		if(confirm("해당 사원을 삭제하시겠습니까?")){
+			location.href="${path}/deleteMember.do?mid="+mid;
+		}
+	} 
+	/*
+	function updateEmpno(){
+		var mid = $("[name=mid]").val()
+		
+		if(confirm("사원번호를 발급 처리하시겠습니까?")){
+			location.href="${path}/updateEmpno.do?mid="+mid;
+		}
+	}
+	*/
+	
+	var proc = "${proc}"
+	if(proc=="upt"){
+		alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
+		location.href="${path}/memberlist.do";
+	}		
+	
+	if(proc=="del"){
+		alert("삭제완료\n사원 관리 페이지로 이동합니다.");
+		location.href="${path}/memberlist.do";
+	}
+	/*
+	if(proc=="uptE"){
+		alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
+		location.href="${path}/memberlist.do";
+	}
+	*/
+	$(function(){
+		$("#sendBtn").click(function(){
+			$.ajax({
+				url : "mailSender.do",
+				type : "POST",
+				data : {
+					email : $("#email").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			})
+		});
+	})
+</script>
 </html>

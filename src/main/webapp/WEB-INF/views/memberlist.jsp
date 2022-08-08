@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Effective PM | Issues</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -53,6 +53,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
+            <h1 class="m-0">사원 관리</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -67,58 +68,84 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-     
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">이슈사항 등록</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            
-            <div class="card-body">
-             <form id="issueInsert" action="${path}/insertIssue.do" class="form" method="post">
-              <div class="form-group">
-                <label for="inputName">이슈사항명</label>
-                <input type="text" name="ititle" value="${param.ititle}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputDescription">이슈사항 내용</label>
-                <textarea name="icontent" class="form-control" rows="4">${param.icontent}</textarea>
-              </div>              
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">처리현황</label>
-                <select name="iprogress" class="form-control pm-select">
-                  <option selected disabled>처리현황 표기</option>
-                  <option>검토</option>
-                  <option>완료</option>
-                  <option>불가</option>
-                </select> 
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">작성일자</label>
-                <input type="date" name="iregdate" value="${param.iregdate}" class="form-control">
-              </div>
-			  </form>
-            </div>
-  	  </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="issueList.do" class="btn btn-secondary">취소</a>    
-          <button type="button" onclick="insertProc()" class="btn btn-success float-right">등록</button>
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">사원 리스트</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
         </div>
+        <div class="card-body p-0">
+        <form id="send" action="${path}/sendMail.do" method="post">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 16%">
+                          이메일
+                      </th>
+                      <th style="width: 10%">
+                          이름
+                      </th>
+                      <th style="width: 10%">
+                          사원번호
+                      </th>
+                      <th style="width: 10%">
+                          권한
+                      </th>
+                      <th style="width: 16%">
+                          승인여부
+                      </th>  
+                  </tr>
+              </thead>
+              <tbody>
+              <c:forEach var="memlist" items="${memlist}">
+                  <tr ondblclick="goDetail(${memlist.mid})">
+                      <td>
+                          ${memlist.mid}
+                      </td>
+                      <td>
+                          <div>
+                              ${memlist.email}
+                          </div>
+                      </td>
+                      <td>
+                          <a>
+                              ${memlist.name}
+                          </a>
+                      </td>
+                      <td>
+                          <div>
+                              ${memlist.empno}
+                          </div>
+                      </td>
+                      <td>
+                          <div>
+                              ${memlist.auth}
+                          </div>
+                      </td>
+                      <td>
+                          <div>
+                              ${memlist.status}
+                          </div>
+                      </td>
+                  </tr>
+              </c:forEach>            
+              </tbody>
+          </table>
+          </form>
+        </div>
+        <!-- /.card-body -->
       </div>
-      
+      <!-- /.card -->
 
     </section>
-        <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -127,20 +154,12 @@
   <!-- Control Sidebar -->
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
-<!-- ./wrapper -->
+</div>
+<!-- ./wrapper -->  
 <script type="text/javascript">
-	var isInsert = "${isInsert}"
-		if(isInsert=="Y"){
-			if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
-				// 취소 입력시 조회화면 이동..
-				location.href="${path}/issueList.do"
-			}
-		}
-	function insertProc(){
-		if(confirm("등록하시겠습니까?")){	
-			document.querySelector("form").submit();
-		}
-	}
+function goDetail(mid){
+	location.href="${path}/memberDetail.do?mid="+mid;
+}
 </script>
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
@@ -176,5 +195,41 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<script type="text/javascript">
+
+$("#checkEmail").click(function () {
+    let email = $("#email").val();
+    let name = $("#name").val();
+
+    $.ajax({
+        type: "GET",
+        url: "mailForm.do",
+        data: {
+            "email": email,
+            "name": name
+        },
+        success: function (res) {
+            if (res['check']) {
+                swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK))
+                    if(OK) {
+                        $.ajax({
+                            type: "POST",
+                            url: "mailSender.do",
+                            data: {
+                            	"email": email,
+                                "name": name
+                            }
+                        })
+                        window.location = "login.do";
+                    }
+
+
+                }
+            
+        }
+    })
+})
+
+</script>
 </body>
 </html>

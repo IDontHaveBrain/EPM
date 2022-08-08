@@ -16,11 +16,11 @@ import pms.vo.Member;
 public class MemberController {
 	@Autowired(required = false)
 	private MemberService service;
-
+	
 	// http://localhost:7080/project06/register.do
 	@RequestMapping("register.do")
 	public String register(Member ins, Model d) {
-		if (ins != null && ins.getEmail() != null && ins.getPassword() != null && ins.getName() != null) {
+		if (ins != null && ins.getEmail() != null && ins.getName() != null) {
 			service.register(ins);
 			return "redirect:login.do";
 		}
@@ -39,24 +39,62 @@ public class MemberController {
 	@RequestMapping("login.do")
 	public String login(Member m, Model d, HttpServletRequest request) {
 
-		if (m.getEmail() != null && m.getPassword() != null) {
-
+		if (m.getEmpno() != 0 && m.getPassword() != null && m.getAuth() == "ADMIN") {
+			System.out.println("관리자냐?" + m.getAuth());
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
 			if (mem != null) {
 				session.setAttribute("mem", mem);
-				return "redirect:tabdefault.do";
+				return "redirect:adminDashboard.do";
+			}
+
+		} else if (m.getEmpno() != 0 && m.getPassword() != null && m.getAuth() != "ADMIN") {
+			Member mem = service.memberLogin(m);
+			HttpSession session = request.getSession();
+			if (mem != null) {
+				session.setAttribute("mem", mem);
+				return "redirect:dashboard.do";
 			}
 
 		}
 		return "WEB-INF\\views\\login.jsp";
 	}
-
-	// 로그아웃시
-	// session.removeAttribute("mem");
-	/*
-	 * @RequestMapping("logout.do") public String logout(HttpServletRequest request)
-	 * { Member mem = service.memberLogin(m); HttpSession session =
-	 * request.getSession(); return ""; }
-	 */
+	
+	@RequestMapping("memberlist.do")
+	public String mailForm(Model d, Member sch) {
+		d.addAttribute("memlist", service.getMemberList(sch));
+		return "WEB-INF\\views\\memberlist.jsp";
+	}
+	
+	// http://localhost:7080/project06/memberDetail.do
+	@RequestMapping("memberDetail.do")
+	public String boardDetail(@RequestParam("mid") int mid, Model d){
+		d.addAttribute("member",service.getMemberDetail(mid));
+		
+		return "WEB-INF\\views\\memberdetail.jsp";
+	}	
+	
+	@RequestMapping("authorize.do")
+	public String authorize(Model d, Member upt) {
+		service.authorize(upt);
+		d.addAttribute("member", service.getMemberDetail(upt.getMid()));
+		d.addAttribute("proc", "upt");
+		return "WEB-INF\\views\\memberdetail.jsp";
+	}
+	
+	@RequestMapping("deleteMember.do")
+	public String deleteMember(@RequestParam("mid") int mid, Model d) {
+		service.deleteMember(mid);
+		d.addAttribute("proc", "del");
+		return "WEB-INF\\views\\memberdetail.jsp";
+	}
+	
 }
+
+// 로그아웃시
+// session.removeAttribute("mem");
+/*
+ * @RequestMapping("logout.do") public String logout(HttpServletRequest request)
+ * { Member mem = service.memberLogin(m); HttpSession session =
+ * request.getSession(); return "";
+ */
