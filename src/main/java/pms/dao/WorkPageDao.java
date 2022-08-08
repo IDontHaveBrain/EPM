@@ -11,10 +11,11 @@ import pms.vo.WorkPageFile;
 @Repository
 public interface WorkPageDao {
 	// 리스트
-	public List<WorkPage> getWorkPageList(int pid);
+	public List<WorkPage> WorkPageList(int mid,int pid);
+	public List<WorkPage> getWorkPageList(WorkPage sch);
 
 	// 상세화면
-	public WorkPage getWorkPageDetail(int pid);
+	public WorkPage getWorkPageDetail(int mid);
 
 	// 파일등록
 	public void insertFile(WorkPageFile file);

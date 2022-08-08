@@ -135,8 +135,6 @@ CREATE SEQUENCE jobmember_seq
 	INCREMENT BY 1
 	START WITH 1;
 
-
-
 CREATE TABLE issues (								-- 업무 이슈 테이블
 	iid			number PRIMARY KEY,					-- 업무 이슈 아이디 (시퀀스를 사용해서 입력)
 	ititle		varchar2(300),						-- 이슈 제목 (한글 기준 최대 100자)

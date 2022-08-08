@@ -82,7 +82,7 @@
               <div class="card-header">        	
              <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
-                <h2 style="text-align:center">프로젝트이름</h2><br>
+                <h2 style="text-align:center">#{workpage.pname}</h2><br>
                   <thead>
                     <tr>
                       <th style="width: 300px">업무이름</th>
@@ -96,20 +96,20 @@
                   </thead>
                   <tbody>
                     <tr>
-                     <td>업무이름</td>
-                      <td>담당자이름</td>
+                     <td>#{workpage.jname}</td>
+                      <td>#{workpage.name}</td>
                       <td>
                         <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: 90%"></div>
+                          <div class="progress-bar progress-bar-danger" style="width: #{workpage.progress}%"></div>
                         </div>
                       </td>
-                      <td><span class="badge bg-primary">90%</span></td>
-                      <td>실제시작날짜</td>
-                      <td>실제마감날짜</td>
-                      <td>수정일</td>
+                      <td><span class="badge bg-primary">#{workpage.progress}%</span></td>
+                      <td>#{workpage.jstart}</td>
+                      <td>#{workpage.jend}</td>
+                      <td>#{workpage.juptdate}</td>
                     </tr>
                   <tr>
-                    <td style="text-align:center" colspan="7">내용</td>
+                    <td style="text-align:center" colspan="7">#{workpage.content}</td>
                   </tr>
                     <tr>
                     <td style="text-align:center" colspan="7">
@@ -119,7 +119,20 @@
                     <td style="text-align:center" colspan="7">파일</td>
                     </tr>
                     <td style="text-align:center" colspan="7">
-                    	등록된 파일</td>
+	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
+		 class="form"  method="post">
+			<div class="input-group-prepend">
+				<span class="text-center input-group-text">첨부파일</span>
+				<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
+	<input type="submit" value="저장" class="btn btn-success float-right">
+			</div>
+						
+			<input name="fname" class="form-control" value="" />
+			<!-- 
+			  {workpage.fname}
+			 -->
+	</form>
+                    </td>
                     </tr>
                     
     <tr><td colspan="7">
@@ -127,7 +140,7 @@
         <div class="col-12">
           <a href="WorkPageList.do" class="btn btn-secondary">뒤로가기</a>
       	
-			<input type="submit" value="승인요청" class="btn btn-success float-right">
+			<input type="button" value="승인요청" class="btn btn-success float-right">
 			</div>
         </div>
 	</td></tr>
