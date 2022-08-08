@@ -56,7 +56,7 @@ public class DashboardController {
     public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
-        session.setAttribute("mem", gservice.getMember("test@test.com"));
+        //session.setAttribute("mem", gservice.getMember("test@test.com"));
 
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 
