@@ -107,13 +107,9 @@
                 <div class="form-group">
                   <label>담당자:</label>
                   <select class="duallistbox" multiple="multiple">
-                    <option>탁나래</option>
-                    <option>박주연</option>
-                    <option>조남준</option>
-                    <option>송우신</option>
-                    <option>김재환</option>
-                    <option>김철수</option>
-                    <option>안영희</option>
+                    <c:forEach var="pp" items="${pplist}">
+                    	<option value="${pp.mid}">${pp.name}(${pp.email})</option>
+                    </c:forEach>
                   </select>
                 </div>
                 <!-- /.form-group -->
@@ -208,6 +204,15 @@ var tasks;
 $(document).ready(function(){
 	$('#jobperiod').daterangepicker();
 	$('.duallistbox').bootstrapDualListbox();
+	$.ajax({
+		url:"${path}/joblist.do",
+		data:{pid:1},
+		dataType:"json",
+		success:function(data){
+			tasks = data.joblist
+			gantt = new Gantt("#gantt", tasks);
+		}
+	});
 	$('#addjob').click(function(){
 		job = $('#job').val();
 		if(job == ''){
@@ -241,7 +246,7 @@ $(document).ready(function(){
 			}
 		}); */
 	});
-	tasks = [
+	/* tasks = [
 		  {
 			id: 'Task 1',
 			name: '업무11',
@@ -276,7 +281,7 @@ $(document).ready(function(){
 			  }
 			  
 		]
-		gantt = new Gantt("#gantt", tasks);
+		gantt = new Gantt("#gantt", tasks); */
 	  
 	  document.querySelector(".chart-controls #day-btn").addEventListener("click", () => {
 		    gantt.change_view_mode("Day");

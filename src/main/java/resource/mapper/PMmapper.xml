@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        
+<mapper namespace="pms.dao.PMDao">
+	<resultMap type="jobdto" id="getJobPlan">
+		<result column="jid" property="id"/>
+		<result column="jname" property="name"/>
+		<result column="jstart" property="start"/>
+		<result column="jend" property="end"/>
+	</resultMap>
+	<select id="getJobPlan"	resultMap="getJobPlan" parameterType="int">
+		SELECT jid, jname, jstart, jend, required, realstart, realend, content, pid, jstatus
+		FROM jobplan
+		WHERE pid = #{pid}
+	</select>
+	<select id="getJobMember" resultType="jmdto" parameterType="int">
+		SELECT m.mid, m.email, m.name, jmid, progress, jmstatus
+		FROM jobmember jm, participants pp, member m
+		WHERE jm.ppid = pp.ppid AND pp.mid = m.mid
+			AND jid = #{jid}
+	</select>
+	<select id="getParticipants" resultType="jmdto" parameterType="int">
+		SELECT m.mid, email, name
+		FROM participants pp, member m
+		WHERE pp.mid = m.mid
+			AND pid = #{pid}
+	</select>
+</mapper>
