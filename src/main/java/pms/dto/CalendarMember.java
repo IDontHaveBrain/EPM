@@ -16,12 +16,12 @@ public class CalendarMember {
 	private String borderColor;
 	private String backgroundColor;
 	private String textColor;
-	private int allday;
+	private boolean allDay;
 
 	public CalendarMember() {
 	}
 
-	public CalendarMember(int id, int mcid, int mid, String title, String start, String end, Date cstart, Date cend, String content, String borderColor, String backgroundColor, String textColor, int allday) {
+	public CalendarMember(int id, int mcid, int mid, String title, String start, String end, Date cstart, Date cend, String content, String borderColor, String backgroundColor, String textColor, boolean allDay) {
 		this.id = id;
 		this.mcid = mcid;
 		this.mid = mid;
@@ -34,7 +34,7 @@ public class CalendarMember {
 		this.borderColor = borderColor;
 		this.backgroundColor = backgroundColor;
 		this.textColor = textColor;
-		this.allday = allday;
+		this.allDay = allDay;
 	}
 
 	public int getId() {
@@ -133,11 +133,11 @@ public class CalendarMember {
 		this.textColor = textColor;
 	}
 
-	public int getAllday() {
-		return allday;
+	public boolean isAllDay() {
+		return allDay;
 	}
 
-	public void setAllday(int allday) {
-		this.allday = allday;
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
 	}
 }

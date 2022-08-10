@@ -75,9 +75,10 @@
         console.log(arg.color) // 입력으로 넣을 예정
         console.log(arg.textColor) // 입력으로 넣을 예정
         console.log(arg.allDay)
+        //alert(new Date(arg.start.getTime()-arg.start.getTimezoneOffset()*60000).toISOString().slice(0, -5));
         // arg.start.toISOString() : GMT 기준 시간으로 나온다.
-        $("#frm01 [name=start]").val(arg.start.toISOString())
-        $("#frm01 [name=end]").val(arg.end.toISOString())
+        $("#frm01 [name=start]").val(new Date(arg.start.getTime()-arg.start.getTimezoneOffset()*60000).toISOString().slice(0, -5))
+        $("#frm01 [name=end]").val(new Date(arg.end.getTime()-arg.start.getTimezoneOffset()*60000).toISOString().slice(0, -5))
         $("#frm01 [name=allDay]").val(""+arg.allDay)
         // 내용은 추가적으로 넣을 예정..
       },
@@ -125,13 +126,16 @@
   });
   function formData(event){
     // 매개변수로 받은 일정 내용을 설정처리..
-    $("#frm01 [name=id]").val(event.id)
+    $("#frm01 [name=mcid]").val(event.id)
     $("#frm01 [name=title]").val(event.title)
-    $("#frm01 [name=start]").val(event.start.toISOString())
+    //$("#frm01 [name=start]").val(event.start.toISOString())
+    $("#frm01 [name=start]").val(new Date(event.start.getTime()-event.start.getTimezoneOffset()*60000).toISOString().slice(0, -5))
     if(event.end!=null){
-      $("#frm01 [name=end]").val(event.end.toISOString())
+      //$("#frm01 [name=end]").val(event.end.toISOString())
+      $("#frm01 [name=end]").val(new Date(event.end.getTime()-event.end.getTimezoneOffset()*60000).toISOString().slice(0, -5))
     }else{
-      $("#frm01 [name=end]").val(event.start.toISOString())
+      //$("#frm01 [name=end]").val(event.start.toISOString())
+      $("#frm01 [name=end]").val(new Date(event.end.getTime()-event.end.getTimezoneOffset()*60000).toISOString().slice(0, -5))
     }
     $("#frm01 [name=backgroundColor]").val(event.backgroundColor)
     $("#frm01 [name=textColor]").val(event.textColor)
@@ -183,86 +187,96 @@
         <div class="row">
           <div class="col-12">
             <div id="calendar"></div>
-          </div>
-        </div>
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form id="frm01" class="form"  method="post">
-                  <input type="hidden" name="id" value="0"/>
-                  <div class="row">
-                    <div class="col">
-                      <input type="text" class="form-control" placeholder="제목 입력"
-                             data-bs-toggle="tooltip"  title="제목 입력" name="title">
-                    </div>
-                    <div class="col">
-                      <select name="allDay" class="form-control"   data-bs-toggle="tooltip"  title="종일여부">
-                        <option value="false">시간</option>
-                        <option value="true">종일</option>
-                      </select>
-                    </div>
+            <h2 data-toggle="modal" id="modalBox"
+                data-target="#exampleModalCenter" style="display:none;">모달창 로딩</h2>
+            <div class="modal fade" id="exampleModalCenter">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  <div class="row">
-                    <div class="col">
-                      <input type="text" class="form-control"  data-bs-toggle="tooltip"  title="시작일" name="start">
-                    </div>
-                    <div class="col">
-                      <input type="text" class="form-control"  data-bs-toggle="tooltip"  title="종료일" name="end">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <input type="color" class="form-control"  data-bs-toggle="tooltip"  title="배경색상"
-                             value="#0099cc" name="backgroundColor">
-                    </div>
-                    <div class="col">
-                      <input type="color" class="form-control"   data-bs-toggle="tooltip"  title="글자색상"
-                             value="#ccffff" name="textColor">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
+                  <div class="modal-body">
+                    <form id="frm01" class="form"  method="get">
+                      <input type="hidden" name="mcid" value="0"/>
+                      <div class="row">
+                        <div class="col">
+                          <input type="text" class="form-control" placeholder="제목 입력"
+                                 data-bs-toggle="tooltip"  title="제목 입력" name="title">
+                        </div>
+                        <div class="col">
+                          <select name="allDay" class="form-control"   data-bs-toggle="tooltip"  title="종일여부">
+                            <option value="false">시간</option>
+                            <option value="true">종일</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <input name="start" type="datetime-local" class="form-control"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <input name="end" type="datetime-local" class="form-control"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <input type="color" class="form-control"  data-bs-toggle="tooltip"  title="배경색상"
+                                 value="#0099cc" name="backgroundColor">
+                        </div>
+                        <div class="col">
+                          <input type="color" class="form-control"   data-bs-toggle="tooltip"  title="글자색상"
+                                 value="#ccffff" name="textColor">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
 	        <textarea name="content" rows="7"  class="form-control"
                       data-bs-toggle="tooltip"  placeholder="내용 입력"  title="내용" ></textarea>
-                    </div>
-                  </div>
+                        </div>
+                      </div>
 
-                </form>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="regBtn" class="btn btn-primary">일정등록</button>
+                    <button type="button" id="uptBtn" class="btn btn-info">일정수정</button>
+                    <button type="button" id="delBtn" class="btn btn-danger">일정삭제</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                  <script type="text/javascript">
+                    $("#regBtn").click(function(){
+                      if(confirm("등록하시겠습니까?")){
+                        $("#frm01").attr("action","${path}/calInsert.do");
+                        $("#frm01").submit();
+                      }
+                    });
+                    $("#uptBtn").click(function(){ // calUpdate.do
+                      if(confirm("수정하시겠습니까?")){
+                        $("#frm01").attr("action","${path}/calUpdate.do");
+                        $("#frm01").submit();
+                      }
+                    });
+                    $("#delBtn").click(function(){
+                      if(confirm("삭제하시겠습니까?")){
+                        $("#frm01").attr("action","${path}/calDelete.do");
+                        $("#frm01").submit();
+                      }
+                    });
+                    // 11:15~
+                  </script>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" id="regBtn" class="btn btn-primary">일정등록</button>
-                <button type="button" id="uptBtn" class="btn btn-info">일정수정</button>
-                <button type="button" id="delBtn" class="btn btn-danger">일정삭제</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-              <script type="text/javascript">
-                $("#regBtn").click(function(){
-                  if(confirm("등록하시겠습니까?")){
-                    $("#frm01").attr("action","${path}/calInsert.do");
-                    $("#frm01").submit();
-                  }
-                });
-                $("#uptBtn").click(function(){ // calUpdate.do
-                  if(confirm("수정하시겠습니까?")){
-                    $("#frm01").attr("action","${path}/calUpdate.do");
-                    $("#frm01").submit();
-                  }
-                });
-                $("#delBtn").click(function(){
-                  if(confirm("삭제하시겠습니까?")){
-                    $("#frm01").attr("action","${path}/calDelete.do");
-                    $("#frm01").submit();
-                  }
-                });
-                // 11:15~
-              </script>
             </div>
           </div>
         </div>
@@ -312,5 +326,7 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<script>
+</script>
 </body>
 </html>

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pms.service.CalendarService;
-import pms.vo.CalendarMember;
+import pms.dto.CalendarMember;
 
 @Controller
 public class CalendarController {
@@ -43,8 +43,8 @@ public class CalendarController {
 	}
 	// http://localhost:7080/springweb/calDelete.do
 	@RequestMapping("calDelete.do")
-	public String deleteCalendar(int id) {
-		service.deleteCalendar(id);
+	public String deleteCalendar(int mcid) {
+		service.deleteCalendar(mcid);
 		return "redirect:/calendar.do";
 	}
 }
