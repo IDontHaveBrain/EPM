@@ -51,6 +51,9 @@
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+
+
+
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -113,8 +116,8 @@
               <div>
               <div class="form-group">           
                 <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
+                <select id="inputPM" class="form-control pm-select">       
+                  <option selected disabled>PM 선택</option>            
                   <option>멤버</option>
                   <option>정보</option>
                   <option>받아오기</option>
@@ -122,12 +125,14 @@
               </div>
               <div class="form-group"> 
               	<label for="inputProjectLeader">참여 인원 선택</label>
+              
                 <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
+         
+					<c:forEach var="memberList" items="${memberList}" varStatus="i">
+						<option value="${memberList.name}">${memberList.name}</option>
+					</c:forEach>
                 </select> 
+        
               </div>
               </div>
               <div class="form-group">
@@ -161,38 +166,10 @@
         <div class="col-12">
           <a href="#" class="btn btn-secondary">취소</a>    
           <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
 
         </div>
       </div>
-      <script type="text/javascript">
-      /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
-
-      </script>
+ 	</div>
     </section>
         
         

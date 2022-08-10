@@ -24,6 +24,7 @@
   <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
   
 
+  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -44,11 +45,54 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="${path}/pms/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="${path}/pms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  
+  <link rel="stylesheet" href="${path}/pms/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  
 <script type="text/javascript">
 	$(document).ready(function(){
-		<%-- 
+		function updateMember(){
+		    $.ajax({
+		      url: "${path}/ajaxMember.do",
+		      data: "",
+		      dataType: "json",
+		      success: function (data) {
+		        console.log(data)
+		        var list = data.memberList;
+		        var addHTML = "";
+		        var addPage = "";
+		        $(list).each(function (idx, rst) {
+		        	addHTML+="<option value='"+rst.empno+"'>"+rst.name+rst.empno+"</option>";
+		        });
+		        console.log(addHTML);
+		        $("#inputPM").html(addHTML);
+		        $("#inputMem").html(addHTML);
+		     
+		      }
+		    });
+		  }
+		updateMember();
 		
-		--%>	
+		
+		//Initialize Select2 Elements
+	    $('.select2').select2()
+
+	    //Initialize Select2 Elements
+	    $('.select2bs4').select2({
+	      theme: 'bootstrap4'
+	    })
+	   
+        
+    	//Date picker
+	    $('#reservationdate').datepicker({
+	    	format: 'L'
+
+	    });
+		
+
+
 	});
 
 </script>
@@ -96,51 +140,54 @@
         <!-- 페이지 구성 시작!! -->
      	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
           <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">새로운 프로젝트 등록</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
             
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
                 <input id="inputName" type="text" value="${param.pname}" class="form-control">
               </div>
-              <div class="form-group">           
+              <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select>              
+                <select id="inputPM" class="form-control pm-select select2bs4">
+    				<c:forEach var="member" items="${memberList}">
+						<option value="${member.name }">${member.name}(${member.empno})</option>
+					</c:forEach>
+                </select>                    
               </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select> 
-              </div>  
+              
+          
+             <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label>참여 멤버</label>
+                  <div class="select2-purple">
+                    <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+    				<c:forEach var="member" items="${memberList}">
+						<option value="${member.name }">${member.name}(${member.empno})</option>
+					</c:forEach>
+                    </select>
+                  </div>
+                </div>
+              
+
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
                 <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
               </div>
-                <div class="form-group">
-	                <label for="inputClientCompany">시작일</label>
-	               	<input type="date" id="startDate" class="form-control" />               
-				
-	                <label for="inputClientCompany">종료일</label>
-	                <input type="date" id="endDate" class="form-control" />
-	               
-				</div>
+              <div class="form-group">
+              	<label for="inputClientCompany">시작일</label>
+                <input type="date" id="startDate" class="form-control" value="${param.pstart}" autocomplete="off"/>
+
+                <label for="inputClientCompany">종료일</label>
+                <input type="date" id="endDate" class="form-control" value="${param.pend}" autocomplete="off"/>
+
+              </div>
+
             </div>
             <!-- /.card-body -->
      	</div>
@@ -184,6 +231,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="${path}/pms/plugins/select2/js/select2.full.min.js"></script>
 <!-- ChartJS -->
 <script src="${path}/pms/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -206,11 +255,12 @@
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${path}/pms/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="${path}/pms/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 </body>
 
 <script type="text/javascript">
+    
 var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){

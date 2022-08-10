@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.service.ProjectService;
+import pms.vo.Member;
 import pms.vo.Project;
 
 
@@ -51,6 +52,20 @@ public class ProjectController {
 		
 		return "WEB-INF\\views\\projectlist.jsp";	
 	}
+	
+	@RequestMapping("memberList.do")
+	public String ajaxMember() {
+		return "WEB-INF\\views\\project.jsp";
+	}
+	// http://localhost:7080/project06/ajaxMember.do
+	@RequestMapping("ajaxMember.do")
+	public String ajaxMember(Model d) {
+		d.addAttribute("memberList", service.getMemberList(1));
+
+		return "pageJsonReport";
+	}
+
+
 
 	
 	/*

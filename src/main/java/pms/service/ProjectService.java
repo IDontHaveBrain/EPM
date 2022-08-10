@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pms.dao.ProjectDao;
+import pms.vo.Member;
 import pms.vo.Project;
-
 
 @Service
 public class ProjectService {
@@ -18,6 +18,12 @@ public class ProjectService {
     public List<Project> getProjectList(){
     	return dao.getProjectList();
 	}
+    
+    public List<Member> getMemberList(int empno){
+    	return dao.getMemberList(empno);
+	}
+
+	
     public Project getProjectDetail(int pid){
       	return dao.getProjectDetail(pid);
     }
@@ -29,4 +35,5 @@ public class ProjectService {
 	public void deleteProject(int pid) {
 		dao.deleteProject(pid);
 	}
+	
 }

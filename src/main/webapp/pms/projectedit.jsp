@@ -122,12 +122,12 @@
                 <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
+              	<label for="inputClientCompany">시작일</label>
+                <input type="date" id="startDate" class="form-control" value="${project.pstart}" autocomplete="off"/>
+
                 <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
+                <input type="date" id="endDate" class="form-control" value="${project.pend}" autocomplete="off"/>
+
               </div>
 
 			  </form>
