@@ -45,16 +45,12 @@ create table jobplan(
     juptdate date,
     required number
 );
+DROP TABLE jobplan;
 
-INSERT INTO jobplan VALUES (1,'업무이름',sysdate,sysdate,sysdate,sysdate,'내용','검토',sysdate,sysdate,1);
-INSERT INTO jobplan VALUES (2,'리스트테스트',sysdate,sysdate,sysdate,sysdate,'내용2','취소',sysdate,sysdate,1);
-INSERT INTO jobplan VALUES (3,'리스트테스트2',sysdate,sysdate,sysdate,sysdate,'내용3','완료',sysdate,sysdate,3);
-INSERT INTO jobplan VALUES (4,'리스트테스트3',sysdate,sysdate,sysdate,sysdate,'내용4','진행중',sysdate,sysdate,4);
-INSERT INTO jobplan VALUES (5,'업무이름',to_date('2015-11-03','YYYY-MM-DD'),
-					to_date('2015-11-03','YYYY-MM-DD'),to_date('2017-08-02','YYYY-MM-DD'),
-					to_date('2015-11-06','YYYY-MM-DD'),'내용입니다!','52%',
-					to_date('2015-11-07','YYYY-MM-DD'),
-					to_date('2015-11-08','YYYY-MM-DD'),5);
+INSERT INTO jobplan VALUES (1,'개발프로젝트',sysdate,sysdate,sysdate,sysdate,'생산기술','53',sysdate,sysdate,1);
+INSERT INTO jobplan VALUES (2,'개발프로젝트',sysdate,sysdate,sysdate,sysdate,'설계','42',sysdate,sysdate,1);
+INSERT INTO jobplan VALUES (3,'개발프로젝트',sysdate,sysdate,sysdate,sysdate,'품질(종합)','63',sysdate,sysdate,1);
+INSERT INTO jobplan VALUES (4,'개발프로젝트',sysdate,sysdate,sysdate,sysdate,'상품기획','87',sysdate,sysdate,1);
 				
 SELECT * FROM jobplan;
 --

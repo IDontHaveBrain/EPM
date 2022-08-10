@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: skawn
-  Date: 2022-07-28
-  Time: 오후 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -37,7 +30,6 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -53,7 +45,6 @@
 
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
-
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -79,83 +70,108 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
+     
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">새로운 프로젝트 등록</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
               </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>업무이름</th>
-                    <th>담당자</th>
-                    <th>시작날짜</th>
-                    <th>마감날짜</th>
-                    <th>내용</th>
-                    <th>수정일</th>
-                    <th>진행률</th>
-                    <th>산출물</th>
-                    <th>승인여부</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach var="wl" items="${wlist}">
-                  <tr>
-                    <td>${wl.jname}</td>
-                    <td>담당자이름</td>
-                    <td><fmt:formatDate value="${wl.jstart}" type="both" />${wl.jstart}</td>
-                    <td><fmt:formatDate value="${wl.jend}" type="both"/>${wl.jend}</td>
-                    <td>${wl.content}</td>
-                    <td><fmt:formatDate value="${wl.juptdate}" type="both"/>${wl.juptdate}</td>
-                    <td>${wl.jprogress}</td>
-                    <td>파일등록일</td>
-                    <td>승인여부</td>
-                  </tr>
-                  </c:forEach>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>고</th>
-                    <th>정</th>
-                    <th>글</th>
-                    <th>인</th>
-                    <th>가</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+            
+            <div class="card-body">
+             <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
+              <div class="form-group">
+                <label for="inputProjectCode">프로젝트 코드</label>
+                <input type="text" id="inputProjectCode" value="${param.number}" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="inputName">프로젝트명</label>
+                <input id="inputName" type="text" value="${param.pname}" class="form-control">
+              </div>
+              <div class="form-group">           
+                <label for="inputProjectLeader">PM</label>
+                <select id="inputPM" class="form-control pm-select">
+                  <option selected disabled>PM 선택</option>
+                  <option>멤버</option>
+                  <option>정보</option>
+                  <option>받아오기</option>
+                </select>              
+              </div>
+              <div class="form-group"> 
+              	<label for="inputProjectLeader">PM</label>
+                <select id="inputPM" class="form-control pm-select">
+                  <option selected disabled>인원 선택</option>
+                  <option>멤버</option>
+                  <option>정보</option>
+                  <option>받아오기</option>
+                </select> 
+              </div>  
+              <div class="form-group">
+                <label for="inputDescription">프로젝트 설명</label>
+                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="inputClientCompany">시작일</label>
+                <input type="text" id="inputClientCompany" class="form-control">
+              </div>
+			  <div class="form-group">
+                <label for="inputClientCompany">종료일</label>
+                <input type="text" id="inputClientCompany" class="form-control">
+              </div>
+
+			  </form>
+            </div>
+            <!-- /.card-body -->
+     
+          <!-- /.card -->
+       
+  	  </div>
       </div>
-      <!-- /.container-fluid -->
+      <div class="row">
+        <div class="col-12">
+          <a href="#" class="btn btn-secondary">취소</a>    
+          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
+          <!--           
+          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
+          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
+          -->
+
+        </div>
+      </div>
+      
+      <script type="text/javascript">
+      /*
+      	$("#regBtn").click(function(){
+      		if(confirm("등록하시겠습니까?")){
+      			$("").attr("action","${path}/calInsert");
+      			$("").submit();
+      		}
+      	});
+      	
+      	$("#uptBtn").click(function(){
+      		if(confirm("수정하시겠습니까?")){
+      			$("").attr("action","${path}/calUpdate.do");
+      			$("").submit();
+      		}
+      	});  
+      	
+      	$("#delBtn").click(function(){
+      		if(confirm("삭제하시겠습니까?")){
+      			$("").attr("action","${path}/calDelete.do");
+      			$("").submit();
+      		}
+      	});        
+	   */
+
+      </script>
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+        
+        
+     
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>

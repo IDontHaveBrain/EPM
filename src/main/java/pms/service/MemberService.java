@@ -15,6 +15,7 @@ public class MemberService {
 	private MemberDao dao;
 	
 	public void register(Member ins) {
+		
 		dao.register(ins);
 	}
 	
@@ -22,7 +23,24 @@ public class MemberService {
 		return dao.checkEmail(email);
 	}
 	
-	public Member loginMember(Member m) {
-		return dao.loginMember(m);
+	public Member memberLogin(Member m){
+		return dao.memberLogin(m);
 	}
+	
+	public List<Member> getMemberList(Member sch) {
+		return dao.getMemberList(sch);
+	}
+	
+	public Member getMemberDetail(int mid) {
+		return dao.getMemberDetail(mid);
+	}
+	
+	public void authorize(Member upt) {
+		dao.authorize(upt);
+	}
+	
+	public void deleteMember(int mid) {
+		dao.deleteMember(mid);
+	}
+	
 }

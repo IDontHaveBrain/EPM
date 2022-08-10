@@ -103,8 +103,12 @@
             </div>
             <div class="card-body">
               <div class="form-group">
+                <label for="inputProjectCode"></label>
+                <input type="text" id="inputProjectCode" class="form-control">
+              </div>
+               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input type="text" id="inputName" class="form-control">
+                <input id="inputName" type="text" class="form-control">
               </div>
               <div>
               <div class="form-group">           

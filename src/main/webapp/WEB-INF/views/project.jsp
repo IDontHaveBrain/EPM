@@ -16,6 +16,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+  
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -37,7 +44,17 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+	});
+
+</script>
+
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -60,7 +77,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">Project</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -77,11 +94,10 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-      <div class="row">
-        <div class="col-md-6">
+     	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">General</h3>
+              <h3 class="card-title">새로운 프로젝트 등록</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -89,14 +105,11 @@
                 </button>
               </div>
             </div>
+            
             <div class="card-body">
               <div class="form-group">
-                <label for="inputProjectCode"></label>
-                <input type="text" id="inputProjectCode" class="form-control">
-              </div>
-              <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input type="text" id="inputName" class="form-control">
+                <input id="inputName" type="text" value="${param.pname}" class="form-control">
               </div>
               <div class="form-group">           
                 <label for="inputProjectLeader">PM</label>
@@ -118,74 +131,45 @@
               </div>  
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
               </div>
-              <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-
+                <div class="form-group">
+	                <label for="inputClientCompany">시작일</label>
+	               	<input type="date" id="startDate" class="form-control" />               
+				
+	                <label for="inputClientCompany">종료일</label>
+	                <input type="date" id="endDate" class="form-control" />
+	               
+				</div>
             </div>
             <!-- /.card-body -->
-          </div>
+     	</div>
           <!-- /.card -->
-        </div>
-      </div>
-      </div>
+       
+  	  
+  	
+   
       <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
-
-        </div>
+        <div class="col-12">    
+          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+          <button type="button" id="regBtn" onclick="insertProc()" class="btn btn-success float-right">등록</button>
+        </div>       
       </div>
-      <script type="text/javascript">
-      /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
-
-      </script>
-    </section>
+    
         
         
-     
+       </form>
         <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+  <jsp:include page="footer.jsp"/>
 
   <!-- Control Sidebar -->
-
+  <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -225,4 +209,34 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 </body>
+
+<script type="text/javascript">
+var isInsert = "${isInsert}"
+	if(isInsert=="Y"){
+		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
+			// 취소 입력시 조회화면 이동..
+			location.href="${path}/ProjectList.do"
+		}else{
+			location.href="${path}/projectInsertForm.do"
+		}
+	}
+
+function insertProc(){
+	if(confirm("등록하시겠습니까?")){
+		var pnameVal = $("[name=pname]").val();		
+		if(	pnameVal == ""){
+			alert("프로젝트명을 등록하세요");
+			$("[name=pname]").focus();
+			return; // 프로세스를 중단 처리
+		}		
+		document.querySelector("form").submit();
+	}
+}
+
+function goMain(){
+	location.href="${path}/projectList.do";
+}
+
+	
+</script>
 </html>

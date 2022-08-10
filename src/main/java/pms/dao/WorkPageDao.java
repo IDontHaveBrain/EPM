@@ -6,8 +6,25 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import pms.vo.WorkPage;
+import pms.vo.WorkPageFile;
 
 @Repository
 public interface WorkPageDao {
-	public List<WorkPage> getWorkPageList(int jid);
+	// 리스트
+	public List<WorkPage> WorkPageList(int mid,int pid);
+	public List<WorkPage> getWorkPageList(WorkPage sch);
+	
+	// 파일등록
+	public void insertFile(WorkPageFile file);
+	
+	// 상세화면
+	public List<WorkPage> WorkPageDetailList(int mid,int jid);
+	public List<WorkPage> getWorkPageDetailList(WorkPage sch);
+	
+	// 상세화면 파일 다운로드
+	public List<WorkPage> getWorkPageFile(WorkPage filelist);
 }
+
+
+
+

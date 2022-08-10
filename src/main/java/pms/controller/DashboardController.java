@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pms.dao.GlobalDao;
-import pms.dto.IssueDashDto;
+import org.springframework.web.bind.annotation.RequestParam;
+import pms.dto.*;
 import pms.service.DashboardService;
 import pms.service.GlobalService;
+import pms.vo.Jobplan;
 import pms.vo.Member;
 import pms.vo.Notice;
+import pms.vo.Project;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,37 +26,56 @@ public class DashboardController {
 
 	// http://localhost:7080/project06/dashboard.do
     @RequestMapping("dashboard.do")
-    public String dashboard(IssueDashDto issueForm ,Model d, HttpServletRequest request){
-        for(Notice n:service.getNoticeList(1)){
-            System.out.println(n.getNtitle());
-        }
-        for(IssueDashDto issue:service.getIssueList(1)){
-            System.out.println(issue.getItitle());
-        }
+    public String dashboard(IssuesSch isch, NoticeSch nsch,
+                            @RequestParam(value = "pid", defaultValue = "0") int pid,
+                            Model d, HttpServletRequest request){
+        //pid = 1;
         HttpSession session = request.getSession();
-        session.setAttribute("mem", gservice.getMember("skawns848@naver.com"));
         Member curMem = (Member)request.getSession().getAttribute("mem");
         if(curMem == null){
             return "redirect:login.do";
         }
+        if(!gservice.checkProjectAuth(curMem.getMid(), pid))
+        {
+            return "redirect:test.do";
+        }
         System.out.println(curMem.getEmail());
 
-        List<IssueDashDto> issueList = service.getIssueList(1);
-        Integer iprogCount[] = {0,0,0,0};
-        for(IssueDashDto issue:issueList){
-            if(issue.getIprogress().equals("해결"))
-                iprogCount[0]++;
-            else if (issue.getIprogress().equals("해결중"))
-                iprogCount[1]++;
-            else if (issue.getIprogress().equals("해결불가"))
-                iprogCount[2]++;
-            iprogCount[3]++;
-        }
+        Integer iprogCount[] = service.issueProgCount(pid);
+        Integer jprogCount[] = service.jobProgCount(pid);
 
-        d.addAttribute("nlist", service.getNoticeList(1));
-        d.addAttribute("ilist", issueList);
+        d.addAttribute("nlist", service.noticePaging(nsch,pid));
+        d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);
-        return "pms/dashboard.jsp";
+        d.addAttribute("jprog", jprogCount);
+        return "WEB-INF/views/dashboard/dashboard.jsp";
     }
 
+    @RequestMapping("adminDashboard.do")
+    public String adminDashboard(ProjectSch sch,
+                                 Model d, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        //session.setAttribute("mem", gservice.getMember("test@test.com"));
+
+        List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
+
+        d.addAttribute("prjList", prjList);
+        return "WEB-INF/views/dashboard/adminDashboard.jsp";
+    }
+
+    @RequestMapping("issueListAjax.do")
+    public String issueListAjax(IssuesSch sch,
+                                @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
+
+        d.addAttribute("ilist", service.issuePaging(sch,pid));
+        return "pageJsonReport";
+    }
+
+    @RequestMapping("noticeListAjax.do")
+    public String noticeListAjax(NoticeSch sch,
+                                 @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
+
+        d.addAttribute("nlist", service.noticePaging(sch ,pid));
+        return "pageJsonReport";
+    }
 }

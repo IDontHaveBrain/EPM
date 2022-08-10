@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: skawn
-  Date: 2022-07-28
-  Time: 오후 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Effective PM | Issues</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -37,7 +30,6 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -53,63 +45,7 @@
 
   <!-- Main Sidebar Container -->
   <jsp:include page="sidebar.jsp"/>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#schBtn").click(function(){
-		$.ajax({
-			url:"${path}/WorkPageList.do",
-			dataType:"json",
-			success:function(data){
-				// data.모델명  : m.addAttribute("empList", ser...)
-				var list = data.WorkPageList //이부분확인
-				var addHTML=""
-				$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-					addHTML+="<tr>"
-								"<th>"+workpage.jname+"</th>"
-								"<th>"+workpage.content+"</th>"
-							 "</tr>"
-				});
-				console.log(addHTML)
-				$("#WorkPageList").html(addHTML)
-			}
-		});
-	});
-	$(".sch").keyup(function(){
-		var jnameVal = $("[name=jname]").val()
-		//$("h2").text("ename="+enameVal+"&job="+jobVal)
-		// 입력후, enter키를 입력시, 조회 처리..
-		if(event.keyCode==13){
-			$.ajax({
-				url:"${path}/WorkPageList.do",
-				data:"jname="+jnameVal,
-				dataType:"json",
-				success:function(data){
-					// data.모델명  : m.addAttribute("empList", ser...)
-					var list = data.WorkPageList
-					var addHTML=""
-						$(list).each(function(idx, workpage){ // 변수명이 중요하지 않고, 순서.
-							addHTML+="<tr>"
-								"<th>"+workpage.jname+"</th>"
-								"<th>"+workpage.content+"</th>"
-							 "</tr>"
-						});
-					console.log(addHTML)
-					$("#WorkPageList").html(addHTML)
-				}
-			});			
-		}
-		
-	});
-	
-});
-</script>
-<form>
-	    <input class="sch form-control mr-sm-2" placeholder="이름" name="jname"/>
-	    <button type="button" id="schBtn">Search</button>
-	    
-	    <tr><th>이름</th></tr>
 
-</form>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -117,7 +53,7 @@ $(document).ready(function(){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">리스크 목록</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -132,72 +68,92 @@ $(document).ready(function(){
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                	<tbody id="WorkPageList">
-    				</tbody>
-                  <thead>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>고</th>
-                    <th>정</th>
-                    <th>글</th>
-                    <th>인</th>
-                    <th>가</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Issues</h3>
+
+          <div class="card-tools">
+            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+                     
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          업무명
+                      </th>
+                      <th style="width: 20%">
+                          이슈사항명
+                      </th>
+                      <th style="width: 10%">
+                          진행상황
+                      </th>
+                      <th style="width: 15%">
+                          최종 수정일
+                      </th>
+                      <th style="width: 10%">
+                          작성자
+                      </th>       
+                  </tr>
+              </thead>
+              <tbody>
+              <c:forEach var="iss" items="${issues}">
+                  <tr>
+                      <td>
+                          ${iss.iid}
+                      </td>
+                      <td>
+                          <div>
+                              ${iss.jname}
+                          </div>
+                      </td>
+                      <td>
+                          <a>
+                              ${iss.ititle}
+                          </a>
+                          <br/>
+                          <small>
+                              등록일:<fmt:formatDate value="${iss.iregdate}" pattern="yyyy-MM-dd"/>
+                          </small>
+                      </td>
+                      <td>
+                          <div>
+                              ${iss.iprogress}
+                          </div>
+                      </td>
+                      <td>
+                          <div>
+                              <fmt:formatDate value="${iss.iuptdate}" pattern="yyyy-MM-dd"/>
+                          </div>
+                      </td>
+                      <td>
+                          ${iss.name}
+                      </td>
+                      <td class="project-actions text-right" style="width: 10%">
+                      	<button type="button" onclick="goDetail(${iss.iid})" class="btn btn-info btn-sm">상세보기</button>
+                      </td>
+                  </tr>
+              </c:forEach>            
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
       </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-        <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+      <!-- /.card -->
+
     </section>
     <!-- /.content -->
   </div>
@@ -208,8 +164,15 @@ $(document).ready(function(){
   <jsp:include page="ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-
+<!-- ./wrapper -->  
+<script type="text/javascript">
+		function goDetail(iid) {
+			location.href="${path}/issueDetail.do?iid="+iid;
+		}
+		function goInsert() {
+			location.href="${path}/issueInsertForm.do"
+		}
+</script>    
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

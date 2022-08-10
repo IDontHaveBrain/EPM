@@ -6,4 +6,18 @@
     <select id="getMember" parameterType="string" resultType="member">
         select * from member where email=#{email}
     </select>
+    <select id="jobplanListPrj" parameterType="int" resultType="jobplan">
+        select * from jobplan where pid=#{pid}
+    </select>
+    <select id="isProjectMember" parameterType="hashmap" resultType="boolean">
+        select count(*) from participants where mid=#{mid} and pid=#{pid}
+    </select>
+    <select id="checkProjectAuth" parameterType="hashmap" resultType="boolean">
+        select count(m.mid)
+        from participants p, member m
+        where p.mid = m.mid(+) and ((p.mid = #{mid} and p.pid = #{pid}) or (m.auth = 'ADMIN'))
+    </select>
+    <select id="testMember" parameterType="hashmap" resultType="boolean">
+        select * from member where mid=#{mid} 
+    </select>
 </mapper>

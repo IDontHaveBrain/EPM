@@ -2,7 +2,7 @@ package pms.vo;
 
 import java.util.Date;
 
-public class Issue {
+public class Issues {
     private int iid;
     private String ititle;
     private String icontent;
@@ -10,11 +10,12 @@ public class Issue {
     private Date iregdate;
     private Date iuptdate;
     private int jmid;
-
-    public Issue() {
+    private String name;
+    private String jname;
+    public Issues() {
     }
 
-    public Issue(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid) {
+    public Issues(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid) {
         this.iid = iid;
         this.ititle = ititle;
         this.icontent = icontent;
@@ -23,7 +24,7 @@ public class Issue {
         this.iuptdate = iuptdate;
         this.jmid = jmid;
     }
-
+    
     public int getIid() {
         return iid;
     }
@@ -79,4 +80,20 @@ public class Issue {
     public void setJmid(int jmid) {
         this.jmid = jmid;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getJname() {
+		return jname;
+	}
+
+	public void setJname(String jname) {
+		this.jname = jname;
+	}
 }
