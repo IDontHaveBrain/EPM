@@ -18,4 +18,5 @@ public interface MemberDao {
 	public void deleteMember(int mid);
 	public void uptEmpnoAndPassword(Member upt);
 	public void recoverPassword(Member upt);
+	public String getMemberName(Member sch);
 }

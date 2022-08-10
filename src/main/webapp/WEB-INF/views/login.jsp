@@ -115,12 +115,12 @@
 			return false;
 		}
 		
-		$("#password").keyup(function(){
-			if(event.keyCode==13){
-				$("#login").submit();
-			}
-		})
 	}
+	$("#login").keyup(function(){
+		if(event.keyCode==13){
+			login();
+		}
+	});
 </script>
 </body>
 </html>

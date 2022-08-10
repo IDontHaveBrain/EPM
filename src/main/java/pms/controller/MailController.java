@@ -16,6 +16,9 @@ public class MailController {
 	
 	@Autowired(required = false)
 	private MailSenderService service;
+	
+	@Autowired(required = false)
+	private MemberService mService;
 
 	// http://localhost:7080/springweb/mailForm.do
 	@GetMapping("createEmpnoAndPassword.do")
@@ -28,8 +31,11 @@ public class MailController {
 		if(member != null) {
 			service.uptEmpnoAndPassword(member);
 			d.addAttribute("msg", service.sendMail(mail, member));
+			System.out.println("이름 : " + member.getName());
 			return "redirect:memberlist.do";
 		}
+		
+		
 		
 		return "WEB-INF\\views\\memberdetail.jsp";
 	}
@@ -42,6 +48,7 @@ public class MailController {
 	@PostMapping("sendTempPassword.do")
 	public String recoverPassword(Mail mail, Member member, Model d) {
 		if(member != null) {
+			mService.getMemberName(member);
 			service.recoverPassword(member);
 			d.addAttribute("msg", service.sendTempPassword(mail, member));
 		}

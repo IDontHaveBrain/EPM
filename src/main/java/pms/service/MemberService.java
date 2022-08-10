@@ -43,4 +43,8 @@ public class MemberService {
 		dao.deleteMember(mid);
 	}
 	
+	public String getMemberName(Member sch) {
+		return dao.getMemberName(sch);
+	}
+	
 }

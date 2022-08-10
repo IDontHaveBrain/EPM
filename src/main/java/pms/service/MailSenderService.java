@@ -73,6 +73,7 @@ public class MailSenderService {
 		// 처리할 메소드 선언
 		// 1. 멀티미디어형 메일 데이터 전송
 		MimeMessage mmsg = sender.createMimeMessage();
+		member.setName(dao.getMemberName(member));
 		// 2. 제목 설정
 		try {
 			mmsg.setSubject("[EPM 임시비밀번호입니다.]");

@@ -58,4 +58,11 @@
 		WHERE empno = #{empno}
 		AND email = #{email}
 	</update>
+	
+	<select id="getMemberName" parameterType="member" resultType="String">
+		SELECT name
+		FROM member
+		WHERE empno = #{empno}
+		AND email = #{email}
+	</select>
 </mapper>

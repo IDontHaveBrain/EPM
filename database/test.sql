@@ -226,3 +226,5 @@ select * from CALENDARMEMBER;
 
 insert into CALENDARMEMBER
 values (CALENDARMEMBER_SEQ.nextval, 2, 'test', sysdate, to_date('2022-08-11 00:00:00','YYYY-MM-DD HH24:MI:SS'), 'tt test tt',NULL,'#0099CC','#ccffff',0);
+
+SELECT * FROM MEMBER;
