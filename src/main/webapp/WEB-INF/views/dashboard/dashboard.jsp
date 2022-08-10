@@ -164,7 +164,7 @@
         <!-- 페이지 구성 시작!! -->
         <div class="row">
           <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card">
               <div class="card-header">
                 <h3 class="card-title text-bold">간트차트</h3>
 
@@ -179,14 +179,11 @@
               <c:choose>
                 <c:when test="${empty jlist}">
 
-                  <div class="col-11">
+                  <div class="col-12 align-items-center justify-content-center align-content-center">
                     <!-- small card -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box bg-warning justify-content-center">
                       <div class="inner">
                         <h2>등록된 업무가 없습니다!</h2>
-                        <div class="icon">
-                          <i class="ion ion-stats-bars"></i>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -499,28 +496,35 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
-  // 간트차트
-  var tasks = [
-    <c:forEach var="job" items="${jlist}">
-    {
-      id: '${job.jid}',
-      name: '${job.jname}',
-      start: '<fmt:formatDate value="${job.jstart}" pattern="yyyy-MM-dd"></fmt:formatDate>',
-      end: '<fmt:formatDate value="${job.jend}" pattern="yyyy-MM-dd"></fmt:formatDate>',
-      progress: 10,
-      dependencies: '${job.required}',
-      read_only: true
-    },
-    </c:forEach>
-  ]
-  var gantt = new Gantt("#gantt", tasks, {
-    step: 12,
-    view_mode: 'Week',
-    read_only: true
-  });
-  gantt.read_only = true;
-  $('.gantt .bar-wrapper').css('pointer-events', 'none');
-  gantt.make_grid_highlights();
+  $(document).ready(function() {
+    // 간트차트
+    var tasks = [
+      <c:forEach var="job" items="${jlist}">
+      {
+        id: '${job.jid}',
+        name: '${job.jname}',
+        start: '<fmt:formatDate value="${job.jstart}" pattern="yyyy-MM-dd"></fmt:formatDate>',
+        end: '<fmt:formatDate value="${job.jend}" pattern="yyyy-MM-dd"></fmt:formatDate>',
+        progress: 10,
+        dependencies: '${job.required}',
+        read_only: true,
+        readonly: true
+      },
+      </c:forEach>
+    ]
+    var gantt = new Gantt("#gantt", tasks, {
+      step: 12,
+      view_mode: 'Day',
+      read_only: true,
+      readonly: true
+    });
+    //$('.gantt .bar-wrapper').css('pointer-events', 'none');
+    gantt.change_view_mode('Week');
+    gantt.clear();
+    gantt.render();
+    gantt.bar_being_dragged = true;
+    $('.gantt .bar-label').css('fill', '#555');
+  })
 
   // 이슈차트
   var pieChartCanvas = $('#issuePieChart').get(0).getContext('2d')

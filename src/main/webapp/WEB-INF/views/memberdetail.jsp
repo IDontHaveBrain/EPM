@@ -87,7 +87,7 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
+     	<form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">${member.name}님 사원정보</h3>
@@ -135,7 +135,7 @@
       <div class="row">
         <div class="col-12" style="text-align:right">    
           <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">권한변경 및 승인</button>
-          <button type="button" id="sendBtn" class="btn btn-info btn-sm">사원번호 발급</button>
+          <button type="submit"  class="btn btn-info btn-sm">사원번호 발급</button>
           <button type="button" onclick="deleteMember(${memlist.mid})" class="btn btn-danger btn-sm">탈퇴</button>
         </div>       
       </div>
@@ -210,7 +210,8 @@
 		var mid = $("[name=mid]").val()
 		
 		if(confirm("사원번호를 발급 처리하시겠습니까?")){
-			location.href="${path}/updateEmpno.do?mid="+mid;
+			$("form").attr("action","${path}/createEmpnoandPassword.do");
+			$("form").submit();
 		}
 	}
 	*/
@@ -231,6 +232,7 @@
 		location.href="${path}/memberlist.do";
 	}
 	*/
+	/*
 	$(function(){
 		$("#sendBtn").click(function(){
 			$.ajax({
@@ -245,5 +247,6 @@
 			})
 		});
 	})
+	*/
 </script>
 </html>

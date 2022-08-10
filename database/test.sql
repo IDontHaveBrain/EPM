@@ -222,21 +222,7 @@ select count(m.mid)
 from participants p, member m
 where p.mid = m.mid(+) and ((p.mid = 1 and p.pid = 1) or (m.auth = 'ADMIN'));
 
-		insert into jobfile values(jobfile_seq.nextval,
-									1,
-									sysdate,
-									1,
-									1) ;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
 select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
 
 select * from CALENDARMEMBER;
 		SELECT jobfile_seq.nextval FROM dual;
