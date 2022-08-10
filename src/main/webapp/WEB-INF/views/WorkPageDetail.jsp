@@ -120,7 +120,7 @@
                     	<textarea rows="10" class="form-control" readonly>${wl.content}</textarea></td>
                     </tr>
                     <tr>
-                    	<td style="text-align:center" colspan="7"><h4>파일</h4></td>
+                    	<td style="text-align:center" colspan="7"><h4>산출물 등록</h4></td>
                     </tr>
          </c:forEach>
 
@@ -128,14 +128,14 @@
                     
                     
                     <td style="text-align:center" colspan="7">
+                    
                  
-	<form enctype="multipart/form-data" action="${path}/WorkPageList.do" 
+	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
 		 class="form"  method="post">
 			<div class="input-group-prepend">
 				<span class="text-center input-group-text">첨부파일</span>
-				<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
-			
-					<input type="submit" value="저장" class="btn btn-success float-right">
+					<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
+					<input type="submit" value="저장" class="btn btn-success float-right"/>
            		<tr>
            		<table class="table table-bordered table-striped">
            			<th style="text-align:center">파일이름</th>
@@ -143,14 +143,17 @@
            			<th style="text-align:center" >삭제</th>
            		</tr>
            <c:forEach var="ws" items="${flist}">
-           		<input type="hidden" name="${ws.jmid}" value=""/>
 
            		<tr>
          				<td style="text-align:center">${ws.fname}</td>
          				<td style="text-align:center"><fmt:formatDate value="${ws.fregdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-         			<div class="btn-group btn-group-sm">
-         				<td><button>1</button></td>
-         			</div> 
+         			<td style="text-align:center">
+	         			<div class="btn-group btn-group-sm">
+	         				<a href="#" class="btn btn-danger">
+	         					<i class="fas fa-trash"></i>
+	         				</a>
+	         			</div>
+         			</td> 
          		</tr>
         		
            </c:forEach>	

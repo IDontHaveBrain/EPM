@@ -60,7 +60,7 @@ public class WorkPageController {
 
 		service.insertWorkPageFile(ins);
 
-		return "WEB-INF\\views\\WorkPageDetail.jsp";
+		return "redirect:WorkPageList.do";
 	}
 
 	// int pid, @RequestParam("pid")
