@@ -36,6 +36,19 @@ public class WorkPageService {
 		sch.setJid(jid);
 		return dao.getWorkPageDetailList(sch);
 	}	
+	// 상세화면 파일다운로드 데이터
+	public List<WorkPage> getWorkPageFile(WorkPage filelist,int mid,int jid,int jmid){
+			filelist.setMid(mid);
+			filelist.setJid(jid);
+			filelist.setJmid(jmid);
+			System.out.println("test1:"+mid);
+			System.out.println("test1:"+jid);
+			System.out.println("test1:"+jmid);
+//			List<WorkPage> dddd = dao.getWorkPageFile(filelist);
+//			System.out.println("test2:"+dddd.get());
+
+		return dao.getWorkPageFile(filelist);
+	}
 	
 	// 파일서버 정보(공통정보)
 	@Value("${upload}")

@@ -110,6 +110,7 @@
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+
                     </tr>
                   <tr>
                     <td style="text-align:center" colspan="7" >내용</td>
@@ -119,6 +120,9 @@
                     	<textarea rows="10" class="form-control" readonly>${wl.content}</textarea></td>
                     </tr>
                     <tr>
+         </c:forEach>
+
+         
                     <td style="text-align:center" colspan="7">파일</td>
                     </tr>
                     <td style="text-align:center" colspan="7">
@@ -128,18 +132,19 @@
 			<div class="input-group-prepend">
 				<span class="text-center input-group-text">첨부파일</span>
 				<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
-	<input type="submit" value="저장" class="btn btn-success float-right">
+					<input type="submit" value="저장" class="btn btn-success float-right">
 			</div>
-						
-			<input name="fname" class="form-control" value="" />
-			<!-- 
-			  {workpage.fname}
-			 -->
+
 	</form>
                     </td>
                     </tr>
-           </c:forEach>
-                    
+
+
+		
+			
+			 
+
+                   
     <tr><td colspan="7">
 	  <div class="row">
         <div class="col-12">
@@ -155,7 +160,9 @@
              </div>              
             </div>
             
-            
+                     <c:forEach var="ws" items="${flist}">
+         <td>"${ws.fname}"</td>
+           </c:forEach>
             </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
@@ -205,5 +212,12 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<script type="text/javascript">
+$("[name=fname]").click(function(){
+	if(confirm("다운로드하시겠습니까?")){
+		location.href="${path}/download.do?fname="+$(this).val()
+	}
+});
+</script>
 </body>
 </html>

@@ -9,6 +9,7 @@ public class WorkPage {
 	private int mid;
 	private int pid;
 	private int jid;
+	private int jmid;
 	
 	private String name;
 	private int progress;
@@ -24,29 +25,51 @@ public class WorkPage {
 	private MultipartFile report;
 	private String fname;
 	private Date fregdate;
+	private String path;
+	private int fid;
 	public WorkPage() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public WorkPage(int mid, int pid, String name, int progress, String jmstatus, String jname, Date jstart, Date jend,
-			MultipartFile report, String fname,Date juptdate,String pname,String content,Date fregdate,int jid) {
+	public WorkPage(int mid, int pid, int jid, String name, int progress, String jmstatus, String jname, Date jstart,
+			Date jend, Date juptdate, String pname, String content, MultipartFile report, String fname, Date fregdate,
+			String path, int fid,int jmid) {
 		this.mid = mid;
 		this.pid = pid;
+		this.jid = jid;
 		this.name = name;
 		this.progress = progress;
 		this.jmstatus = jmstatus;
 		this.jname = jname;
 		this.jstart = jstart;
 		this.jend = jend;
-		this.report = report;
-		this.fname = fname;
-		this.fregdate = fregdate;
 		this.juptdate = juptdate;
 		this.pname = pname;
 		this.content = content;
+		this.report = report;
+		this.fname = fname;
+		this.fregdate = fregdate;
+		this.path = path;
+		this.fid = fid;
+		this.jmid = jmid;
+	}
+	public int getMid() {
+		return mid;
+	}
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public int getJid() {
+		return jid;
+	}
+	public void setJid(int jid) {
 		this.jid = jid;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -83,6 +106,24 @@ public class WorkPage {
 	public void setJend(Date jend) {
 		this.jend = jend;
 	}
+	public Date getJuptdate() {
+		return juptdate;
+	}
+	public void setJuptdate(Date juptdate) {
+		this.juptdate = juptdate;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public MultipartFile getReport() {
 		return report;
 	}
@@ -95,63 +136,30 @@ public class WorkPage {
 	public void setFname(String fname) {
 		this.fname = fname;
 	}
-
-	public int getMid() {
-		return mid;
-	}
-
-	public void setMid(int mid) {
-		this.mid = mid;
-	}
-
-	public int getPid() {
-		return pid;
-	}
-
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-
-	public Date getJuptdate() {
-		return juptdate;
-	}
-
-	public void setJuptdate(Date juptdate) {
-		this.juptdate = juptdate;
-	}
-
-	public String getPname() {
-		return pname;
-	}
-
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public Date getFregdate() {
 		return fregdate;
 	}
-
 	public void setFregdate(Date fregdate) {
 		this.fregdate = fregdate;
 	}
-
-	public int getJid() {
-		return jid;
+	public String getPath() {
+		return path;
 	}
-
-	public void setJid(int jid) {
-		this.jid = jid;
+	public void setPath(String path) {
+		this.path = path;
 	}
-	
+	public int getFid() {
+		return fid;
+	}
+	public void setFid(int fid) {
+		this.fid = fid;
+	}
+	public int getJmid() {
+		return jmid;
+	}
+	public void setJmid(int jmid) {
+		this.jmid = jmid;
+	}
 	
 	
 }

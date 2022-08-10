@@ -28,7 +28,8 @@ public class WorkPageController {
 	// http://localhost:7080/project06/WorkPageList.do
 	@RequestMapping("WorkPageList.do")
 	public String WorkPageList(WorkPage sch, @RequestParam(value = "mid", defaultValue = "0") int mid,
-			@RequestParam(value = "pid", defaultValue = "0") int pid, Model d, HttpServletRequest request) {
+											 @RequestParam(value = "pid", defaultValue = "0") int pid,
+											 Model d, HttpServletRequest request) {
 		// 임시 프로젝트 선택
 
 		pid = 2;
@@ -65,7 +66,10 @@ public class WorkPageController {
 	// int pid, @RequestParam("pid")
 	@RequestMapping("WorkPageDetail.do")
 	public String WorkPageDetail(WorkPage sch,@RequestParam(value = "mid", defaultValue = "0") int mid, Model d,
-			@RequestParam(value = "jid", defaultValue = "0") int jid, HttpServletRequest request) {
+							WorkPage filelist,@RequestParam(value = "jid", defaultValue = "0") int jid,
+											  @RequestParam(value = "jmid", defaultValue = "0") int jmid,
+											  HttpServletRequest request) {
+	
 		HttpSession session = request.getSession();
 		Member curMem = (Member) request.getSession().getAttribute("mem");
 		if (curMem == null) {
@@ -75,7 +79,13 @@ public class WorkPageController {
 		if (!gservice.checkProjectAuth(curMem.getMid(), jid)) {
 			return "redirect:WorkPageDetail.do";
 		}
+		
 		d.addAttribute("workpage", service.getWokrPageDetail(sch,curMem.getMid(), jid));
+		d.addAttribute("flist",service.getWorkPageFile(filelist, curMem.getMid(), jid,jmid));
+		
+		System.out.println("jmid 값:"+filelist.getJmid());
+		System.out.println("jmid 값:"+sch.getJmid());
+		System.out.println("mid 값:"+curMem.getMid());
 		
 		return "WEB-INF\\views\\WorkPageDetail.jsp";
 	}
