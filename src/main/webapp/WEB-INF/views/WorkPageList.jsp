@@ -102,7 +102,7 @@
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr ondblclick="goDetail(${wl.jid})">
+                  <tr ondblclick="goDetail(${wl.jid},${wl.jmid})">
 
                     <td style="text-align:center;">${wl.name}</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
@@ -201,8 +201,8 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript">
-function goDetail(jid){
-	location.href="${path}/WorkPageDetail.do?jid="+jid;
+function goDetail(jid,jmid){
+	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
 </script>
 </body>

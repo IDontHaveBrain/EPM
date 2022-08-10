@@ -222,50 +222,7 @@ select count(m.mid)
 from participants p, member m
 where p.mid = m.mid(+) and ((p.mid = 1 and p.pid = 1) or (m.auth = 'ADMIN'));
 
-		insert into jobfile values(jobfile_seq.nextval,
-									1,
-									sysdate,
-									1,
-									1) ;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
 select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
 
-select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
-select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
-select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
-select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
-select * from CALENDARMEMBER;
-		SELECT jobfile_seq.nextval FROM dual;
-		DROP TABLE jobfile;
-		DROP SEQUENCE jobfile_seq;
-		SELECT * FROM jobfile;
-
-select * from CALENDARMEMBER;
+insert into CALENDARMEMBER
+values (CALENDARMEMBER_SEQ.nextval, 2, 'test', sysdate, to_date('2022-08-11 00:00:00','YYYY-MM-DD HH24:MI:SS'), 'tt test tt',NULL,'#0099CC','#ccffff',0);
