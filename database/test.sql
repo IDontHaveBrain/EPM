@@ -269,3 +269,4 @@ select * from CALENDARMEMBER;
 		SELECT * FROM jobfile;
 
 select * from CALENDARMEMBER;
+SELECT * FROM jobfile;
