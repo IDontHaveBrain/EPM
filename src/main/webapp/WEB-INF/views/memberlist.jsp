@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="card-body p-0">
-        <form id="send" action="${path}/sendMail.do" method="post">
+        <form id="send" action="${path}/sendEmpnoAndPassword.do" method="post">
           <table class="table table-striped projects">
               <thead>
                   <tr>
@@ -196,39 +196,8 @@ function goDetail(mid){
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript">
-
-$("#checkEmail").click(function () {
-    let email = $("#email").val();
-    let name = $("#name").val();
-
-    $.ajax({
-        type: "GET",
-        url: "mailForm.do",
-        data: {
-            "email": email,
-            "name": name
-        },
-        success: function (res) {
-            if (res['check']) {
-                swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK))
-                    if(OK) {
-                        $.ajax({
-                            type: "POST",
-                            url: "mailSender.do",
-                            data: {
-                            	"email": email,
-                                "name": name
-                            }
-                        })
-                        window.location = "login.do";
-                    }
-
-
-                }
-            
-        }
-    })
-})
+var msg = "${msg}"
+    if(msg!="") alert(msg)
 
 </script>
 </body>
