@@ -16,8 +16,8 @@ public class CalendarService {
 	@Autowired(required=false)
 	private CalendarDao dao;
 	
-	public List<CalendarMember> getCalList(){
-		List<CalendarMember> list = dao.getCalList();
+	public List<CalendarMember> getCalList(int mid){
+		List<CalendarMember> list = dao.getCalList(mid);
 		for(CalendarMember calendar : list){
 			calendar.setId(calendar.getMcid());
 			SimpleDateFormat sdf;

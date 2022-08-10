@@ -17,5 +17,6 @@ public interface MemberDao {
 	public void authorize(Member upt);
 	public void deleteMember(int mid);
 	public void uptEmpnoAndPassword(Member upt);
-	public boolean idCheck(String email);
+	public void recoverPassword(Member upt);
+	public String getMemberName(Member sch);
 }

@@ -89,12 +89,11 @@ public class MemberController {
 		return "WEB-INF\\views\\memberdetail.jsp";
 	}
 	
+	@RequestMapping("logout.do")
+	public String logout(Member m, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("mem");
+		return "redirect:login.do";
+	}
+	
 }
-
-// 로그아웃시
-// session.removeAttribute("mem");
-/*
- * @RequestMapping("logout.do") public String logout(HttpServletRequest request)
- * { Member mem = service.memberLogin(m); HttpSession session =
- * request.getSession(); return "";
- */

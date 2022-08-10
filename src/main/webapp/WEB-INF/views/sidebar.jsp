@@ -38,7 +38,7 @@
         <a href="#" class="d-block">${mem.name}</a>
       </div>
       <div class="col-5">
-          	<button type="button" id="logout" class="btn btn-block btn-danger">Logout</button>
+          	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>
       </div>
     </div>
 
