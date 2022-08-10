@@ -95,7 +95,7 @@
                     <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="7%">보류</th>
+  					<th style="text-align:center;" width="7%">산출물 등록여부</th>
                     <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
@@ -112,13 +112,13 @@
 			<!-- 진행률 -->
                       <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.progress}%</span></td>
                       
-                    <td>
+                 
              <!-- 진행률 -->       
            <!-- 파일등록 css -->
-                  	    <button class="btn btn-primary col fileinput-button" onclick="location.href='WorkPageFileinsert.do'">
-                        <i class="fas fa-plus"></i>
-                        <span></span>
-                      </button>
+                  	    
+                        
+                       <td style="text-align:center;" >있어</td>
+                    
           <!-- 파일등록 css -->
 
                     <td>
