@@ -24,6 +24,6 @@ public class MailController {
 
 	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
 	public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
-		service.findPw(response, member);
+		//service.findPw(response, member);
 	}
 }

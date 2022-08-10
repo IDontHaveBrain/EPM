@@ -63,7 +63,9 @@
         </div>
       </div>
       <a class="nav-link bg-light" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a>
-      <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
+      <ul class="navbar-nav overflow-hidden" role="tablist">
+        <li class="nav-item active" role="presentation"><a class="nav-link active" data-toggle="row" id="tab-index" href="#panel-adminDashboard-do-tab-1" role="tab" aria-controls="panel-index" aria-selected="true">Admin Dashboard</a></li>
+      </ul>
       <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
       <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
     </div>
