@@ -52,7 +52,7 @@ public class WorkPageController {
 	@RequestMapping("WorkPageFileinsert.do")
 	public String WorkPageInsertForm() {
 
-		return "WEB-INF\\views\\WorkPageFileinsert.jsp";
+		return "WEB-INF\\views\\WorkPageDetail.jsp";
 	}
 
 	@RequestMapping("WorkPageInsert.do")

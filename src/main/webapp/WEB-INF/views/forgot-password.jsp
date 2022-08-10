@@ -27,9 +27,9 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">사원번호와 사원 등록 시 등록한 이메일주소를 입력해주세요</p>
-      <form action="${path}/mailSender.do" method="post">
+      <form action="${path}/sendTempPassword.do" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="receiver" class="form-control" placeholder="이메일">
+          <input type="email" name="email" class="form-control" placeholder="이메일">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

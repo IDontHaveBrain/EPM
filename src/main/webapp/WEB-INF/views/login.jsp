@@ -74,7 +74,7 @@
       <!-- /.social-auth-links -->
 
       <p class="mt-3 mb-1">
-        <a href="${path}/findMyPassword.do">비밀번호찾기</a>
+        <a href="${path}/recoverpassword.do">비밀번호찾기</a>
       </p>
       <p class="mb-0">
         <a href="${path}/register.do" class="text-center">사원등록신청</a>

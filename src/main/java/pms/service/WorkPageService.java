@@ -56,7 +56,7 @@ public class WorkPageService {
 	public void insertWorkPageFile(WorkPageFile ins) {
 		MultipartFile mpf = ins.getReport();
 		String fname = mpf.getOriginalFilename();
-		
+		System.out.println("jmid 값 가져오냐?"+ins.getJmid());
 		File f = new File(path+fname);
 		try {
 			mpf.transferTo(f);

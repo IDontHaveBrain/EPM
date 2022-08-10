@@ -24,20 +24,7 @@
 		SELECT *
 		FROM member	
 	</select>
-	
-	<update id="sendMail">
-		UPDATE member 
-		SET password = #{password}
-		WHERE empno = #{empno}
-		AND email = #{email}
-	</update>
-	
-	<select id="findPwCheck" resultType="int">
-		SELECT count(*)
-		FROM member
-		WHERE email = #{email}
-	</select>
-	
+
 	<select id="getMemberDetail" parameterType="int" resultType="member">
 		SELECT *
 		FROM member
@@ -58,16 +45,17 @@
 		WHERE mid = #{mid}	
 	</delete>	
 	
-	<update id="uptEmpnoandPassword" parameterType="member">
+	<update id="uptEmpnoAndPassword" parameterType="member">
 		UPDATE member 
-			SET empno = empno_seq.nextval,
-				password = {password}
+			SET empno = #{empno},
+				password = #{password}
 		WHERE mid = #{mid}
 	</update>
 	
-	<select id="idCheck" parameterType="Boolean" resultType="Boolean">
-		SELECT count(*)
-		FROM member
-		WHERE email = #{email}		
-	</select>
+	<update id="recoverPassword" parameterType="member">
+		UPDATE member
+			SET password = #{password}
+		WHERE empno = #{empno}
+		AND email = #{email}
+	</update>
 </mapper>

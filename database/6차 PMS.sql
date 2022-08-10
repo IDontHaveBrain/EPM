@@ -5,7 +5,7 @@ system/1111
 CREATE USER p06 IDENTIFIED BY 1111;
 grant dba to p06;
 */
-
+SELECT * FROM MEMBER;
 CREATE TABLE member(
 	email varchar2(50),
 	password varchar2(20),
@@ -15,8 +15,6 @@ CREATE TABLE member(
 );
 
 INSERT INTO MEMBER values('test@gmail.com', 'zxc!23123', '홍길동', 'ADMIN', sysdate);
-
-SELECT * FROM MEMBER;
 
 create table notice(
                        nid number primary key,

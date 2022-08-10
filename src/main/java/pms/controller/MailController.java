@@ -1,29 +1,51 @@
 package pms.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import pms.service.MailSenderService;
+import pms.service.MemberService;
+import pms.vo.Mail;
 import pms.vo.Member;
 
 @Controller
 public class MailController {
-
+	
 	@Autowired(required = false)
 	private MailSenderService service;
 
 	// http://localhost:7080/springweb/mailForm.do
-	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
-	public void findPwGET() throws Exception{
+	@GetMapping("createEmpnoAndPassword.do")
+	public String mailForm() {
+		return "WEB-INF\\views\\memberdetail.jsp";
 	}
 
-	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
-	public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
-		//service.findPw(response, member);
+	@PostMapping("sendEmpnoAndPassword.do")
+	public String mailSender(Mail mail, Member member, Model d) {
+		if(member != null) {
+			service.uptEmpnoAndPassword(member);
+			d.addAttribute("msg", service.sendMail(mail, member));
+			return "redirect:memberlist.do";
+		}
+		
+		return "WEB-INF\\views\\memberdetail.jsp";
+	}
+	// http://localhost:7080/project06/recoverpassword.do
+	@GetMapping("recoverpassword.do")
+	public String recoverPasswordForm() {
+		return "WEB-INF\\views\\forgot-password.jsp";
+	}
+
+	@PostMapping("sendTempPassword.do")
+	public String recoverPassword(Mail mail, Member member, Model d) {
+		if(member != null) {
+			service.recoverPassword(member);
+			d.addAttribute("msg", service.sendTempPassword(mail, member));
+		}
+		
+		return "WEB-INF\\views\\forgot-password.jsp";
 	}
 }
