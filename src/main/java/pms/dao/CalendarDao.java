@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface CalendarDao {
 
-	public List<CalendarMember> getCalList();
+	public List<CalendarMember> getCalList(int mid);
 	public void insertCalendar(CalendarMember ins);
 	public void updateCalendar(CalendarMember upt);
 	public void deleteCalendar(int mcid);
