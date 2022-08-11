@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: skawn
-  Date: 2022-07-28
-  Time: 오후 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -16,6 +9,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+  
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -43,33 +43,11 @@
 		
 		--%>	
 	});
-	function goInsert(){
-		location.href="${path}/projectInsertForm.do"
-	}
-	function goDetail(pid){
-		location.href="${path}/projectDetail.do?pid="+pid;
-	}
-	/*
-		function deleteProc(){
-		if(confirm("삭제하시겠습니까?")){
-			$("form").attr("action","${path}/deleteProject.do?pid="+pid);
-			$("form").submit();		
-		}
-	}
-	if(proc=="del"){
-		alert("삭제성공!")
-	}	
-	*/
-  	$("#delBtn").click(function(){
-  		if(confirm("삭제하시겠습니까?")){
-  			$("#frm01").attr("action","${path}/calDelete.do");
-  			$("#frm01").submit();
-  		}
-  	});
 
 </script>
 
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -79,11 +57,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -92,7 +70,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Project</h1>
+            <h1 class="m-0">내 사원정보</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -107,114 +85,57 @@
 
     <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
-      <div class="card">
-      <form>
-        <div class="card-header">
-          <h3 class="card-title">Projects</h3>
-
-          <div class="card-tools">
-            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
-                     
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div class="card-body p-0">
-          <table class="table table-striped projects">
-              <thead>
-                  <tr>
-                      <th style="width: 1%">
-                          #
-                      </th>
-                      <th style="width: 20%">
-                          Project Name
-                      </th>
-                      <th style="width: 30%">
-                          Project Period
-                      </th>
-                      <th>
-                          Project Progress
-                      </th>
-                      <th class="text-center">
-                          Status
-                      </th>
-                    
-                   
-                      
-                                
-                  </tr>
-              </thead>
-              <tbody>  
-              <c:forEach var="project" items="${projectList}">
-                  <tr>
-                      <td>
-                          #
-                      </td>
-                      <td>
-                          <a>
-                            ${project.pname}  
-                          </a>
-                          <br/>
-                          <small>
-                          	Created <fmt:formatDate value="${project.pregdate}"/>
-                             
-                          </small>
-                      </td>
-                      <td>
-                          <a>
-                          <fmt:formatDate value="${project.pstart}"/>
-                          
-                          </a>
-                          <br/>
-                          <a>
-                          ~ <fmt:formatDate value="${project.pend}"/>
-                         
-                          </a>
-                      </td>                     
-                      <td class="project_progress">
-                          <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
-                              </div>
-                          </div>
-                          <small>
-                              57% Complete
-                          </small>
-                      </td>
-                      <td class="project-state">
-                          <span class="badge badge-success">Success</span>
-                      </td>
-                 
-                      <td class="project-actions text-right">
-                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-info btn-sm">수정</button>
-						<button type="button" onclick="deleteProc(${project.pid})" class="btn btn-danger btn-sm">삭제</button>
-                      </td>
-                  
-                  </tr>
-              </c:forEach>                
-              </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-        </form>
+      <div class="container-fluid">
+        <!-- 페이지 구성 시작!! -->
+     	<form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">${member.name}님 사원정보</h3>
+            </div>
+            <input id="mid" name="mid" type="hidden" value="${member.mid}" class="form-control" readonly>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputName">사원번호</label>
+                <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
+              </div>
+              <div class="form-group">
+                <label for="inputName">비밀번호</label>
+                <input id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
+                <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">비밀번호 변경</button>
+              </div>
+              <div class="form-group">
+                <label for="inputName">이메일</label>
+                <input id="email" name="email" type="text" value="${member.email}" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="inputName">이름</label>
+                <input id="name" name="name" type="text" value="${member.name}" class="form-control" readonly>
+              </div>
+                <label for="inputProjectLeader">권한</label>
+              <div class="form-group">
+                <input id="auth" name="auth" type="text" value="${member.auth}" class="form-control" readonly>
+              </div>
+              <div class="col-12" style="text-align:right">    
+          		<button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
+        	  </div>                                       
+              </div>
+            </div>
+            <!-- /.card-body -->
+          <!-- /.card -->
+       </form>
+        <!-- 페이지 구성 끝!! -->
       </div>
-      <!-- /.card -->
-
+      <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  </div>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
-</div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
@@ -252,4 +173,68 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 </body>
+
+<script type="text/javascript">
+	var msg = "${msg}"
+	
+    if(msg!="") alert(msg)
+
+
+	function authorize(mid){
+		if(confirm("해당 사원정보를 수정하시겠습니까?")){
+			$("form").attr("action","${path}/authorize.do");
+			$("form").submit();
+		}
+	} 
+	function deleteMember(){
+		var mid = $("[name=mid]").val()
+		
+		if(confirm("해당 사원을 삭제하시겠습니까?")){
+			location.href="${path}/deleteMember.do?mid="+mid;
+		}
+	} 
+	/*
+	function updateEmpno(){
+		var mid = $("[name=mid]").val()
+		
+		if(confirm("사원번호를 발급 처리하시겠습니까?")){
+			$("form").attr("action","${path}/createEmpnoandPassword.do");
+			$("form").submit();
+		}
+	}
+	*/
+	
+	var proc = "${proc}"
+	if(proc=="upt"){
+		alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
+		location.href="${path}/memberlist.do";
+	}		
+	
+	if(proc=="del"){
+		alert("삭제완료\n사원 관리 페이지로 이동합니다.");
+		location.href="${path}/memberlist.do";
+	}
+	/*
+	if(proc=="uptE"){
+		alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
+		location.href="${path}/memberlist.do";
+	}
+	*/
+	
+	$(function(){
+		$("#sendBtn").click(function(){
+			$.ajax({
+				url : "sendEmpnoAndPassword.do",
+				type : "POST",
+				data : {
+					email : $("#email").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			})
+		});
+	})
+	
+</script>
 </html>

@@ -9,6 +9,11 @@
     <select id="jobplanListPrj" parameterType="int" resultType="jobplan">
         select * from jobplan where pid=#{pid}
     </select>
+    <select id="memJobListPrj" parameterType="int" resultType="jobplan">
+        select jp.*
+        from JOBPLAN jp, (select * from PARTICIPANTS p, JOBMEMBER jm where p.MID = #{mid} and p.PPID = jm.PPID) myjob
+        where jp.JID = myjob.JID and jp.PID = #{pid}
+    </select>
     <select id="isProjectMember" parameterType="hashmap" resultType="boolean">
         select count(*) from participants where mid=#{mid} and pid=#{pid}
     </select>

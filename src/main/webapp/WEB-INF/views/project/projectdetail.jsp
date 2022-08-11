@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: skawn
+  Date: 2022-07-28
+  Time: 오후 12:13
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,13 +16,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
-  
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
-
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-	
-  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-  
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -37,17 +37,44 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+
 <script type="text/javascript">
 	$(document).ready(function(){
-		<%-- 
-		
-		--%>	
-	});
+	   
+        
+    	//Date picker
+	    $('#reservationdate').datepicker({
+	    	format: 'L'
 
+	    });
+		
+
+
+	});
+	function updatePmember(){
+		    $.ajax({
+		      url: "${path}/ajaxPmember.do",
+		      data: "pid=" + ${param.pid},
+		      dataType: "json",
+		      success: function (data) {
+		        console.log(data)
+		        var list = data.pmemberList;
+		        var addHTML = "";
+		        var addPage = "";
+		        $(list).each(function (idx, rst) {
+		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name"</option>";
+		        });
+
+		        console.log(addHTML);
+		        $("#inputPM").html(addHTML);
+		        $("#inputMem").html(addHTML);
+		      }
+		    });
+		  }
+	updatePmember();
 </script>
 
 </head>
-
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -70,7 +97,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">사원 상세정보</h1>
+            <h1 class="m-0">프로젝트 수정</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -87,60 +114,70 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
+        <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">             
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">${member.name}님 사원정보</h3>
+              <h3 class="card-title">프로젝트 수정</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
             </div>
-            <input id="mid" name="mid" type="hidden" value="${member.mid}" class="form-control" readonly>
+            
             <div class="card-body">
               <div class="form-group">
-                <label for="inputName">사원번호</label>
-                <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
+                <label for="inputName">프로젝트명</label>
+                <input id="inputName" type="text" value="${project.pname}" class="form-control">
               </div>
-              <div class="form-group">
-                <label for="inputName">이메일</label>
-                <input id="email" name="email" type="text" value="${member.email}" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="inputName">이름</label>
-                <input id="name" name="name" type="text" value="${member.name}" class="form-control">
-              </div>
-                <label for="inputProjectLeader">권한</label>
-              <div class="form-group">
-                <select id="auth" name="auth" class="form-control pm-select">
-                  <option>${member.auth}</option>
-			      <option>CEO</option>
-			      <option>ADMIN</option>
-			      <option>HR</option>
-			      <option>MEMBER</option>
-			      <option>GUEST</option>
-                </select> 
+              <div class="form-group">           
+                <label for="inputProjectLeader">PM</label>
+                <select id="inputPM" class="form-control pm-select">
+                	<option selected disabled>PM 선택</option>
+    				<c:forEach var="pmember" items="${pmemberList}">
+						<option value="${pmember.mid }">${pmember.name}</option>
+					</c:forEach>
+                </select>              
               </div>
               <div class="form-group"> 
-              	<label for="inputProjectLeader">승인 여부</label>
-                <select id="status" name="status" class="form-control pm-select">
-				  <option>${member.status}</option>
-			      <option>승인</option>
-			      <option>대기</option>
+              	<label for="inputProjectLeader">참여 멤버</label>
+                <select id="inputPM" class="form-control pm-select">
+                	<option selected disabled>멤버 선택</option>
+    				<c:forEach var="pmember" items="${pmemberList}">
+						<option value="${pmember.mid }">${pmember.name}</option>
+					</c:forEach>
                 </select> 
-              </div>    
+              </div>  
               <div class="form-group">
-              	<label for="inputProjectLeader">마지막 접속시간</label>
-                	<fmt:formatDate value="${member.accessdate}" pattern="yyyy-MM-dd hh:mm:ss"/>
-              </div>                                    
+                <label for="inputDescription">프로젝트 설명</label>
+                <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
+              <div class="form-group">
+                <label for="inputClientCompany">시작일 :</label>
+                <fmt:formatDate value="${project.pstart}"/>
+                <input type="date" id="inputClientCompany" class="form-control">
+              </div>
+			  <div class="form-group">
+                <label for="inputClientCompany">종료일 :</label>
+                <fmt:formatDate value="${project.pend}"/>
+                <input type="date" id="inputClientCompany" value="${project.pstart}" class="form-control">
+              </div> 
             </div>
             <!-- /.card-body -->
+     	   </div>
           <!-- /.card -->
+      
       <div class="row">
-        <div class="col-12" style="text-align:right">    
-          <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">권한변경 및 승인</button>
-          <button type="submit" id="sendBtn" class="btn btn-info btn-sm">사원번호 발급</button>
-          <button type="button" onclick="deleteMember(${memlist.mid})" class="btn btn-danger btn-sm">탈퇴</button>
-        </div>       
+        <div class="col-12">
+          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
+          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
+
+        </div>
       </div>
-       </form>
+   
+     </form>
         <!-- 페이지 구성 끝!! -->
       </div>
       <!-- /.container-fluid -->
@@ -148,12 +185,12 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  </div>
   <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
   <jsp:include page="../ctrlsidebar.jsp"/>
-  <!-- /.control-sidebar -->
+  <!-- /.control-sidebar -->>
+</div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
@@ -190,69 +227,45 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
-</body>
+
 
 <script type="text/javascript">
-	var msg = "${msg}"
-	
-    if(msg!="") alert(msg)
-
-
-	function authorize(mid){
-		if(confirm("해당 사원정보를 수정하시겠습니까?")){
-			$("form").attr("action","${path}/authorize.do");
-			$("form").submit();
-		}
-	} 
-	function deleteMember(){
-		var mid = $("[name=mid]").val()
-		
-		if(confirm("해당 사원을 삭제하시겠습니까?")){
-			location.href="${path}/deleteMember.do?mid="+mid;
-		}
-	} 
-	/*
-	function updateEmpno(){
-		var mid = $("[name=mid]").val()
-		
-		if(confirm("사원번호를 발급 처리하시겠습니까?")){
-			$("form").attr("action","${path}/createEmpnoandPassword.do");
-			$("form").submit();
-		}
+/*
+ function updateProc(){
+	if(confirm("수정하시겠습니까?")){
+		// 유효성 check
+		$("form").attr("action","${path}/updateProject.do");
+		$("form").submit();
 	}
-	*/
-	
-	var proc = "${proc}"
+}
+
+
+var proc = "${proc}"
 	if(proc=="upt"){
-		alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
-		location.href="${path}/memberlist.do";
-	}		
+		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
+			location.href="${path}/boardList.do";
+		}
+	}
 	
+
+ */
+	function deleteProc(){
+		if(confirm("삭제하시겠습니까?")){
+			$("form").attr("action","${path}/deleteProject.do");
+			$("form").submit();		
+		}
+	}
+ 
+var proc = "${proc}"	
 	if(proc=="del"){
-		alert("삭제완료\n사원 관리 페이지로 이동합니다.");
-		location.href="${path}/memberlist.do";
+		alert("삭제성공!")
 	}
-	/*
-	if(proc=="uptE"){
-		alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
-		location.href="${path}/memberlist.do";
+
+ function goMain(){
+		location.href="${path}/projectList.do";
 	}
-	*/
-	
-	$(function(){
-		$("#sendBtn").click(function(){
-			$.ajax({
-				url : "sendEmpnoAndPassword.do",
-				type : "POST",
-				data : {
-					email : $("#email").val()
-				},
-				success : function(result) {
-					alert(result);
-				},
-			})
-		});
-	})
-	
+
+
 </script>
+</body>
 </html>
