@@ -68,7 +68,7 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <c:if test="${mem.auth eq 'ADMIN'}">
+            <c:if test="${mem.auth eq 'ADMIN' || mem.auth eq 'CEO' || mem.auth eq 'HR'}">
             <li class="nav-item">
               <a href="adminDashboard.do?tab=1" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -93,23 +93,7 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <c:if test="${mem.auth == 'CEO'}">
-            <li class="nav-item">
-              <a href="memberlist.do" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>사원 관리</p>
-              </a>
-            </li>
-            </c:if>
-            <c:if test="${mem.auth == 'ADMIN'}">
-            <li class="nav-item">
-              <a href="memberlist.do" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>사원 관리</p>
-              </a>
-            </li>
-            </c:if>
-            <c:if test="${mem.auth == 'HR'}">
+            <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
             <li class="nav-item">
               <a href="memberlist.do" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -154,6 +138,14 @@
             <p>
               개인업무페이지
 
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="calendar.do" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              개인 일정관리(캘린더)
             </p>
           </a>
         </li>
