@@ -7,6 +7,7 @@ public class JobMemberDTO {
 	private int jmid;
 	private int progress;
 	private String jmstatus;
+	private int ppid;
 	public int getMid() {
 		return mid;
 	}
@@ -42,5 +43,11 @@ public class JobMemberDTO {
 	}
 	public void setJmstatus(String jmstatus) {
 		this.jmstatus = jmstatus;
+	}
+	public int getPpid() {
+		return ppid;
+	}
+	public void setPpid(int ppid) {
+		this.ppid = ppid;
 	}
 }

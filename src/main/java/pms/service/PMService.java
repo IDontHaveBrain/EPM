@@ -24,4 +24,11 @@ public class PMService {
 	public List<JobMemberDTO> getParticipants(int pid){
 		return dao.getParticipants(pid);
 	}
+	public void addJob(JobDTO j) {
+		dao.addJobPlan(j);
+		List<Integer> ppids = j.getPpids();
+		for(int ppid : ppids) {
+			dao.addJobMember(ppid);
+		}
+	}
 }

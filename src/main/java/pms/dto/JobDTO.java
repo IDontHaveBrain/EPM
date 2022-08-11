@@ -17,7 +17,13 @@ public class JobDTO {
 	private int pid;
 	private String jstatus;
 	private List<JobMemberDTO> jmlist;
-	
+	private List<Integer> ppids;
+	public List<Integer> getPpids(){
+		return ppids;
+	}
+	public void setPpids(List<Integer> ppids) {
+		this.ppids = ppids;
+	}
 	public int getId() {
 		return id;
 	}

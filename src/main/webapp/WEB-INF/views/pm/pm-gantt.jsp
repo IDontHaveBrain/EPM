@@ -87,28 +87,40 @@
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
         <form>
+        <input type="hidden" name="pid" value="1"/>
         <div class="card card-primary">
         <div class="card-body">
-             <div class="form-group">
-                  <label>기간:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
-                      </span>
+        	<div class="row">
+        		<div class="col-6">
+                <div class="form-group">
+                  <label>시작일:</label>
+                    <div class="input-group date" id="startdate" data-target-input="nearest">
+                        <input name="start" type="text" class="form-control datetimepicker-input" data-target="#startdate"/>
+                        <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
                     </div>
-                    <input type="text" class="form-control float-right" id="jobperiod">
-                  </div>
-                  <!-- /.input group -->
                 </div>
+                </div>
+                <div class="col-6">
+                <div class="form-group">
+                  <label>마감일:</label>
+                    <div class="input-group date" id="enddate" data-target-input="nearest">
+                        <input name="end" type="text" class="form-control datetimepicker-input" data-target="#enddate"/>
+                        <div class="input-group-append" data-target="#enddate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+             </div>
              <div class="row">
               <div class="col-12">
                 <div class="form-group">
                   <label>담당자:</label>
-                  <select class="duallistbox" multiple="multiple">
+                  <select name="ppids" class="duallistbox" multiple="multiple">
                     <c:forEach var="pp" items="${pplist}">
-                    	<option value="${pp.mid}">${pp.name}(${pp.email})</option>
+                    	<option value="${pp.ppid}">${pp.name}(${pp.email})</option>
                     </c:forEach>
                   </select>
                 </div>
@@ -118,11 +130,11 @@
             </div>
                 <div class="form-group">
                         <label>업무이름:</label>
-                        <input id="job" type="text" class="form-control" placeholder="Enter ...">
+                        <input id="job" name="name" type="text" class="form-control" placeholder="Enter ...">
                       </div>
                       <div class="form-group">
                         <label>업무내용:</label>
-                        <textarea id="content" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea id="content" name="content" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                       </div>
                 </div>
                 <div class="card-footer">
@@ -199,90 +211,85 @@
   <!-- Bootstrap4 Duallistbox -->
 <script src="${path}/pms/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <script >
-var gantt;
-var tasks;
-$(document).ready(function(){
-	$('#jobperiod').daterangepicker();
-	$('.duallistbox').bootstrapDualListbox();
-	$.ajax({
-		url:"${path}/joblist.do",
-		data:{pid:1},
-		dataType:"json",
-		success:function(data){
-			tasks = data.joblist
-			gantt = new Gantt("#gantt", tasks);
-		}
-	});
-	$('#addjob').click(function(){
-		job = $('#job').val();
-		if(job == ''){
-			alert("업무 이름을 입력하세요");
-			$('#job').focus();
-			return;
-		}
-		period = $('#jobperiod').val();
-		start = period.split('-')[0].trim();
-		end = period.split('-')[1].trim();
-		starts = start.split('/')
-		ends = end.split('/')
-		tasks.push({
-			id: 'Task ' + (tasks.length + 1),
-			name: job,
-			start: starts[2] + '-' + starts[0] + '-' + starts[1],
-			end: ends[2] + '-' + ends[0] + '-' + ends[1],
-			progress: 0,
-			dependencies: ''
-		});
-		gantt = new Gantt("#gantt", tasks);
-		$('#job').val('');
-		$('#content').val('');
-		$('.duallistbox option').prop('selected', false);
-		$('.duallistbox').bootstrapDualListbox('refresh', true);
-		/* $.ajax({
-			url: "${path}/joblist.do",
-			dataType: "json",
-			success: function(data) {
-				var tasks = data.joblist
+	var gantt;
+	var tasks;
+	$(document).ready(function(){
+		$('.duallistbox').bootstrapDualListbox();
+		$.ajax({
+			url:"${path}/joblist.do",
+			data:{pid:1},
+			dataType:"json",
+			success:function(data){
+				tasks = data.joblist
+				gantt = new Gantt("#gantt", tasks);
 			}
-		}); */
-	});
-	/* tasks = [
-		  {
-			id: 'Task 1',
-			name: '업무11',
-			start: '2022-08-02',
-			end: '2022-08-10',
-			progress: 20,
-			dependencies: ''
-		  },
-		  {
-				id: 'Task 4',
-				name: '444업무44444',
-				start: '2022-08-09',
-				end: '2022-08-15',
+		});
+		$('#addjob').click(function(){
+			console.log($("form").serialize());
+			job = $('#job').val();
+			if(job == ''){
+				alert("업무 이름을 입력하세요");
+				$('#job').focus();
+				return;
+			}
+			$.ajax({
+				url:"${path}/addjob.do",
+				data: $("form").serialize(),
+				dataType:"json",
+				success: function(){
+					$.ajax({
+						url:"${path}/joblist.do",
+						data:{pid:1},
+						dataType:"json",
+						success:function(data){
+							tasks = data.joblist
+							gantt = new Gantt("#gantt", tasks);
+						}
+					});
+				}
+			});
+
+			$('#job').val('');
+			$('#content').val('');
+			$('.duallistbox option').prop('selected', false);
+			$('.duallistbox').bootstrapDualListbox('refresh', true);
+		});
+		/* tasks = [
+			  {
+				id: 'Task 1',
+				name: '업무11',
+				start: '2022-08-02',
+				end: '2022-08-10',
 				progress: 20,
-				dependencies: 'Task 1'
+				dependencies: ''
 			  },
-		  	{
-				id: 'Task 2',
-				name: '업무22222',
-				start: '2022-08-05',
-				end: '2022-08-11',
-				progress: 20,
-				dependencies: ''
-			},
-			{
-				id: 'Task 3',
-				name: '업무3333',
-				start: '2022-08-04',
-				end: '2022-08-07',
-				progress: 20,
-				dependencies: ''
-			  }
-			  
-		]
-		gantt = new Gantt("#gantt", tasks); */
-	  
+			  {
+					id: 'Task 4',
+					name: '444업무44444',
+					start: '2022-08-09',
+					end: '2022-08-15',
+					progress: 20,
+					dependencies: 'Task 1'
+				  },
+			  	{
+					id: 'Task 2',
+					name: '업무22222',
+					start: '2022-08-05',
+					end: '2022-08-11',
+					progress: 20,
+					dependencies: ''
+				},
+				{
+					id: 'Task 3',
+					name: '업무3333',
+					start: '2022-08-04',
+					end: '2022-08-07',
+					progress: 20,
+					dependencies: ''
+				  }
+				  
+			]
+			gantt = new Gantt("#gantt", tasks); */
 	  document.querySelector(".chart-controls #day-btn").addEventListener("click", () => {
 		    gantt.change_view_mode("Day");
 		})
@@ -292,8 +299,16 @@ $(document).ready(function(){
 		document.querySelector(".chart-controls #month-btn").addEventListener("click", () => {
 		    gantt.change_view_mode("Month");
 		})
+		$('#startdate').datetimepicker({
+	        format: 'L'
+	    });
+	  $('#enddate').datetimepicker({
+	        format: 'L'
+	    });
+	  $(".nav-link").removeClass("active");
+		$("#manage").addClass("active");
 });
-  
+
   </script>
 </body>
 </html>

@@ -48,19 +48,19 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="${path}/pms/pages/widgets.html" class="nav-link active">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              업무관리
+              공지사항
               <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a id="manage" href="${path}/manage.do" class="nav-link active">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              멤버관리
+              업무관리
               <span class="right badge badge-danger">New</span>
             </p>
           </a>
@@ -83,11 +83,12 @@
             </p>
           </a>
         </li>
+
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a id="edit_pp" href="${path}/edit_pp.do" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              공지사항
+              멤버관리
               <span class="right badge badge-danger">New</span>
             </p>
           </a>
