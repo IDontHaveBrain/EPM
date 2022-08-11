@@ -85,7 +85,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container">
         <!-- 페이지 구성 시작!! -->
      	<form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
           <div class="card card-primary">
@@ -98,11 +98,16 @@
                 <label for="inputName">사원번호</label>
                 <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
               </div>
-              <div class="form-group">
-                <label for="inputName">비밀번호</label>
-                <input id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
-                <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">비밀번호 변경</button>
-              </div>
+              <div class="form-group" >
+                <label for="inputName" >비밀번호</label>
+                	
+               
+                <input style="width:85%" id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
+ 				<button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})" 
+                class="btn btn-primary btn-sm" >비밀번호 변경</button>                
+              
+            
+              
               <div class="form-group">
                 <label for="inputName">이메일</label>
                 <input id="email" name="email" type="text" value="${member.email}" class="form-control">
