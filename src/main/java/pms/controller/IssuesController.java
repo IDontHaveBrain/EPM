@@ -28,7 +28,7 @@ public class IssuesController {
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
 		service.insertIssue(ins);
 		d.addAttribute("isInsert","Y");
-		return "WEB-INF\\views\\issue.jsp";
+		return "WEB-INF\\views\\issue\\issue.jsp";
 	}
 	
 	// http://localhost:7080/project06/issueInsertForm.do
@@ -36,7 +36,7 @@ public class IssuesController {
 	public String issueInsertForm(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
-		return "WEB-INF\\views\\issue.jsp";
+		return "WEB-INF\\views\\issue\\issue.jsp";
 	}
 	
 	@RequestMapping("deleteIssue.do")
@@ -45,7 +45,7 @@ public class IssuesController {
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
 		service.deleteIssue(iid);
 		d.addAttribute("proc", "del");
-		return "WEB-INF\\views\\issuelist.jsp";
+		return "WEB-INF\\views\\issue\\issuelist.jsp";
 	}
 	
 	// http://localhost:7080/project06/issueDetail.do
@@ -55,7 +55,7 @@ public class IssuesController {
 		HttpSession session = request.getSession();
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
 		service.getIssueDetail(iid);
-		return "WEB-INF\\views\\issuedetail.jsp";
+		return "WEB-INF\\views\\issue\\issuedetail.jsp";
 	}
 	
 	// http://localhost:7080/project06/editIssue.do
@@ -63,7 +63,7 @@ public class IssuesController {
 	public String editIssue(HttpServletRequest request) { // 이슈사항 업데이트
 		HttpSession session = request.getSession();
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
-		return "WEB-INF\\views\\issueedit.jsp";
+		return "WEB-INF\\views\\issue\\issueedit.jsp";
 	}
 	
 	// http://localhost:7080/project06/issueList.do
@@ -72,6 +72,6 @@ public class IssuesController {
 		HttpSession session = request.getSession();
 		session.setAttribute("mem", gservice.getMember("test@test.com"));
 		d.addAttribute("issues", service.getIssuesList(sch));
-		return "WEB-INF\\views\\issuelist.jsp";
+		return "WEB-INF\\views\\issue\\issuelist.jsp";
 	}
 }

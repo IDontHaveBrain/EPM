@@ -40,11 +40,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -53,7 +53,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">리스크 목록</h1>
+            <h1 class="m-0">사원 관리</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -72,83 +72,74 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Issues</h3>
-
+          <h3 class="card-title">사원 리스트</h3>
           <div class="card-tools">
-            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
-                     
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
               <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
             </button>
           </div>
         </div>
         <div class="card-body p-0">
+        <form id="send" action="${path}/sendEmpnoAndPassword.do" method="post">
           <table class="table table-striped projects">
               <thead>
                   <tr>
                       <th style="width: 1%">
                           #
                       </th>
-                      <th style="width: 20%">
-                          업무명
-                      </th>
-                      <th style="width: 20%">
-                          이슈사항명
+                      <th style="width: 16%">
+                          이메일
                       </th>
                       <th style="width: 10%">
-                          진행상황
-                      </th>
-                      <th style="width: 15%">
-                          최종 수정일
+                          이름
                       </th>
                       <th style="width: 10%">
-                          작성자
-                      </th>       
+                          사원번호
+                      </th>
+                      <th style="width: 10%">
+                          권한
+                      </th>
+                      <th style="width: 16%">
+                          승인여부
+                      </th>  
                   </tr>
               </thead>
               <tbody>
-              <c:forEach var="iss" items="${issues}">
-                  <tr>
+              <c:forEach var="memlist" items="${memlist}">
+                  <tr ondblclick="goDetail(${memlist.mid})">
                       <td>
-                          ${iss.iid}
+                          ${memlist.mid}
                       </td>
                       <td>
                           <div>
-                              ${iss.jname}
+                              ${memlist.email}
                           </div>
                       </td>
                       <td>
                           <a>
-                              ${iss.ititle}
+                              ${memlist.name}
                           </a>
-                          <br/>
-                          <small>
-                              등록일:<fmt:formatDate value="${iss.iregdate}" pattern="yyyy-MM-dd"/>
-                          </small>
                       </td>
                       <td>
                           <div>
-                              ${iss.iprogress}
+                              ${memlist.empno}
                           </div>
                       </td>
                       <td>
                           <div>
-                              <fmt:formatDate value="${iss.iuptdate}" pattern="yyyy-MM-dd"/>
+                              ${memlist.auth}
                           </div>
                       </td>
                       <td>
-                          ${iss.name}
-                      </td>
-                      <td class="project-actions text-right" style="width: 10%">
-                      	<button type="button" onclick="goDetail(${iss.iid})" class="btn btn-info btn-sm">상세보기</button>
+                          <div>
+                              ${memlist.status}
+                          </div>
                       </td>
                   </tr>
               </c:forEach>            
               </tbody>
           </table>
+          </form>
         </div>
         <!-- /.card-body -->
       </div>
@@ -158,21 +149,18 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->  
 <script type="text/javascript">
-		function goDetail(iid) {
-			location.href="${path}/issueDetail.do?iid="+iid;
-		}
-		function goInsert() {
-			location.href="${path}/issueInsertForm.do"
-		}
-</script>    
+function goDetail(mid){
+	location.href="${path}/memberDetail.do?mid="+mid;
+}
+</script>
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -207,5 +195,10 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+<script type="text/javascript">
+var msg = "${msg}"
+    if(msg!="") alert(msg)
+
+</script>
 </body>
 </html>

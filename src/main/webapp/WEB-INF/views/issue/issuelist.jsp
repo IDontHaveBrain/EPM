@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Effective PM | Issues</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -40,11 +40,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -53,7 +53,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">리스크 목록</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -68,124 +68,111 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-     
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">새로운 프로젝트 등록</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            
-            <div class="card-body">
-             <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
-              <div class="form-group">
-                <label for="inputProjectCode">프로젝트 코드</label>
-                <input type="text" id="inputProjectCode" value="${param.number}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
-              </div>
-              <div class="form-group">           
-                <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select>              
-              </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select> 
-              </div>  
-              <div class="form-group">
-                <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Issues</h3>
 
-			  </form>
-            </div>
-            <!-- /.card-body -->
-     
-          <!-- /.card -->
-       
-  	  </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
-
+          <div class="card-tools">
+            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+                     
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          업무명
+                      </th>
+                      <th style="width: 20%">
+                          이슈사항명
+                      </th>
+                      <th style="width: 10%">
+                          진행상황
+                      </th>
+                      <th style="width: 15%">
+                          최종 수정일
+                      </th>
+                      <th style="width: 10%">
+                          작성자
+                      </th>       
+                  </tr>
+              </thead>
+              <tbody>
+              <c:forEach var="iss" items="${issues}">
+                  <tr>
+                      <td>
+                          ${iss.iid}
+                      </td>
+                      <td>
+                          <div>
+                              ${iss.jname}
+                          </div>
+                      </td>
+                      <td>
+                          <a>
+                              ${iss.ititle}
+                          </a>
+                          <br/>
+                          <small>
+                              등록일:<fmt:formatDate value="${iss.iregdate}" pattern="yyyy-MM-dd"/>
+                          </small>
+                      </td>
+                      <td>
+                          <div>
+                              ${iss.iprogress}
+                          </div>
+                      </td>
+                      <td>
+                          <div>
+                              <fmt:formatDate value="${iss.iuptdate}" pattern="yyyy-MM-dd"/>
+                          </div>
+                      </td>
+                      <td>
+                          ${iss.name}
+                      </td>
+                      <td class="project-actions text-right" style="width: 10%">
+                      	<button type="button" onclick="goDetail(${iss.iid})" class="btn btn-info btn-sm">상세보기</button>
+                      </td>
+                  </tr>
+              </c:forEach>            
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
       </div>
-      
-      <script type="text/javascript">
-      /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
+      <!-- /.card -->
 
-      </script>
-    </section>
-        
-        
-     
-        <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-
+<!-- ./wrapper -->  
+<script type="text/javascript">
+		function goDetail(iid) {
+			location.href="${path}/issueDetail.do?iid="+iid;
+		}
+		function goInsert() {
+			location.href="${path}/issueInsertForm.do"
+		}
+</script>    
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
