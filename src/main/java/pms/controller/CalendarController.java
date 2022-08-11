@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pms.service.CalendarService;
 import pms.dto.CalendarMember;
+import pms.service.GlobalService;
 import pms.vo.Member;
 import pms.vo.Participants;
 
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpSession;
 public class CalendarController {
 	@Autowired(required = false)
 	private CalendarService service;
+	@Autowired(required = false)
+	private GlobalService gservice;
+
 	// http://localhost:7080/springweb/calendar.do
 	@RequestMapping("calendar.do")
 	public String calendar() {
@@ -41,6 +45,16 @@ public class CalendarController {
 			d.addAttribute("callist", service.getCalList(mid));
 		} else
 			d.addAttribute("callist", service.getCalJobList(sch, mid));
+		return "pageJsonReport";
+	}
+	@RequestMapping("calPrjList.do")
+	public String calPrjList(Model d, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Member curMem = (Member)request.getSession().getAttribute("mem");
+		if(curMem == null || !curMem.getAuth().equals("ADMIN")){
+			return "redirect:login.do";
+		}
+		d.addAttribute("pcallist", service.getCalPrjList());
 		return "pageJsonReport";
 	}
 	// http://localhost:7080/springweb/calInsert.do

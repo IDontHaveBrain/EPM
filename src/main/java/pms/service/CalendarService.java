@@ -7,9 +7,11 @@ import pms.dao.GlobalDao;
 import pms.dto.CalendarMember;
 import pms.vo.Jobplan;
 import pms.vo.Participants;
+import pms.vo.Project;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -21,6 +23,34 @@ public class CalendarService {
 	@Autowired(required = false)
 	private GlobalDao gdao;
 
+	public List<CalendarMember> getCalPrjList(){
+		List<Project> plist = gdao.getAllPrjList();
+		List<CalendarMember> list = new ArrayList<>();
+		for(Project p : plist){
+			CalendarMember temp = new CalendarMember();
+			temp.setMcid(p.getPid()+1300000);
+			temp.setTitle(p.getPname());
+			temp.setContent(p.getPcomment());
+			temp.setCstart(p.getPstart());
+			temp.setCend(p.getPend());
+			temp.setBackgroundColor("#99FFFF");
+			temp.setTextColor("#000000");
+			temp.setAllDay(true);
+			list.add(temp);
+		}
+		for(CalendarMember calendar : list){
+			calendar.setId(calendar.getMcid());
+			SimpleDateFormat sdf;
+			sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+			String datetime = sdf.format(calendar.getCstart());
+			calendar.setStart(datetime);
+			datetime = sdf.format(calendar.getCend());
+			calendar.setEnd(datetime);
+			System.out.println(calendar.getTitle());
+		}
+		return list;
+	}
 	public List<CalendarMember> getCalJobList(Participants sch, int mid){
 		sch.setMid(mid);
 		List<Jobplan> jlist = gdao.memJobListPrj(sch);

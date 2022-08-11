@@ -34,5 +34,7 @@ public class GlobalService {
         map.put("pid", pid);
         return dao.checkProjectAuth(map);
     }
-
+    public boolean isAdmin(int mid){
+        return dao.isAdmin(mid);
+    }
 }

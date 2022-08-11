@@ -39,6 +39,9 @@
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
   <!-- jQuery -->
   <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
+  <!-- fullcalendar -->
+  <link href='${path}/fullcalendar/lib/main.css' rel='stylesheet' />
+  <script src='${path}/fullcalendar/lib/main.js'></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <script>
@@ -87,17 +90,17 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">내 일정</h3>
+                <h3 class="card-title">프로젝트 일정 캘린더</h3>
 
                 <div class="card-tools">
-                  <button id="calextend" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  <button id="pcalextend" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
                   </button>
                 </div>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="max-height: 500px; overflow-y:scroll"> <!-- style="max-height: 600px; overflow-y:scroll" -->
-                <div id="calendar"></div>
+                <div id="pcalendar"></div>
               </div>
               <!-- /.card-body -->
             </div>
@@ -214,6 +217,47 @@
     <c:forEach var="prj" items="${prjList}">
     //$("#plist${prj.pid}").click();
     </c:forEach>
+
+    var toDay = new Date()
+    var date = toDay.toISOString().split("T")[0]
+    console.log(date)
+
+    var calendarEl = document.getElementById('pcalendar');
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      height: 900,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listMonth'
+      },
+      initialDate: date,
+      initialView: 'listMonth',
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+
+      editable: false,
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: function(info, successCallback, failureCallback){
+        // http://localhost:7080/springweb/calList.do callist
+        $.ajax({
+          type:"post",
+          url:"${path}/calPrjList.do",
+          //data:"pid=" + ${param.pid} + "&job=1",
+          dataType:"json",
+          success:function(data){
+            console.log(data.pcallist)
+            successCallback(data.pcallist)
+          },
+          error:function(err){
+            console.log(err)
+          }
+        });
+      }
+    });
+    calendar.render();
+    $("#pcalextend").click();
   });
   var addHTMLz = "";
   <c:forEach var="prj" items="${prjList}">
