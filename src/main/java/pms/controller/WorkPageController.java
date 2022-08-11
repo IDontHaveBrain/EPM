@@ -32,7 +32,7 @@ public class WorkPageController {
 											 Model d, HttpServletRequest request) {
 		// 임시 프로젝트 선택
 
-		pid = 2;
+		pid = 1;
 		HttpSession session = request.getSession();
 		Member curMem3 = (Member) request.getSession().getAttribute("mem");
 
