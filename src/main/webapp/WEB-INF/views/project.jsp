@@ -271,6 +271,13 @@ var isInsert = "${isInsert}"
 		}
 	}
 
+$("#regBtn").click(function(){
+  	if(confirm("등록하시겠습니까?")){
+  		$("#frm01").attr("action","${path}/projectInsert.do");
+  		$("#frm01").submit();
+  	}
+});	
+
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){
 		var pnameVal = $("[name=pname]").val();		

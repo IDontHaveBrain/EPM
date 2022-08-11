@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import pms.vo.Member;
-import pms.vo.Participants;
+
 import pms.vo.Project;
 
 
@@ -17,7 +17,7 @@ public interface ProjectDao {
 	public Project getProjectDetail(int pid);
 	
 	public void insertProject(Project ins);
-	public void insertPartmem(Participants ins);
+	//public void insertPartmem(Participants ins);
 	
 	public void deleteProject(int pid);
 }

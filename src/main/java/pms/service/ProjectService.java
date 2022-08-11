@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import pms.dao.ProjectDao;
 import pms.vo.Member;
+
 import pms.vo.Project;
 
 @Service
@@ -31,6 +32,12 @@ public class ProjectService {
     public void insertProject(Project ins) {
     	dao.insertProject(ins);
     }	
+    /*
+         public void insertPartmem(Participants ins) {
+    	dao.insertPartmem(ins);
+    }	
+     */
+
     
 	public void deleteProject(int pid) {
 		dao.deleteProject(pid);

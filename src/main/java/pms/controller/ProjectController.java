@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.service.ProjectService;
-import pms.vo.Member;
+
 import pms.vo.Project;
 
 
@@ -33,9 +33,10 @@ public class ProjectController {
 	@RequestMapping("projectInsert.do")
 	public String projectInsert(Project ins, Model d){
 		service.insertProject(ins);
+	
 		d.addAttribute("isInsert","Y");
 		
-		return "WEB-INF\\views\\project.jsp";
+		return "WEB-INF\\views\\projectlist.jsp";
 	}
 	
 	@RequestMapping("projectDetail.do")
@@ -69,6 +70,14 @@ public class ProjectController {
 
 	
 	/*
+		@RequestMapping("ajaxPmeminsert.do")
+	public String ajaxPmeminsert(Participants ins){
+		service.insertPartmem(ins);
+	
+	
+		return "redirect:/projectlist.do";
+	}
+	
 	@RequestMapping("updateProject.do")
 	public String updateProject(Project upt, Model d){		
 		d.addAttribute("project",service.updateProject(upt));
