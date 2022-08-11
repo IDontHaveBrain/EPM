@@ -23,7 +23,7 @@ public class MailController {
 	// http://localhost:7080/springweb/mailForm.do
 	@GetMapping("createEmpnoAndPassword.do")
 	public String mailForm() {
-		return "WEB-INF\\views\\memberdetail.jsp";
+		return "WEB-INF\\views\\member\\memberdetail.jsp";
 	}
 
 	@PostMapping("sendEmpnoAndPassword.do")
@@ -42,7 +42,7 @@ public class MailController {
 	// http://localhost:7080/project06/recoverpassword.do
 	@GetMapping("recoverpassword.do")
 	public String recoverPasswordForm() {
-		return "WEB-INF\\views\\forgot-password.jsp";
+		return "WEB-INF\\views\\login\\forgot-password.jsp";
 	}
 
 	@PostMapping("sendTempPassword.do")
@@ -53,6 +53,6 @@ public class MailController {
 			d.addAttribute("msg", service.sendTempPassword(mail, member));
 		}
 		
-		return "WEB-INF\\views\\forgot-password.jsp";
+		return "WEB-INF\\views\\login\\forgot-password.jsp";
 	}
 }

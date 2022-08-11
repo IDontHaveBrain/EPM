@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: skawn
+  Date: 2022-07-28
+  Time: 오후 12:13
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -30,6 +37,22 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+	});
+	function goInsert(){
+		location.href="${path}/projectInsertForm.do"
+	}
+	function goDetail(pid){
+		location.href="${path}/projectDetail.do?pid="+pid;
+	}	
+
+
+</script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -40,11 +63,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -53,7 +76,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">Project</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -68,120 +91,111 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-     
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">새로운 프로젝트 등록</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            
-            <div class="card-body">
-             <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
-              <div class="form-group">
-                <label for="inputProjectCode">프로젝트 코드</label>
-                <input type="text" id="inputProjectCode" value="${param.number}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
-              </div>
-              <div class="form-group">           
-                <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select>              
-              </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select> 
-              </div>  
-              <div class="form-group">
-                <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">시작일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
+      <!-- Default box -->
+      <div class="card">
+      	<form id="frm01" class="form" method="post">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
 
-			  </form>
-            </div>
-            <!-- /.card-body -->
-     
-          <!-- /.card -->
-       
-  	  </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">취소</a>    
-          <button type="button" id="regBtn" class="btn btn-success float-right">등록</button>
-          <!--           
-          <button type="button" id="uptBtn" class="btn btn-info">수정</button>
-          <button type="button" id="delBtn" class="btn btn-danger">삭제</button> 
-          -->
-
+          <div class="card-tools">
+            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+                     
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Project Name
+                      </th>
+                      <th style="width: 30%">
+                          Project Period
+                      </th>
+                      <th>
+                          Project Progress
+                      </th>
+                      <th class="text-center">
+                          Status
+                      </th>
+                    
+                   
+                      
+                                
+                  </tr>
+              </thead>
+              <tbody>  
+              <c:forEach var="project" items="${projectList}">
+                  <tr ondblclick="goDetail(${project.pid})">
+                      <td>
+                          #
+                      </td>
+                      <td>
+                          <a>
+                            ${project.pname}  
+                          </a>
+                          <br/>
+                          <small>
+                          	Created <fmt:formatDate value="${project.pregdate}"/>
+                             
+                          </small>
+                      </td>
+                      <td>
+                          <a>
+                          <fmt:formatDate value="${project.pstart}"/>
+                          
+                          </a>
+                          <br/>
+                          <a>
+                          ~ <fmt:formatDate value="${project.pend}"/>
+                         
+                          </a>
+                      </td>                     
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              </div>
+                          </div>
+                          <small>
+                              57% Complete
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-success">Success</span>
+                      </td>
+                 
+                      <td class="project-actions text-right">
+                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-info btn-sm">수정</button>
+                      </td>
+                  
+                  </tr>
+              </c:forEach>                
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+        </form>
       </div>
-      
-      <script type="text/javascript">
-      /*
-      	$("#regBtn").click(function(){
-      		if(confirm("등록하시겠습니까?")){
-      			$("").attr("action","${path}/calInsert");
-      			$("").submit();
-      		}
-      	});
-      	
-      	$("#uptBtn").click(function(){
-      		if(confirm("수정하시겠습니까?")){
-      			$("").attr("action","${path}/calUpdate.do");
-      			$("").submit();
-      		}
-      	});  
-      	
-      	$("#delBtn").click(function(){
-      		if(confirm("삭제하시겠습니까?")){
-      			$("").attr("action","${path}/calDelete.do");
-      			$("").submit();
-      		}
-      	});        
-	   */
+      <!-- /.card -->
 
-      </script>
-    </section>
-        
-        
-     
-        <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->

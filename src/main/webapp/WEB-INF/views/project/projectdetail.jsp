@@ -16,15 +16,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
-  
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-	
-  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-  
-
-  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -45,44 +37,9 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="${path}/pms/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="${path}/pms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  
-  <link rel="stylesheet" href="${path}/pms/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-  
+
 <script type="text/javascript">
 	$(document).ready(function(){
-		function updateMember(){
-		    $.ajax({
-		      url: "${path}/ajaxMember.do",
-		      data: "",
-		      dataType: "json",
-		      success: function (data) {
-		        console.log(data)
-		        var list = data.memberList;
-		        var addHTML = "";
-		        var addPage = "";
-		        $(list).each(function (idx, rst) {
-		        	addHTML+="<option value='"+rst.empno+"'>"+rst.name+rst.empno+"</option>";
-		        });
-		        console.log(addHTML);
-		        $("#inputPM").html(addHTML);
-		        $("#inputMem").html(addHTML);
-		     
-		      }
-		    });
-		  }
-		updateMember();
-		
-		
-		//Initialize Select2 Elements
-	    $('.select2').select2()
-
-	    //Initialize Select2 Elements
-	    $('.select2bs4').select2({
-	      theme: 'bootstrap4'
-	    })
 	   
         
     	//Date picker
@@ -94,11 +51,30 @@
 
 
 	});
+	function updatePmember(){
+		    $.ajax({
+		      url: "${path}/ajaxPmember.do",
+		      data: "pid=" + ${param.pid},
+		      dataType: "json",
+		      success: function (data) {
+		        console.log(data)
+		        var list = data.pmemberList;
+		        var addHTML = "";
+		        var addPage = "";
+		        $(list).each(function (idx, rst) {
+		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name"</option>";
+		        });
 
+		        console.log(addHTML);
+		        $("#inputPM").html(addHTML);
+		        $("#inputMem").html(addHTML);
+		      }
+		    });
+		  }
+	updatePmember();
 </script>
 
 </head>
-
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -108,11 +84,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -121,7 +97,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Project</h1>
+            <h1 class="m-0">프로젝트 수정</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -138,74 +114,70 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
+        <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">             
           <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">프로젝트 수정</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
             
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
+                <input id="inputName" type="text" value="${project.pname}" class="form-control">
               </div>
-              <div class="form-group">                       
+              <div class="form-group">           
                 <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select select2bs4">
-    				<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
+                <select id="inputPM" class="form-control pm-select">
+                	<option selected disabled>PM 선택</option>
+    				<c:forEach var="pmember" items="${pmemberList}">
+						<option value="${pmember.mid }">${pmember.name}</option>
 					</c:forEach>
-                </select>                    
+                </select>              
               </div>
-              
-          
-             <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <label>참여 멤버</label>
-                  <div class="select2-purple">
-                    <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
-    				<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
+              <div class="form-group"> 
+              	<label for="inputProjectLeader">참여 멤버</label>
+                <select id="inputPM" class="form-control pm-select">
+                	<option selected disabled>멤버 선택</option>
+    				<c:forEach var="pmember" items="${pmemberList}">
+						<option value="${pmember.mid }">${pmember.name}</option>
 					</c:forEach>
-                    </select>
-                  </div>
-                </div>
-              
-
-                <!-- /.form-group -->
-              </div>
-              <!-- /.col -->
-            </div>
-            
+                </select> 
+              </div>  
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
+                <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
-              	<label for="inputClientCompany">시작일</label>
-                <input type="date" id="startDate" class="form-control" value="${param.pstart}" autocomplete="off"/>
-
-                <label for="inputClientCompany">종료일</label>
-                <input type="date" id="endDate" class="form-control" value="${param.pend}" autocomplete="off"/>
-
+                <label for="inputClientCompany">시작일 :</label>
+                <fmt:formatDate value="${project.pstart}"/>
+                <input type="date" id="inputClientCompany" class="form-control">
               </div>
-
+			  <div class="form-group">
+                <label for="inputClientCompany">종료일 :</label>
+                <fmt:formatDate value="${project.pend}"/>
+                <input type="date" id="inputClientCompany" value="${project.pstart}" class="form-control">
+              </div> 
             </div>
             <!-- /.card-body -->
-     	</div>
+     	   </div>
           <!-- /.card -->
-       
-  	  
-  	
-   
+      
       <div class="row">
-        <div class="col-12">    
+        <div class="col-12">
           <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <button type="button" id="regBtn" onclick="insertProc()" class="btn btn-success float-right">등록</button>
-        </div>       
+          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
+          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
+
+        </div>
       </div>
-    
-        
-        
-       </form>
+   
+     </form>
         <!-- 페이지 구성 끝!! -->
       </div>
       <!-- /.container-fluid -->
@@ -213,11 +185,11 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
-  <!-- /.control-sidebar -->
+  <jsp:include page="../ctrlsidebar.jsp"/>
+  <!-- /.control-sidebar -->>
 </div>
 <!-- ./wrapper -->
 
@@ -231,8 +203,6 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Select2 -->
-<script src="${path}/pms/plugins/select2/js/select2.full.min.js"></script>
 <!-- ChartJS -->
 <script src="${path}/pms/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -255,45 +225,47 @@
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${path}/pms/dist/js/demo.js"></script>
-<!-- Bootstrap4 Duallistbox -->
-<script src="${path}/pms/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-</body>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+
 
 <script type="text/javascript">
-    
-var isInsert = "${isInsert}"
-	if(isInsert=="Y"){
-		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
-			// 취소 입력시 조회화면 이동..
-			location.href="${path}/ProjectList.do"
-		}else{
-			location.href="${path}/projectInsertForm.do"
+/*
+ function updateProc(){
+	if(confirm("수정하시겠습니까?")){
+		// 유효성 check
+		$("form").attr("action","${path}/updateProject.do");
+		$("form").submit();
+	}
+}
+
+
+var proc = "${proc}"
+	if(proc=="upt"){
+		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
+			location.href="${path}/boardList.do";
 		}
 	}
-
-$("#regBtn").click(function(){
-  	if(confirm("등록하시겠습니까?")){
-  		$("#frm01").attr("action","${path}/projectInsert.do");
-  		$("#frm01").submit();
-  	}
-});	
-
-function insertProc(){
-	if(confirm("등록하시겠습니까?")){
-		var pnameVal = $("[name=pname]").val();		
-		if(	pnameVal == ""){
-			alert("프로젝트명을 등록하세요");
-			$("[name=pname]").focus();
-			return; // 프로세스를 중단 처리
-		}		
-		document.querySelector("form").submit();
-	}
-}
-
-function goMain(){
-	location.href="${path}/projectList.do";
-}
-
 	
+
+ */
+	function deleteProc(){
+		if(confirm("삭제하시겠습니까?")){
+			$("form").attr("action","${path}/deleteProject.do");
+			$("form").submit();		
+		}
+	}
+ 
+var proc = "${proc}"	
+	if(proc=="del"){
+		alert("삭제성공!")
+	}
+
+ function goMain(){
+		location.href="${path}/projectList.do";
+	}
+
+
 </script>
+</body>
 </html>

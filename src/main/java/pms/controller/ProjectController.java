@@ -21,13 +21,13 @@ public class ProjectController {
 	@RequestMapping("projectList.do")
 	public String projectList(Model d) {
 		d.addAttribute("projectList", service.getProjectList());
-		return "WEB-INF\\views\\projectlist.jsp";
+		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
 	
 	// http://localhost:7080/project06/projectInsertForm.do
 	@RequestMapping("projectInsertForm.do")
 	public String projectInsertForm(){
-		return "WEB-INF\\views\\project.jsp";
+		return "WEB-INF\\views\\project\\project.jsp";
 	}
 	
 	@RequestMapping("projectInsert.do")
@@ -35,33 +35,42 @@ public class ProjectController {
 		service.insertProject(ins);
 	
 		d.addAttribute("isInsert","Y");
-		
-		return "WEB-INF\\views\\projectlist.jsp";
+	
+		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
 	
 	@RequestMapping("projectDetail.do")
 	public String projectDetail(@RequestParam("pid") int pid, Model d){
 		d.addAttribute("project",service.getProjectDetail(pid));
+		d.addAttribute("pmemberList", service.getPmemberList(pid));
 		
-		return "WEB-INF\\views\\projectdetail.jsp";
+		return "WEB-INF\\views\\project\\projectdetail.jsp";
 	}
-	
+
 	@RequestMapping("deleteProject.do")
 	public String deleteProject(@RequestParam("pid") int pid, Model d){	
 		service.deleteProject(pid);
-		d.addAttribute("proc","del");
-		
-		return "WEB-INF\\views\\projectlist.jsp";	
+		d.addAttribute("proc","del");		
+		return "WEB-INF\\views\\project\\projectdetail.jsp";	
 	}
 	
 	@RequestMapping("memberList.do")
 	public String ajaxMember() {
-		return "WEB-INF\\views\\project.jsp";
+		return "WEB-INF\\views\\project\\project.jsp";
 	}
 	// http://localhost:7080/project06/ajaxMember.do
 	@RequestMapping("ajaxMember.do")
 	public String ajaxMember(Model d) {
-		d.addAttribute("memberList", service.getMemberList(1));
+		d.addAttribute("memberList", service.getMemberList());
+
+		return "pageJsonReport";
+	}
+	
+
+	// http://localhost:7080/project06/ajaxPmember.do?pid=1
+	@RequestMapping("ajaxPmember.do")
+	public String ajaxPmember(@RequestParam(value = "pid", defaultValue = "0") int pid, Model d) {
+		d.addAttribute("pmemberList", service.getPmemberList(pid));
 
 		return "pageJsonReport";
 	}
@@ -86,6 +95,13 @@ public class ProjectController {
 		return "WEB-INF\\views\\projectedit.jsp";
 	}
 	
+		@RequestMapping("deleteProject.do")
+	public String deleteProject(@RequestParam("pid") int pid, Model d){	
+		service.deleteProject(pid);
+		d.addAttribute("proc","del");
+		
+		return "WEB-INF\\views\\projectlist.jsp";	
+	}
 	 */
 
 }

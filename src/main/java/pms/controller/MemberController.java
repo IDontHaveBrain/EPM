@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,7 +27,7 @@ public class MemberController {
 			return "redirect:login.do";
 		}
 		d.addAttribute(new Member());
-		return "WEB-INF\\views\\register.jsp";
+		return "WEB-INF\\views\\login\\register.jsp";
 	}
 
 	@RequestMapping("dupCheck.do")
@@ -57,13 +59,13 @@ public class MemberController {
 			}
 
 		}
-		return "WEB-INF\\views\\login.jsp";
+		return "WEB-INF\\views\\login\\login.jsp";
 	}
 	
 	@RequestMapping("memberlist.do")
 	public String mailForm(Model d, Member sch) {
 		d.addAttribute("memlist", service.getMemberList(sch));
-		return "WEB-INF\\views\\memberlist.jsp";
+		return "WEB-INF\\views\\member\\memberlist.jsp";
 	}
 	
 	// http://localhost:7080/project06/memberDetail.do
@@ -71,7 +73,7 @@ public class MemberController {
 	public String boardDetail(@RequestParam("mid") int mid, Model d){
 		d.addAttribute("member",service.getMemberDetail(mid));
 		
-		return "WEB-INF\\views\\memberdetail.jsp";
+		return "WEB-INF\\views\\member\\memberdetail.jsp";
 	}	
 	
 	@RequestMapping("authorize.do")
@@ -79,14 +81,14 @@ public class MemberController {
 		service.authorize(upt);
 		d.addAttribute("member", service.getMemberDetail(upt.getMid()));
 		d.addAttribute("proc", "upt");
-		return "WEB-INF\\views\\memberdetail.jsp";
+		return "WEB-INF\\views\\member\\memberdetail.jsp";
 	}
 	
 	@RequestMapping("deleteMember.do")
 	public String deleteMember(@RequestParam("mid") int mid, Model d) {
 		service.deleteMember(mid);
 		d.addAttribute("proc", "del");
-		return "WEB-INF\\views\\memberdetail.jsp";
+		return "WEB-INF\\views\\member\\memberdetail.jsp";
 	}
 	
 	@RequestMapping("logout.do")
@@ -95,5 +97,6 @@ public class MemberController {
 		session.removeAttribute("mem");
 		return "redirect:login.do";
 	}
+	
 	
 }
