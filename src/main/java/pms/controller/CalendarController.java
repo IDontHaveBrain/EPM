@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.service.CalendarService;
 import pms.dto.CalendarMember;
 import pms.vo.Member;
+import pms.vo.Participants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,9 @@ public class CalendarController {
 	// http://localhost:7080/springweb/calList.do callist
 	@RequestMapping("calList.do")
 	public String calList(@RequestParam(value = "mid", defaultValue = "0") int mid,
+						  @RequestParam(value = "job", defaultValue = "0") int job,
+						  @RequestParam(value = "pid", defaultValue = "0") int pid,
+						  Participants sch,
 						  Model d, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Member curMem = (Member)request.getSession().getAttribute("mem");
@@ -33,7 +37,10 @@ public class CalendarController {
 		if(mid == 0) {
 			mid = curMem.getMid();
 		}
-		d.addAttribute("callist", service.getCalList(mid));
+		if (job == 0) {
+			d.addAttribute("callist", service.getCalList(mid));
+		} else
+			d.addAttribute("callist", service.getCalJobList(sch, mid));
 		return "pageJsonReport";
 	}
 	// http://localhost:7080/springweb/calInsert.do

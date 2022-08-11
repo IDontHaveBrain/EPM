@@ -84,7 +84,26 @@
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
         <div class="row">
-          <div> <h4>간트차트 영역</h4> </div>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">내 일정</h3>
+
+                <div class="card-tools">
+                  <button id="calextend" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body" style="max-height: 500px; overflow-y:scroll"> <!-- style="max-height: 600px; overflow-y:scroll" -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
 
         <div class="row mb-3">
@@ -112,15 +131,15 @@
                   <h3 class="card-title">${prj.pname}</h3>
 
                   <div class="card-tools">
-                    <button onclick="loaddash(${prj.pid});" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                    <button id="plist${prj.pid}" onclick="loaddash2(${prj.pid});" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
                     </button>
                   </div>
                   <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body p-0" style="max-height: 600px">
                   <!--<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">-->
-                  <div id="pp${prj.pid}" <c:if test="${param.tab != 1}">class="iframe-mode" data-widget="iframe" data-loading-screen="750"</c:if>>
+                  <div id="pp${prj.pid}" <c:if test="${param.tab != 1}">class="iframe-mode" data-widget="iframe" data-loading-screen="600"</c:if>>
                     </div>
                   <!--</div>-->
                 </div>
@@ -191,22 +210,31 @@
 <script>
   $(document).ready(function(){
     <%--
-
     --%>
-    var addHTMLz = "";
     <c:forEach var="prj" items="${prjList}">
-      addHTMLz = "";
-      addHTMLz += '<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">';
-      addHTMLz += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ ${prj.pid} +'&hide=1"></iframe>';
-      addHTMLz += '</div>';
-      $("#pp${prj.pid}").html(addHTMLz);
-      console.log(addHTMLz);
+    //$("#plist${prj.pid}").click();
     </c:forEach>
   });
+  var addHTMLz = "";
+  <c:forEach var="prj" items="${prjList}">
+  /*
+  addHTMLz = "";
+  addHTMLz += '<div id="pp${prj.pid}" class="embed-responsive embed-responsive-16by9">';
+  addHTMLz += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ ${prj.pid} +'&hide=1"></iframe>';
+  addHTMLz += '</div>';
+  $("#pp${prj.pid}").html(addHTMLz);
+  console.log(addHTMLz);
+  */
+  </c:forEach>
+
   function loaddash2(pid){
+
     var addHTML = "";
-    addHTML += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ pid +'&hide=1"></iframe>';
+    addHTML += '<div id="pp'+ pid +'" class="embed-responsive embed-responsive-16by9">';
+    addHTML += '<iframe class="embed-responsive-item" src="dashboard.do?pid='+ pid +'&hide=1" style="max-height: 600px; overflow-y:scroll"></iframe>';
+    addHTML += '</div>';
     $("#pp"+pid).html(addHTML);
+
   }
 
   function goPageP(cnt) {
