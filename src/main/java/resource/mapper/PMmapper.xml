@@ -14,6 +14,7 @@
 		SELECT jid, jname, TO_CHAR(jstart, 'yyyy-mm-dd') jstart, TO_CHAR(jend, 'yyyy-mm-dd') jend, required, realstart, realend, content, pid, jstatus
 		FROM jobplan
 		WHERE pid = #{pid}
+		ORDER BY jstart
 	</select>
 	<select id="getJobMember" resultType="jmdto" parameterType="int">
 		SELECT m.mid, m.email, m.name, jmid, progress, jmstatus, jm.ppid
