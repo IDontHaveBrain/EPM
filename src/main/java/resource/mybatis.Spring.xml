@@ -9,6 +9,7 @@
 		<typeAlias type="pms.vo.Issues" alias="issues"/>
 		<typeAlias type="pms.vo.Project" alias="project"/>
 		<typeAlias type="pms.vo.Jobplan" alias="jobplan"/>
+		<typeAlias type="pms.vo.Participants" alias="participants"/>
 		<typeAlias type="pms.dto.IssuesDashDto" alias="issuesdash"/>
 		<typeAlias type="pms.dto.IssuesSch" alias="issuessch"/>
 		<typeAlias type="pms.dto.NoticeSch" alias="noticesch"/>
@@ -17,6 +18,7 @@
 		<typeAlias type="pms.dto.JobDTO" alias="jobdto"/>
 		<typeAlias type="pms.dto.JobMemberDTO" alias="jmdto"/>
 		<typeAlias type="pms.dto.CalendarMember" alias="calendar"/>
+		<typeAlias type="pms.dto.ProjectMemberDTO" alias="promember"/>
 
 	</typeAliases>
 	<mappers>

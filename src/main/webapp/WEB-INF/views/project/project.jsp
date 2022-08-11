@@ -49,8 +49,7 @@
   <link rel="stylesheet" href="${path}/pms/plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="${path}/pms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   
-  <link rel="stylesheet" href="${path}/pms/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-  
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		function updateMember(){
@@ -108,11 +107,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -149,6 +148,7 @@
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
                 <select id="inputPM" class="form-control pm-select select2bs4">
+    				<option selected disabled>PM 선택</option>
     				<c:forEach var="member" items="${memberList}">
 						<option value="${member.name }">${member.name}(${member.empno})</option>
 					</c:forEach>
@@ -161,11 +161,12 @@
                 <div class="form-group">
                   <label>참여 멤버</label>
                   <div class="select2-purple">
-                    <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
+    				<option selected disabled>멤버 선택</option>
     				<c:forEach var="member" items="${memberList}">
 						<option value="${member.name }">${member.name}(${member.empno})</option>
 					</c:forEach>
-                    </select>
+                   </select>
                   </div>
                 </div>
               
@@ -181,10 +182,10 @@
               </div>
               <div class="form-group">
               	<label for="inputClientCompany">시작일</label>
-                <input type="date" id="startDate" class="form-control" value="${param.pstart}" autocomplete="off"/>
+                <input type="date" id="startDate" class="form-control" autocomplete="off"/>
 
                 <label for="inputClientCompany">종료일</label>
-                <input type="date" id="endDate" class="form-control" value="${param.pend}" autocomplete="off"/>
+                <input type="date" id="endDate" class="form-control" autocomplete="off"/>
 
               </div>
 
@@ -213,10 +214,10 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -270,13 +271,6 @@ var isInsert = "${isInsert}"
 			location.href="${path}/projectInsertForm.do"
 		}
 	}
-
-$("#regBtn").click(function(){
-  	if(confirm("등록하시겠습니까?")){
-  		$("#frm01").attr("action","${path}/projectInsert.do");
-  		$("#frm01").submit();
-  	}
-});	
 
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){

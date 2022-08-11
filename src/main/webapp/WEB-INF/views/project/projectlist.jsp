@@ -37,6 +37,22 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+	});
+	function goInsert(){
+		location.href="${path}/projectInsertForm.do"
+	}
+	function goDetail(pid){
+		location.href="${path}/projectDetail.do?pid="+pid;
+	}	
+
+
+</script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -47,11 +63,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="../sidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -60,7 +76,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">프로젝트 수정</h1>
+            <h1 class="m-0">Project</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -75,83 +91,111 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- 페이지 구성 시작!! -->
-        <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">             
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">프로젝트 수정</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${project.pname}" class="form-control">
-              </div>
-              <div class="form-group">           
-                <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>PM 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select>              
-              </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
-                  <option selected disabled>인원 선택</option>
-                  <option>멤버</option>
-                  <option>정보</option>
-                  <option>받아오기</option>
-                </select> 
-              </div>  
-              <div class="form-group">
-                <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">시작일 :</label>
-                <fmt:formatDate value="${project.pstart}"/>
-                <input type="date" id="inputClientCompany" class="form-control">
-              </div>
-			  <div class="form-group">
-                <label for="inputClientCompany">종료일 :</label>
-                <fmt:formatDate value="${project.pend}"/>
-                <input type="date" id="inputClientCompany" value="${project.pstart}" class="form-control">
-              </div> 
-            </div>
-            <!-- /.card-body -->
-     	   </div>
-          <!-- /.card -->
-      
-      <div class="row">
-        <div class="col-12">
-          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
-          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
+      <!-- Default box -->
+      <div class="card">
+      	<form id="frm01" class="form" method="post">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
 
+          <div class="card-tools">
+            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+                     
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Project Name
+                      </th>
+                      <th style="width: 30%">
+                          Project Period
+                      </th>
+                      <th>
+                          Project Progress
+                      </th>
+                      <th class="text-center">
+                          Status
+                      </th>
+                    
+                   
+                      
+                                
+                  </tr>
+              </thead>
+              <tbody>  
+              <c:forEach var="project" items="${projectList}">
+                  <tr ondblclick="goDetail(${project.pid})">
+                      <td>
+                          #
+                      </td>
+                      <td>
+                          <a>
+                            ${project.pname}  
+                          </a>
+                          <br/>
+                          <small>
+                          	Created <fmt:formatDate value="${project.pregdate}"/>
+                             
+                          </small>
+                      </td>
+                      <td>
+                          <a>
+                          <fmt:formatDate value="${project.pstart}"/>
+                          
+                          </a>
+                          <br/>
+                          <a>
+                          ~ <fmt:formatDate value="${project.pend}"/>
+                         
+                          </a>
+                      </td>                     
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              </div>
+                          </div>
+                          <small>
+                              57% Complete
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-success">Success</span>
+                      </td>
+                 
+                      <td class="project-actions text-right">
+                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-info btn-sm">수정</button>
+                      </td>
+                  
+                  </tr>
+              </c:forEach>                
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+        </form>
       </div>
-   
-     </form>
-        <!-- 페이지 구성 끝!! -->
-      </div>
-      <!-- /.container-fluid -->
+      <!-- /.card -->
+
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <jsp:include page="footer.jsp"/>
+  <jsp:include page="../footer.jsp"/>
 
   <!-- Control Sidebar -->
-  <jsp:include page="ctrlsidebar.jsp"/>
+  <jsp:include page="../ctrlsidebar.jsp"/>
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -190,43 +234,5 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
-
-
-<script type="text/javascript">
-/*
- function updateProc(){
-	if(confirm("수정하시겠습니까?")){
-		// 유효성 check
-		$("form").attr("action","${path}/updateProject.do");
-		$("form").submit();
-	}
-}
-
-
-function deleteProc(){
-	if(confirm("삭제하시겠습니까?")){
-		$("form").attr("action","${path}/deleteProject.do");
-		$("form").submit();		
-	}
-}
-var proc = "${proc}"
-	if(proc=="upt"){
-		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
-			location.href="${path}/boardList.do";
-		}
-	}
-	if(proc=="del"){
-		alert("삭제성공\n조회 리스트화면으로 이동!")
-		location.href="${path}/boardList.do";
-	}	
-
- */
-
- function goMain(){
-		location.href="${path}/projectList.do";
-	}
-
-
-</script>
 </body>
 </html>

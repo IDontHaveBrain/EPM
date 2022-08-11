@@ -8,18 +8,24 @@
 		SELECT * 
 		FROM project	 
 	</select>
+	
 	<select id="getMemberList" resultType="member" parameterType="member">
 		SELECT empno, name
 		FROM member	
 		order by empno
 	</select>
 	
+	<select id="getPmemberList" resultType="promember" parameterType="int">
+		SELECT p.*, m.name
+		FROM participants p, member m
+		WHERE p.mid = m.mid
+		and pid = #{pid}
+	</select>
+	
 	<insert id="insertProject" parameterType="project">
 		insert into project values(project_seq.nextval, #{pname},
 				#{pcomment}, sysdate, sysdate, sysdate)			
 	</insert>
-
-
 	
 	<select id="getProjectDetail" parameterType="int" resultType="project">
 		select pid, pname, pcomment, pstart, pend
