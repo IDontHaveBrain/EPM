@@ -70,7 +70,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">사원 상세정보</h1>
+            <h1 class="m-0">내 사원정보</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -99,47 +99,29 @@
                 <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
               </div>
               <div class="form-group">
+                <label for="inputName">비밀번호</label>
+                <input id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
+                <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">비밀번호 변경</button>
+              </div>
+              <div class="form-group">
                 <label for="inputName">이메일</label>
-                <input id="email" name="email" type="text" value="${member.email}" class="form-control" readonly>
+                <input id="email" name="email" type="text" value="${member.email}" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputName">이름</label>
-                <input id="name" name="name" type="text" value="${member.name}" class="form-control">
+                <input id="name" name="name" type="text" value="${member.name}" class="form-control" readonly>
               </div>
                 <label for="inputProjectLeader">권한</label>
               <div class="form-group">
-                <select id="auth" name="auth" class="form-control pm-select">
-                  <option>${member.auth}</option>
-			      <option>CEO</option>
-			      <option>ADMIN</option>
-			      <option>HR</option>
-			      <option>MEMBER</option>
-			      <option>GUEST</option>
-                </select> 
+                <input id="auth" name="auth" type="text" value="${member.auth}" class="form-control" readonly>
               </div>
-              <div class="form-group"> 
-              	<label for="inputProjectLeader">승인 여부</label>
-                <select id="status" name="status" class="form-control pm-select">
-				  <option>${member.status}</option>
-			      <option>승인</option>
-			      <option>대기</option>
-                </select> 
-              </div>    
-              <div class="form-group">
-              	<label for="inputProjectLeader">마지막 접속시간</label>
-                	<fmt:formatDate value="${member.accessdate}" pattern="yyyy-MM-dd hh:mm:ss"/>
-              </div>                                    
+              <div class="col-12" style="text-align:right">    
+          		<button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
+        	  </div>                                       
               </div>
             </div>
             <!-- /.card-body -->
           <!-- /.card -->
-      <div class="row">
-        <div class="col-12" style="text-align:right">    
-          <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">권한변경 및 승인</button>
-          <button type="submit" id="sendBtn" class="btn btn-info btn-sm">사원번호 발급</button>
-          <button type="button" onclick="deleteMember(${memlist.mid})" class="btn btn-danger btn-sm">탈퇴</button>
-        </div>       
-      </div>
        </form>
         <!-- 페이지 구성 끝!! -->
       </div>

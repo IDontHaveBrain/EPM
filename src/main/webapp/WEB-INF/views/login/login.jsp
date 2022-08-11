@@ -111,6 +111,8 @@
 	            deleteCookie("userInputEmpno");
 	        }
 	    })
+	    
+	    
 	});
 	    
 	    function setCookie(cookieName, value, exdays){
@@ -168,6 +170,29 @@
 			login();
 		}
 	});
+	
+	$("#login").on('submit', function(){
+		$.ajax({
+			url: "${path}/loginCheck.do",
+			method: "post",
+			data: {
+				empno: $("#empno").val(),
+				password: $("#password").val()
+			},
+			dataType: "text",
+			success: function(data){
+				console.log(data);
+				if(data!=="pass"){
+					alert("사원번호와 비밀번호를 확인해주세요.");
+				}else{
+					return false;
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		})
+	})
 </script>
 </body>
 </html>

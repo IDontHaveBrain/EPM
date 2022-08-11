@@ -6,10 +6,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pms.service.MemberService;
 import pms.vo.Member;
@@ -40,24 +41,18 @@ public class MemberController {
 	// http://localhost:7080/project06/login.do
 	@RequestMapping("login.do")
 	public String login(Member m, Model d, HttpServletRequest request) {
-
-		if (m.getEmpno() != 0 && m.getPassword() != null && m.getAuth() == "ADMIN") {
-			System.out.println("관리자냐?" + m.getAuth());
+		if (m.getEmpno() != 0 && m.getPassword() != null) {
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
-			if (mem != null) {
+			if (mem != null && mem.getAuth().equals("ADMIN")) {
 				session.setAttribute("mem", mem);
 				return "redirect:adminDashboard.do";
-			}
-
-		} else if (m.getEmpno() != 0 && m.getPassword() != null && m.getAuth() != "ADMIN") {
-			Member mem = service.memberLogin(m);
-			HttpSession session = request.getSession();
-			if (mem != null) {
+			} else if (mem != null && mem.getAuth() != "ADMIN") {
 				session.setAttribute("mem", mem);
 				return "redirect:dashboard.do";
+			} else {
+				return "redirect:login.do";
 			}
-
 		}
 		return "WEB-INF\\views\\login\\login.jsp";
 	}
@@ -74,7 +69,15 @@ public class MemberController {
 		d.addAttribute("member",service.getMemberDetail(mid));
 		
 		return "WEB-INF\\views\\member\\memberdetail.jsp";
-	}	
+	}
+	
+	@RequestMapping("mypage.do")
+	public String myPage(@RequestParam("mid") int mid, HttpServletRequest request, Model d){
+		Member curMem = (Member)request.getSession().getAttribute("mem");
+		d.addAttribute("member",service.getMemberDetail(curMem.getMid()));
+		
+		return "WEB-INF\\views\\member\\mypage.jsp";
+	}
 	
 	@RequestMapping("authorize.do")
 	public String authorize(Model d, Member upt) {
@@ -98,5 +101,17 @@ public class MemberController {
 		return "redirect:login.do";
 	}
 	
+	@ResponseBody
+	@PostMapping("loginCheck.do")
+	public String loginCheck(@ModelAttribute Member member) throws Exception {
+		Member login = service.memberLogin(member);
+		String result = "";
+		if(login != null) {
+			result = "pass";
+		}else {
+			result = "fail";
+		}
+		return result;
+	}
 	
 }

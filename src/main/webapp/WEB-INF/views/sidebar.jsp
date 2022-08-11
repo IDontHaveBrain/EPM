@@ -88,6 +88,47 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
+              사원정보
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <c:if test="${mem.auth == 'CEO'}">
+            <li class="nav-item">
+              <a href="memberlist.do" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>사원 관리</p>
+              </a>
+            </li>
+            </c:if>
+            <c:if test="${mem.auth == 'ADMIN'}">
+            <li class="nav-item">
+              <a href="memberlist.do" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>사원 관리</p>
+              </a>
+            </li>
+            </c:if>
+            <c:if test="${mem.auth == 'HR'}">
+            <li class="nav-item">
+              <a href="memberlist.do" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>사원 관리</p>
+              </a>
+            </li>
+            </c:if>
+            <li class="nav-item">
+              <a onclick="func();" class="nav-link" style="cursor:pointer">
+                <i class="far fa-circle nav-icon"></i>
+                <p>내 사원정보</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
               리스크
               <i class="right fas fa-angle-left"></i>
             </p>
@@ -219,3 +260,9 @@
   </div>
   <!-- /.sidebar -->
 </aside>
+<script>
+function func(){	
+	var mid = ${mem.mid}
+	window.location.href = "mypage.do?mid=" + mid;
+}
+</script>

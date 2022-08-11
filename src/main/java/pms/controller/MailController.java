@@ -32,12 +32,10 @@ public class MailController {
 			service.uptEmpnoAndPassword(member);
 			d.addAttribute("msg", service.sendMail(mail, member));
 			System.out.println("이름 : " + member.getName());
-			return "redirect:memberlist.do";
+			
 		}
 		
-		
-		
-		return "WEB-INF\\views\\memberdetail.jsp";
+		return "WEB-INF\\views\\member\\memberdetail.jsp";
 	}
 	// http://localhost:7080/project06/recoverpassword.do
 	@GetMapping("recoverpassword.do")
