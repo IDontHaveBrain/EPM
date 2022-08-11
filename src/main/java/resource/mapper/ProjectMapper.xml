@@ -18,10 +18,8 @@
 		insert into project values(project_seq.nextval, #{pname},
 				#{pcomment}, sysdate, sysdate, sysdate)			
 	</insert>
-	<insert id="insertPartmem" parameterType="participants">
-		insert into participants values(participants_seq.nextval, #{pauth},
-				#{pid}, #{mid}, sysdate, sysdate)			
-	</insert>
+
+
 	
 	<select id="getProjectDetail" parameterType="int" resultType="project">
 		select pid, pname, pcomment, pstart, pend

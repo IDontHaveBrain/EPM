@@ -48,8 +48,9 @@
 	}
 	function goDetail(pid){
 		location.href="${path}/projectDetail.do?pid="+pid;
-	}	
-	function deleteProc(){
+	}
+	/*
+		function deleteProc(){
 		if(confirm("삭제하시겠습니까?")){
 			$("form").attr("action","${path}/deleteProject.do?pid="+pid);
 			$("form").submit();		
@@ -58,6 +59,13 @@
 	if(proc=="del"){
 		alert("삭제성공!")
 	}	
+	*/
+  	$("#delBtn").click(function(){
+  		if(confirm("삭제하시겠습니까?")){
+  			$("#frm01").attr("action","${path}/calDelete.do");
+  			$("#frm01").submit();
+  		}
+  	});
 
 </script>
 
