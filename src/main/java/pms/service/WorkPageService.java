@@ -53,10 +53,11 @@ public class WorkPageService {
 	// 파일서버 정보(공통정보)
 	@Value("${upload}")
 	private String path;
-	public void insertWorkPageFile(WorkPageFile ins) {
+	public void insertWorkPageFile(WorkPageFile ins,int jmid) {
+		
 		MultipartFile mpf = ins.getReport();
 		String fname = mpf.getOriginalFilename();
-		System.out.println("jmid 값 가져오냐?"+ins.getJmid());
+
 		File f = new File(path+fname);
 		try {
 			mpf.transferTo(f);
@@ -70,7 +71,7 @@ public class WorkPageService {
 			e.printStackTrace();
 		}
 		// dao.insertWorkPageFile(ins); // 기본정보가 등록  key(no)
-		dao.insertFile(new WorkPageFile(path,fname)); // 위 게시물의 key를 가져와서 파일정보에 등록
+		dao.insertFile(new WorkPageFile(path,fname,jmid)); // 위 게시물의 key를 가져와서 파일정보에 등록
 		
 	// 		insert into  boardfile values(board_seq.currval,
 	// 	     #{path}, #{fname}, sysdate, sysdate, '')	

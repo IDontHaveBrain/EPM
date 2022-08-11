@@ -117,7 +117,7 @@
            <!-- 파일등록 css -->
                   	    
                         
-                       <td style="text-align:center;" >있어</td>
+                       <td style="text-align:center;" >O</td>
                     
           <!-- 파일등록 css -->
 

@@ -16,10 +16,19 @@ public class WorkPageFile {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	public WorkPageFile(String path, String fname) {
 		this.path = path;
 		this.fname = fname;
 	}
+
+
+	public WorkPageFile(String path, String fname,int jmid) {
+		this.path = path;
+		this.fname = fname;
+		this.jmid = jmid;
+	}
+	
 	public int getFid() {
 		return fid;
 	}

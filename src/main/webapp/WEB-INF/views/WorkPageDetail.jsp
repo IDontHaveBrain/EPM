@@ -86,11 +86,24 @@
                 <c:forEach var="wl" items="${workpage}">
                 <h2 style="text-align:center">${wl.pname}</h2><br>
                   <thead>
+                  <tr>
+                  	<th style="border-right:none;" colspan="3"></th>
+                  	<th style="text-align:center; border-left:none;"  colspan="2">
+
+                <p><code>진행률 ${wl.progress}%</code></p>
+                <div class="progress progress-sm active">
+                  <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
+                       aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: ${wl.progress}%">
+                    <span class="sr-only"></span>
+                  </div>
+                </div>                        
+                        
+                  	</th>
+                  </tr>
                     <tr>
                       <th style="text-align:center;" style="width: 150px">업무이름</th>
                       <th style="text-align:center;" style="width: 150px">담당자이름</th>
-                      <th style="text-align:center;" style="width: 200px">진행상황</th>
-                      <th style="text-align:center;" style="width: 40px">%</th>
+
                       <th style="text-align:center;" style="width: 160px">시작날짜</th>
                       <th style="text-align:center;" style="width: 160px">마감날짜</th>
                       <th style="text-align:center;" style="width: 160px">수정일</th>
@@ -101,12 +114,8 @@
                     <tr>
                      <td style="text-align:center;">${wl.jname}</td>
                       <td style="text-align:center;">${wl.name}</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: ${wl.progress}%"></div>
-                        </div>
-                      </td>
-                      <td style="text-align:center;"><span class="badge bg-primary">${wl.progress}%</span></td>
+
+                      
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
@@ -120,7 +129,7 @@
                     	<textarea rows="10" class="form-control" readonly>${wl.content}</textarea></td>
                     </tr>
                     <tr>
-                    	<td style="text-align:center" colspan="7"><h4>산출물 등록</h4></td>
+                    	<td style="text-align:center" colspan="7"><h4>산출물 등록(리스트)</h4></td>
                     </tr>
          </c:forEach>
 
@@ -135,31 +144,41 @@
 			<div class="input-group-prepend">
 				<span class="text-center input-group-text">첨부파일</span>
 					<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
+					
 					<input type="submit" value="저장" class="btn btn-success float-right"/>
            		<tr>
            		<table class="table table-bordered table-striped">
            			<th style="text-align:center">파일이름</th>
            			<th style="text-align:center" >등록일</th>
+           			<th style="text-align:center" >저장</th>
            			<th style="text-align:center" >삭제</th>
            		</tr>
            <c:forEach var="ws" items="${flist}">
-
            		<tr>
-         				<td style="text-align:center">${ws.fname}</td>
+           		
+         				<td style="text-align:center" >${ws.fname}</td>
          				<td style="text-align:center"><fmt:formatDate value="${ws.fregdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+	         		<td style="text-align:center">
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-primary" type="button" name="fname" value="${ws.fname}">		         	
+		         					<i class="fas fa-download"></i>		         				
+	         				</button>	
+	         			</div>	         				
+	         				</td>
          			<td style="text-align:center">
-	         			<div class="btn-group btn-group-sm">
-	         				<a href="#" class="btn btn-danger">
-	         					<i class="fas fa-trash"></i>
-	         				</a>
-	         			</div>
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-danger" type="button" name="fname1" value="${ws.fname}">		         	
+		         					<i class="fas fa-trash"></i>		         				
+	         				</button>	
+	         			</div>	
          			</td> 
          		</tr>
-        		
+          		
            </c:forEach>	
+     
            </table>				
 			</div>
-
+		<input type=hidden name="jmid" value="${flist[0].jmid}"/> 
 	</form>
                     </td>
                     </tr>
@@ -230,7 +249,14 @@
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript">
 $("[name=fname]").click(function(){
-	if(confirm("다운로드하시겠습니까?")){
+	if(confirm("다운로드하시겠습니까?"))
+		return location.href="${path}/download.do?fname="+$(this).val();
+	else	
+		return false;
+});
+
+$("[name=fname1]").click(function(){
+	if(confirm("삭제하시겠습니까?")){
 		location.href="${path}/download.do?fname="+$(this).val()
 	}
 });

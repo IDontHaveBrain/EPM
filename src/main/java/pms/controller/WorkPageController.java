@@ -56,10 +56,10 @@ public class WorkPageController {
 	}
 
 	@RequestMapping("WorkPageInsert.do")
-	public String WorkPageInsert(WorkPageFile ins, Model d) {
-
-		service.insertWorkPageFile(ins);
-
+	public String WorkPageInsert(WorkPageFile ins, Model d,
+						@RequestParam(value = "jmid") int jmid,HttpServletRequest request) {
+			System.out.println("컨트롤러jmid ==>"+jmid);
+		service.insertWorkPageFile(ins,jmid);
 		return "redirect:WorkPageList.do";
 	}
 
@@ -106,7 +106,6 @@ public class WorkPageController {
 	@RequestMapping("download.do")
 	public String download(@RequestParam("fname") String fname, Model d) {
 		d.addAttribute("downloadFileName", fname);
-
 		// viewer에서 지정한 모델명으로 파일명을 지정..
 		// viewer
 		// String fname = (String)model.get("downloadFileName");
