@@ -23,6 +23,13 @@ public interface WorkPageDao {
 	
 	// 상세화면 파일 다운로드
 	public List<WorkPage> getWorkPageFile(WorkPage filelist);
+	
+	// 승인요청 보내기
+	public void updateWorkPage(int jmid);	
+	
+	// 파일 삭제하기
+	public void deleteWorkPageFile(int fid);	
+	
 }
 
 

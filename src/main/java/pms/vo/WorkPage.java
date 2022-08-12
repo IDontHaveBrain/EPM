@@ -10,6 +10,7 @@ public class WorkPage {
 	private int pid;
 	private int jid;
 	private int jmid;
+	private int empno;
 	
 	private String name;
 	private int progress;
@@ -32,7 +33,7 @@ public class WorkPage {
 	}
 	public WorkPage(int mid, int pid, int jid, String name, int progress, String jmstatus, String jname, Date jstart,
 			Date jend, Date juptdate, String pname, String content, MultipartFile report, String fname, Date fregdate,
-			String path, int fid,int jmid) {
+			String path, int fid,int jmid,int empno) {
 		this.mid = mid;
 		this.pid = pid;
 		this.jid = jid;
@@ -51,6 +52,7 @@ public class WorkPage {
 		this.path = path;
 		this.fid = fid;
 		this.jmid = jmid;
+		this.empno = empno;
 	}
 	public int getMid() {
 		return mid;
@@ -159,6 +161,12 @@ public class WorkPage {
 	}
 	public void setJmid(int jmid) {
 		this.jmid = jmid;
+	}
+	public int getEmpno() {
+		return empno;
+	}
+	public void setEmpno(int empno) {
+		this.empno = empno;
 	}
 	
 	

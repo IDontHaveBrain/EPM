@@ -141,6 +141,7 @@
                  
 	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
 		 class="form"  method="post">
+		 <input type="hidden" name="ddd" />
 			<div class="input-group-prepend">
 				<span class="text-center input-group-text">첨부파일</span>
 					<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
@@ -167,19 +168,20 @@
 	         				</td>
          			<td style="text-align:center">
 	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-danger" type="button" name="fname1" value="${ws.fname}">		         	
+	         				<button class="btn btn-danger" type="button" name="fid" value="${ws.fid}">		         	
 		         					<i class="fas fa-trash"></i>		         				
 	         				</button>	
 	         			</div>	
          			</td> 
          		</tr>
-          		
+          		 
            </c:forEach>	
      
            </table>				
 			</div>
-		<input type=hidden name="jmid" value="${flist[0].jmid}"/> 
+		<input type=hidden name="jmid" value="${param.jmid}"/> 
 	</form>
+	
                     </td>
                     </tr>
     <tr><td colspan="7">
@@ -187,7 +189,8 @@
         <div class="col-12">
           <a href="WorkPageList.do" class="btn btn-secondary">뒤로가기</a>
       	
-			<input type="button" value="승인요청" class="btn btn-success float-right">
+			<input type="button" value="승인요청" onclick="updateProc()" 
+					 class="btn btn-success float-right">
 			</div>
         </div>
 	</td></tr>
@@ -255,15 +258,35 @@ $("[name=fname]").click(function(){
 		return false;
 });
 
-$("[name=fname1]").click(function(){
-	if(confirm("삭제하시겠습니까?")){
-		location.href="${path}/download.do?fname="+$(this).val()
+$("[name=fid]").click(function(){
+	if(confirm("파일을 삭제 하시겠습니까?")){
+		//$("[name=ddd]").val("1");
+		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&ddd=1&jid="+${param.jid}+"&jmid="+${param.jmid};
+				
 	}
+	else	
+		return false;
 });
+
 
 function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }
+
+function updateProc(){
+	if(confirm("승인요청 하시겠습니까?")){
+		$("form").attr("action","${path}/updateWorkPage.do");
+		$("form").submit();
+	}
+}
+
+var proc = "${proc}"
+if(proc=="upt"){
+	if(confirm("승인요청 완료\n개인업무페이지로 이동하시겠습니까?")){
+		location.href="${path}/WorkPageList.do";
+	}
+}
+
 </script>
 </body>
 </html>

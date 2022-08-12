@@ -12,6 +12,13 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<style type="text/css">
+
+    td:hover { 
+   cursor:pointer;
+     }
+
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,20 +102,21 @@
                     <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="7%">산출물 등록여부</th>
+  					
                     <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr ondblclick="goDetail(${wl.jid},${wl.jmid})">
+                  <tr class="aa123" style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
 
-                    <td style="text-align:center;">${wl.name}</td>
+                    <td style="text-align:center;">${wl.name}(${wl.empno})</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;">${wl.jname}</td> 
                     <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+   
 			<!-- 진행률 -->
                       <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.progress}%</span></td>
                       
@@ -117,7 +125,7 @@
            <!-- 파일등록 css -->
                   	    
                         
-                       <td style="text-align:center;" >O</td>
+                      
                     
           <!-- 파일등록 css -->
 
@@ -205,5 +213,6 @@ function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
 </script>
+
 </body>
 </html>

@@ -48,7 +48,29 @@ public class WorkPageController {
 		d.addAttribute("wlist", wpList);
 		return "WEB-INF\\views\\WorkPageList.jsp";
 	}
+	
+	// 승인요청
+	@RequestMapping("updateWorkPage.do")
+	public String updateWorkPage(WorkPage upt,Model d,
+					@RequestParam(value = "jmid") int jmid) {
+			service.updateWorkPage(jmid);
+		
+		d.addAttribute("proc","upt");
+		return "redirect:WorkPageList.do?";
+	}
+	// 삭제
 
+	@RequestMapping("deleteWorkPage.do")
+	public String deleteWorkPage(@RequestParam(value = "fid") int fid,
+			@RequestParam(value = "jmid") int jmid,
+			@RequestParam(value = "jid") int jid,Model d) {
+		service.deleteWorkPageFile(fid);
+		System.out.println("파일값들어오냐?:"+fid);
+		return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+	}
+
+	
+	
 	@RequestMapping("WorkPageFileinsert.do")
 	public String WorkPageInsertForm() {
 

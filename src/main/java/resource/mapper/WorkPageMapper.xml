@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="pms.dao.WorkPageDao">
 	<select id="getWorkPageList" resultType="workpage" parameterType="int">
-		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid
+		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno
 		FROM
-		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno
 		FROM 
-		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid
+		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid,c.empno
 		FROM 
-		(SELECT a.name,b.ppid,b.pid,a.mid
+		(SELECT a.name,b.ppid,b.pid,a.mid,a.empno
 		FROM MEMBER a, participants b
 		WHERE a.mid=b.mid
 		AND a.mid=#{mid}) c, project d
@@ -20,13 +20,13 @@
 		WHERE g.jid=h.jid
 	</select>
 	<select id="WorkPageList" resultType="workpage" >
-		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid
+		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno
 		FROM
-		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno
 		FROM 
-		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid
+		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid,c.empno
 		FROM 
-		(SELECT a.name,b.ppid,b.pid,a.mid
+		(SELECT a.name,b.ppid,b.pid,a.mid,a.empno
 		FROM MEMBER a, participants b
 		WHERE a.mid=b.mid
 		AND a.mid=#{mid}) c, project d
@@ -106,14 +106,20 @@
 		where cnt between #{start} and #{end}
 	</select>
 	 -->
-<!-- 		
-		SELECT j.*, f.* 
-		FROM jobplan j, jobfile f
-		WHERE j.pid =f.fid
-		and j.pid = #{pid}
--->
+
+	<update id="updateWorkPage" parameterType="int" >
+		UPDATE jobmember 
+		SET jmstatus='REQ' 
+		WHERE jmid=#{jmid}	
+	</update>
 	
 	
+	<delete id="deleteWorkPageFile" parameterType="int">
+		DELETE 
+		FROM jobfile 
+		WHERE fid = #{fid}	
+	</delete>
+
 </mapper>
         
         

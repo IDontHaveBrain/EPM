@@ -49,6 +49,14 @@ public class WorkPageService {
 
 		return dao.getWorkPageFile(filelist);
 	}
+	// 승인요청
+	public void updateWorkPage(int jmid){
+		dao.updateWorkPage(jmid);
+	}
+	// 파일삭제
+	public void deleteWorkPageFile(int fid){
+		dao.deleteWorkPageFile(fid);
+	}
 	
 	// 파일서버 정보(공통정보)
 	@Value("${upload}")
