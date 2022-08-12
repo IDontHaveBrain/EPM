@@ -47,4 +47,5 @@ public class MemberService {
 		return dao.getMemberName(sch);
 	}
 	
+	
 }

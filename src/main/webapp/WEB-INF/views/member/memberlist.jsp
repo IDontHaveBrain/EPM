@@ -5,6 +5,13 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<style type="text/css">
+
+    tr.hover:hover { background-color: #F5F5F5;
+             cursor:pointer;
+     }
+
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,7 +88,7 @@
         </div>
         <div class="card-body p-0">
         <form id="send" action="${path}/sendEmpnoAndPassword.do" method="post">
-          <table class="table table-striped projects">
+          <table class="table">
               <thead>
                   <tr>
                       <th style="width: 1%">
@@ -106,7 +113,7 @@
               </thead>
               <tbody>
               <c:forEach var="memlist" items="${memlist}">
-                  <tr ondblclick="goDetail(${memlist.mid})">
+                  <tr class="hover" ondblclick="goDetail(${memlist.mid})">
                       <td>
                           ${memlist.mid}
                       </td>

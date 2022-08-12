@@ -23,7 +23,7 @@ public class MailSenderService {
 	private MemberDao dao;
 
 	public String sendMail(Mail mail, Member member) {
-		String msg = "메일 발송 성공"; // 메일 발송이 성공되었을 때,
+		String msg = "사원번호 발급 완료"; // 메일 발송이 성공되었을 때,
 		// 처리할 메소드 선언
 		// 1. 멀티미디어형 메일 데이터 전송
 		MimeMessage mmsg = sender.createMimeMessage();

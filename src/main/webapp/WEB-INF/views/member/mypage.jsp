@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-	
+   
   <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
   
 
@@ -38,11 +38,11 @@
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
 <script type="text/javascript">
-	$(document).ready(function(){
-		<%-- 
-		
-		--%>	
-	});
+   $(document).ready(function(){
+      <%-- 
+      
+      --%>   
+   });
 
 </script>
 
@@ -87,7 +87,7 @@
     <section class="content">
       <div class="container">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
+        <form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">${member.name}님 사원정보</h3>
@@ -100,10 +100,15 @@
               </div>
               <div class="form-group" >
                 <label for="inputName" >비밀번호</label>
+                   
+               
+                <input style="width:85%" id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
+             <button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})" >
+             </button>
                 	
                
                 <input style="width:85%" id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
- 				<button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})" 
+ 				<button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})"
                 class="btn btn-primary btn-sm" >비밀번호 변경</button>                
               
             
@@ -121,11 +126,12 @@
                 <input id="auth" name="auth" type="text" value="${member.auth}" class="form-control" readonly>
               </div>
               <div class="col-12" style="text-align:right">    
-          		<button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
-        	  </div>                                       
+                <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
+             </div>                                       
               </div>
             </div>
             <!-- /.card-body -->
+           </div>
           <!-- /.card -->
        </form>
         <!-- 페이지 구성 끝!! -->
@@ -180,66 +186,66 @@
 </body>
 
 <script type="text/javascript">
-	var msg = "${msg}"
-	
+   var msg = "${msg}"
+   
     if(msg!="") alert(msg)
 
 
-	function authorize(mid){
-		if(confirm("해당 사원정보를 수정하시겠습니까?")){
-			$("form").attr("action","${path}/authorize.do");
-			$("form").submit();
-		}
-	} 
-	function deleteMember(){
-		var mid = $("[name=mid]").val()
-		
-		if(confirm("해당 사원을 삭제하시겠습니까?")){
-			location.href="${path}/deleteMember.do?mid="+mid;
-		}
-	} 
-	/*
-	function updateEmpno(){
-		var mid = $("[name=mid]").val()
-		
-		if(confirm("사원번호를 발급 처리하시겠습니까?")){
-			$("form").attr("action","${path}/createEmpnoandPassword.do");
-			$("form").submit();
-		}
-	}
-	*/
-	
-	var proc = "${proc}"
-	if(proc=="upt"){
-		alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
-		location.href="${path}/memberlist.do";
-	}		
-	
-	if(proc=="del"){
-		alert("삭제완료\n사원 관리 페이지로 이동합니다.");
-		location.href="${path}/memberlist.do";
-	}
-	/*
-	if(proc=="uptE"){
-		alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
-		location.href="${path}/memberlist.do";
-	}
-	*/
-	
-	$(function(){
-		$("#sendBtn").click(function(){
-			$.ajax({
-				url : "sendEmpnoAndPassword.do",
-				type : "POST",
-				data : {
-					email : $("#email").val()
-				},
-				success : function(result) {
-					alert(result);
-				},
-			})
-		});
-	})
-	
+   function authorize(mid){
+      if(confirm("해당 사원정보를 수정하시겠습니까?")){
+         $("form").attr("action","${path}/authorize.do");
+         $("form").submit();
+      }
+   } 
+   function deleteMember(){
+      var mid = $("[name=mid]").val()
+      
+      if(confirm("해당 사원을 삭제하시겠습니까?")){
+         location.href="${path}/deleteMember.do?mid="+mid;
+      }
+   } 
+   /*
+   function updateEmpno(){
+      var mid = $("[name=mid]").val()
+      
+      if(confirm("사원번호를 발급 처리하시겠습니까?")){
+         $("form").attr("action","${path}/createEmpnoandPassword.do");
+         $("form").submit();
+      }
+   }
+   */
+   
+   var proc = "${proc}"
+   if(proc=="upt"){
+      alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
+      location.href="${path}/memberlist.do";
+   }      
+   
+   if(proc=="del"){
+      alert("삭제완료\n사원 관리 페이지로 이동합니다.");
+      location.href="${path}/memberlist.do";
+   }
+   /*
+   if(proc=="uptE"){
+      alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
+      location.href="${path}/memberlist.do";
+   }
+   */
+   
+   $(function(){
+      $("#sendBtn").click(function(){
+         $.ajax({
+            url : "sendEmpnoAndPassword.do",
+            type : "POST",
+            data : {
+               email : $("#email").val()
+            },
+            success : function(result) {
+               alert(result);
+            },
+         })
+      });
+   })
+   
 </script>
 </html>

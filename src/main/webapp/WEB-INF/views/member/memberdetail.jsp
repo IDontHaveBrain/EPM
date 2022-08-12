@@ -239,6 +239,7 @@
 	}
 	*/
 	
+	/*
 	$(function(){
 		$("#sendBtn").click(function(){
 			$.ajax({
@@ -253,6 +254,6 @@
 			})
 		});
 	})
-	
+	*/
 </script>
 </html>
