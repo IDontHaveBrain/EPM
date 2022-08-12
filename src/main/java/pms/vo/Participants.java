@@ -12,6 +12,10 @@ public class Participants {
 	public Participants() {
 		// TODO Auto-generated constructor stub
 	}
+	public Participants(int mid, String pauth) {
+		this.mid = mid;
+		this.pauth = pauth;
+	}
 	public int getPpid() {
 		return ppid;
 	}

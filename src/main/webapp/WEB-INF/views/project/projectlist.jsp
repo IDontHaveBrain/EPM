@@ -38,11 +38,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
 <script type="text/javascript">
-	$(document).ready(function(){
-		<%-- 
-		
-		--%>	
-	});
+
 	function goInsert(){
 		location.href="${path}/projectInsertForm.do"
 	}

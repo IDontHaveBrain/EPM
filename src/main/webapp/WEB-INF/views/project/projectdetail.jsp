@@ -16,7 +16,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	
+  <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+ 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -37,21 +43,37 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="${path}/pms/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="${path}/pms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  
 
 <script type="text/javascript">
 	$(document).ready(function(){
-	   
-        
-    	//Date picker
-	    $('#reservationdate').datepicker({
-	    	format: 'L'
-
-	    });
+		function updateMember(){
+		    $.ajax({
+		      url: "${path}/ajaxMember.do",
+		      data: "",
+		      dataType: "json",
+		      success: function (data) {
+		        console.log(data)
+		        var list = data.memberList;
+		        var addHTML = "";
+		       
+		        $(list).each(function (idx, rst) {
+		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+rst.empno+"</option>";
+		        });
+		        console.log(addHTML);
+		       
+		        $("#inputPM").html(addHTML);
+		        $("#inputMem").html(addHTML);
+		     
+		      }
+		    });
+		  }
+		updateMember();
 		
-
-
-	});
-	function updatePmember(){
+		function updatePmember(){
 		    $.ajax({
 		      url: "${path}/ajaxPmember.do",
 		      data: "pid=" + ${param.pid},
@@ -59,20 +81,53 @@
 		      success: function (data) {
 		        console.log(data)
 		        var list = data.pmemberList;
-		        var addHTML = "";
-		        var addPage = "";
+		        var addHTML2 = "";
+		        var memberlist = [];
+		        var PM = "";
 		        $(list).each(function (idx, rst) {
-		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name"</option>";
+		        	addHTML2+="<option value='"+rst.mid+"'>"+rst.name+"</option>";	
+		        	memberlist.push(rst.pauth);
 		        });
+				
+		       
+		        
+		        for(var i = 0; i <= memberlist.endBlock; i++){
+		        	PM.push(memberlist[i]);
 
-		        console.log(addHTML);
-		        $("#inputPM").html(addHTML);
-		        $("#inputMem").html(addHTML);
+		        }
+		        for(var i = list.startBlock; i <= list.endBlock; i++){
+		            addPage += '<li class="page-item ' + (isch.curPage==i?'active':'') + '">';
+		            addPage += '<a class="page-link" href="javascript:goPageI(' + i + ')">' + i + '</a></li>';
+		         }
+		        	
+	        
+
+		        console.log(addHTML2);
+		        console.log(PM);
+		        
+		        $("#inputPM").html(addHTML2);
+		        $("#inputMem").html(addHTML2);
 		      }
 		    });
 		  }
-	updatePmember();
+		  updatePmember();
+		
+		
+		//Initialize Select2 Elements
+	    $('.select2').select2()
+
+	    //Initialize Select2 Elements
+	    $('.select2bs4').select2({
+	      theme: 'bootstrap4'
+	    })
+	   
+		
+
+
+	});
+
 </script>
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -133,19 +188,26 @@
               </div>
               <div class="form-group">           
                 <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select">
+                    <select id="inputPM" class="form-control pm-select select2bs4">
                 	<option selected disabled>PM 선택</option>
     				<c:forEach var="pmember" items="${pmemberList}">
 						<option value="${pmember.mid }">${pmember.name}</option>
 					</c:forEach>
+					<c:forEach var="member" items="${memberList}">
+						<option value="${member.name }">${member.name}(${member.empno})</option>
+					</c:forEach>
                 </select>              
               </div>
               <div class="form-group"> 
-              	<label for="inputProjectLeader">참여 멤버</label>
-                <select id="inputPM" class="form-control pm-select">
+                  <label>참여 멤버</label>
+                  <div class="select2-purple">
+                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  	
                 	<option selected disabled>멤버 선택</option>
     				<c:forEach var="pmember" items="${pmemberList}">
 						<option value="${pmember.mid }">${pmember.name}</option>
+					</c:forEach>
+					<c:forEach var="member" items="${memberList}">
+						<option value="${member.name }">${member.name}(${member.empno})</option>
 					</c:forEach>
                 </select> 
               </div>  
@@ -156,12 +218,12 @@
               <div class="form-group">
                 <label for="inputClientCompany">시작일 :</label>
                 <fmt:formatDate value="${project.pstart}"/>
-                <input type="date" id="inputClientCompany" class="form-control">
+                <input type="date" id="startDate" class="form-control">
               </div>
 			  <div class="form-group">
                 <label for="inputClientCompany">종료일 :</label>
                 <fmt:formatDate value="${project.pend}"/>
-                <input type="date" id="inputClientCompany" value="${project.pstart}" class="form-control">
+                <input type="date" id="endDate" value="${project.pstart}" class="form-control">
               </div> 
             </div>
             <!-- /.card-body -->
@@ -203,6 +265,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="${path}/pms/plugins/select2/js/select2.full.min.js"></script>
 <!-- ChartJS -->
 <script src="${path}/pms/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -225,8 +289,6 @@
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${path}/pms/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 
 
 <script type="text/javascript">

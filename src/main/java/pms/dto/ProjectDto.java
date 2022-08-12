@@ -1,16 +1,31 @@
-package pms.vo;
+package pms.dto;
 
 import java.util.Date;
+import java.util.List;
 
-public class Project {
+public class ProjectDto {
 	private int pid;
 	private String pname;
 	private String pcomment;
-	private Date pstart;
-	private Date pend;
+	private String pstart;
+	private String pend;
 	private Date pregdate;
+	private int selectPM;
+	private List<Integer> selectmember;
 	
-	public Project() {
+	public int getSelectPM() {
+		return selectPM;
+	}
+	public void setSelectPM(int selectPM) {
+		this.selectPM = selectPM;
+	}
+	public List<Integer> getSelectmember() {
+		return selectmember;
+	}
+	public void setSelectmember(List<Integer> selectmember) {
+		this.selectmember = selectmember;
+	}
+	public ProjectDto() {
 		// TODO Auto-generated constructor stub
 	}
 	public int getPid() {
@@ -31,16 +46,17 @@ public class Project {
 	public void setPcomment(String pcomment) {
 		this.pcomment = pcomment;
 	}
-	public Date getPstart() {
+
+	public String getPstart() {
 		return pstart;
 	}
-	public void setPstart(Date pstart) {
+	public void setPstart(String pstart) {
 		this.pstart = pstart;
 	}
-	public Date getPend() {
+	public String getPend() {
 		return pend;
 	}
-	public void setPend(Date pend) {
+	public void setPend(String pend) {
 		this.pend = pend;
 	}
 	public Date getPregdate() {

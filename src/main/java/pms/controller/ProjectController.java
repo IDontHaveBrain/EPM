@@ -7,9 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pms.dto.ProjectDto;
 import pms.service.ProjectService;
-
-import pms.vo.Project;
 
 
 @Controller
@@ -31,13 +30,18 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("projectInsert.do")
-	public String projectInsert(Project ins, Model d){
-		service.insertProject(ins);
+	public String projectInsert(ProjectDto ins, Model d){	
+
+	    
+	    service.createProject(ins);
+		
 	
 		d.addAttribute("isInsert","Y");
 	
-		return "WEB-INF\\views\\project\\projectlist.jsp";
+		return "WEB-INF\\views\\project\\project.jsp";
 	}
+	
+
 	
 	@RequestMapping("projectDetail.do")
 	public String projectDetail(@RequestParam("pid") int pid, Model d){
@@ -50,7 +54,7 @@ public class ProjectController {
 	@RequestMapping("deleteProject.do")
 	public String deleteProject(@RequestParam("pid") int pid, Model d){	
 		service.deleteProject(pid);
-		d.addAttribute("proc","del");		
+		d.addAttribute("proc","del");
 		return "WEB-INF\\views\\project\\projectdetail.jsp";	
 	}
 	
@@ -64,28 +68,28 @@ public class ProjectController {
 		d.addAttribute("memberList", service.getMemberList());
 
 		return "pageJsonReport";
-	}
-	
+	}	
 
 	// http://localhost:7080/project06/ajaxPmember.do?pid=1
 	@RequestMapping("ajaxPmember.do")
 	public String ajaxPmember(@RequestParam(value = "pid", defaultValue = "0") int pid, Model d) {
 		d.addAttribute("pmemberList", service.getPmemberList(pid));
 
+		
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/project06/ajaxPM.do?pauth=PM
+	@RequestMapping("ajaxPM.do")
+	public String ajaxPM(@RequestParam(value = "pauth", defaultValue = "") String pauth, Model d) {
+		d.addAttribute("pmemberList", pauth.equals("PM"));
+
 		return "pageJsonReport";
 	}
 
 
-
-	
 	/*
-		@RequestMapping("ajaxPmeminsert.do")
-	public String ajaxPmeminsert(Participants ins){
-		service.insertPartmem(ins);
-	
-	
-		return "redirect:/projectlist.do";
-	}
+
 	
 	@RequestMapping("updateProject.do")
 	public String updateProject(Project upt, Model d){		

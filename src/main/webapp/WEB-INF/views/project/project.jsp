@@ -63,7 +63,7 @@
 		        var addHTML = "";
 		        var addPage = "";
 		        $(list).each(function (idx, rst) {
-		        	addHTML+="<option value='"+rst.empno+"'>"+rst.name+rst.empno+"</option>";
+		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
 		        });
 		        console.log(addHTML);
 		        $("#inputPM").html(addHTML);
@@ -83,12 +83,6 @@
 	      theme: 'bootstrap4'
 	    })
 	   
-        
-    	//Date picker
-	    $('#reservationdate').datepicker({
-	    	format: 'L'
-
-	    });
 		
 
 
@@ -137,17 +131,17 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">
+     	<form id="frm01" action="${path}/projectInsert.do" class="form"  method="get">
           <div class="card card-primary">
             
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${param.pname}" class="form-control">
+                <input name="pname" id="inputName" type="text" value="${param.pname}" class="form-control">
               </div>
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
-                <select id="inputPM" class="form-control pm-select select2bs4">
+                <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
     				<option selected disabled>PM 선택</option>
     				<c:forEach var="member" items="${memberList}">
 						<option value="${member.name }">${member.name}(${member.empno})</option>
@@ -161,8 +155,7 @@
                 <div class="form-group">
                   <label>참여 멤버</label>
                   <div class="select2-purple">
-                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
-    				<option selected disabled>멤버 선택</option>
+                   <select name="selectmember" id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  			
     				<c:forEach var="member" items="${memberList}">
 						<option value="${member.name }">${member.name}(${member.empno})</option>
 					</c:forEach>
@@ -178,14 +171,14 @@
             
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
+                <textarea name="pcomment" id="inputDescription" class="form-control" rows="4">${param.pcomment}</textarea>
               </div>
               <div class="form-group">
               	<label for="inputClientCompany">시작일</label>
-                <input type="date" id="startDate" class="form-control" autocomplete="off"/>
+                <input name="pstart" type="date" class="form-control" value="${param.pstart}">
 
                 <label for="inputClientCompany">종료일</label>
-                <input type="date" id="endDate" class="form-control" autocomplete="off"/>
+                <input name="pend" type="date" class="form-control" value="${param.pend}">
 
               </div>
 
@@ -256,8 +249,6 @@
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${path}/pms/dist/js/demo.js"></script>
-<!-- Bootstrap4 Duallistbox -->
-<script src="${path}/pms/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 </body>
 
 <script type="text/javascript">
@@ -267,8 +258,6 @@ var isInsert = "${isInsert}"
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
 			// 취소 입력시 조회화면 이동..
 			location.href="${path}/ProjectList.do"
-		}else{
-			location.href="${path}/projectInsertForm.do"
 		}
 	}
 
@@ -280,7 +269,7 @@ function insertProc(){
 			$("[name=pname]").focus();
 			return; // 프로세스를 중단 처리
 		}		
-		document.querySelector("form").submit();
+		$("form").submit();
 	}
 }
 
