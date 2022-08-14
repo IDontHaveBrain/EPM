@@ -12,6 +12,37 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<style type="text/css">
+
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,7 +91,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">개인업무 상세화면</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -103,7 +134,6 @@
                     <tr>
                       <th style="text-align:center;" style="width: 150px">업무이름</th>
                       <th style="text-align:center;" style="width: 150px">담당자이름</th>
-
                       <th style="text-align:center;" style="width: 160px">시작날짜</th>
                       <th style="text-align:center;" style="width: 160px">마감날짜</th>
                       <th style="text-align:center;" style="width: 160px">수정일</th>
@@ -132,21 +162,15 @@
                     	<td style="text-align:center" colspan="7"><h4>산출물 등록(리스트)</h4></td>
                     </tr>
          </c:forEach>
-
-         
-                    
-                    
                     <td style="text-align:center" colspan="7">
-                    
-                 
 	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
 		 class="form"  method="post">
-		 <input type="hidden" name="ddd" />
-			<div class="input-group-prepend">
-				<span class="text-center input-group-text">첨부파일</span>
-					<input type="file" name="report" class="form-control" placeholder="파일을 첨부하세요" />
-					
-					<input type="submit" value="저장" class="btn btn-success float-right"/>
+			<div class="filebox">
+				<label for="file">파일찾기</label>
+					<input class="upload-name" value="산출물을 등록하세요" placeholder="첨부파일" >					     
+						<input type="file" id="file" name="report">						
+						<input type="button" value="저장하기" onclick="insertProc()" class="btn btn-primary float-center"/>
+           		</div>
            		<tr>
            		<table class="table table-bordered table-striped">
            			<th style="text-align:center">파일이름</th>
@@ -173,13 +197,13 @@
 	         				</button>	
 	         			</div>	
          			</td> 
-         		</tr>
-          		 
+         		</tr>        		 
            </c:forEach>	
      
            </table>				
 			</div>
 		<input type=hidden name="jmid" value="${param.jmid}"/> 
+		<input type=hidden name="jid" value="${param.jid}"/> 
 	</form>
 	
                     </td>
@@ -253,15 +277,14 @@
 <script type="text/javascript">
 $("[name=fname]").click(function(){
 	if(confirm("다운로드하시겠습니까?"))
-		return location.href="${path}/download.do?fname="+$(this).val();
+		return location.href="${path}/download.do?fname="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid};
 	else	
 		return false;
 });
 
 $("[name=fid]").click(function(){
 	if(confirm("파일을 삭제 하시겠습니까?")){
-		//$("[name=ddd]").val("1");
-		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&ddd=1&jid="+${param.jid}+"&jmid="+${param.jmid};
+		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid};
 				
 	}
 	else	
@@ -284,6 +307,22 @@ var proc = "${proc}"
 if(proc=="upt"){
 	if(confirm("승인요청 완료\n개인업무페이지로 이동하시겠습니까?")){
 		location.href="${path}/WorkPageList.do";
+	}
+}
+$("#file").on('change',function(){
+	  var fname = $("#file").val();
+	  $(".upload-name").val(fname);
+	});
+	
+function insertProc(){
+	if(confirm("저장하시겠습니까?")){
+		var fname = $("#file").val();		
+		if(	fname == ""){
+			alert("등록된 파일이 없습니다.");
+			return false; 
+		}		
+		$("form").attr("action","${path}/WorkPageInsert.do");
+		$("form").submit();
 	}
 }
 

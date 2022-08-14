@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pms.service.MemberService;
 import pms.vo.Member;
+import pms.vo.MemberSch;
 
 @Controller
 public class MemberController {
@@ -58,9 +59,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberlist.do")
-	public String mailForm(Model d, Member sch) {
-		d.addAttribute("memlist", service.getMemberList(sch));
-		return "WEB-INF\\views\\member\\memberlist.jsp";
+	public String memberList(Model d, MemberSch sch) {
+		d.addAttribute("memlist", service.memberList(sch));
+		return "WEB-INF\\views\\member\\memberlist.jsp";	
 	}
 	
 	// http://localhost:7080/project06/memberDetail.do
@@ -112,6 +113,13 @@ public class MemberController {
 			result = "fail";
 		}
 		return result;
+	}
+	
+	@RequestMapping("changePassword.do")
+	public String changePassword(Member upt, Model d) {
+		service.uptPassword(upt);
+		d.addAttribute("proc", "pwChange");
+		return "WEB-INF\\views\\member\\mypage.jsp";
 	}
 
 }

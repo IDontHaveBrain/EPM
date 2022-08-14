@@ -1,28 +1,31 @@
 package pms.vo;
 
-public class WorkPageSch {
-    private int pid; // 프로젝트아이디 기준
-    private int mid;
-    private int cnt;
-    private int jid;
-    private int jmid;
-    
-    private int count; // 총데이터 건수
-    private int pageSize; // 한번에 보여줄 페이지 크기
-    private int pageCount; // 총 페이지 수
-    private int curPage; // 클릭한 현재 페이지 번호
-    private int start; // 시작번호(현재페이지)
-    private int end; // 마지막 번호(현재페이지)
-    // 3. 하단에 block속성
-    private int blockSize; // 한번에 보여줄 block의 크기
-    private int startBlock; // block의 시작번호
-    private int endBlock; // block의 마지막번호
-	public WorkPageSch() {
+public class MemberSch {
+	// 페이징 처리 및 검색을 위한 vo
+	// 1. 검색
+	private String status;
+	private String auth;
+	// 2. 페이징 처리를 위한 속성
+	private int count; // 총데이터 건수
+	private int pageSize; // 한번에 보여줄 페이지 크기
+	private int pageCount; // 총 페이지 수
+	private int curPage; // 클릭한 현재 페이지 번호
+	private int start; // 시작번호(현재페이지)
+	private int end; // 마지막 번호(현재페이지)
+	// 3. 하단에 block속성
+	private int blockSize; // 한번에 보여줄 block의 크기
+	private int startBlock; // block의 시작번호
+	private int endBlock; // block의 마지막번호
+	private int cnt;
+	public MemberSch() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
-	public WorkPageSch(int pid, int count, int pageSize, int pageCount, int curPage, int start, int end, int blockSize,
-			int startBlock, int endBlock,int mid,int cnt,int jid,int jmid) {
-		this.pid = pid;
+	public MemberSch(String status, String auth, int count, int pageSize, int pageCount, int curPage, int start,
+			int end, int blockSize, int startBlock, int endBlock, int cnt) {
+		super();
+		this.status = status;
+		this.auth = auth;
 		this.count = count;
 		this.pageSize = pageSize;
 		this.pageCount = pageCount;
@@ -32,16 +35,19 @@ public class WorkPageSch {
 		this.blockSize = blockSize;
 		this.startBlock = startBlock;
 		this.endBlock = endBlock;
-		this.mid = mid;
-		this.cnt = cnt;
-		this.jid = jid;
-		this.jmid = jmid;
+		this.cnt =cnt;
 	}
-	public int getPid() {
-		return pid;
+	public String getStatus() {
+		return status;
 	}
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 	public int getCount() {
 		return count;
@@ -97,29 +103,11 @@ public class WorkPageSch {
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
 	}
-	public int getMid() {
-		return mid;
-	}
-	public void setMid(int mid) {
-		this.mid = mid;
-	}
 	public int getCnt() {
 		return cnt;
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	public int getJid() {
-		return jid;
-	}
-	public void setJid(int jid) {
-		this.jid = jid;
-	}
-	public int getJmid() {
-		return jmid;
-	}
-	public void setJmid(int jmid) {
-		this.jmid = jmid;
-	}
-    
+	
 }

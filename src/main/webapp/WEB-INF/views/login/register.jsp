@@ -53,6 +53,16 @@
           <div class="input-group-append">
           </div>
         </div>
+        <div class="input-group mb-3">
+          <input type="date" name="birthdate" id="birthdate" class="form-control" value="1994-01-26">
+          <div class="input-group-append">
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" name="phonenumber" id="phonenumber" class="form-control" placeholder="핸드폰 번호 ex) 01011112222">
+          <div class="input-group-append">
+          </div>
+        </div>
         <div class="row">
           <!-- /.col -->
           <div class="col-12" style="text-align:center">
@@ -115,6 +125,20 @@
 			if ($("#email").val() == null || $("#email").val() == "") {
 				alert("이메일을 입력해주세요.");
 				$("#email").focus();
+				 
+				return false;
+			}
+			
+			if ($("#birthdate").val() == null || $("#birthdate").val() == "") {
+				alert("생년월일을 선택해주세요.");
+				$("#birthdate").focus();
+				 
+				return false;
+			}
+			
+			if ($("#phonenumber").val() == null || $("#phonenumber").val() == "") {
+				alert("핸드폰 번호를 입력해주세요.");
+				$("#phonenumber").focus();
 				 
 				return false;
 			}

@@ -81,33 +81,48 @@
         <div class="card-header">
           <h3 class="card-title">사원 리스트</h3>
           <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
+	<form id="frm01" class="form"  method="post">
+		<input type="hidden" name="curPage" value="0"><!-- 하단의 js에 의해서 현재페이지 호출 -->
+ 	<div class="input-group lb-3">
+		<div class="input-group-prepend">
+			<span class="text-center input-group-text">EPM 총 사원수: ${memberSch.count}명</span>
+		</div>
+		<div class="input-group-append">
+			<select name="pageSize" class="form-control">
+				<option>3</option>
+				<option>5</option>
+				<option>10</option>
+				<option>20</option>
+				<option>30</option>
+			</select>
+		</div>
+	</div>  	
           </div>
         </div>
         <div class="card-body p-0">
-        <form id="send" action="${path}/sendEmpnoAndPassword.do" method="post">
           <table class="table">
               <thead>
                   <tr>
                       <th style="width: 1%">
                           #
                       </th>
-                      <th style="width: 16%">
+                      <th style="width: 12%">
                           이메일
                       </th>
-                      <th style="width: 10%">
+                      <th style="width: 8%">
                           이름
                       </th>
-                      <th style="width: 10%">
+                      <th style="width: 8%">
                           사원번호
                       </th>
-                      <th style="width: 10%">
+                      <th style="width: 8%">
                           권한
                       </th>
-                      <th style="width: 16%">
+                      <th style="width: 6%">
                           승인여부
+                      </th>
+                      <th style="width: 12%">
+                          가입일자
                       </th>  
                   </tr>
               </thead>
@@ -115,7 +130,7 @@
               <c:forEach var="memlist" items="${memlist}">
                   <tr class="hover" ondblclick="goDetail(${memlist.mid})">
                       <td>
-                          ${memlist.mid}
+                          ${memlist.cnt}
                       </td>
                       <td>
                           <div>
@@ -142,11 +157,28 @@
                               ${memlist.status}
                           </div>
                       </td>
+                      <td>
+                          <div>
+                              <fmt:formatDate value="${memlist.accessdate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+                          </div>
+                      </td>
                   </tr>
               </c:forEach>            
               </tbody>
           </table>
           </form>
+          
+          
+          <ul class="pagination justify-content-end">
+	  
+	  <li class="page-item">
+	  <a class="page-link" href="javascript:goPage(${memberSch.startBlock-1})">이전</a></li>
+	  <c:forEach var="cnt" begin="${memberSch.startBlock}" end="${memberSch.endBlock}">
+	  	<li class="page-item ${memberSch.curPage==cnt?'active':''}">
+	  		<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+	  </c:forEach>
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${memberSch.endBlock+1})">다음</a></li>
+	</ul>
         </div>
         <!-- /.card-body -->
       </div>
@@ -205,7 +237,22 @@ function goDetail(mid){
 <script type="text/javascript">
 var msg = "${msg}"
     if(msg!="") alert(msg)
-
+    
+    
+			// 선택된 페이지 크기 설정..
+			$("[name=pageSize]").val("${memberSch.pageSize}");
+			// 페이지 크기 변경시 마다, controller 단호출..
+			$("[name=pageSize]").change(function(){
+				$("[name=curPage]").val("1");
+				$("form").submit();
+			});
+			
+			
+			function goPage(cnt){
+				// 요청값으로 현재 클릭한 페이지를 설정하고 서버에 전달..
+				$("[name=curPage]").val(cnt);
+				$("form").submit();
+			}
 </script>
 </body>
 </html>

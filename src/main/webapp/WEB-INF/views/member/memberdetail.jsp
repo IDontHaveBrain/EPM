@@ -104,7 +104,15 @@
               </div>
               <div class="form-group">
                 <label for="inputName">이름</label>
-                <input id="name" name="name" type="text" value="${member.name}" class="form-control">
+                <input id="name" name="name" type="text" value="${member.name}" class="form-control" readonly>
+              </div>
+              <div class="form-group">
+                <label for="inputName">핸드폰 번호</label>
+                <input id="phonenumber" name="phonenumber" type="text" value="${member.phonenumber}" class="form-control" readonly>
+              </div>
+              <div class="form-group">
+                <label for="inputName">생년월일</label>
+                <input id="birthdate" name="birthdate" type="text" value="${member.birthdate}" class="form-control" readonly>
               </div>
                 <label for="inputProjectLeader">권한</label>
               <div class="form-group">
@@ -126,7 +134,7 @@
                 </select> 
               </div>    
               <div class="form-group">
-              	<label for="inputProjectLeader">마지막 접속시간</label>
+              	<label for="inputProjectLeader">가입일자</label>
                 	<fmt:formatDate value="${member.accessdate}" pattern="yyyy-MM-dd hh:mm:ss"/>
               </div>                                    
               </div>
