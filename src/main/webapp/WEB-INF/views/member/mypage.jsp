@@ -87,7 +87,7 @@
     <section class="content">
       <div class="container">
         <!-- 페이지 구성 시작!! -->
-        <form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form"  method="post">
+        <form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form" method="post">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">${member.name}님 사원정보</h3>
@@ -98,21 +98,7 @@
                 <label for="inputName">사원번호</label>
                 <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
               </div>
-              <div class="form-group" >
-                <label for="inputName" >비밀번호</label>
-                   
-               
-                <input style="width:85%" id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
-             <button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})" >
-             </button>
-                	
-               
-                <input style="width:85%" id="password" name="password" type="password" value="${member.password}" class="form-control" readonly>
- 				<button style="position: relative; float:right; bottom:35px;" type="button" onclick="authorize(${memlist.mid})"
-                class="btn btn-primary btn-sm" >비밀번호 변경</button>                
-              
-            
-              
+              <input type="hidden" name="pwCheck" value=""/>
               <div class="form-group">
                 <label for="inputName">이메일</label>
                 <input id="email" name="email" type="text" value="${member.email}" class="form-control">
@@ -121,6 +107,14 @@
                 <label for="inputName">이름</label>
                 <input id="name" name="name" type="text" value="${member.name}" class="form-control" readonly>
               </div>
+              <div class="form-group">
+                <label for="inputName">핸드폰 번호</label>
+                <input id="phonenumber" name="phonenumber" type="text" value="${member.phonenumber}" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="inputName">생년월일</label>
+                <input id="birthdate" name="birthdate" type="text" value="${member.birthdate}" class="form-control" readonly>
+              </div>
                 <label for="inputProjectLeader">권한</label>
               <div class="form-group">
                 <input id="auth" name="auth" type="text" value="${member.auth}" class="form-control" readonly>
@@ -128,12 +122,49 @@
               <div class="col-12" style="text-align:right">    
                 <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
              </div>                                       
-              </div>
             </div>
             <!-- /.card-body -->
            </div>
           <!-- /.card -->
        </form>
+     
+        <!-- 페이지 구성 끝!! -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="container">
+        <!-- 페이지 구성 시작!! -->
+        <form id="changePassword" method="post">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">비밀번호 변경하기</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="currentPassword">현재 비밀번호</label>
+                <input id="currentPassword" name="currentPassword" type="password" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="newPassword">새 비밀번호</label>
+                <input id="newPassword" name="password" type="password" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="renewPassword">비밀번호 확인</label>
+                <input id="renewPassword" name="renewPassword" type="password" class="form-control">
+                <div id="pwDif">비밀번호를 다시 확인해주세요.</div>
+                <div id="pwCor">비밀번호가 일치합니다.</div>
+              </div>
+              <input id="mid" name="mid" type="hidden" value="${member.mid}" class="form-control" readonly>
+              <div class="col-12" style="text-align:right"> 
+              	<button type="button" id="pwChBtn" class="btn btn-primary btn-sm">비밀번호 변경</button>
+              </div>                                       
+            </div>
+            <!-- /.card-body -->
+           </div>
+          <!-- /.card -->
+       </form>
+     
         <!-- 페이지 구성 끝!! -->
       </div>
       <!-- /.container-fluid -->
@@ -186,10 +217,61 @@
 </body>
 
 <script type="text/javascript">
-   var msg = "${msg}"
-   
-    if(msg!="") alert(msg)
-
+		$("#pwCor").hide()
+		$("#pwDif").hide()		
+		var pwPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9_-]{8,16}$/
+		$("#pwChBtn").click(function(){
+			if($("#currentPassword").val()!="${member.password}"){
+				alert("현재 비밀번호를 확인해주세요.")
+				return
+			}
+			if($("#newPassword").val().length < 8 || $("#newPassword").val().length > 16 || !$("#newPassword").val().match(pwPattern)){
+				alert("비밀번호는 8~16자 영문+숫자 조합입니다.");
+				$("#newPassword").focus();
+				return
+			}
+			if($("[name=pwCheck]").val() != "cor"){
+				alert("새 비밀번호와 비밀번호 확인을 일치시켜주세요")
+				return
+			}
+			$("#changePassword").attr("action","${path}/changePassword.do")
+			$("#changePassword").submit()
+		})
+		
+		$("#renewPassword").keyup(function(){
+		     var pw1 = $("#newPassword").val()
+		     var pw2 = $("#renewPassword").val()
+		     if(pw1 != '' && pw2 !='') {
+		 		if(pw1 == pw2) {
+		 			$("#pwCor").show()
+		 			$("#pwDif").hide()
+		 			$("#pwCor").css({"color":"green"})
+		 			$("[name=pwCheck]").val("cor")
+		 		} else {
+		 			$("#pwDif").show()
+		 			$("#pwCor").hide()
+		 			$("#pwDif").css({"color":"red"})
+		 			$("[name=pwCheck]").val("dif")
+		 		}
+		 	}
+		})
+		$("#newPassword").keyup(function(){
+		     var pw1 = $("#newPassword").val()
+		     var pw2 = $("#renewPassword").val()
+		     if(pw1 != '' && pw2 !='') {
+		 		if(pw1 == pw2) {
+		 			$("#pwCor").show()
+		 			$("#pwDif").hide()
+		 			$("#pwCor").css({"color":"green"})
+		 			$("[name=pwCheck]").val("cor")
+		 		} else {
+		 			$("#pwDif").show()
+		 			$("#pwCor").hide()
+		 			$("#pwDif").css({"color":"red"})
+		 			$("[name=pwCheck]").val("dif")
+		 		}
+		 	}
+		})
 
    function authorize(mid){
       if(confirm("해당 사원정보를 수정하시겠습니까?")){
@@ -204,16 +286,6 @@
          location.href="${path}/deleteMember.do?mid="+mid;
       }
    } 
-   /*
-   function updateEmpno(){
-      var mid = $("[name=mid]").val()
-      
-      if(confirm("사원번호를 발급 처리하시겠습니까?")){
-         $("form").attr("action","${path}/createEmpnoandPassword.do");
-         $("form").submit();
-      }
-   }
-   */
    
    var proc = "${proc}"
    if(proc=="upt"){
@@ -225,12 +297,6 @@
       alert("삭제완료\n사원 관리 페이지로 이동합니다.");
       location.href="${path}/memberlist.do";
    }
-   /*
-   if(proc=="uptE"){
-      alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
-      location.href="${path}/memberlist.do";
-   }
-   */
    
    $(function(){
       $("#sendBtn").click(function(){
@@ -247,5 +313,11 @@
       });
    })
    
+   if("${proc}"!=""){
+	if("${proc}"=="pwChange"){
+		alert("비밀번호가 변경되었습니다.\n변경된 비밀번호로 다시 로그인해주세요.")
+		location.href="${path}/logout.do"
+	}
+} 
 </script>
 </html>

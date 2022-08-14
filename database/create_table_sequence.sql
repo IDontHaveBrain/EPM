@@ -7,8 +7,8 @@ CREATE TABLE MEMBER (					-- 회원 테이블
 	accessdate	date,					-- 최근 접속일
 	status		varchar2(10),			-- 가입 상태 (대기 / 승인 / 탈퇴)
 	empno		NUMBER					-- 사원번호 (로그인시 사용하는 아이디)
-	birthdate date,						-- 생일
-	phonenumber number					-- 핸드폰번호
+	birthdate varchar2(30),				-- 생일
+	phonenumber varchar2(30)			-- 핸드폰번호
 );
 
 CREATE SEQUENCE member_seq
@@ -19,8 +19,9 @@ CREATE SEQUENCE empno_seq
 	INCREMENT BY 1
 	START WITH 7000;
 
-ALTER TABLE MEMBER ADD birthdate date;
-ALTER TABLE MEMBER ADD phonenumber number;
+ALTER TABLE MEMBER DROP COLUMN phonenumber;
+ALTER TABLE MEMBER ADD birthdate varchar2(30);
+ALTER TABLE MEMBER ADD phonenumber varchar2(30);
 
 DELETE FROM MEMBER, log, participants
 USING 

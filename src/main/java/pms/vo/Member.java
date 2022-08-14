@@ -11,12 +11,15 @@ public class Member {
 	private Date accessdate;
 	private String status;
 	private int empno;
+	private String birthdate;
+	private String phonenumber;
+	private int cnt;
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Member(int mid, String email, String password, String name, String auth, Date accessdate, String status,
-			int empno) {
+			int empno, String birthdate, String phonenumber, int cnt) {
 		super();
 		this.mid = mid;
 		this.email = email;
@@ -26,6 +29,9 @@ public class Member {
 		this.accessdate = accessdate;
 		this.status = status;
 		this.empno = empno;
+		this.birthdate = birthdate;
+		this.phonenumber = phonenumber;
+		this.cnt = cnt;
 	}
 	public int getMid() {
 		return mid;
@@ -75,4 +81,23 @@ public class Member {
 	public void setEmpno(int empno) {
 		this.empno = empno;
 	}
+	public String getBirthdate() {
+		return birthdate;
+	}
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 }
