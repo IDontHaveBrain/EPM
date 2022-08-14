@@ -92,9 +92,29 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+	<form class="form"  method="post">
+		<input type="hidden" name="curPage" value="0">
+	<div class="input-group lb-3">
+		<div class="input-group-prepend">
+			<span class="text-center input-group-text">총 : ${WorkPageSch.count}건</span>
+		</div>
+		<input class="form-control" />	
+		<div class="input-group-append">
+			<span class="text-center input-group-text">페이지 크기</span>
+			<select name="pageSize" class="form-control">
+				<option>3</option>
+				<option>5</option>
+				<option>10</option>
+				<option>20</option>
+				<option>30</option>
+			</select>
+		</div>
+		</div> 
+	</form>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                    <th style="text-align:center;" width="3%">번호</th>
                     <th style="text-align:center;" width="7%">담당자 (사원번호)</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
@@ -107,7 +127,8 @@
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr class="aa123" style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
+                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
+                    <td style="text-align:center;">${wl.cnt}</td>
                     <td style="text-align:center;">${wl.name}(${wl.empno})</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
@@ -131,6 +152,14 @@
                   </tr>
                   </tfoot>
                 </table>
+	<ul class="pagination justify-content-end">
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${WorkPageSch.startBlock}-1)">이전</a></li>
+	  <c:forEach var="cnt" begin="${WorkPageSch.startBlock}" end="${WorkPageSch.endBlock}">
+	  	<li class="page-item ${WorkPageSch.curPage==cnt?'active':''}">
+	  			<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+	  </c:forEach>
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${WorkPageSch.endBlock}+1)">다음</a></li>
+	</ul> 
               </div>
               <!-- /.card-body -->
             </div>
@@ -198,6 +227,20 @@
 function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
+
+function goPage(cnt){
+	// 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
+	$("[name=curPage]").val(cnt);
+	$("form").submit();
+}
+
+// 선택된 페이지 크기 설정..
+$("[name=pageSize]").val("${sch.pageSize}");
+// 페이지 크기 변경시 마다, controller 단 호출..
+$("[name=pageSize]").change(function(){
+	$("[name=curPage]").val("1");
+	$("form").submit();
+});
 </script>
 
 </body>

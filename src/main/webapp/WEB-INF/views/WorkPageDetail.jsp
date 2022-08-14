@@ -134,7 +134,6 @@
                     <tr>
                       <th style="text-align:center;" style="width: 150px">업무이름</th>
                       <th style="text-align:center;" style="width: 150px">담당자이름</th>
-
                       <th style="text-align:center;" style="width: 160px">시작날짜</th>
                       <th style="text-align:center;" style="width: 160px">마감날짜</th>
                       <th style="text-align:center;" style="width: 160px">수정일</th>

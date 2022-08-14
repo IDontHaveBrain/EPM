@@ -2,7 +2,11 @@ package pms.vo;
 
 public class WorkPageSch {
     private int pid; // 프로젝트아이디 기준
-
+    private int mid;
+    private int cnt;
+    private int jid;
+    private int jmid;
+    
     private int count; // 총데이터 건수
     private int pageSize; // 한번에 보여줄 페이지 크기
     private int pageCount; // 총 페이지 수
@@ -17,7 +21,7 @@ public class WorkPageSch {
 		// TODO Auto-generated constructor stub
 	}
 	public WorkPageSch(int pid, int count, int pageSize, int pageCount, int curPage, int start, int end, int blockSize,
-			int startBlock, int endBlock) {
+			int startBlock, int endBlock,int mid,int cnt,int jid,int jmid) {
 		this.pid = pid;
 		this.count = count;
 		this.pageSize = pageSize;
@@ -28,6 +32,10 @@ public class WorkPageSch {
 		this.blockSize = blockSize;
 		this.startBlock = startBlock;
 		this.endBlock = endBlock;
+		this.mid = mid;
+		this.cnt = cnt;
+		this.jid = jid;
+		this.jmid = jmid;
 	}
 	public int getPid() {
 		return pid;
@@ -88,6 +96,30 @@ public class WorkPageSch {
 	}
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
+	}
+	public int getMid() {
+		return mid;
+	}
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getJid() {
+		return jid;
+	}
+	public void setJid(int jid) {
+		this.jid = jid;
+	}
+	public int getJmid() {
+		return jmid;
+	}
+	public void setJmid(int jmid) {
+		this.jmid = jmid;
 	}
     
 }

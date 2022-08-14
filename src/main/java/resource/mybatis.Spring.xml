@@ -20,6 +20,7 @@
 		<typeAlias type="pms.dto.ProjectMemberDTO" alias="promember"/>
 		<typeAlias type="pms.vo.Participants" alias="participants"/>
 		<typeAlias type="pms.dto.ProjectDto" alias="prjdto"/>
+		<typeAlias type="pms.vo.WorkPageSch" alias="workpagesch"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>
