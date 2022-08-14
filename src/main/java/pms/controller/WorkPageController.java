@@ -65,7 +65,6 @@ public class WorkPageController {
 			@RequestParam(value = "jmid") int jmid,
 			@RequestParam(value = "jid") int jid,Model d) {
 		service.deleteWorkPageFile(fid);
-		System.out.println("파일값들어오냐?:"+fid);
 		return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 	}
 
@@ -79,10 +78,15 @@ public class WorkPageController {
 
 	@RequestMapping("WorkPageInsert.do")
 	public String WorkPageInsert(WorkPageFile ins, Model d,
-						@RequestParam(value = "jmid") int jmid,HttpServletRequest request) {
-			System.out.println("컨트롤러jmid ==>"+jmid);
+						@RequestParam(value = "jmid") int jmid,
+						@RequestParam(value = "jid") int jid) {
+
+		
 		service.insertWorkPageFile(ins,jmid);
-		return "redirect:WorkPageList.do";
+			return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+		
+		
+
 	}
 
 	// int pid, @RequestParam("pid")

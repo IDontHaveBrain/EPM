@@ -70,7 +70,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">담당자 업무 리스트</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -88,21 +88,19 @@
         <!-- 페이지 구성 시작!! -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
+               
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-
-                    <th style="text-align:center;" width="5%">담당자</th>
+                    <th style="text-align:center;" width="7%">담당자 (사원번호)</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
                     <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
-                    <th style="text-align:center;" width="5%">진행률</th>
-  					
+                    <th style="text-align:center;" width="5%">진행률</th> 					
                     <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
                   </tr>
@@ -110,30 +108,18 @@
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
                   <tr class="aa123" style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
-
                     <td style="text-align:center;">${wl.name}(${wl.empno})</td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;">${wl.jname}</td> 
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-   
-			<!-- 진행률 -->
-                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.progress}%</span></td>
-                      
-                 
-             <!-- 진행률 -->       
-           <!-- 파일등록 css -->
-                  	    
-                        
-                      
-                    
-          <!-- 파일등록 css -->
-
-                    <td>
-                  	    <button class="btn btn-danger col fileinput-button" onclick="location.href='issueInsertForm.do'">
-                        <i class="fas fa-plus"></i>
-                        <span></span>
-                      </button>
+                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>   
+                    <td style="text-align:center;" width="5%">${wl.progress}%</td>    
+                    <td style="text-align:center;">
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-danger" type="button" onclick="location.href='issueInsertForm.do'">		         	
+		         					<i class="fas fa-bell"></i>		         				
+	         				</button>	
+	         			</div>	                                         
 					</td>
 				<td style="text-align:center;" >${wl.jmstatus}</td>
                   </tr>
