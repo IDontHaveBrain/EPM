@@ -169,7 +169,7 @@
 				<label for="file">파일찾기</label>
 					<input class="upload-name" value="산출물을 등록하세요" placeholder="첨부파일" >					     
 						<input type="file" id="file" name="report">						
-						<input type="submit" value="저장하기" class="btn btn-primary float-center"/>
+						<input type="button" value="저장하기" onclick="insertProc()" class="btn btn-primary float-center"/>
            		</div>
            		<tr>
            		<table class="table table-bordered table-striped">
@@ -313,6 +313,18 @@ $("#file").on('change',function(){
 	  var fname = $("#file").val();
 	  $(".upload-name").val(fname);
 	});
+	
+function insertProc(){
+	if(confirm("저장하시겠습니까?")){
+		var fname = $("#file").val();		
+		if(	fname == ""){
+			alert("등록된 파일이 없습니다.");
+			return false; 
+		}		
+		$("form").attr("action","${path}/WorkPageInsert.do");
+		$("form").submit();
+	}
+}
 
 </script>
 </body>

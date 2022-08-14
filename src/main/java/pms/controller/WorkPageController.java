@@ -27,9 +27,9 @@ public class WorkPageController {
 
 	// http://localhost:7080/project06/WorkPageList.do
 	@RequestMapping("WorkPageList.do")
-	public String WorkPageList(WorkPageSch sch, @RequestParam(value = "mid", defaultValue = "0") int mid,
-											 @RequestParam(value = "pid", defaultValue = "0") int pid,
-											 Model d, HttpServletRequest request) {
+	public String WorkPageList(WorkPageSch sch,@RequestParam(value = "mid", defaultValue = "0") int mid,
+											   @RequestParam(value = "pid", defaultValue = "0") int pid,
+											   Model d, HttpServletRequest request) {
 		// 임시 프로젝트 선택
 
 		pid = 1;

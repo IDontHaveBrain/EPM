@@ -96,9 +96,10 @@
 		<input type="hidden" name="curPage" value="0">
 	<div class="input-group lb-3">
 		<div class="input-group-prepend">
-			<span class="text-center input-group-text">총 : ${WorkPageSch.count}건</span>
+			<span class="text-center input-group-text">총 : ${workPageSch.count}건</span>
 		</div>
-		<input class="form-control" />	
+		
+		
 		<div class="input-group-append">
 			<span class="text-center input-group-text">페이지 크기</span>
 			<select name="pageSize" class="form-control">
@@ -108,6 +109,24 @@
 				<option>20</option>
 				<option>30</option>
 			</select>
+			<span class="text-center input-group-text">승인여부</span>
+			<select name="jmstatus" class="form-control" >
+				<option>TOTAL</option>
+				<option>PROG</option>
+				<option>COMP</option>
+				<option>REQ</option>
+				<option>REJ</option>
+			</select>			
+		</div>
+		<script type="text/javascript">
+			// 선택된 페이지 크기 설정..
+			$("[name=pageSize]").val("${workPageSch.pageSize}");
+			// 페이지 크기 변경시 마다, controller 단 호출..
+			$("[name=pageSize]").change(function(){
+				$("[name=curPage]").val("1");
+				$("form").submit();
+			});
+		</script>	
 		</div>
 		</div> 
 	</form>
@@ -153,12 +172,12 @@
                   </tfoot>
                 </table>
 	<ul class="pagination justify-content-end">
-	  <li class="page-item"><a class="page-link" href="javascript:goPage(${WorkPageSch.startBlock}-1)">이전</a></li>
-	  <c:forEach var="cnt" begin="${WorkPageSch.startBlock}" end="${WorkPageSch.endBlock}">
-	  	<li class="page-item ${WorkPageSch.curPage==cnt?'active':''}">
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${workPageSch.startBlock}-1)">이전</a></li>
+	  <c:forEach var="cnt" begin="${workPageSch.startBlock}" end="${workPageSch.endBlock}">
+	  	<li class="page-item ${workPageSch.curPage==cnt?'active':''}">
 	  			<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
 	  </c:forEach>
-	  <li class="page-item"><a class="page-link" href="javascript:goPage(${WorkPageSch.endBlock}+1)">다음</a></li>
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${workPageSch.endBlock}+1)">다음</a></li>
 	</ul> 
               </div>
               <!-- /.card-body -->
@@ -224,23 +243,20 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript">
-function goDetail(jid,jmid){
-	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
-}	
-
 function goPage(cnt){
 	// 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
 	$("[name=curPage]").val(cnt);
 	$("form").submit();
 }
 
-// 선택된 페이지 크기 설정..
-$("[name=pageSize]").val("${sch.pageSize}");
-// 페이지 크기 변경시 마다, controller 단 호출..
-$("[name=pageSize]").change(function(){
-	$("[name=curPage]").val("1");
-	$("form").submit();
-});
+
+
+
+function goDetail(jid,jmid){
+	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+}	
+
+
 </script>
 
 </body>
