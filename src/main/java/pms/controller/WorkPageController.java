@@ -16,20 +16,20 @@ import pms.service.WorkPageService;
 import pms.vo.Member;
 import pms.vo.WorkPage;
 import pms.vo.WorkPageFile;
+import pms.vo.WorkPageSch;
 
 @Controller
 public class WorkPageController {
 	@Autowired(required = false)
 	private WorkPageService service;
-	// 강제로그인
 	@Autowired(required = false)
 	private GlobalService gservice;
 
 	// http://localhost:7080/project06/WorkPageList.do
 	@RequestMapping("WorkPageList.do")
-	public String WorkPageList(WorkPage sch, @RequestParam(value = "mid", defaultValue = "0") int mid,
-											 @RequestParam(value = "pid", defaultValue = "0") int pid,
-											 Model d, HttpServletRequest request) {
+	public String WorkPageList(WorkPageSch sch,@RequestParam(value = "mid", defaultValue = "0") int mid,
+											   @RequestParam(value = "pid", defaultValue = "0") int pid,
+											   Model d, HttpServletRequest request) {
 		// 임시 프로젝트 선택
 
 		pid = 1;
