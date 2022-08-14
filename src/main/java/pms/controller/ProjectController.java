@@ -11,6 +11,7 @@ import pms.dto.ProjectDto;
 import pms.service.ProjectService;
 
 
+
 @Controller
 public class ProjectController {
 	@Autowired(required=false)
@@ -30,19 +31,22 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("projectInsert.do")
-	public String projectInsert(ProjectDto ins, Model d){	
-
-	    
+	public String projectInsert(ProjectDto ins, Model d){	    
 	    service.createProject(ins);
-		
-	
 		d.addAttribute("isInsert","Y");
 	
 		return "WEB-INF\\views\\project\\project.jsp";
 	}
 	
+	@RequestMapping("updateProject.do")
+	public String updateProject(ProjectDto upt, Model d){	
+		System.out.println(upt.getPname());
+		d.addAttribute("project",service.updateProject(upt));	
+		d.addAttribute("proc","upt");
 
-	
+		return "WEB-INF\\views\\project\\projectdetail.jsp";
+	}
+
 	@RequestMapping("projectDetail.do")
 	public String projectDetail(@RequestParam("pid") int pid, Model d){
 		d.addAttribute("project",service.getProjectDetail(pid));
@@ -50,12 +54,13 @@ public class ProjectController {
 		
 		return "WEB-INF\\views\\project\\projectdetail.jsp";
 	}
+	
 
 	@RequestMapping("deleteProject.do")
 	public String deleteProject(@RequestParam("pid") int pid, Model d){	
 		service.deleteProject(pid);
 		d.addAttribute("proc","del");
-		return "WEB-INF\\views\\project\\projectdetail.jsp";	
+		return "WEB-INF\\views\\project\\projectlist.jsp";	
 	}
 	
 	@RequestMapping("memberList.do")
@@ -91,13 +96,7 @@ public class ProjectController {
 	/*
 
 	
-	@RequestMapping("updateProject.do")
-	public String updateProject(Project upt, Model d){		
-		d.addAttribute("project",service.updateProject(upt));
-		d.addAttribute("proc","upt");
 
-		return "WEB-INF\\views\\projectedit.jsp";
-	}
 	
 		@RequestMapping("deleteProject.do")
 	public String deleteProject(@RequestParam("pid") int pid, Model d){	

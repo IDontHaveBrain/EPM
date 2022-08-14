@@ -49,29 +49,9 @@
   
 
 <script type="text/javascript">
+var list
 	$(document).ready(function(){
-		function updateMember(){
-		    $.ajax({
-		      url: "${path}/ajaxMember.do",
-		      data: "",
-		      dataType: "json",
-		      success: function (data) {
-		        console.log(data)
-		        var list = data.memberList;
-		        var addHTML = "";
-		       
-		        $(list).each(function (idx, rst) {
-		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+rst.empno+"</option>";
-		        });
-		        console.log(addHTML);
-		       
-		        $("#inputPM").html(addHTML);
-		        $("#inputMem").html(addHTML);
-		     
-		      }
-		    });
-		  }
-		updateMember();
+
 		
 		function updatePmember(){
 		    $.ajax({
@@ -79,34 +59,37 @@
 		      data: "pid=" + ${param.pid},
 		      dataType: "json",
 		      success: function (data) {
-		        console.log(data)
-		        var list = data.pmemberList;
-		        var addHTML2 = "";
-		        var memberlist = [];
-		        var PM = "";
-		        $(list).each(function (idx, rst) {
-		        	addHTML2+="<option value='"+rst.mid+"'>"+rst.name+"</option>";	
-		        	memberlist.push(rst.pauth);
-		        });
+		        list = data.pmemberList;
+		        var addHTML = "";
+		        var addHTML2 = "";		     		     				
+		     
+				var pmid;
+				for(var i = 0; i < list.length; i++){
+			  		if(list[i].pauth == "PM")
+			  			  pmid = list[i].mid;	
+				}
 				
-		       
-		        
-		        for(var i = 0; i <= memberlist.endBlock; i++){
-		        	PM.push(memberlist[i]);
-
-		        }
-		        for(var i = list.startBlock; i <= list.endBlock; i++){
-		            addPage += '<li class="page-item ' + (isch.curPage==i?'active':'') + '">';
-		            addPage += '<a class="page-link" href="javascript:goPageI(' + i + ')">' + i + '</a></li>';
-		         }
+		        $(list).each(function (idx, rst) {
+		        	if(rst.pauth == "PM"){
+		        	 	addHTML2+="<option disabled selected value='"+rst.mid+"'>"+rst.name+"</option>";	
+		        	}else{
+		        		addHTML+="<option disabled selected value='"+rst.mid+"'>"+rst.name+"</option>";	
+		        	}
 		        	
-	        
+		        	
+		        });
+		 
+				 console.log(pmid)
+	
 
-		        console.log(addHTML2);
-		        console.log(PM);
-		        
+	        
+			
+				 console.log(list)
+		       
+	  			$("#inputMem").html(pmid);
+				 
 		        $("#inputPM").html(addHTML2);
-		        $("#inputMem").html(addHTML2);
+		        $("#inputMem").html(addHTML);
 		      }
 		    });
 		  }
@@ -120,7 +103,9 @@
 	    $('.select2bs4').select2({
 	      theme: 'bootstrap4'
 	    })
-	   
+	    
+
+
 		
 
 
@@ -169,11 +154,11 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-        <form id="frm01" enctype="multipart/form-data" action="${path}/projectInsert.do" class="form"  method="post">             
+        <form id="frm01" enctype="multipart/form-data" action="${path}/updateProject.do" class="form"  method="get">             
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">프로젝트 수정</h3>
-
+			  <input type="hidden" name="pid" value="${project.pid}">
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                   <i class="fas fa-minus"></i>
@@ -184,46 +169,36 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">프로젝트명</label>
-                <input id="inputName" type="text" value="${project.pname}" class="form-control">
+                <input name="pname" id="inputName" type="text" value="${project.pname}" class="form-control">
               </div>
-              <div class="form-group">           
-                <label for="inputProjectLeader">PM</label>
-                    <select id="inputPM" class="form-control pm-select select2bs4">
-                	<option selected disabled>PM 선택</option>
-    				<c:forEach var="pmember" items="${pmemberList}">
-						<option value="${pmember.mid }">${pmember.name}</option>
-					</c:forEach>
-					<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
-					</c:forEach>
+              <div class="form-group" >           
+                <label for="inputProjectLeader" >PM</label>
+                    <select id="inputPM" class="form-control pm-select select2bs4" >
+               
+  
                 </select>              
               </div>
               <div class="form-group"> 
                   <label>참여 멤버</label>
                   <div class="select2-purple">
                    <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  	
-                	<option selected disabled>멤버 선택</option>
-    				<c:forEach var="pmember" items="${pmemberList}">
-						<option value="${pmember.mid }">${pmember.name}</option>
-					</c:forEach>
-					<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
-					</c:forEach>
+             
+
                 </select> 
               </div>  
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
+                <textarea name="pcomment" id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">시작일 :</label>
                 <fmt:formatDate value="${project.pstart}"/>
-                <input type="date" id="startDate" class="form-control">
+                <input type="date" name="pstart" id="startDate" value="${project.pstart}" class="form-control">
               </div>
 			  <div class="form-group">
                 <label for="inputClientCompany">종료일 :</label>
                 <fmt:formatDate value="${project.pend}"/>
-                <input type="date" id="endDate" value="${project.pstart}" class="form-control">
+                <input type="date" name="pend" id="endDate" value="${project.pend}" class="form-control">
               </div> 
             </div>
             <!-- /.card-body -->
@@ -238,7 +213,7 @@
 
         </div>
       </div>
-   
+      </div>
      </form>
         <!-- 페이지 구성 끝!! -->
       </div>
@@ -292,40 +267,37 @@
 
 
 <script type="text/javascript">
-/*
- function updateProc(){
+
+function updateProc(){
 	if(confirm("수정하시겠습니까?")){
-		// 유효성 check
 		$("form").attr("action","${path}/updateProject.do");
 		$("form").submit();
 	}
 }
 
-
 var proc = "${proc}"
 	if(proc=="upt"){
 		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
-			location.href="${path}/boardList.do";
-		}
+			location.href="${path}/projectList.do";
 	}
+}
 	
-
- */
-	function deleteProc(){
-		if(confirm("삭제하시겠습니까?")){
-			$("form").attr("action","${path}/deleteProject.do");
-			$("form").submit();		
-		}
+function deleteProc(){
+	if(confirm("삭제하시겠습니까?")){
+		$("form").attr("action","${path}/deleteProject.do");
+		$("form").submit();		
 	}
+}
  
 var proc = "${proc}"	
 	if(proc=="del"){
 		alert("삭제성공!")
 	}
 
- function goMain(){
+
+function goMain(){
 		location.href="${path}/projectList.do";
-	}
+}
 
 
 </script>

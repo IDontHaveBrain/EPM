@@ -21,12 +21,6 @@
 		WHERE p.mid = m.mid
 		and pid = #{pid}
 	</select>
-	
-	<select id="getLastProject" resultType="Project" parameterType="int">
-		SELECT * 
-		FROM member	
-		order by empno
-	</select>
 
 	
 	<insert id="insertProject" parameterType="prjdto">
@@ -37,17 +31,33 @@
 	<insert id="insertParticipants" parameterType="participants">
       insert into participants values(participants_seq.nextval, #{pauth},
             project_seq.currval, #{mid}, sysdate, sysdate)         
-   </insert>
+    </insert>
 	
 	<select id="getProjectDetail" parameterType="int" resultType="project">
 		select pid, pname, pcomment, pstart, pend
 		from project
 		where pid = #{pid}
 	</select>
+
+	
+	<update id="updateProject" parameterType="prjdto">
+		UPDATE project
+		   SET pname = #{pname, jdbcType=VARCHAR},
+			   pcomment = #{pcomment, jdbcType=VARCHAR},
+			   pstart = #{pstart, jdbcType=DATE},
+			   pend = #{pend, jdbcType=DATE}		
+		WHERE pid = #{pid}	
+	</update>
+	
 	
 	<delete id="deleteProject" parameterType="int">
 		delete
 		from project
-		where pid = #{pid}	
-	</delete>	
+		where pid = #{pid}
+	</delete>
+	<delete id="deleteMember" parameterType="int">
+		delete
+		from participants
+		where pid = #{pid}
+	</delete>		
 </mapper>

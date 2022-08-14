@@ -18,15 +18,16 @@ public interface ProjectDao {
 	public List<Member> getMemberList();
 	public List<ProjectMemberDTO> getPmemberList(int pid); //조회
 	
-	//public void<Participants> - 수정 
 	public Project getProjectDetail(int pid);
 	
 	public void insertProject(ProjectDto ins);	
 	public void insertParticipants(Participants p);
 	
+	public void updateProject(ProjectDto upt);
 
 	
 	
 	
 	public void deleteProject(int pid);
+	public void deleteMember(int pid);
 }

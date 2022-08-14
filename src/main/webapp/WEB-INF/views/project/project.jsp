@@ -51,6 +51,7 @@
   
 
 <script type="text/javascript">
+var list
 	$(document).ready(function(){
 		function updateMember(){
 		    $.ajax({
@@ -59,15 +60,16 @@
 		      dataType: "json",
 		      success: function (data) {
 		        console.log(data)
-		        var list = data.memberList;
-		        var addHTML = "";
-		        var addPage = "";
+		        list = data.memberList;
+		        var addHTML = "<option selected disabled>PM 선택</option>";
+	 
 		        $(list).each(function (idx, rst) {
 		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+		        	
 		        });
-		        console.log(addHTML);
+		        		      
 		        $("#inputPM").html(addHTML);
-		        $("#inputMem").html(addHTML);
+		       
 		     
 		      }
 		    });
@@ -83,7 +85,43 @@
 	      theme: 'bootstrap4'
 	    })
 	   
-		
+	    var pmid;
+	    $("select[name=selectPM]").change(function(){  	  
+	  		pmid=$(this).val();
+		});
+	  	  
+	  	function PrjMember(pm){
+	          $.ajax({
+	            url: "${path}/ajaxMember.do",
+	            data: "",
+	            dataType: "json",
+	            success: function (data) {
+	            console.log(data)
+	            list = data.memberList;               
+	            var addHTML02 = ""; 
+	            
+		        $(list).each(function (idx, rst) {
+		        	console.log(pmid);
+		        	if(rst.mid != pm)
+		        	 	addHTML02+="<option value='"+rst.mid+"'>"+rst.name+"</option>";	
+ 	
+		        });
+	                  
+	                 $("#inputMem").html(addHTML02);
+	              
+	               }
+	             });
+	           }
+	  	console.log(pmid);
+	  	PrjMember(pmid);  
+  
+
+	  	  
+
+	  	  $("#inputPM").change(PrjMember(pmid));
+	  	
+	  	  
+	  
 
 
 	});
@@ -131,7 +169,7 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-     	<form id="frm01" action="${path}/projectInsert.do" class="form"  method="get">
+     	<form id="frm01" action="${path}/projectInsert.do" class="form"  method="post">
           <div class="card card-primary">
             
             <div class="card-body">
@@ -142,10 +180,8 @@
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
                 <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
-    				<option selected disabled>PM 선택</option>
-    				<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
-					</c:forEach>
+    				
+
                 </select>                    
               </div>
               
@@ -156,11 +192,9 @@
                   <label>참여 멤버</label>
                   <div class="select2-purple">
                    <select name="selectmember" id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  			
-    				<c:forEach var="member" items="${memberList}">
-						<option value="${member.name }">${member.name}(${member.empno})</option>
-					</c:forEach>
+
                    </select>
-                  </div>
+                  </div>           
                 </div>
               
 
@@ -252,6 +286,10 @@
 </body>
 
 <script type="text/javascript">
+
+
+	
+
     
 var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
@@ -259,7 +297,15 @@ var isInsert = "${isInsert}"
 			// 취소 입력시 조회화면 이동..
 			location.href="${path}/ProjectList.do"
 		}
+			location.href="${path}/Project.do"
 	}
+	
+if(isInsert=="Y"){
+		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
+			// 취소 입력시 조회화면 이동..
+			location.href="${path}/ProjectList.do"
+		}
+	}	
 
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){
@@ -272,6 +318,8 @@ function insertProc(){
 		$("form").submit();
 	}
 }
+
+
 
 function goMain(){
 	location.href="${path}/projectList.do";

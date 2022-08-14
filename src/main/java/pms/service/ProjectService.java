@@ -37,23 +37,29 @@ public class ProjectService {
       	return dao.getProjectDetail(pid);
     }
     
-    // pname=%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8&selectPM=2&selectmember=5&selectmember=7&selectmember=11&pcomment=%E3%85%87%E3%84%B9%E3%84%B4%E3%85%87%E3%84%B9%E3%85%87%E3%84%B4&pstart=2022-08-18&pend=2022-09-08
-    
+   
     public void createProject(ProjectDto ins) {   	
         dao.insertProject(ins);
         
         dao.insertParticipants(new Participants(ins.getSelectPM(), "PM"));
         
-        for(int m:ins.getSelectmember()) {
-           dao.insertParticipants(new Participants(m, "Developer"));
+        for(int m:ins.getSelectmember()) { 
+            dao.insertParticipants(new Participants(m, "Developer"));
         }
         
      }
-
     
-	public void deleteProject(int pid) {
-		dao.deleteProject(pid);
-	}
+    public Project updateProject(ProjectDto upt) {
+    	
+        dao.updateProject(upt);       
+        return dao.getProjectDetail(upt.getPid()); 
+     }
+    
+    public void deleteProject(int pid) {   	
+    	dao.deleteMember(pid);
+    	dao.deleteProject(pid);    
+    }
+
 
 
 	
