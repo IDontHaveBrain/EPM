@@ -23,6 +23,13 @@ ALTER TABLE MEMBER DROP COLUMN phonenumber;
 ALTER TABLE MEMBER ADD birthdate varchar2(30);
 ALTER TABLE MEMBER ADD phonenumber varchar2(30);
 
+CREATE TABLE profile (					-- 회원 프로필 사진 테이블
+	mid REFERENCES member(mid),			-- 회원 아이디 레퍼런스
+	PATH varchar2(120),					-- 경로
+	fname varchar2(50)					-- 사진 이름
+);
+
+
 DELETE FROM MEMBER, log, participants
 USING 
 

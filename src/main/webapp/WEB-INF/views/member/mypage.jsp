@@ -87,13 +87,31 @@
     <section class="content">
       <div class="container">
         <!-- 페이지 구성 시작!! -->
-        <form id="frm01" enctype="multipart/form-data" action="${path}/sendEmpnoAndPassword.do" class="form" method="post">
+        <form id="infoCForm" class="form" enctype="multipart/form-data" method="post">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">${member.name}님 사원정보</h3>
             </div>
             <input id="mid" name="mid" type="hidden" value="${member.mid}" class="form-control" readonly>
             <div class="card-body">
+            <div class="row mb-3">
+                <label for="inputName">프로필 사진</label>
+                 <div class="col-md-8 col-lg-9">
+					<c:choose>
+						<c:when test="${not empty profile.fname}">
+							<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/${profile.fname}" alt="User profile picture">
+						</c:when>
+						<c:otherwise>
+							<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/defaultpic.png" alt="User profile picture">
+						</c:otherwise>
+					</c:choose>
+                   <div class="pt-2">
+                       <input type="file" name="report" id="inputFile" style="display:none" />
+                     <button type="button" class="btn btn-primary btn-sm" id="fileUptBtn" title="Upload new profile image"><i>수정</i></button>
+                     <button type="button" class="btn btn-danger btn-sm" id="fileDelBtn" title="Remove my profile image"><i>삭제</i></button>
+                   </div>
+                 </div>
+            </div>
               <div class="form-group">
                 <label for="inputName">사원번호</label>
                 <input id="empno" name="empno" type="text" value="${member.empno}" class="form-control" readonly>
@@ -120,7 +138,7 @@
                 <input id="auth" name="auth" type="text" value="${member.auth}" class="form-control" readonly>
               </div>
               <div class="col-12" style="text-align:right">    
-                <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">회원정보 수정</button>
+                <button type="button" id="uptInfoBtn" class="btn btn-primary btn-sm">회원정보 수정</button>
              </div>                                       
             </div>
             <!-- /.card-body -->
@@ -217,6 +235,9 @@
 </body>
 
 <script type="text/javascript">
+
+		
+
 		$("#pwCor").hide()
 		$("#pwDif").hide()		
 		var pwPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9_-]{8,16}$/
@@ -272,52 +293,57 @@
 		 		}
 		 	}
 		})
+		
+		$("#uptInfoBtn").click(function(){
+			if ($("#email").val() == null || $("#email").val() == "") {
+				alert("이메일을 입력해주세요.");
+				$("#email").focus();
+				
+				return false;		
+			}
+			if ($("#phonenumber").val() == null || $("#phonenumber").val() == "") {
+				alert("핸드폰번호를 입력해주세요.");
+				$("#phonenumber").focus();
+				 
+				return false;
+			}
+			
+			$("#uptInfo").attr("action","${path}/updateInfo.do")
+			$("#uptInfo").submit()
+		})
+		
 
-   function authorize(mid){
-      if(confirm("해당 사원정보를 수정하시겠습니까?")){
-         $("form").attr("action","${path}/authorize.do");
-         $("form").submit();
-      }
-   } 
-   function deleteMember(){
-      var mid = $("[name=mid]").val()
-      
-      if(confirm("해당 사원을 삭제하시겠습니까?")){
-         location.href="${path}/deleteMember.do?mid="+mid;
-      }
-   } 
-   
-   var proc = "${proc}"
-   if(proc=="upt"){
-      alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
-      location.href="${path}/memberlist.do";
-   }      
-   
-   if(proc=="del"){
-      alert("삭제완료\n사원 관리 페이지로 이동합니다.");
-      location.href="${path}/memberlist.do";
-   }
-   
-   $(function(){
-      $("#sendBtn").click(function(){
-         $.ajax({
-            url : "sendEmpnoAndPassword.do",
-            type : "POST",
-            data : {
-               email : $("#email").val()
-            },
-            success : function(result) {
-               alert(result);
-            },
-         })
-      });
-   })
-   
-   if("${proc}"!=""){
-	if("${proc}"=="pwChange"){
-		alert("비밀번호가 변경되었습니다.\n변경된 비밀번호로 다시 로그인해주세요.")
-		location.href="${path}/logout.do"
-	}
-} 
+		if("${proc}"!=""){
+			var mid = $("[name=mid]").val()
+			
+			if("${proc}"=="pwChange"){
+				alert("비밀번호가 변경되었습니다.\n변경된 비밀번호로 다시 로그인해주세요.")
+				location.href="${path}/logout.do"
+			}
+			if("${proc}"=="uptInfo"){
+				alert("사원 정보가 수정되었습니다.")
+				location.href="${path}/mypage.do?mid=" + ${param.mid}
+			}
+			if("${proc}"=="uptImg"){
+				alert("프로필 이미지가 업로드되었습니다.")
+				location.href="${path}/mypage.do?mid=" + ${param.mid}
+			}
+			if("${proc}"=="delImg"){
+				alert("프로필 이미지가 삭제되었습니다.")
+				location.href="${path}/mypage.do?mid=" + ${param.mid}
+			}
+		}
+		
+		
+		$("#fileUptBtn").click(function(){
+			$("#inputFile").click()
+		})
+		$("#inputFile").change(function(){
+			$("#infoCForm").attr("action","${path}/uptProfile.do")
+			$("#infoCForm").submit()
+		})
+		$("#fileDelBtn").click(function(){
+			location.href="${path}/delProfile.do?mid=" + ${param.mid}
+		})
 </script>
 </html>

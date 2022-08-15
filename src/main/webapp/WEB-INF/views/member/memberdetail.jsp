@@ -144,7 +144,7 @@
       <div class="row">
         <div class="col-12" style="text-align:right">    
           <button type="button" onclick="authorize(${memlist.mid})" class="btn btn-primary btn-sm">권한변경 및 승인</button>
-          <button type="submit" id="sendBtn" class="btn btn-info btn-sm">사원번호 발급</button>
+          <button type="button" onclick="updateEmpno(${memlist.mid})" class="btn btn-info btn-sm">사원번호 발급</button>
           <button type="button" onclick="deleteMember(${memlist.mid})" class="btn btn-danger btn-sm">탈퇴</button>
         </div>       
       </div>
@@ -219,49 +219,31 @@
 			location.href="${path}/deleteMember.do?mid="+mid;
 		}
 	} 
-	/*
+	
 	function updateEmpno(){
 		var mid = $("[name=mid]").val()
 		
 		if(confirm("사원번호를 발급 처리하시겠습니까?")){
-			$("form").attr("action","${path}/createEmpnoandPassword.do");
+			$("form").attr("action","${path}/sendEmpnoAndPassword.do");
 			$("form").submit();
 		}
 	}
-	*/
+	
 	
 	var proc = "${proc}"
 	if(proc=="upt"){
-		alert("권한변경 및 승인 처리 완료\n사원 관리 페이지로 이동합니다.");
-		location.href="${path}/memberlist.do";
+		alert("권한변경 및 승인 처리 완료");
+		location.href="${path}/memberlist.do?mid=" + ${param.mid};
 	}		
 	
 	if(proc=="del"){
 		alert("삭제완료\n사원 관리 페이지로 이동합니다.");
 		location.href="${path}/memberlist.do";
 	}
-	/*
-	if(proc=="uptE"){
-		alert("사원번호 발급 완료\n해당 사원 이메일 주소로 사원번호와 비밀번호를 발송합니다.")
-		location.href="${path}/memberlist.do";
-	}
-	*/
 	
-	/*
-	$(function(){
-		$("#sendBtn").click(function(){
-			$.ajax({
-				url : "sendEmpnoAndPassword.do",
-				type : "POST",
-				data : {
-					email : $("#email").val()
-				},
-				success : function(result) {
-					alert(result);
-				},
-			})
-		});
-	})
-	*/
+	if(proc=="uptE"){
+		location.href="${path}/memberDetail.do?mid=" + ${param.mid};
+	}
+	
 </script>
 </html>

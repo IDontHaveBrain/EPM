@@ -5,3 +5,4 @@ jdbc.user=final
 jdbc.pass=1234
 # 파일 업로드 정보
 upload=C:/a01_javaexp/workspace/project06/src/main/webapp/fileupload/
+uploadprofile=C:/Users/woosh/git/project06/src/main/webapp/profilepics/

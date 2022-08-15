@@ -1,12 +1,17 @@
 package pms.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import pms.dao.MemberDao;
 import pms.vo.Member;
+import pms.vo.MemberProfile;
 import pms.vo.MemberSch;
 
 @Service
@@ -111,5 +116,38 @@ public class MemberService {
 		return dao.memberList(sch);
 	}
 	
+	public void uptInfo(Member upt) {
+		dao.uptInfo(upt);
+	}
+	
+	@Value("${uploadprofile}")
+	private String path;
+	public void insProfile(MemberProfile ins) {
+		MultipartFile mpf = ins.getReport();
+		String fname = mpf.getOriginalFilename();
+		
+		File f = new File(path+fname);
+		try {
+			mpf.transferTo(f);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(dao.checkProfile(ins.getMid()).equals("1")) {
+			dao.delProfile(ins.getMid());
+		}
+		dao.insProfile(new MemberProfile(ins.getMid(),path,fname));
+	}
+	
+	public MemberProfile getProfile(int mid) {
+		return dao.getProfile(mid);
+	}
+	
+	public void delProfile(int mid) {
+		dao.delProfile(mid);
+	}
 	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pms.service.MemberService;
 import pms.vo.Member;
+import pms.vo.MemberProfile;
 import pms.vo.MemberSch;
 
 @Controller
@@ -59,14 +60,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberlist.do")
-	public String memberList(Model d, MemberSch sch) {
+	public String memberList(Model d, HttpServletRequest request, MemberSch sch) {
+		Member curMem = (Member)request.getSession().getAttribute("mem");
+        if(curMem == null){
+            return "redirect:login.do";
+        }
 		d.addAttribute("memlist", service.memberList(sch));
 		return "WEB-INF\\views\\member\\memberlist.jsp";	
 	}
 	
 	// http://localhost:7080/project06/memberDetail.do
 	@RequestMapping("memberDetail.do")
-	public String boardDetail(@RequestParam("mid") int mid, Model d){
+	public String boardDetail(@RequestParam("mid") int mid, HttpServletRequest request, Model d){
+		Member curMem = (Member)request.getSession().getAttribute("mem");
+        if(curMem == null){
+            return "redirect:login.do";
+        }
 		d.addAttribute("member",service.getMemberDetail(mid));
 		
 		return "WEB-INF\\views\\member\\memberdetail.jsp";
@@ -75,13 +84,18 @@ public class MemberController {
 	@RequestMapping("mypage.do")
 	public String myPage(@RequestParam("mid") int mid, HttpServletRequest request, Model d){
 		Member curMem = (Member)request.getSession().getAttribute("mem");
+        if(curMem == null){
+            return "redirect:login.do";
+        }
+		HttpSession session = request.getSession();
 		d.addAttribute("member",service.getMemberDetail(curMem.getMid()));
+		d.addAttribute("profile",service.getProfile(curMem.getMid()));
 		
 		return "WEB-INF\\views\\member\\mypage.jsp";
 	}
 	
 	@RequestMapping("authorize.do")
-	public String authorize(Model d, Member upt) {
+	public String authorize(Model d, @RequestParam(value = "mid") int mid, Member upt) {
 		service.authorize(upt);
 		d.addAttribute("member", service.getMemberDetail(upt.getMid()));
 		d.addAttribute("proc", "upt");
@@ -119,6 +133,32 @@ public class MemberController {
 	public String changePassword(Member upt, Model d) {
 		service.uptPassword(upt);
 		d.addAttribute("proc", "pwChange");
+		return "WEB-INF\\views\\member\\mypage.jsp";
+	}
+	
+	@RequestMapping("updateInfo.do")
+	public String uptInfo(Member upt, Model d) {
+		service.uptInfo(upt);
+		d.addAttribute("proc", "uptInfo");
+		return "WEB-INF\\views\\member\\mypage.jsp";
+	}
+	
+	@RequestMapping("uptProfile.do")
+	public String uptPfImg(HttpServletRequest request, MemberProfile ins, @RequestParam(value = "mid") int mid, Model d) {
+		HttpSession session = request.getSession();
+		service.insProfile(ins);
+		session.setAttribute("pfImg", ins.getFname());
+		d.addAttribute("proc", "uptImg");
+		return "WEB-INF\\views\\member\\mypage.jsp";
+	}
+	
+	@RequestMapping("delProfile.do")
+	public String delPfImg(HttpServletRequest request, @RequestParam(value = "mid") int mid, Model d) {
+		HttpSession session = request.getSession();
+		Member curMem = (Member)request.getSession().getAttribute("mem");
+		service.delProfile(curMem.getMid());
+		session.removeAttribute("pfImg");
+		d.addAttribute("proc", "delImg");
 		return "WEB-INF\\views\\member\\mypage.jsp";
 	}
 

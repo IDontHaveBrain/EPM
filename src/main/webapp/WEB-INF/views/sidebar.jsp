@@ -11,6 +11,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
 <c:if test="${empty mem}">
@@ -88,7 +89,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
-              사원정보
+              <spring:message code="empinfo"/>
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
@@ -249,10 +250,24 @@
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
+    
   </div>
+  
   <!-- /.sidebar -->
 </aside>
 <script>
+$(document).ready(function(){
+	<%-- 
+	
+	--%>	
+	$("#selLan").val("${param.lang}")
+	$("#selLan").change(function(){
+		if($(this).val()!=""){
+			$("[name=lang]").val($(this).val())
+			$("form").submit();
+		}
+	});
+});
 function func(){	
 	var mid = ${mem.mid}
 	window.location.href = "mypage.do?mid=" + mid;
