@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
@@ -14,13 +16,17 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="${path}/pms/index3.html" class="nav-link">Home</a>
+      <a href="${path}/pms/index3.html" class="nav-link"><spring:message code="empinfo"/></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
     </li>
   </ul>
-
+ 	 <select class="form" id="selLan">
+	  	<option value=""><spring:message code="chLang"/></option>
+	  	<option value="ko"><spring:message code="ko"/></option>
+	  	<option value="en"><spring:message code="en"/></option>
+	</select>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
@@ -142,3 +148,23 @@
     </li>
   </ul>
 </nav>
+<!-- jQuery -->
+<script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="${path}/pms/dist/js/adminlte.min.js"></script>
+<script>
+$(document).ready(function(){
+	<%-- 
+	
+	--%>	
+	$("#selLan").val("${param.lang}")
+	$("#selLan").change(function(){
+		if($("[name=selLan]").val()!=""){
+			$("[name=lang]").val($("[name=selLan]").val())
+			$("frm01").submit();
+		}
+	});
+});
+</script>
