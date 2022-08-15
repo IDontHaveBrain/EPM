@@ -25,6 +25,8 @@ public class WorkPageService {
 	public List<WorkPage> getWorkPageList(WorkPageSch sch,int mid,int pid){
 		sch.setMid(mid);
 		sch.setPid(pid);
+		sch.setJmstatus(sch.getJmstatus());
+		System.out.println("이건뭐여?:"+sch.getJmstatus());
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.WorkPageTotCnt(sch) ); 
         //System.out.println("총건수:"+sch.getCount());

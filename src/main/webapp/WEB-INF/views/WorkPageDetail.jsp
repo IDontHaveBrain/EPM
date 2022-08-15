@@ -298,6 +298,7 @@ function goDetail(jid,jmid){
 
 function updateProc(){
 	if(confirm("승인요청 하시겠습니까?")){
+		alert("승인요청 처리완료\n승인여부를 확인해주세요.");
 		$("form").attr("action","${path}/updateWorkPage.do");
 		$("form").submit();
 	}
