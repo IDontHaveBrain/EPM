@@ -39,6 +39,7 @@ CREATE SEQUENCE project_seq
 	INCREMENT BY 1
 	START WITH 1;
 
+ALTER TABLE PROJECT ADD pstatus varchar(10);
 
 
 CREATE TABLE log (									-- 로그 테이블

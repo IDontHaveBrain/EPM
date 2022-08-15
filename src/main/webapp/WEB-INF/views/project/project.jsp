@@ -51,29 +51,10 @@
   
 
 <script type="text/javascript">
-var list
+var list;
+
 	$(document).ready(function(){
-		function updateMember(){
-		    $.ajax({
-		      url: "${path}/ajaxMember.do",
-		      data: "",
-		      dataType: "json",
-		      success: function (data) {
-		        console.log(data)
-		        list = data.memberList;
-		        var addHTML = "<option selected disabled>PM 선택</option>";
-	 
-		        $(list).each(function (idx, rst) {
-		        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
-		        	
-		        });
-		        		      
-		        $("#inputPM").html(addHTML);
-		       
-		     
-		      }
-		    });
-		  }
+		
 		updateMember();
 		
 		
@@ -89,43 +70,76 @@ var list
 	    $("select[name=selectPM]").change(function(){  	  
 	  		pmid=$(this).val();
 		});
-	  	  
-	  	function PrjMember(pm){
-	          $.ajax({
-	            url: "${path}/ajaxMember.do",
-	            data: "",
-	            dataType: "json",
-	            success: function (data) {
-	            console.log(data)
-	            list = data.memberList;               
-	            var addHTML02 = ""; 
-	            
-		        $(list).each(function (idx, rst) {
-		        	console.log(pmid);
-		        	if(rst.mid != pm)
-		        	 	addHTML02+="<option value='"+rst.mid+"'>"+rst.name+"</option>";	
- 	
-		        });
-	                  
-	                 $("#inputMem").html(addHTML02);
-	              
-	               }
-	             });
-	           }
-	  	console.log(pmid);
-	  	PrjMember(pmid);  
+	  	  $("#inputPM").change(function(){
+	  		  console.log("pm변경")
+	  		  var pm = $("#inputPM option:selected").val();
+	  		  $("#inputMem option").each(function(){
+	  			  var mem = $(this);
+	  			  if(mem.val() == pm) {
+	  				  mem.prop("disabled", true);
+	  			  }
+	  			  else {
+	  				  mem.prop("disabled", false);
+	  			  }
+	  		  });
+	  		  
+	  	  });
   
 
 	  	  
 
-	  	  $("#inputPM").change(PrjMember(pmid));
+	  	 // $("#inputPM").change(PrjMember(pmid));
 	  	
 	  	  
 	  
 
 
 	});
+	function updateMember(){
+	    $.ajax({
+	      url: "${path}/ajaxMember.do",
+	      data: "",
+	      dataType: "json",
+	      success: function (data) {
+	        console.log(data)
+	        list = data.memberList;
+	        var addHTML = "";
+ 
+	        $(list).each(function (idx, rst) {
+	        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	
+	        });
+	        var pmsel = $("#inputPM");
+	        
+	        pmsel.html(pmsel.html() + addHTML);
+	      $("#inputMem").html(addHTML);
+	       
+	     
+	      }
+	    });
+	  }
+/* 	function PrjMember(pm){
+        $.ajax({
+          url: "${path}/ajaxMember.do",
+          data: "",
+          dataType: "json",
+          success: function (data) {
+          console.log(data)
+          list = data.memberList;               
+          var addHTML02 = ""; 
+          
+	        $(list).each(function (idx, rst) {
+	        	console.log(pmid);
+	        	if(rst.mid != pm)
+	        	 	addHTML02+="<option value='"+rst.mid+"'>"+rst.name+"</option>";	
 
+	        });
+                
+               $("#inputMem").html(addHTML02);
+            
+             }
+           });
+         } */
 </script>
 
 </head>
@@ -180,7 +194,7 @@ var list
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
                 <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
-    				
+    				<option selected disabled>PM 선택</option>
 
                 </select>                    
               </div>
@@ -192,7 +206,7 @@ var list
                   <label>참여 멤버</label>
                   <div class="select2-purple">
                    <select name="selectmember" id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  			
-
+	
                    </select>
                   </div>           
                 </div>
@@ -295,17 +309,14 @@ var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
 			// 취소 입력시 조회화면 이동..
-			location.href="${path}/ProjectList.do"
+			location.href="${path}/projectList.do"
 		}
-			location.href="${path}/Project.do"
+		else{
+			location.href="${path}/projectInsertForm.do"
+			
+		}
 	}
 	
-if(isInsert=="Y"){
-		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
-			// 취소 입력시 조회화면 이동..
-			location.href="${path}/ProjectList.do"
-		}
-	}	
 
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){

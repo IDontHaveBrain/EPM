@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 
 	function goInsert(){
@@ -91,19 +92,40 @@
       <!-- Default box -->
       <div class="card">
       	<form id="frm01" class="form" method="post">
+      		<input type="hidden" name="curPage" value="0"> <!-- 하단 js에 의해서 현재페이지 번호를 전송  -->
         <div class="card-header">
           <h3 class="card-title">Projects</h3>
-
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    		<input class="form-control mr-sm-2" name="pname" placeholder="제목" 
+	    			value="${projectSch.pname}"/>
+	    		<button class="btn btn-info" type="submit">Search</button>	
+          	</nav>
+        <div class="input-group-prepend">
+			<span class="text-center input-group-text">총 : ${projectSch.count }건</span>
+		</div>
           <div class="card-tools">
-            <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
-                     
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+	          <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+	          <div class="input-group-append">
+				<span class="text-center input-group-text">페이지 크기</span>
+				<select name="pageSize" class="form-control">
+					<option>3</option>
+					<option>5</option>
+					<option>10</option>
+					<option>20</option>
+					<option>30</option>
+				</select>
+			</div>
+			<script type="text/javascript">
+				// 선택된 페이지 크기 설정.. 
+				$("[name=pageSize]").val("${projectSch.pageSize}");
+				// 페이지 크기 변경시 마다, controller 단호출..
+				$("[name=pageSize]").change(function(){
+					$("[name=curPage]").val("1");
+					$("form").submit();
+				});		
+			</script>
+	
+		</div>
         </div>
         <div class="card-body p-0">
           <table class="table table-striped projects">
@@ -119,22 +141,20 @@
                           Project Period
                       </th>
                       <th>
-                          Project Progress
+                          Project 
                       </th>
                       <th class="text-center">
                           Status
-                      </th>
-                    
-                   
-                      
+                      </th>     
                                 
                   </tr>
               </thead>
+                   <c:forEach var="project" items="${projectList}">
               <tbody>  
-              <c:forEach var="project" items="${projectList}">
+            
                   <tr ondblclick="goDetail(${project.pid})">
                       <td>
-                          #
+                          ${project.cnt}
                       </td>
                       <td>
                           <a>
@@ -166,21 +186,47 @@
                               57% Complete
                           </small>
                       </td>
-                      <td class="project-state">
-                          <span class="badge badge-success">Success</span>
+                      <td class="project-state">                         
+		                <select class="badge badge-primary" name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
+		    				<option selected>${project.pstatus}</option>		
+		    				<option>WAIT</option>		
+		    				<option>PROG</option>		
+		    				<option>COMP</option>		
+		    				<option>CANCEL</option>		
+		                </select>   		                      
+                     
                       </td>
-                 
+                 	
                       <td class="project-actions text-right">
-                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-info btn-sm">수정</button>
+                      <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+                      	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-warning btn-sm">수정</button>
+                      	</c:if>
                       </td>
                   
                   </tr>
-              </c:forEach>                
+                       
               </tbody>
+              </c:forEach>
           </table>
+          
         </div>
+        <div class="row">
+          <div class="col">
+          <ul class="pagination justify-content-center m-0">
+            <li class="page-item"><a class="page-link" href="javascript:goPage(${projectSch.startBlock-1})">&laquo;</a></li>
+            <c:forEach var="cnt" begin="${projectSch.startBlock}" end="${projectSch.endBlock}">
+              <li class="page-item ${projectSch.curPage==cnt?'active':''}">
+                <a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+            </c:forEach>
+            <li class="page-item"><a class="page-link" href="javascript:goPage(${projectSch.endBlock+1})">&raquo;</a></li>
+          </ul>
+          </div>
+        </div>
+        
         <!-- /.card-body -->
         </form>
+        
+        
       </div>
       <!-- /.card -->
 
@@ -230,5 +276,15 @@
 <script src="${path}/pms/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
+
+<script type="text/javascript">
+	function goPage(cnt){
+		// 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달
+		$("[name=curPage]").val(cnt);
+		$("form").submit();
+			
+	}
+	
+</script>
 </body>
 </html>

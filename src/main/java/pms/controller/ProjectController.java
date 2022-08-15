@@ -1,6 +1,8 @@
 package pms.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.ProjectDto;
+import pms.dto.ProjectSch;
 import pms.service.ProjectService;
 
 
@@ -19,14 +22,15 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectList.do
 	@RequestMapping("projectList.do")
-	public String projectList(Model d) {
-		d.addAttribute("projectList", service.getProjectList());
+	public String projectList(ProjectSch sch, Model d) {
+		
+		d.addAttribute("projectList", service.getProjectList(sch));
 		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
 	
 	// http://localhost:7080/project06/projectInsertForm.do
 	@RequestMapping("projectInsertForm.do")
-	public String projectInsertForm(){
+	public String projectInsertForm(){	
 		return "WEB-INF\\views\\project\\project.jsp";
 	}
 	
@@ -38,6 +42,7 @@ public class ProjectController {
 		return "WEB-INF\\views\\project\\project.jsp";
 	}
 	
+	
 	@RequestMapping("updateProject.do")
 	public String updateProject(ProjectDto upt, Model d){	
 		System.out.println(upt.getPname());
@@ -46,9 +51,10 @@ public class ProjectController {
 
 		return "WEB-INF\\views\\project\\projectdetail.jsp";
 	}
-
+	
+	// http://localhost:7080/project06/projectDetail.do
 	@RequestMapping("projectDetail.do")
-	public String projectDetail(@RequestParam("pid") int pid, Model d){
+	public String projectDetail(@RequestParam("pid") int pid, Model d, HttpServletRequest request){
 		d.addAttribute("project",service.getProjectDetail(pid));
 		d.addAttribute("pmemberList", service.getPmemberList(pid));
 		
@@ -57,7 +63,7 @@ public class ProjectController {
 	
 
 	@RequestMapping("deleteProject.do")
-	public String deleteProject(@RequestParam("pid") int pid, Model d){	
+	public String deleteProject(@RequestParam("pid") int pid, Model d, HttpServletRequest request){
 		service.deleteProject(pid);
 		d.addAttribute("proc","del");
 		return "WEB-INF\\views\\project\\projectlist.jsp";	

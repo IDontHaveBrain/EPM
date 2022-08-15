@@ -154,7 +154,14 @@
             <i class="nav-icon fas fa-book"></i>
             <p>
               프로젝트 목록
-
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="chattingFrm.do" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              채팅
             </p>
           </a>
         </li>

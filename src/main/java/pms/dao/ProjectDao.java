@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import pms.dto.ProjectDto;
 import pms.dto.ProjectMemberDTO;
+import pms.dto.ProjectSch;
 import pms.vo.Member;
 import pms.vo.Participants;
 import pms.vo.Project;
@@ -14,7 +15,10 @@ import pms.vo.Project;
 
 @Repository
 public interface ProjectDao {
-	public List<Project> getProjectList();
+	public int totCnt(ProjectSch sch);
+	public List<Project> getProjectList(ProjectSch sch);
+
+	
 	public List<Member> getMemberList();
 	public List<ProjectMemberDTO> getPmemberList(int pid); //조회
 	

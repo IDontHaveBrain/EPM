@@ -38,7 +38,8 @@ create table project
     pcomment varchar2(500),
     pstart   date,
     pend     date,
-    pregdate date
+    pregdate date,
+    pstatus varchar2(10)
 );
 insert into project
 values (1, 'PMS', '프로젝트 관리 시스템', to_date('2022-07-20', 'YYYY-MM-DD'), to_date('2022-08-23', 'YYYY-MM-DD'),
