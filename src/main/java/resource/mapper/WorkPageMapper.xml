@@ -5,6 +5,8 @@
 <mapper namespace="pms.dao.WorkPageDao">
 	<select id="getWorkPageList" resultType="workpage" parameterType="workpagesch">
 		SELECT *
+		FROM
+		(SELECT *
 		FROM 
 		(SELECT ab.*, rownum cnt
 		FROM 
@@ -23,7 +25,11 @@
 		WHERE e.ppid=f.ppid) g,jobplan h
 		WHERE g.jid=h.jid
 		order by h.jid ASC) ab)
-		where cnt between #{start} and #{end}
+		where cnt between #{start} and #{end} )
+		WHERE 1=1
+		<if test="jmstatus!=null">
+		AND jmstatus LIKE '%'||#{jmstatus}||'%'
+		</if>
 	</select>
 	<select id="WorkPageList" parameterType="workpagesch" resultType="workpage" >
 		SELECT *
@@ -138,32 +144,6 @@
 		FROM jobfile 
 		WHERE fid = #{fid}	
 	</delete>
-
-<!--
-	<select id="WorkPageing" parameterType="workpagesch" resultType="workpage">
-		SELECT *
-		FROM
-		(SELECT ab.*, rownum cnt
-			FROM (
-		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid
-		FROM
-		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid
-		FROM 
-		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid
-		FROM 
-		(SELECT a.name,b.ppid,b.pid,a.mid
-		FROM MEMBER a, participants b
-		WHERE a.mid=b.mid
-		AND a.mid=#{mid}) c, project d
-		WHERE c.pid=d.pid
-		AND c.pid=#{pid}) e,jobmember f
-		WHERE e.ppid=f.ppid) g,jobplan h
-		WHERE g.jid=h.jid
-		order by h.jid desc) ab)
-		where cnt between #{start} and #{end}
-	</select>
-  -->
-
 
 </mapper>
         

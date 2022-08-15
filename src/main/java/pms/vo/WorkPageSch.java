@@ -6,6 +6,7 @@ public class WorkPageSch {
     private int cnt;
     private int jid;
     private int jmid;
+    private String jmstatus;
     
     private int count; // 총데이터 건수
     private int pageSize; // 한번에 보여줄 페이지 크기
@@ -21,7 +22,7 @@ public class WorkPageSch {
 		// TODO Auto-generated constructor stub
 	}
 	public WorkPageSch(int pid, int count, int pageSize, int pageCount, int curPage, int start, int end, int blockSize,
-			int startBlock, int endBlock,int mid,int cnt,int jid,int jmid) {
+			int startBlock, int endBlock,int mid,int cnt,int jid,int jmid,String jmstatus) {
 		this.pid = pid;
 		this.count = count;
 		this.pageSize = pageSize;
@@ -36,6 +37,7 @@ public class WorkPageSch {
 		this.cnt = cnt;
 		this.jid = jid;
 		this.jmid = jmid;
+		this.jmstatus = jmstatus;
 	}
 	public int getPid() {
 		return pid;
@@ -121,5 +123,12 @@ public class WorkPageSch {
 	public void setJmid(int jmid) {
 		this.jmid = jmid;
 	}
+	public String getJmstatus() {
+		return jmstatus;
+	}
+	public void setJmstatus(String jmstatus) {
+		this.jmstatus = jmstatus;
+	}
+	
     
 }

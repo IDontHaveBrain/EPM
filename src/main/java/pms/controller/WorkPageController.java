@@ -46,6 +46,8 @@ public class WorkPageController {
 		System.out.println(curMem3.getEmail());
 		List<WorkPage> wpList = service.getWorkPageList(sch, curMem3.getMid(), pid);
 		d.addAttribute("wlist", wpList);
+		
+		System.out.println("확인해보자:"+sch.getJmstatus());
 		return "WEB-INF\\views\\WorkPageList.jsp";
 	}
 	

@@ -94,30 +94,35 @@
               <div class="card-body">
 	<form class="form"  method="post">
 		<input type="hidden" name="curPage" value="0">
-	<div class="input-group lb-3">
+	<div class="input-group">
 		<div class="input-group-prepend">
-			<span class="text-center input-group-text">총 : ${workPageSch.count}건</span>
+			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>총 검색된 리스트 : ${workPageSch.count} 건</h4></span>
 		</div>
 		
-		
+		<span class="form-control" style="border:none"> </span>	
+
+
 		<div class="input-group-append">
 			<span class="text-center input-group-text">페이지 크기</span>
-			<select name="pageSize" class="form-control">
+			<select name="pageSize" class="form-select">
 				<option>3</option>
 				<option>5</option>
 				<option>10</option>
 				<option>20</option>
 				<option>30</option>
 			</select>
+	
 			<span class="text-center input-group-text">승인여부</span>
-			<select name="jmstatus" class="form-control" >
-				<option>TOTAL</option>
-				<option>PROG</option>
-				<option>COMP</option>
-				<option>REQ</option>
-				<option>REJ</option>
+			<select name="jmstatus" class="form-select" >
+				<option value="">전체</option>
+				<option value="PROG">PROG</option>
+				<option value="COMP">COMP</option>
+				<option value="REQ">REQ</option>
+				<option value="REJ">REJ</option>
 			</select>			
+		
 		</div>
+
 		<script type="text/javascript">
 			// 선택된 페이지 크기 설정..
 			$("[name=pageSize]").val("${workPageSch.pageSize}");
@@ -126,9 +131,17 @@
 				$("[name=curPage]").val("1");
 				$("form").submit();
 			});
-		</script>	
+			
+			$("[name=jmstatus]").val("${workPageSch.jmstatus}");
+			// 페이지 크기 변경시 마다, controller 단 호출..
+			$("[name=jmstatus]").change(function(){
+				$(this).val();
+				$("form").submit();
+			});
+		</script>
 		</div>
 		</div> 
+	
 	</form>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
