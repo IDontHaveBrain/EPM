@@ -199,7 +199,7 @@
                           </small>
                       </td>
                       <td class="project-state">                         
-		                <select name="pstatus" id="pstatus" onchange="schange(this);" class="form-control pm-select select2bs4">
+		                <select name="pstatus" id="pstatus" onchange="schange(${project.pid});" class="form-control pm-select select2bs4">
 		    				<option selected>${project.pstatus}</option>		
 		    				<option>WAIT</option>		
 		    				<option>PROG</option>		
@@ -296,11 +296,14 @@
 		$("form").submit();
 			
 	}
-	function schange(pstatus){
+	
+	function schange(pid){
+	
 		var pindex = pstatus.selectedIndex;
 		var pstatus = pstatus.options[pindex].text;
 		
 		console.log(pstatus);
+		console.log(${project.pid});
 	}
 	// 값 받아와서 db에 저장하기
 	

@@ -1,8 +1,6 @@
 package pms.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.ProjectDto;
 import pms.dto.ProjectSch;
 import pms.service.ProjectService;
+import pms.vo.Project;
 
 
 
@@ -27,6 +26,16 @@ public class ProjectController {
 		d.addAttribute("projectList", service.getProjectList(sch));
 		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
+	
+	@RequestMapping("updateProjectStatus.do")
+	public String updateProjectStatus(Project upt, Model d){
+		
+		service.updateProjectStatus(upt);
+		d.addAttribute("proc","upt");
+
+		return "WEB-INF\\views\\project\\projectlist.jsp";
+	}
+	
 	
 	// http://localhost:7080/project06/projectInsertForm.do
 	@RequestMapping("projectInsertForm.do")
@@ -45,7 +54,6 @@ public class ProjectController {
 	
 	@RequestMapping("updateProject.do")
 	public String updateProject(ProjectDto upt, Model d){	
-		System.out.println(upt.getPname());
 		d.addAttribute("project",service.updateProject(upt));	
 		d.addAttribute("proc","upt");
 
@@ -54,7 +62,7 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectDetail.do
 	@RequestMapping("projectDetail.do")
-	public String projectDetail(@RequestParam("pid") int pid, Model d, HttpServletRequest request){
+	public String projectDetail(@RequestParam("pid") int pid, Model d){
 		d.addAttribute("project",service.getProjectDetail(pid));
 		d.addAttribute("pmemberList", service.getPmemberList(pid));
 		
@@ -63,15 +71,17 @@ public class ProjectController {
 	
 
 	@RequestMapping("deleteProject.do")
-	public String deleteProject(@RequestParam("pid") int pid, Model d, HttpServletRequest request){
+	public String deleteProject(@RequestParam("pid") int pid, Model d){
 		service.deleteProject(pid);
 		d.addAttribute("proc","del");
-		return "WEB-INF\\views\\project\\projectlist.jsp";	
+		return "WEB-INF\\views\\project\\projectdetail.jsp";
+		
 	}
 	
 	@RequestMapping("memberList.do")
 	public String ajaxMember() {
 		return "WEB-INF\\views\\project\\project.jsp";
+		
 	}
 	// http://localhost:7080/project06/ajaxMember.do
 	@RequestMapping("ajaxMember.do")

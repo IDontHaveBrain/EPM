@@ -66,19 +66,22 @@ public class ProjectService {
         } else {
             sch.setEndBlock(endBlock);
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
-        }
-
+        } 
+        
         return dao.getProjectList(sch);
 
 	}
+    
+    public void updateProjectStatus(Project upt) {
+    	dao.updateProjectStatus(upt);
+    	
+     }
     
     public List<Member> getMemberList(){
     	return dao.getMemberList();
 	}
     
-    public List<ProjectMemberDTO> getPmemberList(int pid) {
-    
-    	
+    public List<ProjectMemberDTO> getPmemberList(int pid) {	
     	return dao.getPmemberList(pid);
 	}
  
@@ -99,8 +102,7 @@ public class ProjectService {
         
      }
     
-    public Project updateProject(ProjectDto upt) {
-    	
+    public Project updateProject(ProjectDto upt) {   	
         dao.updateProject(upt);       
         return dao.getProjectDetail(upt.getPid()); 
      }
