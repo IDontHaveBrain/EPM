@@ -71,11 +71,7 @@ public class ProjectService {
         return dao.getProjectList(sch);
 
 	}
-    
-    public void updateProjectStatus(Project upt) {
-    	dao.updateProjectStatus(upt);
-    	
-     }
+   
     
     public List<Member> getMemberList(){
     	return dao.getMemberList();

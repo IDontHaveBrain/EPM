@@ -51,7 +51,7 @@
     </insert>
 	
 	<select id="getProjectDetail" parameterType="int" resultType="project">
-		select pid, pname, pcomment, pstart, pend
+		select pid, pname, pcomment, pstart, pend, pstatus
 		from project
 		where pid = #{pid}
 	</select>
@@ -66,15 +66,12 @@
 			   <if test="pend != ''">
 					pend = #{pend, jdbcType=DATE},
 			   </if>
+			   <if test="pstatus != ''">
+					pstatus = #{pstatus, jdbcType=VARCHAR},
+			   </if>
 			   pcomment = #{pcomment, jdbcType=VARCHAR}
    	
 		WHERE pid = #{pid}	
-	</update>
-	
-	<update id="updateProjectStatus" parameterType="project" >
-		UPDATE project
-		SET pstatus=#{pstatus, jdbcType=VARCHAR} 
-		WHERE pid=#{pid}	
 	</update>
 	
 	<delete id="deleteProject" parameterType="int">

@@ -174,18 +174,26 @@ var list
               <div class="form-group" >           
                 <label for="inputProjectLeader" >PM</label>
                     <select id="inputPM" class="form-control pm-select select2bs4" >
-               
-  
-                </select>              
+
+                    </select>              
               </div>
               <div class="form-group"> 
                   <label>참여 멤버</label>
                   <div class="select2-purple">
                    <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  	
-             
-
-                </select> 
-              </div>  
+	  			   </select> 
+              	   </div>  
+              </div>	
+              <div class="form-group"> 
+                  <label>프로젝트 진행상태</label>
+                  		<select name="pstatus" id="pstatus" class="form-control pm-select select2bs4">
+		    				<option selected>${project.pstatus}</option>	
+		    				<option>WAIT</option>		
+		    				<option>PROG</option>		
+		    				<option>COMP</option>		
+		    				<option>CANCEL</option>		
+		                </select>                 
+              </div>   
               <div class="form-group">
                 <label for="inputDescription">프로젝트 설명</label>
                 <textarea name="pcomment" id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
@@ -200,7 +208,7 @@ var list
                 <fmt:formatDate value="${project.pend}"/>
                 <input type="date" name="pend" id="endDate" value="${project.pend}" class="form-control">
               </div> 
-            </div>
+            
             <!-- /.card-body -->
      	   </div>
           <!-- /.card -->
@@ -208,9 +216,10 @@ var list
       <div class="row">
         <div class="col-12">
           <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
-          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
-
+          <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+	          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
+	          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
+		  </c:if>
         </div>
       </div>
       </div>
