@@ -83,4 +83,31 @@
 		SET password = #{password}
 		WHERE mid = #{mid}
 	</update>
+	
+	<update id="uptInfo" parameterType="member">
+		UPDATE member
+		SET phonenumber = #{phonenumber},
+			email = #{email}
+		WHERE mid = #{mid}
+	</update>
+	
+	<insert id="insProfile" parameterType="memberprofile">
+		INSERT INTO profile values(#{mid}, #{path}, #{fname})
+	</insert>
+	
+	<select id="getProfile" parameterType="int" resultType="memberprofile">
+		SELECT *
+		FROM profile
+		WHERE mid = #{mid}
+	</select>
+	
+	<delete id="delProfile" parameterType="int">
+		DELETE FROM profile WHERE mid = #{mid}
+	</delete>
+	
+	<select id="checkProfile" resultType="String" parameterType="int">
+		SELECT count(*)
+		FROM profile
+		WHERE mid = #{mid}
+	</select>
 </mapper>

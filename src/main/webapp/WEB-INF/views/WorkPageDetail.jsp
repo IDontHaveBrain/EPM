@@ -111,8 +111,7 @@
         	<div class="container">
             <div class="card">
               <div class="card-header">        	
-             <div class="card-body">
-             
+             <div class="card-body">             
                 <table id="example1" class="table table-bordered table-striped">
                 <c:forEach var="wl" items="${workpage}">
                 <h2 style="text-align:center">${wl.pname}</h2><br>
@@ -120,15 +119,13 @@
                   <tr>
                   	<th style="border-right:none;" colspan="3"></th>
                   	<th style="text-align:center; border-left:none;"  colspan="2">
-
                 <p><code>진행률 ${wl.progress}%</code></p>
                 <div class="progress progress-sm active">
                   <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: ${wl.progress}%">
                     <span class="sr-only"></span>
                   </div>
-                </div>                        
-                        
+                </div>                                                
                   	</th>
                   </tr>
                     <tr>
@@ -139,17 +136,13 @@
                       <th style="text-align:center;" style="width: 160px">수정일</th>
                     </tr>
                   </thead>
-                  <tbody>
-                  
+                  <tbody>                 
                     <tr>
                      <td style="text-align:center;">${wl.jname}</td>
-                      <td style="text-align:center;">${wl.name}</td>
-
-                      
+                      <td style="text-align:center;">${wl.name}</td>                   
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                       <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-
                     </tr>
                   <tr>
                     <td style="text-align:center" colspan="7" ><h4>내용</h4></td>
@@ -179,8 +172,7 @@
            			<th style="text-align:center" >삭제</th>
            		</tr>
            <c:forEach var="ws" items="${flist}">
-           		<tr>
-           		
+           		<tr>           		
          				<td style="text-align:center" >${ws.fname}</td>
          				<td style="text-align:center"><fmt:formatDate value="${ws.fregdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 	         		<td style="text-align:center">
@@ -212,7 +204,6 @@
 	  <div class="row">
         <div class="col-12">
           <a href="WorkPageList.do" class="btn btn-secondary">뒤로가기</a>
-      	
 			<input type="button" value="승인요청" onclick="updateProc()" 
 					 class="btn btn-success float-right">
 			</div>
@@ -223,8 +214,6 @@
               </div>             
              </div>              
             </div>
-            
-
             </div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
