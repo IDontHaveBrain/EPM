@@ -18,6 +18,7 @@ public interface GlobalDao {
     public boolean isProjectMember(Map check);
     public boolean checkProjectAuth(Map check);
     public boolean isAdmin(int mid);
+    public List<Member> getPrjMembers(int pid);
     public boolean testMember(Map check);
     public Member getTestMember(int mid);
 }
