@@ -16,17 +16,9 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="${path}/pms/index3.html" class="nav-link"><spring:message code="empinfo"/></a>
-    </li>
-    <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
     </li>
   </ul>
- 	 <select class="form" id="selLan">
-	  	<option value=""><spring:message code="chLang"/></option>
-	  	<option value="ko"><spring:message code="ko"/></option>
-	  	<option value="en"><spring:message code="en"/></option>
-	</select>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->

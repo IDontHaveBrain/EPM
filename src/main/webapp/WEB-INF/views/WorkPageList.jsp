@@ -88,7 +88,6 @@
         <!-- 페이지 구성 시작!! -->
             <div class="card">
               <div class="card-header">
-               
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -96,12 +95,9 @@
 		<input type="hidden" name="curPage" value="0">
 	<div class="input-group">
 		<div class="input-group-prepend">
-			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>총 검색된 리스트 : ${workPageSch.count} 건</h4></span>
+			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>총 리스트 : ${workPageSch.count} 건</h4></span>
 		</div>
-		
 		<span class="form-control" style="border:none"> </span>	
-
-
 		<div class="input-group-append">
 			<span class="text-center input-group-text">페이지 크기</span>
 			<select name="pageSize" class="form-select">
@@ -111,7 +107,6 @@
 				<option>20</option>
 				<option>30</option>
 			</select>
-	
 			<span class="text-center input-group-text">승인여부</span>
 			<select name="jmstatus" class="form-select" >
 				<option value="">전체</option>
@@ -119,10 +114,8 @@
 				<option value="COMP">COMP</option>
 				<option value="REQ">REQ</option>
 				<option value="REJ">REJ</option>
-			</select>			
-		
+			</select>		
 		</div>
-
 		<script type="text/javascript">
 			// 선택된 페이지 크기 설정..
 			$("[name=pageSize]").val("${workPageSch.pageSize}");
@@ -141,7 +134,6 @@
 		</script>
 		</div>
 		</div> 
-	
 	</form>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
