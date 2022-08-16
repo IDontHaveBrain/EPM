@@ -80,8 +80,23 @@
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Start v1</li>
             </ol>
-          </div><!-- /.col -->
+          </div><!-- /.col --> 
+          
+          
+
         </div><!-- /.row -->
+                  <form id="frm01" class="form" method="post">
+         	<div class="input-group">
+         		
+              <input type="search" name="pname" value="${projectSch.pname}" class="form-control form-control-lg" placeholder="제목">
+                   <div class="input-group-append">
+                        <button type="submit" class="btn btn-lg btn-default">
+                                <i class="fa fa-search"></i>
+                         </button>
+                    </div>
+            	      
+            </div>
+            </form> 
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -93,19 +108,16 @@
       <div class="card">
       	<form id="frm01" class="form" method="post">
       		<input type="hidden" name="curPage" value="0"> <!-- 하단 js에 의해서 현재페이지 번호를 전송  -->
+
         <div class="card-header">
           <h3 class="card-title">Projects</h3>
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    		<input class="form-control mr-sm-2" name="pname" placeholder="제목" 
-	    			value="${projectSch.pname}"/>
-	    		<button class="btn btn-info" type="submit">Search</button>	
-          	</nav>
-        <div class="input-group-prepend">
-			<span class="text-center input-group-text">총 : ${projectSch.count }건</span>
-		</div>
+            
+
+       
           <div class="card-tools">
-	          <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+	         <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
 	          <div class="input-group-append">
+	          <span class="text-center input-group-text">총 : ${projectSch.count }건</span>
 				<span class="text-center input-group-text">페이지 크기</span>
 				<select name="pageSize" class="form-control">
 					<option>3</option>
@@ -187,7 +199,7 @@
                           </small>
                       </td>
                       <td class="project-state">                         
-		                <select class="badge badge-primary" name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
+		                <select name="pstatus" id="pstatus" onchange="schange(this);" class="form-control pm-select select2bs4">
 		    				<option selected>${project.pstatus}</option>		
 		    				<option>WAIT</option>		
 		    				<option>PROG</option>		
@@ -284,6 +296,13 @@
 		$("form").submit();
 			
 	}
+	function schange(pstatus){
+		var pindex = pstatus.selectedIndex;
+		var pstatus = pstatus.options[pindex].text;
+		
+		console.log(pstatus);
+	}
+	// 값 받아와서 db에 저장하기
 	
 </script>
 </body>
