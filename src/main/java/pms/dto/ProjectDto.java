@@ -11,6 +11,7 @@ public class ProjectDto {
 	private String pend;
 	private Date pregdate;
 	private int selectPM;
+	private String pstatus;
 	private List<Integer> selectmember;
 	
 	public int getSelectPM() {
@@ -64,6 +65,12 @@ public class ProjectDto {
 	}
 	public void setPregdate(Date pregdate) {
 		this.pregdate = pregdate;
+	}
+	public String getPstatus() {
+		return pstatus;
+	}
+	public void setPstatus(String pstatus) {
+		this.pstatus = pstatus;
 	}
 	
 	

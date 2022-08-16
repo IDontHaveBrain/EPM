@@ -28,9 +28,7 @@ public interface ProjectDao {
 	public void insertParticipants(Participants p);
 	
 	public void updateProject(ProjectDto upt);
-
-	
-	
+	public void updateProjectStatus(Project upt);
 	
 	public void deleteProject(int pid);
 	public void deleteMember(int pid);

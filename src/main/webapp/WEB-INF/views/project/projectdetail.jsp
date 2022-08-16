@@ -292,7 +292,6 @@ function deleteProc(){
 	}
 }
  
-var proc = "${proc}"	
 	if(proc=="del"){
 		alert("삭제성공!")
 		location.href="${path}/projectList.do";

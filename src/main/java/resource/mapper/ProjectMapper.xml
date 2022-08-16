@@ -42,7 +42,7 @@
 	
 	<insert id="insertProject" parameterType="prjdto">
 		insert into project values(project_seq.nextval, #{pname},
-				#{pcomment}, TO_DATE(#{pstart}, 'yyyy-mm-dd'), TO_DATE(#{pend}, 'yyyy-mm-dd'), sysdate)		   			
+				#{pcomment}, TO_DATE(#{pstart}, 'yyyy-mm-dd'), TO_DATE(#{pend}, 'yyyy-mm-dd'), sysdate, 'WAIT')		   			
 	</insert>	
 	
 	<insert id="insertParticipants" parameterType="participants">
@@ -67,12 +67,15 @@
 					pend = #{pend, jdbcType=DATE},
 			   </if>
 			   pcomment = #{pcomment, jdbcType=VARCHAR}
-
-
-			   	
+   	
 		WHERE pid = #{pid}	
 	</update>
 	
+	<update id="updateProjectStatus" parameterType="project" >
+		UPDATE project
+		SET pstatus=#{pstatus, jdbcType=VARCHAR} 
+		WHERE pid=#{pid}	
+	</update>
 	
 	<delete id="deleteProject" parameterType="int">
 		delete
