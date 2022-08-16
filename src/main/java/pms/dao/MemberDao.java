@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import pms.vo.Member;
+import pms.vo.MemberProfile;
 import pms.vo.MemberSch;
 
 @Repository
@@ -40,8 +41,20 @@ public interface MemberDao {
 	// 마이페이지에서 비밀번호 변경
 	public void uptPassword(Member upt);
 	
+	// 총사원수 cnt
 	public int totCnt(MemberSch sch);
 	
 	// 사원 관리 리스트 호출
 	public List<Member> memberList(MemberSch sch);
+	
+	// 마이페이지에서 이메일, 핸드폰 번호 수정
+	public void uptInfo(Member upt);
+	
+	public void insProfile(MemberProfile ins);
+	
+	public MemberProfile getProfile(int mid);
+	
+	public void delProfile(int mid);
+	
+	public String checkProfile(int mid);
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.service.MailSenderService;
 import pms.service.MemberService;
@@ -27,10 +28,11 @@ public class MailController {
 	}
 
 	@PostMapping("sendEmpnoAndPassword.do")
-	public String mailSender(Mail mail, Member member, Model d) {
+	public String mailSender(@RequestParam(value = "mid") int mid, Mail mail, Member member, Model d) {
 		if(member != null) {
 			service.uptEmpnoAndPassword(member);
 			d.addAttribute("msg", service.sendMail(mail, member));
+			d.addAttribute("proc", "uptE");
 			System.out.println("이름 : " + member.getName());
 			
 		}
