@@ -5,6 +5,10 @@
   Time: 오후 5:26
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="java.util.*"
+    %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -14,9 +18,6 @@
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-    </li>
-    <li class="nav-item d-none d-sm-inline-block">
-      Home
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
@@ -149,17 +150,5 @@
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.min.js"></script>
-<script>
-$(document).ready(function(){
-	<%-- 
-	
-	--%>	
-	$("#selLan").val("${param.lang}")
-	$("#selLan").change(function(){
-		if($("[name=selLan]").val()!=""){
-			$("[name=lang]").val($("[name=selLan]").val())
-			$("frm01").submit();
-		}
-	});
-});
-</script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
