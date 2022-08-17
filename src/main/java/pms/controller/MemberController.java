@@ -41,6 +41,7 @@ public class MemberController {
 	}
 
 	// http://localhost:7080/project06/login.do
+	
 	@RequestMapping("login.do")
 	public String login(Member m, Model d, HttpServletRequest request) {
 		if (m.getEmpno() != 0 && m.getPassword() != null) {
