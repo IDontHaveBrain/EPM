@@ -49,24 +49,26 @@ public class MemberController {
 
 	// http://localhost:7080/project06/login.do
 	@RequestMapping("login.do")
-	public String login(Member m, Model d, HttpServletRequest request ,
-					@RequestParam(value="lang", defaultValue = "") String lang, HttpServletResponse response) {
+	public String login(Member m, Model d, 
+					@RequestParam(value="lang", defaultValue = "") String lang,HttpServletRequest request , HttpServletResponse response) {
 		System.out.println("선택한 언어:"+lang);
 		Locale locale = new Locale(lang);
 		localResolver.setLocale(request, response, locale);
+		
 		if (m.getEmpno() != 0 && m.getPassword() != null) {
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
 			if (mem != null && mem.getAuth().equals("ADMIN")) {
 				session.setAttribute("mem", mem);
-				return "redirect:adminDashboard.do";
+				return "forward:adminDashboard.do";
 			} else if (mem != null && mem.getAuth() != "ADMIN") {
 				session.setAttribute("mem", mem);
-				return "redirect:dashboard.do";
+				return "forward:dashboard.do";
 			} else {
-				return "redirect:login.do";
+				return "forward:login.do";
 			}
 		}
+		
 		return "WEB-INF\\views\\login\\login.jsp";
 	}
 	

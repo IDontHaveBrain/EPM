@@ -17,7 +17,6 @@
     td:hover { 
    cursor:pointer;
      }
-
 </style>
 <head>
   <meta charset="utf-8">
@@ -95,7 +94,7 @@
 		<input type="hidden" name="curPage" value="0">
 	<div class="input-group">
 		<div class="input-group-prepend">
-			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>총 리스트 : ${workPageSch.count} 건</h4></span>
+			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>출력된 리스트 : ${workPageSch.count} 건</h4></span>
 		</div>
 		<span class="form-control" style="border:none"> </span>	
 		<div class="input-group-append">
@@ -128,7 +127,7 @@
 			$("[name=jmstatus]").val("${workPageSch.jmstatus}");
 			// 페이지 크기 변경시 마다, controller 단 호출..
 			$("[name=jmstatus]").change(function(){
-				$(this).val();
+				$("[name=curPage]").val("1");
 				$("form").submit();
 			});
 		</script>
@@ -154,10 +153,13 @@
                   <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
                     <td style="text-align:center;">${wl.cnt}</td>
                     <td style="text-align:center;">${wl.name}(${wl.empno})</td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;">${wl.jname}</td> 
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>   
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>   
                     <td style="text-align:center;" width="5%">${wl.progress}%</td>    
                     <td style="text-align:center;">
 	         			<div class="btn-group-vertical">

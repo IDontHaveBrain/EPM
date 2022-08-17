@@ -140,9 +140,12 @@
                     <tr>
                      <td style="text-align:center;">${wl.jname}</td>
                       <td style="text-align:center;">${wl.name}</td>                   
-                      <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                      <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                      <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                      <td style="text-align:center;">
+                      <fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                      <td style="text-align:center;">
+                      <fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                      <td style="text-align:center;">
+                      <fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     </tr>
                   <tr>
                     <td style="text-align:center" colspan="7" ><h4>내용</h4></td>
@@ -162,13 +165,13 @@
 				<label for="file">파일찾기</label>
 					<input class="upload-name" value="산출물을 등록하세요" placeholder="첨부파일" >					     
 						<input type="file" id="file" name="report">						
-						<input type="button" value="저장하기" onclick="insertProc()" class="btn btn-primary float-center"/>
+							<input type="button" value="저장하기" onclick="insertProc()" class="btn btn-primary float-center"/>
            		</div>
            		<tr>
            		<table class="table table-bordered table-striped">
            			<th style="text-align:center">파일이름</th>
            			<th style="text-align:center" >등록일</th>
-           			<th style="text-align:center" >저장</th>
+           			<th style="text-align:center" >다운로드</th>
            			<th style="text-align:center" >삭제</th>
            		</tr>
            <c:forEach var="ws" items="${flist}">

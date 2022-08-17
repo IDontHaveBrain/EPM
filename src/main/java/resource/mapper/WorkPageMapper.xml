@@ -22,14 +22,17 @@
 		AND a.mid=#{mid}) c, project d
 		WHERE c.pid=d.pid
 		AND c.pid=#{pid}) e,jobmember f
-		WHERE e.ppid=f.ppid) g,jobplan h
+		WHERE 1=1
+		AND e.ppid=f.ppid
+		<if test="jmstatus!=null">
+		AND jmstatus LIKE '%'||#{jmstatus}||'%' 
+		</if> ) g,jobplan h
 		WHERE g.jid=h.jid
 		order by h.jid ASC) ab)
 		where cnt between #{start} and #{end} )
-		WHERE 1=1
-		<if test="jmstatus!=null">
-		AND jmstatus LIKE '%'||#{jmstatus}||'%'
-		</if>
+
+
+		
 	</select>
 	<select id="WorkPageList" parameterType="workpagesch" resultType="workpage" >
 		SELECT *
@@ -68,16 +71,12 @@
 			AND c.pid=#{pid}) e,jobmember f
 			WHERE e.ppid=f.ppid) g,jobplan h
 			WHERE g.jid=h.jid)
+			where 1=1
+		<if test="jmstatus!=null">
+		AND jmstatus LIKE '%'||#{jmstatus}||'%' 
+		</if>
+			
 	</select>	
-	
-	
-	<insert id="insertFile" parameterType="workpagefile">
-		insert into jobfile values(jobfile_seq.nextval,
-									#{jmid},
-									sysdate,
-									#{path},
-									#{fname} )
-	</insert>
 	
 	<select id="getWorkPageDetailList" resultType="workpage" parameterType="int" >
 		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid
@@ -131,7 +130,13 @@
 		where i.jmid=j.jmid
 		AND i.jmid=#{jmid}
 	</select>
-
+	<insert id="insertFile" parameterType="workpagefile">
+		insert into jobfile values(jobfile_seq.nextval,
+									#{jmid},
+									sysdate,
+									#{path},
+									#{fname} )
+	</insert>
 	<update id="updateWorkPage" parameterType="int" >
 		UPDATE jobmember 
 		SET jmstatus='REQ' 
