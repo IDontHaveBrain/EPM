@@ -1,6 +1,11 @@
 package pms.controller;
 
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.ProjectDto;
 import pms.dto.ProjectSch;
 import pms.service.ProjectService;
+import pms.vo.Member;
 import pms.vo.Project;
+
 
 
 
@@ -21,19 +28,28 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectList.do
 	@RequestMapping("projectList.do")
-	public String projectList(ProjectSch sch, Model d) {
+	public String projectList(ProjectSch sch,
+							  @RequestParam(value = "mid", defaultValue = "0") int mid,								
+							  Model d, HttpServletRequest request) {
 		
-		d.addAttribute("projectList", service.getProjectList(sch));
+		HttpSession session = request.getSession();
+		Member curMem3 = (Member) request.getSession().getAttribute("mem");
+		if (curMem3 == null) {
+			return "redirect:login.do";
+		}
+
+		List<Project> pList = service.getProjectList(sch, curMem3.getMid());
+		d.addAttribute("prjList", pList);
 		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
 	
-	@RequestMapping("updateProjectStatus.do")
-	public String updateProjectStatus(Project upt, Model d){
+	// http://localhost:7080/project06/adminProjectList.do
+	@RequestMapping("adminProjectList.do")
+	public String adminProjectList(ProjectSch sch, Model d, HttpServletRequest request) {
+		HttpSession session = request.getSession();
 		
-		service.updateProjectStatus(upt);
-		d.addAttribute("proc","upt");
-
-		return "WEB-INF\\views\\project\\projectlist.jsp";
+		d.addAttribute("projectList", service.getAdProjectList(sch));
+		return "WEB-INF\\views\\project\\adminprojectlist.jsp";
 	}
 	
 	

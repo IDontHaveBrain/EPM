@@ -48,6 +48,7 @@ public class MemberController {
 	}
 
 	// http://localhost:7080/project06/login.do
+	
 	@RequestMapping("login.do")
 	public String login(Member m, Model d, 
 					@RequestParam(value="lang", defaultValue = "") String lang,HttpServletRequest request , HttpServletResponse response) {

@@ -17,6 +17,7 @@ import pms.vo.Project;
 public interface ProjectDao {
 	public int totCnt(ProjectSch sch);
 	public List<Project> getProjectList(ProjectSch sch);
+	public List<Project> getAdProjectList(ProjectSch sch);
 
 	
 	public List<Member> getMemberList();
@@ -28,7 +29,7 @@ public interface ProjectDao {
 	public void insertParticipants(Participants p);
 	
 	public void updateProject(ProjectDto upt);
-	public void updateProjectStatus(Project upt);
+
 	
 	public void deleteProject(int pid);
 	public void deleteMember(int pid);

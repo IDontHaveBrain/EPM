@@ -15,6 +15,21 @@
 	<select id="getProjectList" parameterType="projectsch" resultType="project">
 		select *
 		from (
+			select j.*, rownum cnt
+		     from project j, participants p
+		     where j.pid = p.pid
+		     and mid = #{mid}
+		     and 1=1
+		     	<if test="pname != null">
+					AND pname LIKE '%'||#{pname}||'%'
+				</if>
+		     )
+		where cnt between #{start} and #{end}
+	</select>
+	
+	<select id="getAdProjectList" parameterType="projectsch" resultType="project">
+		select *
+		from (
 			select p.*, rownum cnt
 		     from project p
 		     where 1=1
@@ -51,7 +66,7 @@
     </insert>
 	
 	<select id="getProjectDetail" parameterType="int" resultType="project">
-		select pid, pname, pcomment, pstart, pend
+		select pid, pname, pcomment, pstart, pend, pstatus
 		from project
 		where pid = #{pid}
 	</select>
@@ -66,15 +81,12 @@
 			   <if test="pend != ''">
 					pend = #{pend, jdbcType=DATE},
 			   </if>
+			   <if test="pstatus != ''">
+					pstatus = #{pstatus, jdbcType=VARCHAR},
+			   </if>
 			   pcomment = #{pcomment, jdbcType=VARCHAR}
    	
 		WHERE pid = #{pid}	
-	</update>
-	
-	<update id="updateProjectStatus" parameterType="project" >
-		UPDATE project
-		SET pstatus=#{pstatus, jdbcType=VARCHAR} 
-		WHERE pid=#{pid}	
 	</update>
 	
 	<delete id="deleteProject" parameterType="int">
