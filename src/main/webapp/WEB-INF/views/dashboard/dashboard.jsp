@@ -162,7 +162,7 @@
       }
     });
     calendar.render();
-    $("#calextend").click();
+    //$("#calextend").click();
   });
 </script>
 
@@ -559,10 +559,6 @@
 <script src="${path}/pms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${path}/pms/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
   $(document).ready(function() {
     // 간트차트
@@ -614,9 +610,6 @@
       display: false
     }
   }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
   var pieChart = new Chart(pieChartCanvas, {
     type: 'doughnut',
     data: pieData,
@@ -641,10 +634,7 @@
       display: false
     }
   }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
-  var pieChart = new Chart(pieChartCanvas, {
+  var pieChart2 = new Chart(pieChartCanvas, {
     type: 'doughnut',
     data: pieData,
     options: pieOptions

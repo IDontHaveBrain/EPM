@@ -37,7 +37,10 @@ public class DashboardController {
         }
         if(!gservice.checkProjectAuth(curMem.getMid(), pid))
         {
-            return "redirect:test.do";
+            return "redirect:projectList.do";
+        }
+        if(pid == 0){
+            return "redirect:projectList.do";
         }
         System.out.println(curMem.getEmail());
 
@@ -56,7 +59,6 @@ public class DashboardController {
     public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
-        //session.setAttribute("mem", gservice.getMember("test@test.com"));
 
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 
