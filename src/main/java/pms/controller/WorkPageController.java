@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.service.GlobalService;
 import pms.service.WorkPageService;
+import pms.vo.Issues;
 import pms.vo.Member;
 import pms.vo.WorkPage;
 import pms.vo.WorkPageFile;
@@ -30,7 +31,7 @@ public class WorkPageController {
 	public String WorkPageList(WorkPageSch sch,@RequestParam(value = "mid", defaultValue = "0") int mid,
 											   @RequestParam(value = "pid", defaultValue = "0") int pid,
 											   Model d, HttpServletRequest request) {
-		pid = 1;
+		
 		HttpSession session = request.getSession();
 		Member curMem3 = (Member) request.getSession().getAttribute("mem");
 		if (curMem3 == null) {
@@ -39,6 +40,9 @@ public class WorkPageController {
 		if (!gservice.checkProjectAuth(curMem3.getMid(), pid)) {
 			return "redirect:WorkPageList.do";
 		}
+		if(pid == 0){
+	        return "redirect:projectList.do";
+	    }
 		System.out.println(curMem3.getEmail());
 		List<WorkPage> wpList = service.getWorkPageList(sch, curMem3.getMid(), pid);
 		d.addAttribute("wlist", wpList);
@@ -95,6 +99,14 @@ public class WorkPageController {
 		d.addAttribute("workpage", service.getWokrPageDetail(sch,curMem.getMid(), jid));
 		d.addAttribute("flist",service.getWorkPageFile(filelist, curMem.getMid(), jid,jmid));
 		return "WEB-INF\\views\\WorkPageDetail.jsp";
+	}
+	// 이슈사항 등록
+	@RequestMapping("insertIssues.do")
+	public String insertIssues(Issues ins,Model d,
+					@RequestParam(value = "jmid") int jmid,
+					@RequestParam(value = "pid") int pid) {
+			service.insertIssue(ins,jmid);
+		 return "redirect:WorkPageList.do?pid="+pid;
 	}
 
 

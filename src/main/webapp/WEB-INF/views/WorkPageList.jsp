@@ -144,8 +144,9 @@
                     <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th> 					
-                    <th style="text-align:center;" width="7%">이슈사항</th>
                     <th style="text-align:center;" width="5%">승인여부</th>
+                    <th style="text-align:center;" width="2%">이슈사항</th>
+                    <th style="text-align:center;" width="5%">처리상태</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -159,16 +160,17 @@
                     <fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;">${wl.jname}</td> 
                     <td style="text-align:center;">
-                    <fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>   
-                    <td style="text-align:center;" width="5%">${wl.progress}%</td>    
-                    <td style="text-align:center;">
-	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-danger" type="button" onclick="location.href='issueInsertForm.do'">		         	
-		         					<i class="fas fa-bell"></i>		         				
-	         				</button>	
-	         			</div>	                                         
-					</td>
+                    <fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>       
+                    <td style="text-align:center;">${wl.progress}%</td>
 				<td style="text-align:center;" >${wl.jmstatus}</td>
+                    <td style="text-align:center;" width="5%">
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
+		         					<i class="fas fa-comment-alt"></i>		         				
+	         				</button>	
+	         			</div>	             
+                    </td>
+                <td>ddd</td>
                   </tr>
                   </c:forEach>
                   </tbody>
@@ -263,7 +265,9 @@ function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
 
-
+function goRisk(jmid,pid){
+	location.href="${path}/issueInsertForm.do?jmid="+jmid+"&pid="+pid;
+}	
 </script>
 
 </body>

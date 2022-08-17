@@ -5,6 +5,7 @@ import java.util.List;
 // pms.dao.WorkPageDao
 import org.springframework.stereotype.Repository;
 
+import pms.vo.Issues;
 import pms.vo.WorkPage;
 import pms.vo.WorkPageFile;
 import pms.vo.WorkPageSch;
@@ -27,7 +28,8 @@ public interface WorkPageDao {
 	public void updateWorkPage(int jmid);	
 	// 파일 삭제하기
 	public void deleteWorkPageFile(int fid);	
-	
+	// 이슈사항 등록
+	public void insertIssue(Issues ins);
 
 }
 

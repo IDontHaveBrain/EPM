@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import pms.dao.WorkPageDao;
+import pms.vo.Issues;
 import pms.vo.WorkPage;
 import pms.vo.WorkPageFile;
 import pms.vo.WorkPageSch;
@@ -118,5 +119,9 @@ public class WorkPageService {
 			e.printStackTrace();
 		}
 		dao.insertFile(new WorkPageFile(path,fname,jmid));
+	}
+	public void insertIssue(Issues ins,int jmid) {
+			ins.setJmid(jmid);
+		dao.insertIssue(ins);
 	}
 }

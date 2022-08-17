@@ -30,9 +30,6 @@
 		WHERE g.jid=h.jid
 		order by h.jid ASC) ab)
 		where cnt between #{start} and #{end} )
-
-
-		
 	</select>
 	<select id="WorkPageList" parameterType="workpagesch" resultType="workpage" >
 		SELECT *
@@ -75,9 +72,7 @@
 		<if test="jmstatus!=null">
 		AND jmstatus LIKE '%'||#{jmstatus}||'%' 
 		</if>
-			
 	</select>	
-	
 	<select id="getWorkPageDetailList" resultType="workpage" parameterType="int" >
 		SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid
 		FROM
@@ -142,14 +137,14 @@
 		SET jmstatus='REQ' 
 		WHERE jmid=#{jmid}	
 	</update>
-	
-	
 	<delete id="deleteWorkPageFile" parameterType="int">
 		DELETE 
 		FROM jobfile 
 		WHERE fid = #{fid}	
 	</delete>
-
+    <insert id="insertIssue" parameterType="issues">
+        INSERT INTO issues values(issues_seq.NEXTVAL, #{ititle}, #{icontent}, #{iprogress}, sysdate, sysdate, #{jmid})
+    </insert>
 </mapper>
         
         

@@ -80,11 +80,14 @@
                 </button>
               </div>
             </div>
-            
+
+            	
             <div class="card-body">
-             <form id="issueInsert" action="${path}/insertIssue.do" class="form" method="post">
+             <form action="${path}/insertIssues.do" class="form" method="post">
+				<input type=hidden name="jmid" value="${param.jmid}"/> 
+				<input type=hidden name="pid" value="${param.pid}"/> 
               <div class="form-group">
-                <label for="inputName">이슈사항명</label>
+                <label for="inputName">제 목</label>
                 <input type="text" name="ititle" value="${param.ititle}" class="form-control">
               </div>
               <div class="form-group">
@@ -94,15 +97,8 @@
               <div class="form-group"> 
               	<label for="inputProjectLeader">처리현황</label>
                 <select name="iprogress" class="form-control pm-select">
-                  <option selected disabled>처리현황 표기</option>
-                  <option>검토</option>
-                  <option>완료</option>
-                  <option>불가</option>
+                  <option value="대기">대기</option>
                 </select> 
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">작성일자</label>
-                <input type="date" name="iregdate" value="${param.iregdate}" class="form-control">
               </div>
 			  </form>
             </div>
@@ -110,7 +106,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="issueList.do" class="btn btn-secondary">취소</a>    
+          <a href="WorkPageList.do" class="btn btn-secondary">취소</a>    
           <button type="button" onclick="insertProc()" class="btn btn-success float-right">등록</button>
         </div>
       </div>
@@ -129,18 +125,33 @@
   <!-- /.control-sidebar -->
 <!-- ./wrapper -->
 <script type="text/javascript">
-	var isInsert = "${isInsert}"
-		if(isInsert=="Y"){
-			if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
-				// 취소 입력시 조회화면 이동..
-				location.href="${path}/issueList.do"
-			}
-		}
 	function insertProc(){
-		if(confirm("등록하시겠습니까?")){	
-			document.querySelector("form").submit();
-		}
+		if(confirm("이슈사항 등록 하시겠습니까?")){
+			var ititleVal = $("[name=ititle]").val();		
+			if(	ititleVal == ""){
+				alert("제목을 등록하세요");
+				$("[name=ititle]").focus();
+				return; 
+			}	
+			var icontentVal = $("[name=icontent]").val();		
+			if(	icontentVal == ""){
+				alert("내용을 등록하세요");
+				$("[name=icontent]").focus();
+				return; 
+			}			
+			var iprogressVal = $("[name=iprogress]").val();		
+			if(	iprogressVal == ""){
+				alert("처리현황을 선택하세요");
+				$("[name=iprogress]").focus();
+				return; 
+			}
+			alert("등록이 완료됬습니다.");
+			$("form").attr("action","${path}/insertIssues.do");
+			$("form").submit();
+			}
 	}
+
+	
 </script>
 <!-- jQuery -->
 <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
