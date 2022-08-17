@@ -41,7 +41,6 @@
         </div>
       </div>
     </div>
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -66,7 +65,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a id="jobcheck" href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               산출물확인
@@ -85,7 +84,7 @@
         </li>
 
         <li class="nav-item">
-          <a id="edit_pp" href="${path}/edit_pp.do" class="nav-link">
+          <a id="edit_pp" href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               멤버관리
