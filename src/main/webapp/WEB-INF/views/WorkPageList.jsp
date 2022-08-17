@@ -43,7 +43,8 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- jQuery -->
+    <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
