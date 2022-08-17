@@ -46,6 +46,9 @@
 	function goDetail(pid){
 		location.href="${path}/projectDetail.do?pid="+pid;
 	}	
+	function goDash(pid){
+		location.href="${path}/dashboard.do?pid="+pid;
+	}	
 
 
 </script>
@@ -115,7 +118,7 @@
 
        
           <div class="card-tools">
-	         <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+	      
 	          <div class="input-group-append">
 	          <span class="text-center input-group-text">총 : ${projectSch.count }건</span>
 				<span class="text-center input-group-text">페이지 크기</span>
@@ -161,7 +164,7 @@
                                 
                   </tr>
               </thead>
-                   <c:forEach var="project" items="${projectList}">
+                   <c:forEach var="project" items="${prjList}">
               <tbody>  
             
                   <tr ondblclick="goDetail(${project.pid})">
@@ -212,6 +215,7 @@
                       <td class="project-actions text-right">
                
                       	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-warning btn-sm">상세보기</button>
+                      	<button type="button" onclick="goDash(${project.pid})" class="btn btn-info btn-sm">대시보드</button>
                
                       </td>
                   

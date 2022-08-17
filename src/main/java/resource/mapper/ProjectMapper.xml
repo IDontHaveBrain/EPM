@@ -15,6 +15,21 @@
 	<select id="getProjectList" parameterType="projectsch" resultType="project">
 		select *
 		from (
+			select j.*, rownum cnt
+		     from project j, participants p
+		     where j.pid = p.pid
+		     and mid = #{mid}
+		     and 1=1
+		     	<if test="pname != null">
+					AND pname LIKE '%'||#{pname}||'%'
+				</if>
+		     )
+		where cnt between #{start} and #{end}
+	</select>
+	
+	<select id="getAdProjectList" parameterType="projectsch" resultType="project">
+		select *
+		from (
 			select p.*, rownum cnt
 		     from project p
 		     where 1=1

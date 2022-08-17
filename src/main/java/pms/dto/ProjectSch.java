@@ -2,6 +2,7 @@ package pms.dto;
 
 public class ProjectSch {
     private String pname;
+    private int mid;
 
     private int count; // 총데이터 건수
     private int pageSize; // 한번에 보여줄 페이지 크기
@@ -109,4 +110,13 @@ public class ProjectSch {
     public void setEndBlock(int endBlock) {
         this.endBlock = endBlock;
     }
+
+	public int getMid() {
+		return mid;
+	}
+
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+    
 }

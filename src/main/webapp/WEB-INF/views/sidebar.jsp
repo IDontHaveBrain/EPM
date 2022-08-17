@@ -150,12 +150,31 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="projectList.do?pid=${param.pid}" class="nav-link">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
-              프로젝트 목록
+              프로젝트
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
+            <li class="nav-item">
+              <a href="adminProjectList.do?pid=${param.pid}" class="nav-link">
+                 <i class="nav-icon fas fa-book"></i>
+                <p>프로젝트 목록</p>
+              </a>
+            </li>
+            </c:if>
+	        <li class="nav-item">
+	          <a href="projectList.do?pid=${param.pid}" class="nav-link">
+	            <i class="nav-icon fas fa-book"></i>
+	            <p>
+	              개인 프로젝트 목록
+	            </p>
+	          </a>
+	        </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a href="chattingFrm.do?pid=${param.pid}" class="nav-link">

@@ -12,6 +12,7 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,8 +106,141 @@
 		
 	}
 </script>
+<style type="text/css">
+.media-chat {
+    padding-right: 64px;
+    margin-bottom: 0;
+}
 
+.media {
+    padding: 16px 12px;
+    -webkit-transition: background-color .2s linear;
+    transition: background-color .2s linear;
+}
+
+.media .avatar {
+    flex-shrink: 0;
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 100%;
+    background-color: #f5f6f7;
+    color: #8b95a5;
+    text-transform: uppercase;
+}
+
+.media-chat .media-body {
+    -webkit-box-flex: initial;
+    flex: initial;
+    display: table;
+}
+
+.media-body {
+    min-width: 0;
+}
+
+.media-chat .media-body p {
+    position: relative;
+    padding: 6px 8px;
+    margin: 4px 0;
+    background-color: #f5f6f7;
+    border-radius: 3px;
+    font-weight: 100;
+    color:#9b9b9b;
+}
+
+.media>* {
+    margin: 0 8px;
+}
+
+.media-chat .media-body p.meta {
+    background-color: transparent !important;
+    padding: 0;
+    opacity: .8;
+}
+
+.media-meta-day {
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 0;
+    color: #8b95a5;
+    opacity: .8;
+    font-weight: 400;
+}
+
+.media {
+    padding: 16px 12px;
+    -webkit-transition: background-color .2s linear;
+    transition: background-color .2s linear;
+}
+
+.media-meta-day::before {
+    margin-right: 16px;
+}
+
+.media-meta-day::before, .media-meta-day::after {
+    content: '';
+    -webkit-box-flex: 1;
+    flex: 1 1;
+    border-top: 1px solid #ebebeb;
+}
+
+.media-meta-day::after {
+    content: '';
+    -webkit-box-flex: 1;
+    flex: 1 1;
+    border-top: 1px solid #ebebeb;
+}
+
+.media-meta-day::after {
+    margin-left: 16px;
+}
+
+.media-chat.media-chat-reverse {
+    padding-right: 12px;
+    padding-left: 64px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    flex-direction: row-reverse;
+}
+
+.media-chat {
+    padding-right: 64px;
+    margin-bottom: 0;
+}
+
+.media {
+    padding: 16px 12px;
+    -webkit-transition: background-color .2s linear;
+    transition: background-color .2s linear;
+}
+
+.media-chat.media-chat-reverse .media-body p {
+    float: right;
+    clear: right;
+    background-color: #48b0f7;
+    color: #fff;
+}
+
+.media-chat .media-body p {
+    position: relative;
+    padding: 6px 8px;
+    margin: 4px 0;
+    background-color: #f5f6f7;
+    border-radius: 3px;
+}
+
+</style>
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -146,8 +280,10 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-        
-		<div class="input-group mb-2 ">
+         <div class="card card-bordered">
+              <div class="card-header">
+                <h4 class="card-title"><strong>Chat</strong></h4>
+           <div class="input-group mb-2 ">
 			<div class="input-group-prepend ">
 				<span class="text-center input-group-text ">아이디</span>
 			</div>
@@ -157,26 +293,31 @@
 			<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>
 
 							
-		</div>  
- 
-			
-		<div class="input-group mb-2">
-			<div class="input-group-prepend">
-				<span class="text-center input-group-text">내 용</span>
+		</div>
+              
+              </div>
+        
+  
+        <div class="card-body" id="chat-content" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+           <div class="d-flex flex-row justify-content-start">		
+				<div id="chatArea" class="input-group-append">
+					<div id="chatMessageArea"></div>
+				</div>			
 			</div>
-			<div id="chatArea" class="input-group-append">
-				<div id="chatMessageArea"></div>
-			</div>			
-		</div> 	
 		
-		<div class="input-group mb-2">
-			<div class="input-group-prepend">
-				<span class="text-center input-group-text">메시지</span>
-			</div>
-			<input id="msg" class="form-control" placeholder="보낼 메시지 입력" />	
-				 
-			<button type="button" id="sndBtn"  class="btn btn-info">메시지전송</button>
-		</div> 
+		</div>
+		
+		
+		<div class="chat_wrap">
+			<div class="input-group mb-2">
+				<div class="input-group-prepend">
+					<span class="text-center input-group-text">메시지</span>
+				</div>
+				<input id="msg" class="form-control" placeholder="보낼 메시지 입력" />	
+					 
+				<button type="button" id="sndBtn"  class="btn btn-info">메시지전송</button>
+			</div> 
+		</div>
 		<script type="text/javascript">
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
@@ -199,7 +340,7 @@
 		<div class="text-right">
 			<button type="button" onclick="goMain()" class="btn btn-info">메인화면</button>
 		</div>		
-
+	</div>
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>
