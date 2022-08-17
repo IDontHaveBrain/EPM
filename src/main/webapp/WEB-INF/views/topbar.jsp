@@ -9,10 +9,17 @@
     pageEncoding="UTF-8"
     import="java.util.*"
     %>
+<%@ page language="java" import="java.net.InetAddress" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%
+  InetAddress inet = InetAddress.getLocalHost();
+  //String svrIP = inet.getHostAddress();
+  request.setAttribute("serverIp", inet.getHostAddress());
+%>
+<script>alert("${serverIp}")</script>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
@@ -250,7 +257,12 @@ function onlineMembers() {
 }
 
   function conn2(){
-    wsocket2 = new WebSocket("ws:localhost:7080/${path}/online-ws.do")
+    var serverIp = "${serverIp}";
+    if(serverIp.includes("192.")){
+      wsocket2 = new WebSocket("ws:localhost:7080/${path}/online-ws.do");
+    } else {
+      wsocket2 = new WebSocket("ws:${serverIp}:7080/${path}/online-ws.do");
+    }
     wsocket2.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
       wsocket2.send("add:${mem.mid}");
     }
