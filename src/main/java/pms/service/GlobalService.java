@@ -21,7 +21,16 @@ public class GlobalService {
         return dao.getMember(email);
     }
     public List<Jobplan> jobplanListPrj(int pid) {
-        return dao.jobplanListPrj(pid);
+        List<Jobplan> temp = dao.jobplanListPrj(pid);
+        for(Jobplan job : temp) {
+            int all = dao.jobMemberCount(job.getJid());
+            int comp = dao.jobMemberCompCount(job.getJid());
+            if(comp == 0)
+                job.setPercent(0);
+            else
+                job.setPercent(comp/(double)all);
+        }
+        return temp;
     }
     public boolean isProjectMember(Integer mid, Integer pid) {
         Map<String, Object> map = new HashMap<>();

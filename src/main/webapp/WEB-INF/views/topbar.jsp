@@ -126,8 +126,7 @@
         <div class="dropdown-divider"></div>
         <div id="onlineMember">
           <a href="#" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i> asd
-            <span class="float-right text-muted text-sm">Online</span>
+            <i class="far fa-angry mr-2"></i> 프로젝트를 선택하세요!
           </a>
         </div>
         <div class="dropdown-divider"></div>
@@ -269,15 +268,17 @@ function onlineMembers() {
         dataType : "json",
         success : function(data) {
           //console.log(data);
-          $("#onlineMember").empty();
-          for(var i=0;i<data.members.length;i++){
-            for(var j=0;j<msgArr.length;j++){
-              if(data.members[i].mid==msgArr[j]){
-                $("#onlineMember").append("<a href='#' class='dropdown-item'>" +
-                        "<i class='fas fa-user mr-2'></i>"+data.members[i].name+
-                        "("+data.members[i].empno+")"+
-                        "<span class='float-right text-muted text-sm'>" +
-                        "<i class='fas fa-circle text-success'></i></span></a>");
+          if(data.members != null) {
+            $("#onlineMember").empty();
+            for (var i = 0; i < data.members.length; i++) {
+              for (var j = 0; j < msgArr.length; j++) {
+                if (data.members[i].mid == msgArr[j]) {
+                  $("#onlineMember").append("<a href='#' class='dropdown-item'>" +
+                          "<i class='fas fa-user mr-2'></i>" + data.members[i].name +
+                          "(" + data.members[i].empno + ")" +
+                          "<span class='float-right text-muted text-sm'>" +
+                          "<i class='fas fa-circle text-success'></i></span></a>");
+                }
               }
             }
           }

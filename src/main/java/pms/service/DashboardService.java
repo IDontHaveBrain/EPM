@@ -34,11 +34,11 @@ public class DashboardService {
         List<IssuesDashDto> issueList = getIssueList(pid);
         Integer iprogCount[] = {0,0,0,0};
         for(IssuesDashDto issue:issueList){
-            if(issue.getIprogress().equals("해결"))
+            if(issue.getIprogress().equals("해결") || issue.getIprogress().equals("COMP"))
                 iprogCount[0]++;
-            else if (issue.getIprogress().equals("해결중"))
+            else if (issue.getIprogress().equals("해결중") || issue.getIprogress().equals("PROG"))
                 iprogCount[1]++;
-            else if (issue.getIprogress().equals("해결불가"))
+            else if (issue.getIprogress().equals("해결불가") || issue.getIprogress().equals("REJ"))
                 iprogCount[2]++;
             iprogCount[3]++;
         }
