@@ -48,4 +48,20 @@ public class GlobalController {
         d.addAttribute("members", service.getPrjMembers(pid));
         return "pageJsonReport";
     }
+
+    @RequestMapping("myProjectAjax.do")
+    public String myProjectAjax(@RequestParam(value = "mid", defaultValue = "0") int mid,
+                                 Model d, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Member curMem = (Member)request.getSession().getAttribute("mem");
+
+        if(curMem == null){
+            return "pageJsonReport";
+        }
+        if(mid == 0) {
+            mid = curMem.getMid();
+        }
+        d.addAttribute("projects", service.getMyPrjList(mid));
+        return "pageJsonReport";
+    }
 }

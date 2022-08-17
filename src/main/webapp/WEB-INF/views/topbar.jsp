@@ -108,6 +108,13 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
       </div>
     </li>
+    <!-- My prj list -->
+    <div class="col-5">
+      <div class="form-group">
+        <select id="prjList" class="form-control select2">
+        </select>
+      </div>
+    </div>
     <!-- Online Check -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
@@ -189,6 +196,38 @@ $(document).ready(function(){
     <c:if test="${not empty mem}">
       conn2();
     </c:if>
+
+  $.ajax({
+    url : "${path}/myProjectAjax.do",
+    data : "mid=0",
+    dataType : "json",
+    success : function(data) {
+      console.log(data);
+      var prjList = data.projects;
+      var addHTML = "";
+      $(prjList).each(function(idx, rst) {
+        <c:choose>
+        <c:when test="${empty param.pid}">
+        if (idx == 0) {
+          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+        }
+        </c:when>
+        <c:otherwise>
+        if(rst.pid == ${param.pid}) {
+          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+        }
+        </c:otherwise>
+        </c:choose>
+        else {
+          addHTML += "<option value='" + rst.pid + "'>" + rst.pname + "</option>";
+        }
+      });
+      $("#prjList").html(addHTML);
+      $("#prjList").change(function(){
+        location.href = "dashboard.do?pid="+$("#prjList").val();
+      });
+    }
+  });
 });
 
 function onlineMembers() {

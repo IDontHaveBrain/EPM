@@ -37,4 +37,10 @@
     <select id="getPrjMembers" parameterType="int" resultType="member">
         select distinct m.* from PARTICIPANTS p, MEMBER m where p.PID = #{pid} and p.MID = m.MID
     </select>
+    <select id="getMyPrjList" parameterType="int" resultType="project">
+        select distinct p.*
+        from PROJECT p,
+             (select * from PARTICIPANTS pp, MEMBER m where pp.MID = m.MID and m.MID = #{mid}) mm
+        where p.PID = mm.PID
+    </select>
 </mapper>
