@@ -61,12 +61,12 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			if (mem != null && mem.getAuth().equals("ADMIN")) {
 				session.setAttribute("mem", mem);
-				return "forward:adminDashboard.do";
+				return "redirect:adminDashboard.do";
 			} else if (mem != null && mem.getAuth() != "ADMIN") {
 				session.setAttribute("mem", mem);
-				return "forward:dashboard.do";
+				return "redirect:dashboard.do";
 			} else {
-				return "forward:login.do";
+				return "redirect:login.do";
 			}
 		}
 		
