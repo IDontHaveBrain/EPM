@@ -48,8 +48,8 @@
 		location.href="${path}/projectDetail.do?pid="+pid;
 	}	
 	function goDash(pid){
-		location.href="${path}/dashboard.do?pid="+pid;
-	}	
+		location.href="${path}/dashboard.do?pid="+pid;	
+	}
 
 
 </script>
@@ -119,7 +119,6 @@
 
        
           <div class="card-tools">
-	      
 	          <div class="input-group-append">
 	          <span class="text-center input-group-text">총 : ${projectSch.count }건</span>
 				<span class="text-center input-group-text">페이지 크기</span>
@@ -203,21 +202,15 @@
                           </small>
                       </td>
                       <td class="project-state">                         
-		                <select name="pstatus" id="pstatus" onchange="schange(${project.pid});" class="form-control pm-select select2bs4">
-		    				<option selected>${project.pstatus}</option>		
-		    				<option>WAIT</option>		
-		    				<option>PROG</option>		
-		    				<option>COMP</option>		
-		    				<option>CANCEL</option>		
-		                </select>   		                      
+ 		              		<a>
+ 		              			${project.pstatus}
+ 		              		</a>        
                      
                       </td>
                  	
                       <td class="project-actions text-right">
-               
                       	<button type="button" onclick="goDetail(${project.pid})" class="btn btn-warning btn-sm">상세보기</button>
-                      	<button type="button" onclick="goDash(${project.pid})" class="btn btn-info btn-sm">대시보드</button>
-               
+                      	<button type="button" onclick="goDash(${project.pid})" class="btn btn-info btn-sm">대시보드</button> 
                       </td>
                   
                   </tr>
@@ -300,14 +293,6 @@
 			
 	}
 	
-	function schange(pid){
-	
-		var pindex = pstatus.selectedIndex;
-		var pstatus = pstatus.options[pindex].text;
-		
-		console.log(pstatus);
-		console.log(${project.pid});
-	}
 	// 값 받아와서 db에 저장하기
 	
 </script>
