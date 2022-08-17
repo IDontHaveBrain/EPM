@@ -26,7 +26,6 @@ public class WorkPageService {
 		sch.setMid(mid);
 		sch.setPid(pid);
 		sch.setJmstatus(sch.getJmstatus());
-		System.out.println("이건뭐여?:"+sch.getJmstatus());
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.WorkPageTotCnt(sch) ); 
         //System.out.println("총건수:"+sch.getCount());
@@ -38,6 +37,8 @@ public class WorkPageService {
         //    ex) 18/5 ==> 3
         //    ex) 18/5.0 (실수) ==> Math.ceil(3.6) : 4.0 ==> 정수형으로 변환하여 4를 총페이지수로 처리
         sch.setPageCount( (int)Math.ceil( sch.getCount() /(double)sch.getPageSize()) );
+        
+        
         // 4. 클릭한 현재 페이지 번호..(요청값)
         if(sch.getCurPage()==0) {
             sch.setCurPage(1);
