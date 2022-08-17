@@ -1,6 +1,9 @@
 package pms.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 
 import pms.service.MemberService;
 import pms.vo.Member;
@@ -21,6 +25,9 @@ import pms.vo.MemberSch;
 public class MemberController {
 	@Autowired(required = false)
 	private MemberService service;
+	
+	@Autowired(required=false)
+	private LocaleResolver localResolver;
 	
 	// http://localhost:7080/project06/register.do
 	@RequestMapping("register.do")
@@ -43,7 +50,11 @@ public class MemberController {
 	// http://localhost:7080/project06/login.do
 	
 	@RequestMapping("login.do")
-	public String login(Member m, Model d, HttpServletRequest request) {
+	public String login(Member m, Model d, HttpServletRequest request ,
+					@RequestParam(value="lang", defaultValue = "") String lang, HttpServletResponse response) {
+		System.out.println("선택한 언어:"+lang);
+		Locale locale = new Locale(lang);
+		localResolver.setLocale(request, response, locale);
 		if (m.getEmpno() != 0 && m.getPassword() != null) {
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();

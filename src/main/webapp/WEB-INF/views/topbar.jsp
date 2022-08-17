@@ -5,6 +5,10 @@
   Time: 오후 5:26
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="java.util.*"
+    %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -104,6 +108,30 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
       </div>
     </li>
+    <!-- My prj list -->
+    <div class="col-5">
+      <div class="form-group">
+        <select id="prjList" class="form-control select2">
+        </select>
+      </div>
+    </div>
+    <!-- Online Check -->
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-people-arrows"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">Online Member</span>
+        <div class="dropdown-divider"></div>
+        <div id="onlineMember">
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-user mr-2"></i> asd
+            <span class="float-right text-muted text-sm">Online</span>
+          </a>
+        </div>
+        <div class="dropdown-divider"></div>
+      </div>
+    </li>
     <!-- Notifications Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
@@ -149,11 +177,15 @@
 <script src="${path}/pms/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+
 <script>
+  var wsocket2;
 $(document).ready(function(){
-	<%-- 
-	
-	--%>	
+	<%--
+
+	--%>
 	$("#selLan").val("${param.lang}")
 	$("#selLan").change(function(){
 		if($("[name=selLan]").val()!=""){
@@ -161,5 +193,95 @@ $(document).ready(function(){
 			$("frm01").submit();
 		}
 	});
+    <c:if test="${not empty mem}">
+      conn2();
+    </c:if>
+
+  $.ajax({
+    url : "${path}/myProjectAjax.do",
+    data : "mid=0",
+    dataType : "json",
+    success : function(data) {
+      console.log(data);
+      var prjList = data.projects;
+      var addHTML = "";
+      $(prjList).each(function(idx, rst) {
+        <c:choose>
+        <c:when test="${empty param.pid}">
+        if (idx == 0) {
+          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+        }
+        </c:when>
+        <c:otherwise>
+        if(rst.pid == ${param.pid}) {
+          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+        }
+        </c:otherwise>
+        </c:choose>
+        else {
+          addHTML += "<option value='" + rst.pid + "'>" + rst.pname + "</option>";
+        }
+      });
+      $("#prjList").html(addHTML);
+      $("#prjList").change(function(){
+        location.href = "dashboard.do?pid="+$("#prjList").val();
+      });
+    }
+  });
 });
+
+function onlineMembers() {
+    $.ajax({
+        url : "${path}/teamMemberAjax.do",
+        data : "pid=${param.pid}",
+        dataType : "json",
+        success : function(data) {
+            //console.log(data);
+            $("#onlineMember").empty();
+            for(var i=0;i<data.members.length;i++){
+                //console.log(data.members[i]);
+                $("#onlineMember").append("<a href='#' class='dropdown-item'><i class='fas fa-user mr-2'></i>"+data.members[i].name+"("+data.members[i].empno+")"+"<span class='float-right text-muted text-sm'><i class='fas fa-circle text-success'></i></span></a>");
+            }
+        }
+    });
+}
+
+  function conn2(){
+    wsocket2 = new WebSocket("ws:localhost:7080/${path}/online-ws.do")
+    wsocket2.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
+      wsocket2.send("add:${mem.mid}");
+    }
+    // 메시지를 받을 때, 처리되는 메서드
+    // 서버에서 push방식으로 메시지를 전달 받는데..
+    wsocket2.onmessage=function(evt){
+
+      var msg = evt.data;
+      console.log("#메시지 받기#");
+      console.log(msg);
+      var msgArr = msg.split(",");
+      var dupeCheck = new Set(msgArr);
+      msgArr = [...dupeCheck];
+      $.ajax({
+        url : "${path}/teamMemberAjax.do",
+        data : "pid=${param.pid}",
+        dataType : "json",
+        success : function(data) {
+          //console.log(data);
+          $("#onlineMember").empty();
+          for(var i=0;i<data.members.length;i++){
+            for(var j=0;j<msgArr.length;j++){
+              if(data.members[i].mid==msgArr[j]){
+                $("#onlineMember").append("<a href='#' class='dropdown-item'><i class='fas fa-user mr-2'></i>"+data.members[i].name+"("+data.members[i].empno+")"+"<span class='float-right text-muted text-sm'><i class='fas fa-circle text-success'></i></span></a>");
+              }
+            }
+            //$("#onlineMember").append("<a href='#' class='dropdown-item'><i class='fas fa-user mr-2'></i>"+data.members[i].name+"<span class='float-right text-muted text-sm'><i class='fas fa-circle text-success'></i></span></a>");
+          }
+        }
+      });
+    }
+    // 접속을 종료 처리할 때
+    wsocket2.onclose=function(){
+      alert($("#id").val()+"접속 종료합니다.")
+    }
+  }
 </script>

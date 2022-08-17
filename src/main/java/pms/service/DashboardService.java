@@ -48,11 +48,13 @@ public class DashboardService {
         List<Jobplan> jobList = gdao.jobplanListPrj(pid);
         Integer jprogCount[] = {0,0,0,0};
         for(Jobplan jobplan:jobList){
-            if(jobplan.getJstatus().equals("완료"))
-                jprogCount[0]++;
-            else if (jobplan.getJstatus().equals("진행중"))
-                jprogCount[1]++;
-            jprogCount[3]++;
+            if(jobplan.getJstatus() != null) {
+                if (jobplan.getJstatus().equals("완료") || jobplan.getJstatus().equals("COMP"))
+                    jprogCount[0]++;
+                else if (jobplan.getJstatus().equals("진행중") || jobplan.getJstatus().equals("PROG"))
+                    jprogCount[1]++;
+                jprogCount[3]++;
+            }
         }
         return jprogCount;
     }

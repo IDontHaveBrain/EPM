@@ -95,6 +95,7 @@
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 	<mvc:default-servlet-handler/>
 	<websocket:handlers>
+		<websocket:mapping handler="onlineHandler" path="/online-ws.do"/>
 		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>

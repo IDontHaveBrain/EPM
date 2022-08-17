@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pms.dao.GlobalDao;
 import pms.vo.Jobplan;
 import pms.vo.Member;
+import pms.vo.Project;
 
 @Service
 public class GlobalService {
@@ -36,5 +37,11 @@ public class GlobalService {
     }
     public boolean isAdmin(int mid){
         return dao.isAdmin(mid);
+    }
+    public List<Member> getPrjMembers(int pid) {
+        return dao.getPrjMembers(pid);
+    }
+    public List<Project> getMyPrjList(int mid) {
+        return dao.getMyPrjList(mid);
     }
 }

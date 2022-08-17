@@ -4,6 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
@@ -12,7 +13,17 @@
 
  --%>
 
-<html lang="en">
+<html>
+<style>
+
+
+select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +38,16 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="${path}/pms/dist/css/adminlte.min.css">
 </head>
+
 <body class="hold-transition login-page">
+<select class="selLang" id="selLan">
+	<option value=""><spring:message code="chLang"/></option>
+	<option value="ko"><spring:message code="ko"/></option>
+	<option value="en"><spring:message code="en"/></option>
+</select>
+<form id="selLang" class="form-inline" method="post">
+	<input type="hidden" name="lang" value=""/>
+</form>
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -35,11 +55,11 @@
       <a class="h1"><b>Effective</b>PM</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">로그인을 진행해주세요</p>
+      <p class="login-box-msg"><spring:message code="loginmsg"/></p>
 
       <form action="login.do" id="login" method="post">
         <div class="input-group mb-3">
-          <input type="text" name="empno" id="empno" class="form-control" placeholder="사원번호">
+          <input type="text" name="empno" id="empno" class="form-control" placeholder="<spring:message code="empno"/>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -47,7 +67,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호">
+          <input type="password" name="password" id="password" class="form-control" placeholder="<spring:message code="password"/>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -59,13 +79,13 @@
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
-                사원번호 저장
+                <spring:message code="remember"/>
               </label>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="button" onclick="login(); return false;" class="btn btn-primary btn-block">로그인</button>
+            <button type="button" onclick="login(); return false;" class="btn btn-primary btn-block"><spring:message code="login"/></button>
           </div>
           <!-- /.col -->
         </div>
@@ -74,10 +94,10 @@
       <!-- /.social-auth-links -->
 
       <p class="mt-3 mb-1">
-        <a href="${path}/recoverpassword.do">비밀번호찾기</a>
+        <a href="${path}/recoverpassword.do"><spring:message code="findpw"/></a>
       </p>
       <p class="mb-0">
-        <a href="${path}/register.do" class="text-center">사원등록신청</a>
+        <a href="${path}/register.do" class="text-center"><spring:message code="register"/></a>
       </p>
     </div>
     <!-- /.login-card-body -->
@@ -193,6 +213,18 @@
 			}
 		})
 	})
+	$(document).ready(function(){
+		<%-- 
+		
+		--%>	
+		$("#selLan").val("${param.lang}")
+		$("#selLan").change(function(){
+			if($(this).val()!=""){
+				$("[name=lang]").val($(this).val())
+				$("#selLang").submit();
+			}
+		});
+	});
 </script>
 </body>
 </html>
