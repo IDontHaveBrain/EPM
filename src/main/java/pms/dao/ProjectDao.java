@@ -15,6 +15,8 @@ import pms.vo.Project;
 
 @Repository
 public interface ProjectDao {
+	public int totMemCnt(ProjectSch sch);
+	
 	public int totCnt(ProjectSch sch);
 	public List<Project> getProjectList(ProjectSch sch);
 	public List<Project> getAdProjectList(ProjectSch sch);

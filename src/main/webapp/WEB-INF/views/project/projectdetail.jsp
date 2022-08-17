@@ -288,7 +288,7 @@ var proc = "${proc}"
 
 	if(proc=="upt"){
 		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
-			location.href="${path}/projectList.do";
+			location.href="${path}/adminprojectlist.do";
 		}else{
 			location.href="${path}/projectDetail.do"			
 		}
@@ -303,12 +303,12 @@ function deleteProc(){
  
 	if(proc=="del"){
 		alert("삭제성공!")
-		location.href="${path}/projectList.do";
+		location.href="${path}/adminprojectlist.do";
 	}
 
 
 function goMain(){
-		location.href="${path}/projectList.do";
+		location.href="${path}/adminprojectlist.do";
 }
 
 

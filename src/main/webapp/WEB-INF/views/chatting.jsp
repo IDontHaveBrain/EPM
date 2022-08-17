@@ -18,6 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
 
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -38,11 +39,16 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-    <!-- jQuery -->
-    <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 	var wsocket;
 	$(document).ready(function(){
+		/*
+		
+		
+		*/
+		
 		$("#enterBtn").click(function(){
 			if(confirm("채팅방 접속합니다.")){
 				conn();
@@ -107,7 +113,9 @@
 		
 	}
 </script>
+
 <style type="text/css">
+
 .media-chat {
     padding-right: 64px;
     margin-bottom: 0;
@@ -239,6 +247,7 @@
     border-radius: 3px;
 }
 
+
 </style>
 </head>
 
@@ -281,33 +290,28 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-         <div class="card card-bordered">
-              <div class="card-header">
-                <h4 class="card-title"><strong>Chat</strong></h4>
+   
            <div class="input-group mb-2 ">
-			<div class="input-group-prepend ">
-				<span class="text-center input-group-text ">아이디</span>
-			</div>
-			<input id="id" class="form-control"  placeholder="접속할 아이디 입력하세요" />	
+				<div class="input-group-prepend ">
+					<span class="text-center input-group-text ">아이디</span>
+				</div>
+				<input id="id" class="form-control"  placeholder="접속할 아이디 입력하세요" />	
 			
-			<button type="button" id="enterBtn" class="btn btn-success">채팅입장</button>
-			<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>
-
-							
-		</div>
-              
-              </div>
-        
+				<button type="button" id="enterBtn" class="btn btn-success">채팅입장</button>
+				<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>					
+		  </div>  		
+         <div class="card card-primary">
+           <div class="card-body">  
   
-        <div class="card-body" id="chat-content" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
-           <div class="d-flex flex-row justify-content-start">		
-				<div id="chatArea" class="input-group-append">
+        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+           		
+				<div id="chatArea" class="media media-chat">
 					<div id="chatMessageArea"></div>
 				</div>			
-			</div>
 		
-		</div>
-		
+			
+		</div> 	
+			
 		
 		<div class="chat_wrap">
 			<div class="input-group mb-2">
@@ -319,6 +323,7 @@
 				<button type="button" id="sndBtn"  class="btn btn-info">메시지전송</button>
 			</div> 
 		</div>
+		
 		<script type="text/javascript">
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
@@ -334,14 +339,16 @@
 				
 			});
 		
-		</script>		
-				
-				
-		
+		</script>
+		</div>
+	</div>
 		<div class="text-right">
 			<button type="button" onclick="goMain()" class="btn btn-info">메인화면</button>
 		</div>		
-	</div>
+
+		
+	
+
         <!-- 페이지 구성 끝!! -->
       </div><!-- /.container-fluid -->
     </section>
@@ -356,6 +363,8 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- jQuery -->
+<script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="${path}/pms/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

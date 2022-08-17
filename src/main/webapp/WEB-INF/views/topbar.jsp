@@ -9,10 +9,16 @@
     pageEncoding="UTF-8"
     import="java.util.*"
     %>
+<%@ page language="java" import="java.net.InetAddress" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%
+  InetAddress inet = InetAddress.getLocalHost();
+  //String svrIP = inet.getHostAddress();
+  request.setAttribute("serverIp", inet.getHostAddress());
+%>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
@@ -126,8 +132,7 @@
         <div class="dropdown-divider"></div>
         <div id="onlineMember">
           <a href="#" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i> asd
-            <span class="float-right text-muted text-sm">Online</span>
+            <i class="far fa-angry mr-2"></i> 프로젝트를 선택하세요!
           </a>
         </div>
         <div class="dropdown-divider"></div>
@@ -212,7 +217,8 @@ $(document).ready(function(){
         <c:choose>
         <c:when test="${empty param.pid}">
         if (idx == 0) {
-          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+          addHTML += "<option selected disabled hidden>프로젝트 선택하세요</option>";
+          addHTML += "<option value='" + rst.pid + "'>" + rst.pname + "</option>";
         }
         </c:when>
         <c:otherwise>
@@ -250,7 +256,12 @@ function onlineMembers() {
 }
 
   function conn2(){
-    wsocket2 = new WebSocket("ws:localhost:7080/${path}/online-ws.do")
+    var serverIp = "${serverIp}";
+    if(serverIp.includes("192.")){
+      wsocket2 = new WebSocket("ws:localhost:7080/${path}/online-ws.do");
+    } else {
+      wsocket2 = new WebSocket("ws:${serverIp}:7080/${path}/online-ws.do");
+    }
     wsocket2.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
       wsocket2.send("add:${mem.mid}");
     }
@@ -268,15 +279,17 @@ function onlineMembers() {
         dataType : "json",
         success : function(data) {
           //console.log(data);
-          $("#onlineMember").empty();
-          for(var i=0;i<data.members.length;i++){
-            for(var j=0;j<msgArr.length;j++){
-              if(data.members[i].mid==msgArr[j]){
-                $("#onlineMember").append("<a href='#' class='dropdown-item'>" +
-                        "<i class='fas fa-user mr-2'></i>"+data.members[i].name+
-                        "("+data.members[i].empno+")"+
-                        "<span class='float-right text-muted text-sm'>" +
-                        "<i class='fas fa-circle text-success'></i></span></a>");
+          if(data.members != null) {
+            $("#onlineMember").empty();
+            for (var i = 0; i < data.members.length; i++) {
+              for (var j = 0; j < msgArr.length; j++) {
+                if (data.members[i].mid == msgArr[j]) {
+                  $("#onlineMember").append("<a href='#' class='dropdown-item'>" +
+                          "<i class='fas fa-user mr-2'></i>" + data.members[i].name +
+                          "(" + data.members[i].empno + ")" +
+                          "<span class='float-right text-muted text-sm'>" +
+                          "<i class='fas fa-circle text-success'></i></span></a>");
+                }
               }
             }
           }

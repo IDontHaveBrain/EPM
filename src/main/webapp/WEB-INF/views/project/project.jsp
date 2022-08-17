@@ -206,7 +206,7 @@ var list;
                   <label>참여 멤버</label>
                   <div class="select2-purple">
                    <select name="selectmember" id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  			
-	
+						
                    </select>
                   </div>           
                 </div>

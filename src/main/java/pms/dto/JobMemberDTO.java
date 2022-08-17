@@ -8,11 +8,33 @@ public class JobMemberDTO {
 	private int progress;
 	private String jmstatus;
 	private int ppid;
+	private String pauth;
+	private String auth;
+	private int pid;
+	
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
+	public String getPauth() {
+		return pauth;
+	}
+	public void setPauth(String auth) {
+		this.pauth = auth;
+	}
 	public int getMid() {
 		return mid;
 	}
 	public void setMid(int mid) {
 		this.mid = mid;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 	public String getEmail() {
 		return email;

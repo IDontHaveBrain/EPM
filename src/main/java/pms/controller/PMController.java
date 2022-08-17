@@ -1,6 +1,7 @@
 package pms.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.JobDTO;
+import pms.dto.JobMemberDTO;
 import pms.service.PMService;
+import pms.vo.Member;
 
 @Controller
 public class PMController {
@@ -17,19 +20,33 @@ public class PMController {
 	private PMService service;
 	// http://localhost:7080/project06/manage.do
 	@RequestMapping("manage.do")
-	public String manage(HttpServletRequest request, Model d) {
-//		HttpSession session = request.getSession();
-//        Member mem = (Member)session.getAttribute("mem");
-//        if(mem == null){
-//            return "redirect:login.do";
-//        }
-        d.addAttribute("pplist", service.getParticipants(1));
-        d.addAttribute("activelink", "manage");
+	public String manage(@RequestParam(value = "pid", defaultValue = "1") int pid, HttpServletRequest request, Model d) {
+		HttpSession session = request.getSession();
+        Member mem = (Member)session.getAttribute("mem");
+        if(mem == null){
+            return "redirect:login.do";
+        }
+        
+        JobMemberDTO jm = new JobMemberDTO();
+        jm.setPid(pid);
+        jm.setMid(mem.getMid());
+        System.out.println(jm.getPid());
+        System.out.println(jm.getMid());
+        String pauth = service.getPauth(jm);
+        if(!pauth.equals("PM")) {
+        	return "redirect:dashboard.do?pid=" + pid;
+        }
+        if(session.getAttribute("prjlist") == null) {
+        	session.setAttribute("prjlist", service.prjList(mem.getMid()));
+        }
+		d.addAttribute("pid", pid);
+        d.addAttribute("pplist", service.getParticipants(pid));
 		return "WEB-INF\\views\\pm\\pm-gantt.jsp";
 	}
 	@RequestMapping("joblist.do")
 	public String joblist(@RequestParam("pid") int pid, Model d) {
 		d.addAttribute("joblist", service.getJobList(pid));
+		
 		return "pageJsonReport";
 	}
 	@RequestMapping("addjob.do")
@@ -38,14 +55,28 @@ public class PMController {
 		return "pageJsonReport";
 	}
 	@RequestMapping("edit_pp.do")
-	public String editParticipants(Model d) {
-		d.addAttribute("activelink", "edit_pp");
-		d.addAttribute("pplist", service.getParticipants(1));
+	public String editParticipants(@RequestParam("pid") int pid, Model d) {
+		d.addAttribute("pid", pid);
 		return "WEB-INF\\views\\pm\\editparticipants.jsp";
 	}
-//	@RequestMapping("pplist.do")
-//	public String pplist(Model d){
-//		d.addAttribute("pplist", service.getParticipants(1));
-//		return "pageJsonReport";
-//	}
+	@RequestMapping("removepp.do")
+	public String removePP(JobMemberDTO jm, Model d) {
+		service.removePP(jm);
+		d.addAttribute("pplist", service.getParticipants(jm.getPid()));
+		d.addAttribute("mlist", service.getNonPPMember(jm.getPid()));
+		return "pageJsonReport";
+	}
+	@RequestMapping("addpp.do")
+	public String addPP(JobMemberDTO jm, Model d) {
+		service.addPP(jm);
+		d.addAttribute("pplist", service.getParticipants(jm.getPid()));
+		d.addAttribute("mlist", service.getNonPPMember(jm.getPid()));
+		return "pageJsonReport";
+	}
+	@RequestMapping("pplist.do")
+	public String pplist(JobMemberDTO jm, Model d) {
+		d.addAttribute("pplist", service.getParticipants(jm.getPid()));
+		d.addAttribute("mlist", service.getNonPPMember(jm.getPid()));
+		return "pageJsonReport";
+	}
 }

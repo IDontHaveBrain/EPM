@@ -1,6 +1,4 @@
 package pms.dto;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class JobDTO {
@@ -10,7 +8,7 @@ public class JobDTO {
 	private String end;
 	private int progress;
 	private int required;
-	private List<Integer> dependencies = new ArrayList<Integer>();
+	private String dependencies = "";
 	private String realstart;
 	private String realend;
 	private String content;
@@ -55,9 +53,9 @@ public class JobDTO {
 		this.progress = progress;
 	}
 	public void setDependencies() {
-		this.dependencies.add(required);
+		this.dependencies += required;
 	}
-	public List<Integer> getDependencies(){
+	public String getDependencies(){
 		return dependencies;
 	}
 	public String getRealstart() {
