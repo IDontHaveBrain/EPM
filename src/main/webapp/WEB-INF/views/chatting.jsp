@@ -5,10 +5,17 @@
   Time: 오후 12:13
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
+<%@ page language="java" import="java.net.InetAddress" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%
+  InetAddress inet = InetAddress.getLocalHost();
+  //String svrIP = inet.getHostAddress();
+  request.setAttribute("serverIp", inet.getHostAddress());
+%>
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
@@ -72,8 +79,16 @@
 		});
 		
 	});
+	
+	
 	function conn(){
-		wsocket = new WebSocket("ws:localhost:7080/${path}/chat-ws.do")
+	    var serverIp = "${serverIp}";
+	    if(serverIp.includes("192.")){
+	      wsocket = new WebSocket("ws:localhost:7080/${path}/chat-ws.do");
+	    } else {
+	      wsocket = new WebSocket("ws:${serverIp}:7080/${path}/chat-ws.do");
+	    }
+	    
 		wsocket.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
 			console.log(evt)
 			// 능동적으로 서버에 소켓통신으로 메시지를 보내는 것..
