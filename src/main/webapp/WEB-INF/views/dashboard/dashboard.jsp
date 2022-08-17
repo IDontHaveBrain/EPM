@@ -569,7 +569,7 @@
         name: '${job.jname}',
         start: '<fmt:formatDate value="${job.jstart}" pattern="yyyy-MM-dd"></fmt:formatDate>',
         end: '<fmt:formatDate value="${job.jend}" pattern="yyyy-MM-dd"></fmt:formatDate>',
-        progress: 10,
+        progress: ${job.percent*100},
         dependencies: '${job.required}',
         read_only: true,
         readonly: true

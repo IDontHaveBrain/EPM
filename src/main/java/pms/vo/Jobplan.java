@@ -15,6 +15,7 @@ public class Jobplan {
     private int required;
     private int pid;
     private String jstatus;
+    private double percent;
 
     public Jobplan() {
     }
@@ -32,6 +33,14 @@ public class Jobplan {
         this.required = required;
         this.pid = pid;
         this.jstatus = jstatus;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
 
     public int getJid() {
