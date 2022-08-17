@@ -212,7 +212,8 @@ $(document).ready(function(){
         <c:choose>
         <c:when test="${empty param.pid}">
         if (idx == 0) {
-          addHTML += "<option value='" + rst.pid + "' selected>" + rst.pname + "</option>";
+          addHTML += "<option selected disabled hidden>프로젝트 선택하세요</option>";
+          addHTML += "<option value='" + rst.pid + "'>" + rst.pname + "</option>";
         }
         </c:when>
         <c:otherwise>
