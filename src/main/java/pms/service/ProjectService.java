@@ -23,7 +23,7 @@ public class ProjectService {
     	sch.setMid(mid);
     	
         // 1. 전체 데이터 건수 설정
-        sch.setCount(	dao.totCnt(sch) ); // 프로젝트 선택파트 완료시 pid로 변경
+        sch.setCount(	dao.totMemCnt(sch) ); // 프로젝트 선택파트 완료시 pid로 변경
         //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
         if(sch.getPageSize()==0) {
