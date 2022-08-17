@@ -19,7 +19,6 @@
   //String svrIP = inet.getHostAddress();
   request.setAttribute("serverIp", inet.getHostAddress());
 %>
-<script>alert("${serverIp}")</script>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
