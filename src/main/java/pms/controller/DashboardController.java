@@ -37,7 +37,7 @@ public class DashboardController {
         }
         if(!gservice.checkProjectAuth(curMem.getMid(), pid))
         {
-            return "redirect:test.do";
+            return "redirect:projectList.do";
         }
         if(pid == 0){
             return "redirect:projectList.do";
