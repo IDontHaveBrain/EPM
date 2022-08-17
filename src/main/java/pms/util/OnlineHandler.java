@@ -31,7 +31,8 @@ public class OnlineHandler extends TextWebSocketHandler{
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		log(session.getId()+"에서 온 메시지:"+message.getPayload());
 		if((""+message.getPayload()).contains("add")) {
-			users.get(session.getId()).put("mid", (""+message.getPayload()).replaceAll("[^0-9]", ""));
+			users.get(session.getId()).put("mid",
+					(""+message.getPayload()).replaceAll("[^0-9]", ""));
 		}
 		String temp = "";
 		for(Map<String, Object> sv:users.values()){

@@ -111,7 +111,8 @@
     <!-- My prj list -->
     <div class="col-5">
       <div class="form-group">
-        <select id="prjList" class="form-control select2">
+        <select id="prjList" class="form-control pm-select select2bs4">
+          <option selected disabled>프로젝트 선택</option>
         </select>
       </div>
     </div>
@@ -181,7 +182,9 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 
 <script>
+
   var wsocket2;
+
 $(document).ready(function(){
 	<%--
 
@@ -251,10 +254,8 @@ function onlineMembers() {
     wsocket2.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
       wsocket2.send("add:${mem.mid}");
     }
-    // 메시지를 받을 때, 처리되는 메서드
-    // 서버에서 push방식으로 메시지를 전달 받는데..
-    wsocket2.onmessage=function(evt){
 
+    wsocket2.onmessage=function(evt){
       var msg = evt.data;
       console.log("#메시지 받기#");
       console.log(msg);
@@ -271,15 +272,18 @@ function onlineMembers() {
           for(var i=0;i<data.members.length;i++){
             for(var j=0;j<msgArr.length;j++){
               if(data.members[i].mid==msgArr[j]){
-                $("#onlineMember").append("<a href='#' class='dropdown-item'><i class='fas fa-user mr-2'></i>"+data.members[i].name+"("+data.members[i].empno+")"+"<span class='float-right text-muted text-sm'><i class='fas fa-circle text-success'></i></span></a>");
+                $("#onlineMember").append("<a href='#' class='dropdown-item'>" +
+                        "<i class='fas fa-user mr-2'></i>"+data.members[i].name+
+                        "("+data.members[i].empno+")"+
+                        "<span class='float-right text-muted text-sm'>" +
+                        "<i class='fas fa-circle text-success'></i></span></a>");
               }
             }
-            //$("#onlineMember").append("<a href='#' class='dropdown-item'><i class='fas fa-user mr-2'></i>"+data.members[i].name+"<span class='float-right text-muted text-sm'><i class='fas fa-circle text-success'></i></span></a>");
           }
         }
       });
     }
-    // 접속을 종료 처리할 때
+
     wsocket2.onclose=function(){
       alert($("#id").val()+"접속 종료합니다.")
     }

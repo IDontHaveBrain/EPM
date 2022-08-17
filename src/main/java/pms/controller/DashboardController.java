@@ -39,6 +39,9 @@ public class DashboardController {
         {
             return "redirect:test.do";
         }
+        if(pid == 0){
+            return "redirect:projectList.do";
+        }
         System.out.println(curMem.getEmail());
 
         Integer iprogCount[] = service.issueProgCount(pid);
@@ -56,7 +59,6 @@ public class DashboardController {
     public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
-        //session.setAttribute("mem", gservice.getMember("test@test.com"));
 
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 

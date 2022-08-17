@@ -63,7 +63,7 @@ public class MemberController {
 				return "redirect:adminDashboard.do";
 			} else if (mem != null && mem.getAuth() != "ADMIN") {
 				session.setAttribute("mem", mem);
-				return "redirect:dashboard.do";
+				return "redirect:projectList.do";
 			} else {
 				return "redirect:login.do";
 			}

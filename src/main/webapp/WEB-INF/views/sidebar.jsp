@@ -18,6 +18,10 @@
     location.href = "login.do";
   </script>
 </c:if>
+<c:set var="spid" value="${param.pid}"></c:set>
+<c:if test="${empty param.pid}">
+  <c:set var="spid" value="0"></c:set>
+</c:if>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="${path}/pms/index3.html" class="brand-link">
@@ -70,14 +74,14 @@
           <ul class="nav nav-treeview">
             <c:if test="${mem.auth eq 'ADMIN' || mem.auth eq 'CEO' || mem.auth eq 'HR'}">
             <li class="nav-item">
-              <a href="adminDashboard.do?tab=1&pid=${param.pid}" class="nav-link">
+              <a href="adminDashboard.do?tab=1&pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Admin Dashboard</p>
               </a>
             </li>
             </c:if>
             <li class="nav-item">
-              <a href="dashboard.do?pid=${param.pid}" class="nav-link">
+              <a href="dashboard.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Dashboard</p>
               </a>
@@ -95,7 +99,7 @@
           <ul class="nav nav-treeview">
             <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
             <li class="nav-item">
-              <a href="memberlist.do?pid=${param.pid}" class="nav-link">
+              <a href="memberlist.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>사원 관리</p>
               </a>
@@ -119,7 +123,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="issueList.do?pid=${param.pid}" class="nav-link">
+              <a href="issueList.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>리스크 목록</p>
               </a>
@@ -133,7 +137,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="WorkPageList.do?pid=${param.pid}" class="nav-link">
+          <a href="WorkPageList.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               개인업무페이지
@@ -142,7 +146,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="calendar.do?pid=${param.pid}" class="nav-link">
+          <a href="calendar.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               개인 일정관리(캘린더)
@@ -160,14 +164,14 @@
           <ul class="nav nav-treeview">
             <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
             <li class="nav-item">
-              <a href="adminProjectList.do?pid=${param.pid}" class="nav-link">
+              <a href="adminProjectList.do?pid=${spid}" class="nav-link">
                  <i class="nav-icon fas fa-book"></i>
                 <p>프로젝트 목록</p>
               </a>
             </li>
             </c:if>
 	        <li class="nav-item">
-	          <a href="projectList.do?pid=${param.pid}" class="nav-link">
+	          <a href="projectList.do?pid=${spid}" class="nav-link">
 	            <i class="nav-icon fas fa-book"></i>
 	            <p>
 	              개인 프로젝트 목록
@@ -177,7 +181,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="chattingFrm.do?pid=${param.pid}" class="nav-link">
+          <a href="chattingFrm.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               채팅
@@ -281,6 +285,6 @@
 <script>
 function func(){	
 	var mid = ${mem.mid}
-	window.location.href = "mypage.do?mid=" + mid + "&pid=${param.pid}";
+	window.location.href = "mypage.do?mid=" + mid + "&pid=${spid}";
 }
 </script>
