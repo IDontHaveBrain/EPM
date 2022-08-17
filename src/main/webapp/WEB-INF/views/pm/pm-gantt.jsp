@@ -72,10 +72,7 @@
             <h1 class="m-0">업무관리</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
-            </ol>
+	<button data-toggle="modal" id="modalBox" data-target="#addjobmodal" type="button" class="btn btn-primary float-right"> + </button>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -86,8 +83,19 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-        <form>
-        <input type="hidden" name="pid" value="1"/>
+        
+        <div class="modal fade" id="addjobmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">업무등록</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form method="post">
+        <input type="hidden" name="pid" value="${pid}"/>
         <div class="card card-primary">
         <div class="card-body">
         	<div class="row">
@@ -137,11 +145,18 @@
                         <textarea id="content" name="content" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                       </div>
                 </div>
-                <div class="card-footer">
-             <button id="addjob" type="button" class="btn btn-primary float-right">업무 등록</button>
-             </div>
              </div>
    		</form>
+      </div>
+      <div class="modal-footer"> 
+        <button id="addjob" type="button" class="btn btn-primary float-right">등록</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
         <div>
         	<svg id="gantt"></svg>
         </div>
@@ -213,17 +228,15 @@
 <script >
 	var gantt;
 	var tasks;
+	var joblist;
 	$(document).ready(function(){
-		$('.duallistbox').bootstrapDualListbox();
-		$.ajax({
-			url:"${path}/joblist.do",
-			data:{pid:1},
-			dataType:"json",
-			success:function(data){
-				tasks = data.joblist
-				gantt = new Gantt("#gantt", tasks);
-			}
+		$(".nav-link").click(function(){
+			var id = $(this).attr("id");
+			$("form").attr("action", "${path}/" + id + ".do");
+			$("form").submit();
 		});
+		$('.duallistbox').bootstrapDualListbox();
+		ganttAjax();
 		$('#addjob').click(function(){
 			console.log($("form").serialize());
 			job = $('#job').val();
@@ -237,18 +250,10 @@
 				data: $("form").serialize(),
 				dataType:"json",
 				success: function(){
-					$.ajax({
-						url:"${path}/joblist.do",
-						data:{pid:1},
-						dataType:"json",
-						success:function(data){
-							tasks = data.joblist
-							gantt = new Gantt("#gantt", tasks);
-						}
-					});
+					ganttAjax();
 				}
 			});
-
+			$("#modalBox").click();
 			$('#job').val('');
 			$('#content').val('');
 			$('.duallistbox option').prop('selected', false);
@@ -308,7 +313,30 @@
 	  $(".nav-link").removeClass("active");
 		$("#manage").addClass("active");
 });
-
+function ganttAjax(){
+	$.ajax({
+		url:"${path}/joblist.do",
+		data:{pid:${pid}},
+		dataType:"json",
+		success:function(data){
+			joblist = data.joblist;
+			tasks = [];
+			for(var i = 0; i < joblist.length; i++){
+				var job = joblist[i];
+				var dep = job.dependencies == 0 ? '' : job.dependencies;
+				tasks.push({
+					id: String(job.id),
+					name: job.name,
+					start: job.start,
+					end: job.end,
+					progress: job.progress,
+					dependencies: dep
+				});
+			}
+			gantt = new Gantt("#gantt", tasks);
+		}
+	});
+}
   </script>
 </body>
 </html>

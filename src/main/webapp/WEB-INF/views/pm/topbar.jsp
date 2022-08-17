@@ -2,9 +2,10 @@
   Created by IntelliJ IDEA.
   User: skawn
   Date: 2022-07-27
-  Time: 오후 5:26
+  Time: ì¤í 5:26
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -13,14 +14,15 @@
     <li class="nav-item">
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
-      <a href="${path}/pms/index3.html" class="nav-link">Home</a>
-    </li>
-    <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Contact</a>
-    </li>
   </ul>
-
+<div class="form-group">
+      <label for="prjs">프로젝트 선택</label>
+      <select class="custom-select form-control-border" id="prjs">
+      	<c:forEach var="prj" items="${sessionScope.prjlist}">
+      		<option value="${prj.pid}" ${prj.pid == pid ? selected : ""}>${prj.pname}</option>
+      	</c:forEach>
+      </select>
+    </div>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
