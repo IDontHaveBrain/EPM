@@ -98,7 +98,7 @@
                  <div class="col-md-8 col-lg-9">
 					<c:choose>
 						<c:when test="${not empty profile.fname}">
-							<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/${profile.fname}" alt="User profile picture">
+							<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/${profile.fname}" alt="User profile picture" width="200" height="200">
 						</c:when>
 						<c:otherwise>
 							<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/defaultpic.png" alt="User profile picture">
