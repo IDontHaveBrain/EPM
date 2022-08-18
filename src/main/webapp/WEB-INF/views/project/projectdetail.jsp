@@ -215,11 +215,11 @@ var list
       
       <div class="row">
         <div class="col-12">
-          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+        <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+          	  <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
 	          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
 	          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
-		  </c:if>
+		</c:if>
         </div>
       </div>
       </div>
