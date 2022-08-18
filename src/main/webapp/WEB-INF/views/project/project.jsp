@@ -309,7 +309,7 @@ var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
 			// 취소 입력시 조회화면 이동..
-			location.href="${path}/projectList.do"
+			location.href="${path}/adminProjectList.do"
 		}
 		else{
 			location.href="${path}/projectInsertForm.do"
