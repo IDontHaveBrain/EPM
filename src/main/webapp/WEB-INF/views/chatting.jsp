@@ -69,6 +69,7 @@
 			}
 		});
 		
+		
 		$("#exitBtn").click(function(){
 			if(confirm("접속을 종료하시겠습니까?")){
 				wsocket.send("msg:"+$("#id").val()+":접속 종료 했습니다.")
@@ -92,6 +93,7 @@
 		wsocket.onopen=function(evt){ // 접속하는 핸들러 메서드와 연결
 			console.log(evt)
 			// 능동적으로 서버에 소켓통신으로 메시지를 보내는 것..
+			// 받는 값 hidden으로
 			wsocket.send("msg:"+$("#id").val()+":연결 접속했습니다.")
 			// "msg:himan:연결접속했습니다."
 		}
@@ -288,12 +290,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">채팅</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">채팅</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -307,10 +309,7 @@
         <!-- 페이지 구성 시작!! -->
    
            <div class="input-group mb-2 ">
-				<div class="input-group-prepend ">
-					<span class="text-center input-group-text ">아이디</span>
-				</div>
-				<input id="id" class="form-control"  placeholder="접속할 아이디 입력하세요" />	
+				<input type="hidden" id="id" value="${mem.name}" class="form-control" />	
 			
 				<button type="button" id="enterBtn" class="btn btn-success">채팅입장</button>
 				<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>					
@@ -340,20 +339,36 @@
 		</div>
 		
 		<script type="text/javascript">
+	        var currentTime = function(){
+	            var date = new Date();
+	            var hh = date.getHours();
+	            var mm = date.getMinutes();
+	            var apm = hh >12 ? "오후":"오전";
+	            var ct = apm + " "+hh+":"+mm+"";
+	            return ct;
+	        }
+	        
+			$("time").append( function(){
+				$(this).css("font-size","small");
+			}); //흠 안되네..^_^
+	        
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
-					wsocket.send("msg:"+$("#id").val()+":"+$(this).val())
+					wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+$("time").val())
 					$(this).val("").focus()
 				}
 				
 			});
 			// 전송 버튼을 클릭시에 메시지 전송
 			$("#sndBtn").click(function(){
-				wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val())
+				wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+currentTime())
 				$("#msg").val("").focus()				
 				
 			});
+			
 		
+            
+
 		</script>
 		</div>
 	</div>

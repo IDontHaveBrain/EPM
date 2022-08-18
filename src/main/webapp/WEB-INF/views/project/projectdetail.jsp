@@ -154,7 +154,7 @@ var list
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
-        <form id="frm01" enctype="multipart/form-data" action="${path}/updateProject.do" class="form"  method="get">             
+        <form id="frm01" enctype="multipart/form-data" action="${path}/updateProject.do" class="form"  method="post">             
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">프로젝트 수정</h3>
