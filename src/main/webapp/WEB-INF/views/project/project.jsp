@@ -171,7 +171,7 @@ var list;
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">프로젝트 등록</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -309,7 +309,7 @@ var isInsert = "${isInsert}"
 	if(isInsert=="Y"){
 		if(!confirm("등록성공했습니다\n계속등록하시겠습니까?")){
 			// 취소 입력시 조회화면 이동..
-			location.href="${path}/projectList.do"
+			location.href="${path}/adminProjectList.do"
 		}
 		else{
 			location.href="${path}/projectInsertForm.do"
@@ -333,7 +333,7 @@ function insertProc(){
 
 
 function goMain(){
-	location.href="${path}/projectList.do";
+	location.href="${path}/adminProjectList.do";
 }
 
 	

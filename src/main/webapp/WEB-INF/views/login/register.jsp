@@ -4,6 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
@@ -11,11 +12,22 @@
 
 
  --%>
-<html lang="en">
+ 
+<html>
+<style>
+
+
+select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Effective PM | 사원등록 </title>
+  <title>Effective PM | <spring:message code="regi"/> </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -27,18 +39,26 @@
   <link rel="stylesheet" href="${path}/pms/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
+<select class="selLang" id="selLan">
+	<option value=""><spring:message code="chLang"/></option>
+	<option value="ko"><spring:message code="ko"/></option>
+	<option value="en"><spring:message code="en"/></option>
+</select>
+<form id="selLang" class="form-inline" method="post">
+	<input type="hidden" name="lang" value=""/>
+</form>
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a class="h1"><b>Effective</b>PM</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">사원등록을 진행해주세요</p>
+      <p class="login-box-msg"><spring:message code="reg"/></p>
 
       <form id="register" action="register.do" method="post">
         <input type="hidden" id="email_yn" name="email_yn" value="N"/>
         <div class="input-group mb-3">
-          <input type="text" name="name" id="name" class="form-control" placeholder="성함">
+          <input type="text" name="name" id="name" class="form-control" placeholder="<spring:message code="name"/>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -46,9 +66,9 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" name="email" id="email" class="form-control" placeholder="이메일">
+          <input type="email" name="email" id="email" class="form-control" placeholder="<spring:message code="email"/>">
           <div class="col-4">
-          	<button type="button" id="dupCheck" class="btn btn-danger col fileinput-button">중복체크</button>
+          	<button type="button" id="dupCheck" class="btn btn-danger col fileinput-button"><spring:message code="dupcheck"/></button>
           </div>
           <div class="input-group-append">
           </div>
@@ -59,19 +79,19 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="number" name="phonenumber" id="phonenumber" class="form-control" placeholder="핸드폰 번호 ex) 01011112222">
+          <input type="number" name="phonenumber" id="phonenumber" class="form-control" placeholder="<spring:message code="pn"/>">
           <div class="input-group-append">
           </div>
         </div>
         <div class="row">
           <!-- /.col -->
           <div class="col-12" style="text-align:center">
-            <button type="button" class="btn btn-primary btn-block" onclick="fnSubmit(); return false;">사원등록신청</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="fnSubmit(); return false;"><spring:message code="regcomp"/></button>
           </div>
           <!-- /.col -->
         </div>
         <p class="mt-3 mb-1">
-        <a href="${path}/login.do" class="text-center">로그인</a>
+        <a href="${path}/login.do" class="text-center"><spring:message code="login"/></a>
         </p>
       </form>
     </div>
@@ -96,11 +116,11 @@
 				success:function(data){
 					console.log(data)
 					if(data.dupCheck){
-						alert("이미 등록된 이메일입니다.\n다른 이메일을 입력하세요")
+						alert("<spring:message code="edupcheckf"/>")
 						$("#email_yn").val("N");
 						$("[name=email]").val("").focus();	
 					}else{
-						alert("등록가능한 이메일입니다!")
+						alert("<spring:message code="edupcheckp"/>")
 						$("#email_yn").val("Y");
 					}
 				},
@@ -116,48 +136,60 @@
 			var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			
 			if ($("#name").val() == null || $("#name").val() == "") {
-				alert("이름을 입력해주세요.");
+				alert("<spring:message code="namecheck"/>");
 				$("#name").focus();
 			 
 				return false;
 			}
 			 
 			if ($("#email").val() == null || $("#email").val() == "") {
-				alert("이메일을 입력해주세요.");
+				alert("<spring:message code="emailcheck"/>");
 				$("#email").focus();
 				 
 				return false;
 			}
 			
 			if ($("#birthdate").val() == null || $("#birthdate").val() == "") {
-				alert("생년월일을 선택해주세요.");
+				alert("<spring:message code="bdaycheck"/>");
 				$("#birthdate").focus();
 				 
 				return false;
 			}
 			
 			if ($("#phonenumber").val() == null || $("#phonenumber").val() == "") {
-				alert("핸드폰 번호를 입력해주세요.");
+				alert("<spring:message code="pnumbercheck"/>");
 				$("#phonenumber").focus();
 				 
 				return false;
 			}
 			 
 			if ($("#email_yn").val() != 'Y') {
-				alert("이메일 중복체크를 눌러주세요.");
+				alert("<spring:message code="confdupcheck"/>");
 				$("#email_yn").focus();
 				 
 				return false;
 			}
 			
-	         if (confirm("사원등록신청을 완료하시겠습니까?")) {
+	         if (confirm("<spring:message code="confcheck"/>")) {
 	             $("#register").submit();
-	             alert("사원등록신청 완료!\n관리자의 승인을 기다려주세요.")
+	             alert("<spring:message code="compreg"/>")
 	             return false;
 	             
 	        }
 
 		}
+		$(document).ready(function(){
+			<%-- 
+			
+			--%>	
+			$("#selLan").val("${param.lang}")
+			$("#selLan").change(function(){
+				if($(this).val()!=""){
+					$("[name=lang]").val($(this).val())
+					$("#selLang").submit();
+				}
+			});
+		});
 </script>
 </body>
 </html>

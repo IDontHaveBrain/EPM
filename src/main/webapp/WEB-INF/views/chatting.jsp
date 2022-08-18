@@ -110,7 +110,7 @@
 				var revMsg = msg.substring(4)
 				console.log("#메시지 받기#")
 				console.log(msg)
-				$("#chatMessageArea").append(revMsg+"<br>")	
+				$("#chatMessageArea").append("<span>" + revMsg + "</span>"+"<br>")	
 				// 자동 scolling 처리 로직
 				// 1.  전체 charMessageArea의 입력된 최대 높이 구하기
 				var mx = parseInt($("#chatMessageArea").height())
@@ -348,9 +348,17 @@
 	            return ct;
 	        }
 	        
+
+	       
+	        
 			$("time").append( function(){
-				$(this).css("font-size","small");
-			}); //흠 안되네..^_^
+				
+			}); 
+			
+	        var baseFont = $("time").css('font-size');
+	        baseFont = parseInt(baseFont,10);
+	        
+	        $("time").css('font-size',baseFont);
 	        
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
@@ -372,9 +380,7 @@
 		</script>
 		</div>
 	</div>
-		<div class="text-right">
-			<button type="button" onclick="goMain()" class="btn btn-info">메인화면</button>
-		</div>		
+	
 
 		
 	

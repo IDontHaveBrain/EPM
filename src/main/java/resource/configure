@@ -4,5 +4,5 @@ jdbc.url=jdbc:oracle:thin:@216.66.67.160:1521:xe
 jdbc.user=final
 jdbc.pass=1234
 # 파일 업로드 정보
-upload=C:/Users/user/git/project06/src/main/webapp/fileupload/
-uploadprofile=C:/Users/woosh/git/project06/src/main/webapp/profilepics/
+upload=C:/a01_javaexp/workspace/project06/src/main/webapp/fileupload/
+uploadprofile=C:/a01_javaexp/workspace/project06/src/main/webapp/profilepics/

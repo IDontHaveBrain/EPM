@@ -57,4 +57,6 @@ public interface MemberDao {
 	public void delProfile(int mid);
 	
 	public String checkProfile(int mid);
+	
+	public Member sendTempPassword(Member m);
 }
