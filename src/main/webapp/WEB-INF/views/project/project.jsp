@@ -52,6 +52,7 @@
 
 <script type="text/javascript">
 var list;
+var adlist;
 
 	$(document).ready(function(){
 		
@@ -67,9 +68,11 @@ var list;
 	    })
 	   
 	    var pmid;
+		
 	    $("select[name=selectPM]").change(function(){  	  
 	  		pmid=$(this).val();
 		});
+	    
 	  	  $("#inputPM").change(function(){
 	  		  console.log("pm변경")
 	  		  var pm = $("#inputPM option:selected").val();
@@ -103,12 +106,21 @@ var list;
 	      success: function (data) {
 	        console.log(data)
 	        list = data.memberList;
+	        adlist = data.memberList;
+	  
 	        var addHTML = "";
+	        var addADMINHTML = "";
  
 	        $(list).each(function (idx, rst) {
 	        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
 	        	
 	        });
+	        
+	        $(adlist).each(function (idx, rst) {
+	        	if(rst.auth == "ADMIN") 
+	        		addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";	
+	        });
+	        
 	        var pmsel = $("#inputPM");
 	        
 	        pmsel.html(pmsel.html() + addHTML);

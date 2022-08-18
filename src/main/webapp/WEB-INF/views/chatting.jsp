@@ -351,31 +351,31 @@
 
 	       
 	        
-			$("time").append( function(){
-				
-			}); 
 			
-	        var baseFont = $("time").css('font-size');
-	        baseFont = parseInt(baseFont,10);
-	        
-	        $("time").css('font-size',baseFont);
+			var id = $("#id").val()
+			var date = currentTime()
+			
+
 	        
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
-					wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+$("time").val())
+					wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+date)
 					$(this).val("").focus()
 				}
 				
 			});
 			// 전송 버튼을 클릭시에 메시지 전송
 			$("#sndBtn").click(function(){
-				wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+currentTime())
+				var msg = $("#msg").val()
+		
+				
+				wsocket.send("msg:"+id+":"+"<span>"+msg+"</span>"+"&nbsp;&nbsp;&nbsp;<span>"+date+"</span>")
+
 				$("#msg").val("").focus()				
 				
 			});
 			
-		
-            
+
 
 		</script>
 		</div>

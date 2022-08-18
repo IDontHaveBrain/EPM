@@ -29,7 +29,6 @@
 		     from project j, participants p
 		     where j.pid = p.pid
 		     and mid = #{mid}
-		     and 1=1
 		     	<if test="pname != null">
 					AND pname LIKE '%'||#{pname}||'%'
 				</if>

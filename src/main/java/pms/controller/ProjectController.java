@@ -28,12 +28,11 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectList.do
 	@RequestMapping("projectList.do")
-	public String projectList(ProjectSch sch,
-							  @RequestParam(value = "mid", defaultValue = "0") int mid,								
+	public String projectList(ProjectSch sch,								
 							  Model d, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
-		Member curMem3 = (Member) request.getSession().getAttribute("mem");
+		Member curMem3 = (Member) session.getAttribute("mem");
 		if (curMem3 == null) {
 			return "redirect:login.do";
 		}
