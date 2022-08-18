@@ -24,7 +24,7 @@
 </c:if>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="${path}/pms/index3.html" class="brand-link">
+  <a href="dashboard.do?pid=${spid}" class="brand-link">
     <!--
     <img src="${path}/pms/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     -->
@@ -129,7 +129,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="issueInsertForm.do" class="nav-link">
+              <a href="issueInsertForm.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>리스크 등록</p>
               </a>
@@ -187,94 +187,6 @@
               채팅
             </p>
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Charts
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="${path}/pms/pages/charts/chartjs.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>ChartJS</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/charts/flot.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Flot</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/charts/inline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inline</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tree"></i>
-            <p>
-              UI Elements
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/general.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>General</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/icons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Icons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/buttons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Buttons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/sliders.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Sliders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/modals.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Modals & Alerts</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/navbar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Navbar & Tabs</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/timeline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Timeline</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/ribbons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Ribbons</p>
-              </a>
-            </li>
-          </ul>
         </li>
       </ul>
     </nav>

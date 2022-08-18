@@ -59,7 +59,7 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.jname
+          addHTML += "<tr><td>" + ((data.issuesSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.jname
             + "</td><td>" + rst.ititle + "</td><td>" + rst.iprogress + "</td>";
           addHTML += "<td>" + rst.name + "</td><td>" + new Date(rst.iuptdate).toLocaleDateString()+ "</td></tr>";
         });
@@ -90,7 +90,7 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.ntitle
+          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.ntitle
             + "</td>";
           addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
         });
