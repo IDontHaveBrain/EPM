@@ -37,13 +37,17 @@ public class DashboardController {
         }
         if(!gservice.checkProjectAuth(curMem.getMid(), pid))
         {
-            return "redirect:test.do";
+            return "redirect:projectList.do";
+        }
+        if(pid == 0){
+            return "redirect:projectList.do";
         }
         System.out.println(curMem.getEmail());
 
         Integer iprogCount[] = service.issueProgCount(pid);
         Integer jprogCount[] = service.jobProgCount(pid);
 
+        d.addAttribute("jlist", gservice.jobplanListPrj(pid));
         d.addAttribute("nlist", service.noticePaging(nsch,pid));
         d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);
@@ -55,8 +59,14 @@ public class DashboardController {
     public String adminDashboard(ProjectSch sch,
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
-        //session.setAttribute("mem", gservice.getMember("test@test.com"));
 
+        Member curMem = (Member)request.getSession().getAttribute("mem");
+        if(curMem == null){
+            return "redirect:login.do";
+        }
+        if(!(curMem.getAuth().equals("ADMIN") || curMem.getAuth().equals("CEO"))){
+            return "redirect:projectList.do";
+        }
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 
         d.addAttribute("prjList", prjList);

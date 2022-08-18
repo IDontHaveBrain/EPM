@@ -11,20 +11,64 @@
 		<result column="jend" property="end"/>
 	</resultMap>
 	<select id="getJobPlan"	resultMap="getJobPlan" parameterType="int">
-		SELECT jid, jname, jstart, jend, required, realstart, realend, content, pid, jstatus
+		SELECT jid, jname, TO_CHAR(jstart, 'yyyy-mm-dd') jstart, TO_CHAR(jend, 'yyyy-mm-dd') jend, required, realstart, realend, content, pid, jstatus
 		FROM jobplan
 		WHERE pid = #{pid}
+		ORDER BY jstart
 	</select>
 	<select id="getJobMember" resultType="jmdto" parameterType="int">
-		SELECT m.mid, m.email, m.name, jmid, progress, jmstatus
+		SELECT m.mid, m.email, m.name, jmid, progress, jmstatus, jm.ppid
 		FROM jobmember jm, participants pp, member m
 		WHERE jm.ppid = pp.ppid AND pp.mid = m.mid
 			AND jid = #{jid}
 	</select>
 	<select id="getParticipants" resultType="jmdto" parameterType="int">
-		SELECT m.mid, email, name
+		SELECT m.mid, pp.ppid, email, name, pp.pauth
 		FROM participants pp, member m
 		WHERE pp.mid = m.mid
 			AND pid = #{pid}
+			AND exitdate IS NULL
 	</select>
+	<select id="getNonPPMember" resultType="jmdto" parameterType="int">
+		SELECT mid, email, name, auth
+		FROM member
+		WHERE mid NOT IN (
+				SELECT mid
+				FROM participants
+				WHERE pid = #{pid}
+					AND exitdate IS NULL)
+	</select>
+	<select id="prjList" parameterType="int" resultType="project">
+		SELECT *
+		FROM project
+		WHERE pid IN (SELECT pid
+						FROM participants
+						WHERE mid = #{mid}
+						AND exitdate IS NULL)
+	</select>
+	<select id="getPauth" parameterType="jmdto" resultType="string">
+		SELECT pauth
+		FROM participants
+		WHERE pid = #{pid}
+		AND mid = #{mid}
+		AND exitdate IS NULL
+	</select>
+	<insert id="addJobPlan" parameterType="jobdto">
+		INSERT INTO jobplan(jid, jname, jstart, jend, content, jregdate, juptdate, required, pid)
+		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}, 'mm/dd/yyyy'), TO_DATE(#{end}, 'mm/dd/yyyy'), #{content}, sysdate, sysdate, #{required}, #{pid})
+	</insert>
+	
+	<insert id="addJobMember" parameterType="int">
+		INSERT INTO jobmember VALUES(jobmember_seq.nextval, jobplan_seq.currval, #{ppid}, 0, 'PROG')
+	</insert>
+	<update id="removePP" parameterType="jmdto">
+		UPDATE participants
+		SET exitdate = sysdate
+		WHERE pid = #{pid}
+			AND mid = #{mid}
+			AND exitdate IS NULL
+	</update>
+	<insert id="addPP" parameterType="jmdto">
+		INSERT INTO participants VALUES(participants_seq.nextval, 'Developer', #{pid}, #{mid}, sysdate, null)
+	</insert>
 </mapper>

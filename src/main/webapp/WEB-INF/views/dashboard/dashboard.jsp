@@ -42,6 +42,9 @@
   <!-- gantt -->
   <script src="${path}/frappe-gantt/dist/frappe-gantt.min.js"></script>
   <link rel="stylesheet" href="${path}/frappe-gantt/dist/frappe-gantt.min.css">
+  <!-- fullcalendar -->
+  <link href='${path}/fullcalendar/lib/main.css' rel='stylesheet' />
+  <script src='${path}/fullcalendar/lib/main.js'></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <script>
@@ -56,7 +59,7 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.jname
+          addHTML += "<tr><td>" + ((data.issuesSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.jname
             + "</td><td>" + rst.ititle + "</td><td>" + rst.iprogress + "</td>";
           addHTML += "<td>" + rst.name + "</td><td>" + new Date(rst.iuptdate).toLocaleDateString()+ "</td></tr>";
         });
@@ -87,7 +90,7 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + (idx + 1) + "</td><td>" + rst.ntitle
+          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.ntitle
             + "</td>";
           addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
         });
@@ -116,9 +119,50 @@
     updateNotice(cnt);
   }
 
+  var calendar;
   $(document).ready(function () {
     updateIssue(1);
     updateNotice(1);
+
+    var toDay = new Date()
+    var date = toDay.toISOString().split("T")[0]
+    console.log(date)
+
+    var calendarEl = document.getElementById('calendar');
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      height: 900,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      initialDate: date,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+
+      editable: false,
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: function(info, successCallback, failureCallback){
+        // http://localhost:7080/springweb/calList.do callist
+        $.ajax({
+          type:"post",
+          url:"${path}/calList.do",
+          data:"pid=" + ${param.pid} + "&job=1",
+          dataType:"json",
+          success:function(data){
+            console.log(data.callist)
+            successCallback(data.callist)
+          },
+          error:function(err){
+            console.log(err)
+          }
+        });
+      }
+    });
+    calendar.render();
+    //$("#calextend").click();
   });
 </script>
 
@@ -202,6 +246,30 @@
           </div>
           <!-- /.col -->
         </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">내 일정</h3>
+
+                <div class="card-tools">
+                  <button id="calextend" type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body" style="max-height: 500px; overflow-y:scroll"> <!-- style="max-height: 600px; overflow-y:scroll" -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
 
         <div class="row">
           <div class="col-lg-6">
@@ -491,10 +559,6 @@
 <script src="${path}/pms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${path}/pms/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script>
   $(document).ready(function() {
     // 간트차트
@@ -505,7 +569,7 @@
         name: '${job.jname}',
         start: '<fmt:formatDate value="${job.jstart}" pattern="yyyy-MM-dd"></fmt:formatDate>',
         end: '<fmt:formatDate value="${job.jend}" pattern="yyyy-MM-dd"></fmt:formatDate>',
-        progress: 10,
+        progress: ${job.percent*100},
         dependencies: '${job.required}',
         read_only: true,
         readonly: true
@@ -546,9 +610,6 @@
       display: false
     }
   }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
   var pieChart = new Chart(pieChartCanvas, {
     type: 'doughnut',
     data: pieData,
@@ -573,10 +634,7 @@
       display: false
     }
   }
-  // Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
-  var pieChart = new Chart(pieChartCanvas, {
+  var pieChart2 = new Chart(pieChartCanvas, {
     type: 'doughnut',
     data: pieData,
     options: pieOptions

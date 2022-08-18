@@ -12,6 +12,12 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<style type="text/css">
+
+    td:hover { 
+   cursor:pointer;
+     }
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +43,8 @@
   <link rel="stylesheet" href="${path}/pms/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="${path}/pms/plugins/summernote/summernote-bs4.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- jQuery -->
+    <script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -63,7 +70,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Start</h1>
+            <h1 class="m-0">담당자 업무 리스트</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -81,53 +88,90 @@
         <!-- 페이지 구성 시작!! -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">담당자 업무 리스트</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+	<form class="form"  method="post">
+		<input type="hidden" name="curPage" value="0">
+	<div class="input-group">
+		<div class="input-group-prepend">
+			<span style="background-color:white; border:none;" class="text-center input-group-text"><h4>출력된 리스트 : ${workPageSch.count} 건</h4></span>
+		</div>
+		<span class="form-control" style="border:none"> </span>	
+		<div class="input-group-append">
+			<span class="text-center input-group-text">페이지 크기</span>
+			<select name="pageSize" class="form-select">
+				<option>3</option>
+				<option>5</option>
+				<option>10</option>
+				<option>20</option>
+				<option>30</option>
+			</select>
+			<span class="text-center input-group-text">승인여부</span>
+			<select name="jmstatus" class="form-select" >
+				<option value="">전체</option>
+				<option value="PROG">PROG</option>
+				<option value="COMP">COMP</option>
+				<option value="REQ">REQ</option>
+				<option value="REJ">REJ</option>
+			</select>		
+		</div>
+		<script type="text/javascript">
+			// 선택된 페이지 크기 설정..
+			$("[name=pageSize]").val("${workPageSch.pageSize}");
+			// 페이지 크기 변경시 마다, controller 단 호출..
+			$("[name=pageSize]").change(function(){
+				$("[name=curPage]").val("1");
+				$("form").submit();
+			});
+			
+			$("[name=jmstatus]").val("${workPageSch.jmstatus}");
+			// 페이지 크기 변경시 마다, controller 단 호출..
+			$("[name=jmstatus]").change(function(){
+				$("[name=curPage]").val("1");
+				$("form").submit();
+			});
+		</script>
+		</div>
+		</div> 
+	</form>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-
-                    <th style="text-align:center;" width="5%">담당자</th>
+                    <th style="text-align:center;" width="3%">번호</th>
+                    <th style="text-align:center;" width="7%">담당자 (사원번호)</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
                     <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
-                    <th style="text-align:center;" width="5%">진행률</th>
-  					<th style="text-align:center;" width="7%">보류</th>
-                    <th style="text-align:center;" width="7%">이슈사항</th>
+                    <th style="text-align:center;" width="5%">진행률</th> 					
                     <th style="text-align:center;" width="5%">승인여부</th>
+                    <th style="text-align:center;" width="2%">이슈사항</th>
+                    <th style="text-align:center;" width="5%">처리상태</th>
                   </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr ondblclick="goDetail(${wl.jid},${wl.jmid})">
-
-                    <td style="text-align:center;">${wl.name}</td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
+                    <td style="text-align:center;">${wl.cnt}</td>
+                    <td style="text-align:center;">${wl.name}(${wl.empno})</td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.jstart}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.jend}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td style="text-align:center;">${wl.jname}</td> 
-                    <td style="text-align:center;"><fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-			<!-- 진행률 -->
-                      <td style="text-align:center;" width="5%"><span class="badge bg-warning">${wl.progress}%</span></td>
-                      
-                    <td>
-             <!-- 진행률 -->       
-           <!-- 파일등록 css -->
-                  	    <button class="btn btn-primary col fileinput-button" onclick="location.href='WorkPageFileinsert.do'">
-                        <i class="fas fa-plus"></i>
-                        <span></span>
-                      </button>
-          <!-- 파일등록 css -->
-
-                    <td>
-                  	    <button class="btn btn-danger col fileinput-button" onclick="location.href='issueInsertForm.do'">
-                        <i class="fas fa-plus"></i>
-                        <span></span>
-                      </button>
-					</td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${wl.juptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>       
+                    <td style="text-align:center;">${wl.progress}%</td>
 				<td style="text-align:center;" >${wl.jmstatus}</td>
+                    <td style="text-align:center;" width="5%">
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
+		         					<i class="fas fa-comment-alt"></i>		         				
+	         				</button>	
+	         			</div>	             
+                    </td>
+                <td>ddd</td>
                   </tr>
                   </c:forEach>
                   </tbody>
@@ -137,6 +181,14 @@
                   </tr>
                   </tfoot>
                 </table>
+	<ul class="pagination justify-content-end">
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${workPageSch.startBlock}-1)">이전</a></li>
+	  <c:forEach var="cnt" begin="${workPageSch.startBlock}" end="${workPageSch.endBlock}">
+	  	<li class="page-item ${workPageSch.curPage==cnt?'active':''}">
+	  			<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+	  </c:forEach>
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${workPageSch.endBlock}+1)">다음</a></li>
+	</ul> 
               </div>
               <!-- /.card-body -->
             </div>
@@ -166,8 +218,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="${path}/pms/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="${path}/pms/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -201,9 +251,23 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="${path}/pms/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript">
+function goPage(cnt){
+	// 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
+	$("[name=curPage]").val(cnt);
+	$("form").submit();
+}
+
+
+
+
 function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
+
+function goRisk(jmid,pid){
+	location.href="${path}/issueInsertForm.do?jmid="+jmid+"&pid="+pid;
+}	
 </script>
+
 </body>
 </html>

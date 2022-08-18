@@ -18,9 +18,13 @@
     location.href = "login.do";
   </script>
 </c:if>
+<c:set var="spid" value="${param.pid}"></c:set>
+<c:if test="${empty param.pid}">
+  <c:set var="spid" value="0"></c:set>
+</c:if>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="${path}/pms/index3.html" class="brand-link">
+  <a href="dashboard.do?pid=${spid}" class="brand-link">
     <!--
     <img src="${path}/pms/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     -->
@@ -38,7 +42,7 @@
         <a href="#" class="d-block">${mem.name}</a>
       </div>
       <div class="col-5">
-          	<button type="button" id="logout" class="btn btn-block btn-danger">Logout</button>
+          	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>
       </div>
     </div>
 
@@ -68,18 +72,43 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <c:if test="${mem.auth eq 'ADMIN'}">
+            <c:if test="${mem.auth eq 'ADMIN' || mem.auth eq 'CEO' || mem.auth eq 'HR'}">
             <li class="nav-item">
-              <a href="adminDashboard.do?tab=1" class="nav-link">
+              <a href="adminDashboard.do?tab=1&pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Admin Dashboard</p>
               </a>
             </li>
             </c:if>
             <li class="nav-item">
-              <a href="dashboard.do?pid=1" class="nav-link">
+              <a href="dashboard.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Dashboard</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              사원정보
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
+            <li class="nav-item">
+              <a href="memberlist.do?pid=${spid}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>사원 관리</p>
+              </a>
+            </li>
+            </c:if>
+            <li class="nav-item">
+              <a onclick="func();" class="nav-link" style="cursor:pointer">
+                <i class="far fa-circle nav-icon"></i>
+                <p>내 사원정보</p>
               </a>
             </li>
           </ul>
@@ -94,13 +123,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="issueList.do" class="nav-link">
+              <a href="issueList.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>리스크 목록</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="issueInsertForm.do" class="nav-link">
+              <a href="issueInsertForm.do?pid=${spid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>리스크 등록</p>
               </a>
@@ -108,7 +137,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="WorkPageList.do" class="nav-link">
+          <a href="WorkPageList.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
               개인업무페이지
@@ -117,101 +146,47 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="projectList.do" class="nav-link">
+          <a href="calendar.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
-              프로젝트 목록
-
+              개인 일정관리(캘린더)
             </p>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
+            <i class="nav-icon fas fa-book"></i>
             <p>
-              Charts
+              프로젝트
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <c:if test="${mem.auth == 'CEO' || mem.auth == 'ADMIN' || mem.auth == 'HR'}">
             <li class="nav-item">
-              <a href="${path}/pms/pages/charts/chartjs.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>ChartJS</p>
+              <a href="adminProjectList.do?pid=${spid}" class="nav-link">
+                 <i class="nav-icon fas fa-book"></i>
+                <p>프로젝트 목록</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/charts/flot.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Flot</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/charts/inline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inline</p>
-              </a>
-            </li>
+            </c:if>
+	        <li class="nav-item">
+	          <a href="projectList.do?pid=${spid}" class="nav-link">
+	            <i class="nav-icon fas fa-book"></i>
+	            <p>
+	              개인 프로젝트 목록
+	            </p>
+	          </a>
+	        </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tree"></i>
+          <a href="chattingFrm.do?pid=${spid}" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
             <p>
-              UI Elements
-              <i class="fas fa-angle-left right"></i>
+              채팅
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/general.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>General</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/icons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Icons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/buttons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Buttons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/sliders.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Sliders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/modals.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Modals & Alerts</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/navbar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Navbar & Tabs</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/timeline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Timeline</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="${path}/pms/pages/UI/ribbons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Ribbons</p>
-              </a>
-            </li>
-          </ul>
         </li>
       </ul>
     </nav>
@@ -219,3 +194,9 @@
   </div>
   <!-- /.sidebar -->
 </aside>
+<script>
+function func(){	
+	var mid = ${mem.mid}
+	window.location.href = "mypage.do?mid=" + mid + "&pid=${spid}";
+}
+</script>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pms.dao.GlobalDao;
 import pms.vo.Jobplan;
 import pms.vo.Member;
+import pms.vo.Project;
 
 @Service
 public class GlobalService {
@@ -20,7 +21,16 @@ public class GlobalService {
         return dao.getMember(email);
     }
     public List<Jobplan> jobplanListPrj(int pid) {
-        return dao.jobplanListPrj(pid);
+        List<Jobplan> temp = dao.jobplanListPrj(pid);
+        for(Jobplan job : temp) {
+            int all = dao.jobMemberCount(job.getJid());
+            int comp = dao.jobMemberCompCount(job.getJid());
+            if(comp == 0)
+                job.setPercent(0);
+            else
+                job.setPercent(comp/(double)all);
+        }
+        return temp;
     }
     public boolean isProjectMember(Integer mid, Integer pid) {
         Map<String, Object> map = new HashMap<>();
@@ -34,5 +44,13 @@ public class GlobalService {
         map.put("pid", pid);
         return dao.checkProjectAuth(map);
     }
-
+    public boolean isAdmin(int mid){
+        return dao.isAdmin(mid);
+    }
+    public List<Member> getPrjMembers(int pid) {
+        return dao.getPrjMembers(pid);
+    }
+    public List<Project> getMyPrjList(int mid) {
+        return dao.getMyPrjList(mid);
+    }
 }
