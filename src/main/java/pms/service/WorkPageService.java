@@ -124,4 +124,20 @@ public class WorkPageService {
 			ins.setJmid(jmid);
 		dao.insertIssue(ins);
 	}
+	public Issues getWorkIsDetail(Issues sch,int iid){
+		sch.setIid(iid);
+		return dao.getWorkIsDetail(iid);
+	}
+	
+	public Issues updateIssues(Issues upt,int iid) {
+			upt.setIid(iid);
+		dao.updateIssues(upt); 
+		return dao.getWorkIsDetail(iid);
+	}	
+	
+	public void deleteIssues(int iid) {
+		dao.deleteIssues(iid);
+	}	
+	
+	
 }

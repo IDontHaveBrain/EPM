@@ -147,7 +147,8 @@
                     <th style="text-align:center;" width="5%">진행률</th> 					
                     <th style="text-align:center;" width="5%">승인여부</th>
                     <th style="text-align:center;" width="2%">이슈사항</th>
-                    <th style="text-align:center;" width="5%">처리상태</th>
+                    <th style="text-align:center;" width="2%">이슈상세</th>
+                    <th style="text-align:center;" width="5%">이슈처리상태</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -171,7 +172,14 @@
 	         				</button>	
 	         			</div>	             
                     </td>
-                <td>ddd</td>
+                    <td style="text-align:center;" width="5%">
+	         			<div class="btn-group-vertical">
+	         				<button class="btn btn-danger" type="button" onclick="goiDetail(${wl.jmid},${param.pid},${wl.iid})">		         	
+		         					<i class="fas fa-comment-alt"></i>		         				
+	         				</button>	
+	         			</div>	             
+                    </td>
+                <td style="text-align:center;">${wl.iprogress}</td>
                   </tr>
                   </c:forEach>
                   </tbody>
@@ -263,9 +271,11 @@ function goPage(cnt){
 function goDetail(jid,jmid){
 	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
 }	
-
+function goiDetail(jmid,pid,iid){
+	location.href="${path}/issueDetail3.do?jmid="+jmid+"&pid="+pid+"&iid="+iid;
+}	
 function goRisk(jmid,pid){
-	location.href="${path}/issueInsertForm.do?jmid="+jmid+"&pid="+pid;
+	location.href="${path}/issueInsertForm2.do?jmid="+jmid+"&pid="+pid;
 }	
 </script>
 

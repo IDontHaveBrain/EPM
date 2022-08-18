@@ -100,14 +100,53 @@ public class WorkPageController {
 		d.addAttribute("flist",service.getWorkPageFile(filelist, curMem.getMid(), jid,jmid));
 		return "WEB-INF\\views\\WorkPageDetail.jsp";
 	}
-	// 이슈사항 등록
-	@RequestMapping("insertIssues.do")
+	// 이슈사항 등록	
+	@RequestMapping("issueInsertForm2.do")
+	public String WorkPageIssues() {
+		return "WEB-INF\\views\\issue\\issue.jsp";
+	}
+	@RequestMapping("issueInsert2.do")
 	public String insertIssues(Issues ins,Model d,
 					@RequestParam(value = "jmid") int jmid,
 					@RequestParam(value = "pid") int pid) {
 			service.insertIssue(ins,jmid);
-		 return "redirect:WorkPageList.do?pid="+pid;
+			return "redirect:WorkPageList.do?pid="+pid;
+	}	
+	// 이슈사항 상세	
+	@RequestMapping("issueDetail3.do")
+	public String WorkPageIssuesDetail(Issues sch,@RequestParam(value = "iid") int iid,
+												  @RequestParam(value = "pid") int pid, Model d) {
+		
+		d.addAttribute("isList",service.getWorkIsDetail(sch,iid));
+		return "WEB-INF\\views\\issue\\issueDetail.jsp";
 	}
+	// 이슈사항 수정
+	@RequestMapping("uptIssuespage.do")
+	public String uptIssuespage(Issues upt,Model d,
+					@RequestParam(value = "iid") int iid,
+					@RequestParam(value = "pid") int pid) {
+			d.addAttribute("isList",service.updateIssues(upt,iid));
+		return "WEB-INF\\views\\issue\\issueDetail.jsp";
+	}
+	// 이슈사항 삭제
+	@RequestMapping("delIssuespage.do")
+	public String delIssuespage(@RequestParam(value = "iid") int iid,
+								@RequestParam(value = "pid") int pid) {
+			service.deleteIssues(iid);
+		
+		return "redirect:WorkPageList.do?pid="+pid;
+	}
+/*
+	// 승인요청
+	@RequestMapping("updateWorkPage.do")
+	public String updateWorkPage(WorkPage upt,Model d,
+					@RequestParam(value = "jmid") int jmid) {
+			service.updateWorkPage(jmid);
+		
+		d.addAttribute("proc","upt");
+		return "redirect:WorkPageList.do?";
+	}
+*/
 
 
 }

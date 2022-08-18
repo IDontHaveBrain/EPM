@@ -9,8 +9,8 @@ import pms.vo.Issues;
 @Repository
 public interface IssuesDao {
 	
-	public void insertIssue(Issues ins);
-	public void deleteIssue(int iid);
+	//public void insertIssue(Issues ins);
+	//public void deleteIssue(int iid);
 	public List<Issues> getIssuesList(Issues sch);
 	public List<Issues> getIssueDetail(int iid);
 }
