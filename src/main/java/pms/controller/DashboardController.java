@@ -60,6 +60,13 @@ public class DashboardController {
                                  Model d, HttpServletRequest request){
         HttpSession session = request.getSession();
 
+        Member curMem = (Member)request.getSession().getAttribute("mem");
+        if(curMem == null){
+            return "redirect:login.do";
+        }
+        if(!(curMem.getAuth().equals("ADMIN") || curMem.getAuth().equals("CEO"))){
+            return "redirect:projectList.do";
+        }
         List<Project> prjList = service.projectPaging(sch); //service.getAllProjectList();
 
         d.addAttribute("prjList", prjList);
