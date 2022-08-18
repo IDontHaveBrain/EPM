@@ -60,7 +60,7 @@ public class WorkPageService {
             sch.setStart((sch.getCurPage() - 1) * sch.getPageSize() + 1);
         }
         // 1. 블럭의 크기 지정.
-        sch.setBlockSize(3);
+        sch.setBlockSize(5);
         // 2. 블럭의 번호 지정..
         int blocknum = (int)(Math.ceil(sch.getCurPage()/(double)sch.getBlockSize()));
 
