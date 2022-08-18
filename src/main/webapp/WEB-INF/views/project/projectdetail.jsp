@@ -142,7 +142,7 @@ var list
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">프로젝트 상세화면</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -200,13 +200,13 @@ var list
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">시작일 :</label>
-                <fmt:formatDate value="${project.pstart}"/>
-                <input type="date" name="pstart" id="startDate" value="${project.pstart}" class="form-control">
+                <fmt:formatDate value="${project.pstart}" pattern="yyyy-MM-dd"/>
+                <input type="date" name="pstart" id="startDate" value="${project.pstart}" pattern="yyyy-MM-dd" class="form-control">
               </div>
 			  <div class="form-group">
                 <label for="inputClientCompany">종료일 :</label>
-                <fmt:formatDate value="${project.pend}"/>
-                <input type="date" name="pend" id="endDate" value="${project.pend}" class="form-control">
+                <fmt:formatDate value="${project.pend}" pattern="yyyy-MM-dd"/>
+                <input type="date" name="pend" id="endDate" value="${project.pend}" pattern="yyyy-MM-dd" class="form-control">
               </div> 
             
             <!-- /.card-body -->
@@ -288,9 +288,7 @@ var proc = "${proc}"
 
 	if(proc=="upt"){
 		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
-			location.href="${path}/adminprojectlist.do";
-		}else{
-			location.href="${path}/projectDetail.do"			
+			location.href="${path}/adminProjectList.do";
 		}
 	}
 	
@@ -303,13 +301,14 @@ function deleteProc(){
  
 	if(proc=="del"){
 		alert("삭제성공!")
-		location.href="${path}/adminprojectlist.do";
+		location.href="${path}/adminProjectList.do";
 	}
 
 
 function goMain(){
-		location.href="${path}/adminprojectlist.do";
+	location.href="${path}/adminProjectList.do";
 }
+
 
 
 </script>

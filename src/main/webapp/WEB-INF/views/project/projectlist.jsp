@@ -82,7 +82,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">개인 프로젝트 목록</li>
             </ol>
           </div><!-- /.col --> 
           
@@ -177,18 +177,17 @@
                           </a>
                           <br/>
                           <small>
-                          	Created <fmt:formatDate value="${project.pregdate}"/>
-                             
+                          	등록일: <fmt:formatDate value="${project.pregdate}" pattern="yyyy-MM-dd"/>                            
                           </small>
                       </td>
                       <td>
                           <a>
-                          <fmt:formatDate value="${project.pstart}"/>
+                          <fmt:formatDate value="${project.pstart}" pattern="yyyy-MM-dd"/>
                           
                           </a>
                           <br/>
                           <a>
-                          ~ <fmt:formatDate value="${project.pend}"/>
+                          ~ <fmt:formatDate value="${project.pend}" pattern="yyyy-MM-dd"/>
                          
                           </a>
                       </td>                     

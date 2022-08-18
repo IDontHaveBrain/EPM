@@ -78,7 +78,7 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectDetail.do
 	@RequestMapping("projectDetail.do")
-	public String projectDetail(@RequestParam("pid") int pid, Model d){
+	public String projectDetail(@RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
 		d.addAttribute("project",service.getProjectDetail(pid));
 		d.addAttribute("pmemberList", service.getPmemberList(pid));
 		
