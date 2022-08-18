@@ -40,6 +40,8 @@ public class DashboardController {
             return "redirect:projectList.do";
         }
         if(pid == 0){
+            if(curMem.getAuth().equals("ADMIN") || curMem.getAuth().equals("CEO"))
+                return "redirect:adminProjectList.do";
             return "redirect:projectList.do";
         }
         System.out.println(curMem.getEmail());

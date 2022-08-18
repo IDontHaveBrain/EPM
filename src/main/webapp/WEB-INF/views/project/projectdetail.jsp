@@ -180,7 +180,7 @@ var list
               <div class="form-group"> 
                   <label>참여 멤버</label>
                   <div class="select2-purple">
-                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  	
+                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;" disabled="disabled">
 	  			   </select> 
               	   </div>  
               </div>	
