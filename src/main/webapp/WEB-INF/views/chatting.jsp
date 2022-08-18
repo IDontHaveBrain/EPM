@@ -380,9 +380,7 @@
 		</script>
 		</div>
 	</div>
-		<div class="text-right">
-			<button type="button" onclick="goMain()" class="btn btn-info">메인화면</button>
-		</div>		
+	
 
 		
 	
