@@ -46,10 +46,11 @@ public class DashboardController {
         }
         System.out.println(curMem.getEmail());
 
+        List<Jobplan> jobs = gservice.jobplanListPrj(pid);
         Integer iprogCount[] = service.issueProgCount(pid);
-        Integer jprogCount[] = service.jobProgCount(pid);
+        Integer jprogCount[] = service.jobProgCount(jobs);
 
-        d.addAttribute("jlist", gservice.jobplanListPrj(pid));
+        d.addAttribute("jlist", jobs);
         d.addAttribute("nlist", service.noticePaging(nsch,pid));
         d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);

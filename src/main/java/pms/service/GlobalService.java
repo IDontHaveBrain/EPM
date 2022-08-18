@@ -30,8 +30,10 @@ public class GlobalService {
             else
                 job.setPercent(comp/(double)all);
         }
+        
         return temp;
     }
+
     public boolean isProjectMember(Integer mid, Integer pid) {
         Map<String, Object> map = new HashMap<>();
         map.put("mid", mid);

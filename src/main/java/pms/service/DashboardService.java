@@ -32,7 +32,7 @@ public class DashboardService {
     }
     public Integer[] issueProgCount(int pid) {
         List<IssuesDashDto> issueList = getIssueList(pid);
-        Integer iprogCount[] = {0,0,0,0};
+        Integer iprogCount[] = {0,0,0,0,0,0};
         for(IssuesDashDto issue:issueList){
             if(issue.getIprogress().equals("해결") || issue.getIprogress().equals("COMP"))
                 iprogCount[0]++;
@@ -40,21 +40,21 @@ public class DashboardService {
                 iprogCount[1]++;
             else if (issue.getIprogress().equals("해결불가") || issue.getIprogress().equals("REJ"))
                 iprogCount[2]++;
-            iprogCount[3]++;
+            else if (issue.getIprogress().equals("대기") || issue.getIprogress().equals("WAIT"))
+                iprogCount[3]++;
+            iprogCount[5]++;
         }
         return iprogCount;
     }
-    public Integer[] jobProgCount(int pid){
-        List<Jobplan> jobList = gdao.jobplanListPrj(pid);
-        Integer jprogCount[] = {0,0,0,0};
-        for(Jobplan jobplan:jobList){
-            if(jobplan.getJstatus() != null) {
-                if (jobplan.getJstatus().equals("완료") || jobplan.getJstatus().equals("COMP"))
-                    jprogCount[0]++;
-                else if (jobplan.getJstatus().equals("진행중") || jobplan.getJstatus().equals("PROG"))
-                    jprogCount[1]++;
-                jprogCount[3]++;
-            }
+    public Integer[] jobProgCount(List<Jobplan> jobList){
+        Integer jprogCount[] = {0,0,0,0,0,0};
+        for(Jobplan jobplan:jobList) {
+            if (jobplan.getPercent() == 100)
+                jprogCount[0]++;
+            else if (jobplan.getPercent() < 100)
+                jprogCount[1]++;
+            jprogCount[5]++;
+
         }
         return jprogCount;
     }

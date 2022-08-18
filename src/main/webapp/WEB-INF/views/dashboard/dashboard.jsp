@@ -394,6 +394,7 @@
                       <li><i class="far fa-circle text-success"></i> 해결</li>
                       <li><i class="far fa-circle text-warning"></i> 해결중</li>
                       <li><i class="far fa-circle text-danger"></i> 해결불가</li>
+                      <li><i class="far fa-circle text-primary"></i> 대기</li>
                     </ul>
                   </div>
                   <!-- /.col -->
@@ -403,7 +404,7 @@
               <!-- /.card-body -->
               <div class="card-footer p-0">
                 <c:choose>
-                  <c:when test="${iprog[3] == 0}">
+                  <c:when test="${iprog[5] == 0}">
                     <ul class="nav nav-pills flex-column">
                       <li class="nav-item">
                         <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
@@ -416,7 +417,7 @@
                         <a href="#" class="nav-link">
                           해결
                           <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -424,7 +425,7 @@
                         <a href="#" class="nav-link">
                           해결중
                           <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -433,7 +434,15 @@
                           해결불가
                           <span class="float-right text-danger">
                         <i class="fas fa-arrow-down text-sm"></i>
-                        <fmt:formatNumber value="${iprog[2]/iprog[3]*100}" pattern="#.##"/>%</span>
+                        <fmt:formatNumber value="${iprog[2]/iprog[5]*100}" pattern="#.##"/>%</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          대기
+                          <span class="float-right text-primary">
+                        <i class="fas fa-arrow-down text-sm"></i>
+                        <fmt:formatNumber value="${iprog[3]/iprog[5]*100}" pattern="#.##"/>%</span>
                         </a>
                       </li>
                     </ul>
@@ -483,7 +492,7 @@
               <!-- /.card-body -->
               <div class="card-footer p-0">
                 <c:choose>
-                  <c:when test="${jprog[3] == 0}">
+                  <c:when test="${jprog[5] == 0}">
                     <ul class="nav nav-pills flex-column">
                       <li class="nav-item">
                         <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
@@ -496,7 +505,7 @@
                         <a href="#" class="nav-link">
                           완료
                           <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -504,7 +513,7 @@
                         <a href="#" class="nav-link">
                           진행중
                           <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -583,7 +592,7 @@
       readonly: true
     });
     //$('.gantt .bar-wrapper').css('pointer-events', 'none');
-    gantt.change_view_mode('Week');
+    gantt.change_view_mode('Month');
     gantt.clear();
     gantt.render();
     gantt.bar_being_dragged = true;
@@ -597,11 +606,12 @@
       '해결',
       '해결중',
       '해결불가',
+      '대기',
     ],
     datasets: [
       {
-        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}],
-        backgroundColor: ['#00a65a', '#f39c12', '#f56954']
+        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}, ${iprog[3]}],
+        backgroundColor: ['#00a65a', '#f39c12', '#f56954', '#5464f5']
       }
     ]
   }
