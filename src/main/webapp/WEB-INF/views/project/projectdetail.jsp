@@ -137,7 +137,7 @@ var list
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">프로젝트 수정</h1>
+            <h1 class="m-0">프로젝트 상세화면</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -215,8 +215,11 @@ var list
       
       <div class="row">
         <div class="col-12">
+        <c:if test="${sessionScope.mem.auth == 'MEMBER' || sessionScope.mem.auth == 'GUEST'}">
+        	<button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+        </c:if>
         <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
-          	  <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+          	  <button type="button" onclick="goAdMain()" class="btn btn-secondary">취소</button>
 	          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
 	          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
 		</c:if>
@@ -305,8 +308,11 @@ function deleteProc(){
 	}
 
 
-function goMain(){
+function goAdMain(){
 	location.href="${path}/adminProjectList.do";
+}
+function goMain(){
+	location.href="${path}/projectList.do";
 }
 
 
