@@ -127,4 +127,8 @@ public class MemberService {
 		dao.delProfile(mid);
 	}
 	
+	public Member sendTempPassword(Member m) {
+		return dao.sendTempPassword(m);
+	}
+	
 }
