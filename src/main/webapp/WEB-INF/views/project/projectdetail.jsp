@@ -75,15 +75,8 @@ var list
 		        	}else{
 		        		addHTML+="<option disabled selected value='"+rst.mid+"'>"+rst.name+"</option>";	
 		        	}
-		        	
-		        	
 		        });
-		 
 				 console.log(pmid)
-	
-
-	        
-			
 				 console.log(list)
 		       
 	  			$("#inputMem").html(pmid);
@@ -94,7 +87,33 @@ var list
 		    });
 		  }
 		  updatePmember();
-		
+      function updateMember(){
+        $.ajax({
+          url: "${path}/ajaxMember.do",
+          data: "",
+          dataType: "json",
+          success: function (data) {
+            console.log(data)
+            list = data.memberList;
+            var addHTML = "";
+            var pmMid = 0;
+            $("#inputMem option").each(function(){
+              var mem = $(this);
+              pmMid = mem.val();
+            });
+
+            $(list).each(function (idx, rst) {
+              if($("#inputPM option:selected").val() == rst.mid)
+                addHTML += "<option disabled selected value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+              else
+                addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+            });
+            var pmsel = $("#inputPM");
+            pmsel.html(addHTML);
+          }
+        });
+      }
+      updateMember();
 		
 		//Initialize Select2 Elements
 	    $('.select2').select2()
@@ -141,7 +160,7 @@ var list
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="dashboard.do?pid=${param.pid}">Home</a></li>
               <li class="breadcrumb-item active">프로젝트 상세화면</li>
             </ol>
           </div><!-- /.col -->
@@ -173,7 +192,7 @@ var list
               </div>
               <div class="form-group" >           
                 <label for="inputProjectLeader" >PM</label>
-                    <select id="inputPM" class="form-control pm-select select2bs4" >
+                    <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4" >
 
                     </select>              
               </div>

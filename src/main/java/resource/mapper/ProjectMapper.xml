@@ -80,7 +80,7 @@
 		where pid = #{pid}
 	</select>
 
-	
+
 	<update id="updateProject" parameterType="prjdto">
 		UPDATE project
 		   SET pname = #{pname, jdbcType=VARCHAR},
@@ -107,5 +107,14 @@
 		delete
 		from participants
 		where pid = #{pid}
-	</delete>		
+	</delete>
+	<delete id="deleteMemberPm" parameterType="int">
+		delete
+		from participants
+		where pid = #{pid} and pauth = 'PM'
+	</delete>
+	<insert id="insertParticipantsManual" parameterType="participants">
+		insert into participants values(participants_seq.nextval, #{pauth},
+										#{pid}, #{mid}, sysdate, sysdate)
+	</insert>
 </mapper>

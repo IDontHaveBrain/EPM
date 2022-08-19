@@ -113,12 +113,12 @@ var list;
  
 	        $(list).each(function (idx, rst) {
 	        
-	        	if(rst.auth == "ADMIN") {
-	        		addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
-	        	}
-	        	else{
+	        	//if(rst.auth == "ADMIN") {
+	        	//	addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	//}
+	        	//else{
 	        		addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
-	        	}
+	        	//}
 	        	
 	        });
 	        
@@ -126,7 +126,7 @@ var list;
 	        
 	        var pmsel = $("#inputPM");
 	        
-	        pmsel.html(pmsel.html() + addADMINHTML);
+	        pmsel.html(pmsel.html() + addHTML);
 	      $("#inputMem").html(addHTML);
 	       
 	     
@@ -185,7 +185,7 @@ var list;
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="dashboard.do?pid=${param.pid}">Home</a></li>
               <li class="breadcrumb-item active">프로젝트 등록</li>
             </ol>
           </div><!-- /.col -->
@@ -209,7 +209,7 @@ var list;
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
                 <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
-    				<option selected disabled>PM 선택</option>
+    				<option selected disabled value="0">PM 선택</option>
 
                 </select>                    
               </div>
@@ -344,11 +344,10 @@ function insertProc(){
 		}
 		
 		var pmVal = $("[name=selectPM]").val();	
-		if(	pmVal == ""){
+		if(	pmVal == null){
 			alert("PM을 선택하세요");
 			return; 
 		}
-
 		
 		$("form").submit();
 	}

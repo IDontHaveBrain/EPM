@@ -35,4 +35,6 @@ public interface ProjectDao {
 	
 	public void deleteProject(int pid);
 	public void deleteMember(int pid);
+	public void deleteMemberPm(int pid);
+	public void insertParticipantsManual(Participants p);
 }

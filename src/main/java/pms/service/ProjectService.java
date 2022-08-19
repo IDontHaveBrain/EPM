@@ -189,8 +189,12 @@ public class ProjectService {
         
      }
     
-    public Project updateProject(ProjectDto upt) {   	
-        dao.updateProject(upt);       
+    public Project updateProject(ProjectDto upt) {
+        dao.deleteMemberPm(upt.getPid());
+        Participants temp = new Participants(upt.getSelectPM(), "PM");
+        temp.setPid(upt.getPid());
+        dao.insertParticipantsManual(temp);
+        dao.updateProject(upt);
         return dao.getProjectDetail(upt.getPid()); 
      }
     
