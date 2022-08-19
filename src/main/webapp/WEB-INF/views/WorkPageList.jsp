@@ -99,6 +99,14 @@
 		</div>
 		<span class="form-control" style="border:none"> </span>	
 		<div class="input-group-append">
+			<span class="text-center input-group-text">승인여부</span>
+			<select name="jmstatus" class="form-select" >
+				<option value="">전체</option>
+				<option value="PROG">진행중</option>
+				<option value="COMP">완료</option>
+				<option value="REQ">승인요청</option>
+				<option value="REJ">반려</option>
+			</select>
 			<span class="text-center input-group-text">페이지 크기</span>
 			<select name="pageSize" class="form-select">
 				<option>3</option>
@@ -107,14 +115,6 @@
 				<option>20</option>
 				<option>30</option>
 			</select>
-			<span class="text-center input-group-text">승인여부</span>
-			<select name="jmstatus" class="form-select" >
-				<option value="">전체</option>
-				<option value="PROG">PROG</option>
-				<option value="COMP">COMP</option>
-				<option value="REQ">REQ</option>
-				<option value="REJ">REJ</option>
-			</select>		
 		</div>
 		<script type="text/javascript">
 			// 선택된 페이지 크기 설정..
@@ -142,7 +142,7 @@
                     <th style="text-align:center;" width="7%">담당자 (사원번호)</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
-                    <th style="text-align:center;" width="15%">업무이름</th>
+                    <th style="text-align:center;" width="13%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th> 					
                     <th style="text-align:center;" width="5%">승인여부</th>
@@ -153,7 +153,7 @@
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid})">
+                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid},${param.pid})">
                     <td style="text-align:center;">${wl.cnt}</td>
                     <td style="text-align:center;">${wl.name}(${wl.empno})</td>
                     <td style="text-align:center;">
@@ -168,7 +168,7 @@
                     <td style="text-align:center;" width="5%">
 	         			<div class="btn-group-vertical">
 	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
-		         					<i class="fas fa-folder"></i>		         				
+		         					<i class="fas fa-exclamation"></i>		         				
 	         				</button>	
 	         			</div>	             
                     </td>
@@ -181,17 +181,17 @@
                     </td>
                 <td style="text-align:center;">
                     <c:choose>
-                        <c:when test="${wl.iprogress=='REQ'}">
-                            검토요청
+                        <c:when test="${wl.iprogress=='PROG'}">
+                            진행중
+                        </c:when>
+                        <c:when test="${wl.iprogress=='REJ'}">
+                            반려
                         </c:when>
                         <c:when test="${wl.iprogress=='REQ'}">
-                            검토요청
+                            대기중
                         </c:when>
-                        <c:when test="${wl.iprogress=='REQ'}">
-                            검토요청
-                        </c:when>
-                        <c:when test="${wl.iprogress=='REQ'}">
-                            검토요청
+                        <c:when test="${wl.iprogress=='COMP'}">
+                            완료
                         </c:when>
                         <c:otherwise>
                             ${wl.iprogress}
@@ -286,8 +286,8 @@ function goPage(cnt){
 
 
 
-function goDetail(jid,jmid){
-	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+function goDetail(jid,jmid,pid){
+	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid+"&pid="+pid;
 }	
 function goiDetail(jmid,pid,iid){
 	location.href="${path}/issueDetail3.do?jmid="+jmid+"&pid="+pid+"&iid="+iid;

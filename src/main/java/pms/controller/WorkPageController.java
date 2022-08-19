@@ -44,18 +44,33 @@ public class WorkPageController {
 	        return "redirect:projectList.do";
 	    }
 		System.out.println(curMem3.getEmail());
+		
+
 		List<WorkPage> wpList = service.getWorkPageList(sch, curMem3.getMid(), pid);
+		
+		for(WorkPage wp:wpList) {
+			if(wp.getJmstatus().equals("PROG")) {
+				wp.setJmstatus("진행중");
+			}else if(wp.getJmstatus().equals("REQ")) {
+				wp.setJmstatus("승인요청");
+			}else if(wp.getJmstatus().equals("REJ")) {
+				wp.setJmstatus("반려");
+			}else {
+				wp.setJmstatus("완료");
+			}
+		}
+		
 		d.addAttribute("wlist", wpList);
+
 		return "WEB-INF\\views\\WorkPageList.jsp";
 	}
 	// 승인요청
 	@RequestMapping("updateWorkPage.do")
-	public String updateWorkPage(WorkPage upt,Model d,
-					@RequestParam(value = "jmid") int jmid) {
-			service.updateWorkPage(jmid);
-		
-		d.addAttribute("proc","upt");
-		return "redirect:WorkPageList.do?";
+	public String updateWorkPage(WorkPage upt,Model d) {
+				//@RequestParam(value = "jmid") int jmid
+			service.updateWorkPage(upt);
+	System.out.println("@@@@테스트@@@@@:"+upt.getPid());
+			return "redirect:WorkPageList.do?pid="+upt.getPid();
 	}
 	// 삭제
 	@RequestMapping("deleteWorkPage.do")
