@@ -51,7 +51,6 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               공지사항
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
@@ -60,7 +59,6 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               업무관리
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
@@ -69,7 +67,6 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               산출물확인
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
@@ -78,7 +75,6 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               이슈확인
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
@@ -88,7 +84,6 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               멤버관리
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>

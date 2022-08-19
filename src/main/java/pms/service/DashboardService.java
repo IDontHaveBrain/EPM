@@ -38,9 +38,9 @@ public class DashboardService {
                 iprogCount[0]++;
             else if (issue.getIprogress().equals("해결중") || issue.getIprogress().equals("PROG"))
                 iprogCount[1]++;
-            else if (issue.getIprogress().equals("해결불가") || issue.getIprogress().equals("REJ"))
+            else if (issue.getIprogress().equals("반려") || issue.getIprogress().equals("REJ"))
                 iprogCount[2]++;
-            else if (issue.getIprogress().equals("대기") || issue.getIprogress().equals("WAIT"))
+            else if (issue.getIprogress().equals("검토요청") || issue.getIprogress().equals("REQ"))
                 iprogCount[3]++;
             iprogCount[5]++;
         }

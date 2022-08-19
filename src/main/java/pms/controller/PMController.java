@@ -20,7 +20,10 @@ public class PMController {
 	private PMService service;
 	// http://localhost:7080/project06/manage.do
 	@RequestMapping("manage.do")
-	public String manage(@RequestParam(value = "pid", defaultValue = "1") int pid, HttpServletRequest request, Model d) {
+	public String manage(@RequestParam(value="pid", defaultValue = "0") int pid, HttpServletRequest request, Model d) {
+		if(pid == 0) {
+			return "redirect:projectList.do";
+		}
 		HttpSession session = request.getSession();
         Member mem = (Member)session.getAttribute("mem");
         if(mem == null){
@@ -44,9 +47,11 @@ public class PMController {
 		return "WEB-INF\\views\\pm\\pm-gantt.jsp";
 	}
 	@RequestMapping("joblist.do")
-	public String joblist(@RequestParam("pid") int pid, Model d) {
+	public String joblist(@RequestParam(value="pid", defaultValue = "0") int pid, Model d) {
+		if(pid == 0) {
+			return "redirect:projectList.do";
+		}
 		d.addAttribute("joblist", service.getJobList(pid));
-		
 		return "pageJsonReport";
 	}
 	@RequestMapping("addjob.do")
@@ -55,7 +60,10 @@ public class PMController {
 		return "pageJsonReport";
 	}
 	@RequestMapping("edit_pp.do")
-	public String editParticipants(@RequestParam("pid") int pid, Model d) {
+	public String editParticipants(@RequestParam(value="pid", defaultValue = "0") int pid, Model d) {
+		if(pid == 0) {
+			return "redirect:projectList.do";
+		}
 		d.addAttribute("pid", pid);
 		return "WEB-INF\\views\\pm\\editparticipants.jsp";
 	}

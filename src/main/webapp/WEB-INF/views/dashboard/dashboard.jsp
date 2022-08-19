@@ -431,7 +431,7 @@
                       </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link">
-                          해결불가
+                          반려
                           <span class="float-right text-danger">
                         <i class="fas fa-arrow-down text-sm"></i>
                         <fmt:formatNumber value="${iprog[2]/iprog[5]*100}" pattern="#.##"/>%</span>
@@ -439,7 +439,7 @@
                       </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link">
-                          대기
+                          검토요청
                           <span class="float-right text-primary">
                         <i class="fas fa-arrow-down text-sm"></i>
                         <fmt:formatNumber value="${iprog[3]/iprog[5]*100}" pattern="#.##"/>%</span>
@@ -605,8 +605,8 @@
     labels: [
       '해결',
       '해결중',
-      '해결불가',
-      '대기',
+      '반려',
+      '검토요청',
     ],
     datasets: [
       {

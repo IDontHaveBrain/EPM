@@ -17,7 +17,7 @@
 		ORDER BY jstart
 	</select>
 	<select id="getJobMember" resultType="jmdto" parameterType="int">
-		SELECT m.mid, m.email, m.name, jmid, progress, jmstatus, jm.ppid
+		SELECT m.mid, m.email, m.name, jmid, progress, nvl(jmstatus, ' ') jmstatus, jm.ppid
 		FROM jobmember jm, participants pp, member m
 		WHERE jm.ppid = pp.ppid AND pp.mid = m.mid
 			AND jid = #{jid}
@@ -55,7 +55,7 @@
 	</select>
 	<insert id="addJobPlan" parameterType="jobdto">
 		INSERT INTO jobplan(jid, jname, jstart, jend, content, jregdate, juptdate, required, pid)
-		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}, 'mm/dd/yyyy'), TO_DATE(#{end}, 'mm/dd/yyyy'), #{content}, sysdate, sysdate, #{required}, #{pid})
+		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}), TO_DATE(#{end}), #{content}, sysdate, sysdate, #{required}, #{pid})
 	</insert>
 	
 	<insert id="addJobMember" parameterType="int">

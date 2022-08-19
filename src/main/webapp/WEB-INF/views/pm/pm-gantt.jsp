@@ -72,7 +72,8 @@
             <h1 class="m-0">업무관리</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-	<button data-toggle="modal" id="modalBox" data-target="#addjobmodal" type="button" class="btn btn-primary float-right"> + </button>
+	<button data-toggle="modal" id="modalBox" data-target="#addjobmodal" type="button" hidden="hidden"> + </button>
+	<button id="jobbtn" type="button" class="btn btn-primary float-right"> + </button>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -94,7 +95,7 @@
         </button>
       </div>
       <div class="modal-body">
-		<form method="post">
+		<form id="jobForm" method="post">
         <input type="hidden" name="pid" value="${pid}"/>
         <div class="card card-primary">
         <div class="card-body">
@@ -150,6 +151,7 @@
       </div>
       <div class="modal-footer"> 
         <button id="addjob" type="button" class="btn btn-primary float-right">등록</button>
+        <button id="updatejob" type="button" class="btn btn-primary float-right" style="display:none;">수정</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
       </div>
     </div>
@@ -232,17 +234,32 @@
 	$(document).ready(function(){
 		$(".nav-link").click(function(){
 			var id = $(this).attr("id");
-			$("form").attr("action", "${path}/" + id + ".do");
-			$("form").submit();
+			if(id != undefined){
+				$("form").attr("action", "${path}/" + id + ".do");
+				$("form").submit();
+			}
+		});
+		$("#jobbtn").click(function(){
+			$("#jobForm")[0].reset();
+			$("#addjob").css("display", "");
+			$("#updatejob").css("display", "none");
+			$('.duallistbox').bootstrapDualListbox('refresh', true);
+			$("#modalBox").click();
 		});
 		$('.duallistbox').bootstrapDualListbox();
 		ganttAjax();
 		$('#addjob').click(function(){
-			console.log($("form").serialize());
-			job = $('#job').val();
+			var job = $('#job').val();
 			if(job == ''){
 				alert("업무 이름을 입력하세요");
 				$('#job').focus();
+				return;
+			}
+			var start = $("[name=start]").val();
+			var end = $("[name=end]").val();
+			if(start >end) {
+				alert("기간을 다시 확인해주세요");
+				$("#startdate").focus();
 				return;
 			}
 			$.ajax({
@@ -254,9 +271,7 @@
 				}
 			});
 			$("#modalBox").click();
-			$('#job').val('');
-			$('#content').val('');
-			$('.duallistbox option').prop('selected', false);
+
 			$('.duallistbox').bootstrapDualListbox('refresh', true);
 		});
 		/* tasks = [
@@ -305,10 +320,10 @@
 		    gantt.change_view_mode("Month");
 		})
 		$('#startdate').datetimepicker({
-	        format: 'L'
+	        format: 'YYYY-MM-DD'
 	    });
 	  $('#enddate').datetimepicker({
-	        format: 'L'
+	        format: 'YYYY-MM-DD'
 	    });
 	  $(".nav-link").removeClass("active");
 		$("#manage").addClass("active");
@@ -334,6 +349,14 @@ function ganttAjax(){
 				});
 			}
 			gantt = new Gantt("#gantt", tasks);
+			$("g.bar-wrapper").dblclick(function(){
+				$("#jobForm")[0].reset();
+				$('.duallistbox').bootstrapDualListbox('refresh', true);
+				var tid = $(this).attr("data-id");
+				$("#addjob").css("display", "none");
+				$("#updatejob").css("display", "");
+				$("#modalBox").click();
+			});
 		}
 	});
 }
