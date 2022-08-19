@@ -177,11 +177,15 @@ public class ProjectService {
     public void createProject(ProjectDto ins) {   	
         dao.insertProject(ins);
         
-        dao.insertParticipants(new Participants(ins.getSelectPM(), "PM"));
+        if(ins.getSelectPM()!= 0) 
+        	dao.insertParticipants(new Participants(ins.getSelectPM(), "PM"));
         
-        for(int m:ins.getSelectmember()) { 
-            dao.insertParticipants(new Participants(m, "Developer"));
+        if(ins.getSelectmember() != null) {
+            for(int m:ins.getSelectmember()) { 
+                dao.insertParticipants(new Participants(m, "Developer"));
+            }
         }
+
         
      }
     
