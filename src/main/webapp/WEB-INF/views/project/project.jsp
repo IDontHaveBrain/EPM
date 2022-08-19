@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
 var list;
-var adlist;
+
 
 	$(document).ready(function(){
 		
@@ -106,24 +106,27 @@ var adlist;
 	      success: function (data) {
 	        console.log(data)
 	        list = data.memberList;
-	        adlist = data.memberList;
+	 
 	  
 	        var addHTML = "";
 	        var addADMINHTML = "";
  
 	        $(list).each(function (idx, rst) {
-	        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        
+	        	if(rst.auth == "ADMIN") {
+	        		addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	}
+	        	else{
+	        		addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	}
 	        	
 	        });
 	        
-	        $(adlist).each(function (idx, rst) {
-	        	if(rst.auth == "ADMIN") 
-	        		addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";	
-	        });
+
 	        
 	        var pmsel = $("#inputPM");
 	        
-	        pmsel.html(pmsel.html() + addHTML);
+	        pmsel.html(pmsel.html() + addADMINHTML);
 	      $("#inputMem").html(addHTML);
 	       
 	     

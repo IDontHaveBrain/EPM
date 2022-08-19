@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pms.dao.PMDao;
 import pms.dao.ProjectDao;
+import pms.dto.JobMemberDTO;
 import pms.dto.ProjectDto;
 import pms.dto.ProjectMemberDTO;
 import pms.dto.ProjectSch;
@@ -18,8 +20,10 @@ import pms.vo.Project;
 public class ProjectService {
     @Autowired(required = false)
     private ProjectDao dao;
+    @Autowired(required = false)
+    private PMDao dao2;
     
-    public List<Project> getProjectList(ProjectSch sch, int mid){
+    public List<ProjectDto> getProjectList(ProjectSch sch, int mid){
     	sch.setMid(mid);
     	
         // 1. 전체 데이터 건수 설정
@@ -68,13 +72,31 @@ public class ProjectService {
         } else {
             sch.setEndBlock(endBlock);
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
-        } 
+        }
         
-        return dao.getProjectList(sch);
+        List<ProjectDto> list = dao.getProjectList(sch);
+//        for(ProjectDto p : list) {
+//        	List<JobMemberDTO> jmlist =  dao2.getParticipants(p.getPid());
+//        	int comp = 0;
+//        	for(JobMemberDTO jm : jmlist) {
+//        		if(jm.getJmstatus().equals("COMP")) {
+//        			comp++;
+//        		}
+//        	}
+//        	int tot = jmlist.size();
+//        	if(tot == 0) {
+//        		p.setProgress(0);
+//        	}
+//        	else {
+//        		p.setProgress(comp * 100 / tot);
+//        	}
+//        	
+//        }
+        return list;
 
 	}
     
-    public List<Project> getAdProjectList(ProjectSch sch){
+    public List<ProjectDto> getAdProjectList(ProjectSch sch){
     
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.totCnt(sch) ); // 프로젝트 선택파트 완료시 pid로 변경
@@ -124,7 +146,16 @@ public class ProjectService {
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
         } 
         
-        return dao.getAdProjectList(sch);
+        List<ProjectDto> list = dao.getAdProjectList(sch);
+		/*
+		 * for(ProjectDto p : list) { List<JobMemberDTO> jmlist =
+		 * dao2.getJobMember(p.getPid()); int comp = 0; for(JobMemberDTO jm : jmlist) {
+		 * if(jm.getJmstatus().equals("COMP")) { comp++; } } int tot = jmlist.size();
+		 * if(tot == 0) { p.setProgress(0); } else { p.setProgress(comp * 100 / tot); }
+		 * 
+		 * }
+		 */
+        return list;
 
 	}
    

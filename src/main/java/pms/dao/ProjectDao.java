@@ -18,8 +18,8 @@ public interface ProjectDao {
 	public int totMemCnt(ProjectSch sch);
 	
 	public int totCnt(ProjectSch sch);
-	public List<Project> getProjectList(ProjectSch sch);
-	public List<Project> getAdProjectList(ProjectSch sch);
+	public List<ProjectDto> getProjectList(ProjectSch sch);
+	public List<ProjectDto> getAdProjectList(ProjectSch sch);
 
 	
 	public List<Member> getMemberList();

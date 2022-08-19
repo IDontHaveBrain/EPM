@@ -199,13 +199,12 @@ var list
                 <textarea name="pcomment" id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">시작일 :</label>
-                <fmt:formatDate value="${project.pstart}" pattern="yyyy-MM-dd"/>
+                <label for="inputClientCompany">시작일 : ${project.pstart}</label>
+              
                 <input type="date" name="pstart" id="startDate" value="${project.pstart}" pattern="yyyy-MM-dd" class="form-control">
               </div>
 			  <div class="form-group">
-                <label for="inputClientCompany">종료일 :</label>
-                <fmt:formatDate value="${project.pend}" pattern="yyyy-MM-dd"/>
+                <label for="inputClientCompany">종료일 : ${project.pend}</label>
                 <input type="date" name="pend" id="endDate" value="${project.pend}" pattern="yyyy-MM-dd" class="form-control">
               </div> 
             

@@ -22,7 +22,7 @@
 		 AND pname LIKE '%'||#{pname}||'%'
 		 </if> 	 			 
 	</select>
-	<select id="getProjectList" parameterType="projectsch" resultType="project">
+	<select id="getProjectList" parameterType="projectsch" resultType="prjdto">
 		select *
 		from (
 			select j.*, rownum cnt
@@ -36,7 +36,7 @@
 		where cnt between #{start} and #{end}
 	</select>
 	
-	<select id="getAdProjectList" parameterType="projectsch" resultType="project">
+	<select id="getAdProjectList" parameterType="projectsch" resultType="prjdto">
 		select *
 		from (
 			select p.*, rownum cnt

@@ -37,7 +37,7 @@ public class ProjectController {
 			return "redirect:login.do";
 		}
 
-		List<Project> pList = service.getProjectList(sch, curMem3.getMid());
+		List<ProjectDto> pList = service.getProjectList(sch, curMem3.getMid());
 		d.addAttribute("prjList", pList);
 		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}

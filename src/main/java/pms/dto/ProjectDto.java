@@ -1,19 +1,33 @@
 package pms.dto;
 
-import java.util.Date;
+
 import java.util.List;
 
 public class ProjectDto {
+	private int cnt;
 	private int pid;
 	private String pname;
 	private String pcomment;
 	private String pstart;
 	private String pend;
-	private Date pregdate;
+	private String pregdate;
 	private int selectPM;
 	private String pstatus;
+	private int progress;
 	private List<Integer> selectmember;
 	
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
 	public int getSelectPM() {
 		return selectPM;
 	}
@@ -60,10 +74,10 @@ public class ProjectDto {
 	public void setPend(String pend) {
 		this.pend = pend;
 	}
-	public Date getPregdate() {
+	public String getPregdate() {
 		return pregdate;
 	}
-	public void setPregdate(Date pregdate) {
+	public void setPregdate(String pregdate) {
 		this.pregdate = pregdate;
 	}
 	public String getPstatus() {

@@ -177,27 +177,27 @@
                           </a>
                           <br/>
                           <small>
-                          	등록일: <fmt:formatDate value="${project.pregdate}" pattern="yyyy-MM-dd"/>                            
+                          	등록일: ${project.pregdate}                           
                           </small>
                       </td>
                       <td>
                           <a>
-                          <fmt:formatDate value="${project.pstart}" pattern="yyyy-MM-dd"/>
+                          ${project.pstart}
                           
                           </a>
                           <br/>
                           <a>
-                          ~ <fmt:formatDate value="${project.pend}" pattern="yyyy-MM-dd"/>
+                          ~ ${project.pend}
                          
                           </a>
                       </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
                               </div>
                           </div>
                           <small>
-                              57% Complete
+                              ${project.pstatus} Complete
                           </small>
                       </td>
                       <td class="project-state">                         

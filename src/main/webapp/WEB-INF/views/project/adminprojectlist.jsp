@@ -178,18 +178,18 @@
                           </a>
                           <br/>
                           <small>
-                          	등록일: <fmt:formatDate value="${project.pregdate}" pattern="yyyy-MM-dd"/>
+                          	등록일: ${project.pregdate}
                              
                           </small>
                       </td>
                       <td>
                           <a>
-                          <fmt:formatDate value="${project.pstart}" pattern="yyy-MM-dd"/>
+                          ${project.pstart}
                           
                           </a>
                           <br/>
                           <a>
-                          ~ <fmt:formatDate value="${project.pend}" pattern="yyyy-MM-dd"/>
+                          ~ ${project.pend}
                          
                           </a>
                       </td>                     
