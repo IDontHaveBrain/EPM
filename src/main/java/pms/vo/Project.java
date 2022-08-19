@@ -1,14 +1,16 @@
 package pms.vo;
 
 
+import java.util.Date;
+
 public class Project {
 	private int cnt;
 	private int pid;
 	private String pname;
 	private String pcomment;
-	private String pstart;
-	private String pend;
-	private String pregdate;
+	private Date pstart;
+	private Date pend;
+	private Date pregdate;
 	private String pstatus;
 	
 	public Project() {
@@ -44,22 +46,22 @@ public class Project {
 	public void setPcomment(String pcomment) {
 		this.pcomment = pcomment;
 	}
-	public String getPstart() {
+	public Date getPstart() {
 		return pstart;
 	}
-	public void setPstart(String pstart) {
+	public void setPstart(Date pstart) {
 		this.pstart = pstart;
 	}
-	public String getPend() {
+	public Date getPend() {
 		return pend;
 	}
-	public void setPend(String pend) {
+	public void setPend(Date pend) {
 		this.pend = pend;
 	}
-	public String getPregdate() {
+	public Date getPregdate() {
 		return pregdate;
 	}
-	public void setPregdate(String pregdate) {
+	public void setPregdate(Date pregdate) {
 		this.pregdate = pregdate;
 	}
 
