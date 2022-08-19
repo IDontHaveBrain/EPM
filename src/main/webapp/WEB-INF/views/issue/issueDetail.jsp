@@ -95,9 +95,9 @@
                 <textarea name="icontent" class="form-control" rows="4">${isList.icontent}</textarea>
               </div>              
               <div class="form-group">              
-				<label for="inputDescription">수정일</label>
+				<label for="inputDescription">최근 수정일</label>
 			<input  class="form-control" 
-				value='<fmt:formatDate value="${isList.iuptdate}" type="both"/>' placeholder="작성자 입력하세요" />	
+				value='<fmt:formatDate value="${isList.iuptdate}" pattern="yyyy-MM-dd hh:mm:ss"/>' placeholder="작성자 입력하세요" />	
               </div>
               <div class="form-group"> 
               	<label for="inputProjectLeader">처리현황</label>

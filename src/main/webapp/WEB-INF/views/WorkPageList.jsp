@@ -168,14 +168,14 @@
                     <td style="text-align:center;" width="5%">
 	         			<div class="btn-group-vertical">
 	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
-		         					<i class="fas fa-comment-alt"></i>		         				
+		         					<i class="fas fa-folder"></i>		         				
 	         				</button>	
 	         			</div>	             
                     </td>
                     <td style="text-align:center;" width="5%">
 	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-danger" type="button" onclick="goiDetail(${wl.jmid},${param.pid},${wl.iid})">		         	
-		         					<i class="fas fa-comment-alt"></i>		         				
+	         				<button class="btn btn-warning" type="button" onclick="goiDetail(${wl.jmid},${param.pid},${wl.iid})">		         	
+		         					<i class="fas fa-folder-open"></i>		         				
 	         				</button>	
 	         			</div>	             
                     </td>
