@@ -305,8 +305,8 @@
 				return false;
 			}
 			
-			$("#uptInfo").attr("action","${path}/updateInfo.do")
-			$("#uptInfo").submit()
+			$("#infoCForm").attr("action","${path}/updateInfo.do")
+			$("#infoCForm").submit()
 		})
 		
 		if("${proc}"!=""){
