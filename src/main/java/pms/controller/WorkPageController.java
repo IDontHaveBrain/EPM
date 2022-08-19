@@ -122,11 +122,13 @@ public class WorkPageController {
 	}
 	// 이슈사항 수정
 	@RequestMapping("uptIssuespage.do")
-	public String uptIssuespage(Issues upt,Model d,
-					@RequestParam(value = "iid") int iid,
-					@RequestParam(value = "pid") int pid) {
-			d.addAttribute("isList",service.updateIssues(upt,iid));
-		return "WEB-INF\\views\\issue\\issueDetail.jsp";
+	public String uptIssuespage(Issues upt,Model d) {
+					//@RequestParam(value = "iid") int iid,
+					//@RequestParam(value = "pid") int pid) {
+		service.updateIssues(upt);
+			//d.addAttribute("isList",service.updateIssues(upt));
+		//return "WEB-INF\\views\\issue\\issueDetail.jsp";
+		return "redirect:WorkPageList.do?pid="+upt.getPid();
 	}
 	// 이슈사항 삭제
 	@RequestMapping("delIssuespage.do")

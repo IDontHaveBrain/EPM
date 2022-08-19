@@ -335,16 +335,24 @@ var isInsert = "${isInsert}"
 
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){
-		var pnameVal = $("[name=pname]").val();		
+		var pnameVal = $("[name=pname]").val();	
+	
 		if(	pnameVal == ""){
 			alert("프로젝트명을 등록하세요");
 			$("[name=pname]").focus();
-			return; // 프로세스를 중단 처리
-		}		
+			return; 
+		}
+		
+		var pmVal = $("[name=selectPM]").val();	
+		if(	pmVal == ""){
+			alert("PM을 선택하세요");
+			return; 
+		}
+
+		
 		$("form").submit();
 	}
 }
-
 
 
 function goMain(){

@@ -129,10 +129,10 @@ public class WorkPageService {
 		return dao.getWorkIsDetail(iid);
 	}
 	
-	public Issues updateIssues(Issues upt,int iid) {
-			upt.setIid(iid);
+	public void updateIssues(Issues upt) {
+			//upt.setIid(iid);
 		dao.updateIssues(upt); 
-		return dao.getWorkIsDetail(iid);
+		//return dao.getWorkIsDetail(upt.getIid());
 	}	
 	
 	public void deleteIssues(int iid) {
