@@ -179,7 +179,25 @@
 	         				</button>	
 	         			</div>	             
                     </td>
-                <td style="text-align:center;">${wl.iprogress}</td>
+                <td style="text-align:center;">
+                    <c:choose>
+                        <c:when test="${wl.iprogress=='REQ'}">
+                            검토요청
+                        </c:when>
+                        <c:when test="${wl.iprogress=='REQ'}">
+                            검토요청
+                        </c:when>
+                        <c:when test="${wl.iprogress=='REQ'}">
+                            검토요청
+                        </c:when>
+                        <c:when test="${wl.iprogress=='REQ'}">
+                            검토요청
+                        </c:when>
+                        <c:otherwise>
+                            ${wl.iprogress}
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                   </tr>
                   </c:forEach>
                   </tbody>
