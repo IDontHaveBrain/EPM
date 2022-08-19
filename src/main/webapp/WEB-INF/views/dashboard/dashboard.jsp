@@ -233,7 +233,26 @@
                   </div>
                 </c:when>
                 <c:otherwise>
-                  <svg id="gantt"></svg>
+                  <div class="row text-center align-items-center justify-content-center align-content-center" style="text-align: center">
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Day');">
+                        Day
+                      </button>
+                    </div>
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Week');">
+                        Week
+                      </button>
+                    </div>
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Month');">
+                        Month
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <svg id="gantt"></svg>
+                  </div>
                 </c:otherwise>
               </c:choose>
               <c:if test="${empty jlist}">
@@ -569,6 +588,7 @@
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <script>
+  var gantt
   $(document).ready(function() {
     // 간트차트
     var tasks = [
@@ -585,7 +605,7 @@
       },
       </c:forEach>
     ]
-    var gantt = new Gantt("#gantt", tasks, {
+    gantt = new Gantt("#gantt", tasks, {
       step: 12,
       view_mode: 'Day',
       read_only: true,
