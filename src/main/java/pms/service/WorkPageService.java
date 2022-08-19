@@ -94,8 +94,8 @@ public class WorkPageService {
 		return dao.getWorkPageFile(filelist);
 	}
 	// 승인요청
-	public void updateWorkPage(int jmid){
-		dao.updateWorkPage(jmid);
+	public void updateWorkPage(WorkPage upt){
+		dao.updateWorkPage(upt);
 	}
 	// 파일삭제
 	public void deleteWorkPageFile(int fid){

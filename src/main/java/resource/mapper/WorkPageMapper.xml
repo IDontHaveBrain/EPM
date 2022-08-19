@@ -133,7 +133,7 @@
 									#{path},
 									#{fname} )
 	</insert>
-	<update id="updateWorkPage" parameterType="int" >
+	<update id="updateWorkPage" parameterType="workpage" >
 		UPDATE jobmember 
 		SET jmstatus='REQ' 
 		WHERE jmid=#{jmid}	

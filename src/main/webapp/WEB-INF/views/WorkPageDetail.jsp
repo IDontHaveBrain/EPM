@@ -199,6 +199,8 @@
 			</div>
 		<input type=hidden name="jmid" value="${param.jmid}"/> 
 		<input type=hidden name="jid" value="${param.jid}"/> 
+		<input type=hidden name="pid" value="${param.pid}"/> 
+		
 	</form>
 	
                     </td>
@@ -206,7 +208,7 @@
     <tr><td colspan="7">
 	  <div class="row">
         <div class="col-12">
-          <a href="WorkPageList.do" class="btn btn-secondary">뒤로가기</a>
+          <a href="WorkPageList.do?pid=${param.pid}" class="btn btn-secondary">뒤로가기</a>
 			<input type="button" value="승인요청" onclick="updateProc()" 
 					 class="btn btn-success float-right">
 			</div>
@@ -284,9 +286,7 @@ $("[name=fid]").click(function(){
 });
 
 
-function goDetail(jid,jmid){
-	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
-}
+
 
 function updateProc(){
 	if(confirm("승인요청 하시겠습니까?")){
@@ -296,12 +296,6 @@ function updateProc(){
 	}
 }
 
-var proc = "${proc}"
-if(proc=="upt"){
-	if(confirm("승인요청 완료\n개인업무페이지로 이동하시겠습니까?")){
-		location.href="${path}/WorkPageList.do";
-	}
-}
 $("#file").on('change',function(){
 	  var fname = $("#file").val();
 	  $(".upload-name").val(fname);
