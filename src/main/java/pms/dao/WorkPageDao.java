@@ -33,7 +33,7 @@ public interface WorkPageDao {
 	// 이슈 상세
 	public Issues getWorkIsDetail(int iid);
 	// 이슈등록삭제
-	public Issues updateIssues(Issues upt);
+	public void updateIssues(Issues upt);
 	
 	public void deleteIssues(int iid);
 

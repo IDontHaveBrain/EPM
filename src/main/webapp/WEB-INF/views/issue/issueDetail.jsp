@@ -5,6 +5,12 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<c:if test="${param.iid == 0}">
+<script type="text/javascript">
+	alert("등록된 이슈가 없습니다!");
+	location.href="WorkPageList.do?pid=${param.pid}";
+</script>
+</c:if>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -111,9 +117,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="WorkPageList.do" class="btn btn-secondary">취소</a>    
-          <button type="button" onclick="uptProc()" class="btn btn-success float-right">수정</button>
-		  <button type="button" onclick="delProc()" class="btn btn-danger float-right">삭제</button>
+          <a href="WorkPageList.do" class="btn btn-secondary">취소</a>  
+		  <button type="button" onclick="delProc()" class="btn btn-danger float-right">삭제</button>            
+          <button type="button" onclick="uptProc()" class="btn btn-primary float-right">수정</button>
         </div>
       </div>
       
