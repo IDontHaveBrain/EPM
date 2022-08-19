@@ -115,9 +115,9 @@
               	</div>
               	</div>
               <!-- /.card-body -->
-              <form >
+              <form id="reqForm">
               	<input name="mid" type="hidden" value="0"/>
-              	<input name="pid" type="hidden" value="${pid}"/>
+              	<input name="pid"  value="${pid}"/>
               </form>
               
             </div>
@@ -207,8 +207,10 @@ $(document).ready(function(){
 	ajaxlist("pplist");
 	$(".nav-link").click(function(){
 		var id = $(this).attr("id");
-		$("form").attr("action", "${path}/" + id + ".do");
-		$("form").submit();
+		if(id != undefined){
+			$("#reqForm").attr("action", "${path}/" + id + ".do?pid=" + ${pid});
+			$("#reqForm").submit();
+		}
 	});
 	$(".nav-link").removeClass("active");
 	$("#edit_pp").addClass("active");

@@ -18,7 +18,21 @@ public class PMService {
 	public List<JobDTO> getJobList(int pid) {
 		List<JobDTO> jlist = dao.getJobPlan(pid);
 		for(JobDTO j : jlist) {
-			j.setJmlist(dao.getJobMember(j.getId()));
+			List<JobMemberDTO> jmlist = dao.getJobMember(j.getId());
+			j.setJmlist(jmlist);
+			int sum = 0;
+			int size = jmlist.size();
+			if(size == 0) {
+				j.setProgress(0);
+			}
+			else {
+				for(int i = 0; i < size; i++) {
+					if(jmlist.get(i).getJmstatus().equals("COMP")) {
+						sum++;
+					}
+				}
+				j.setProgress(sum * 100 / size);
+			}
 		}
 		return jlist;
 	}
