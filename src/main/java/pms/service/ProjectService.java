@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import pms.dao.PMDao;
 import pms.dao.ProjectDao;
+import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
 import pms.dto.ProjectDto;
 import pms.dto.ProjectMemberDTO;
 import pms.dto.ProjectSch;
 import pms.vo.Member;
 import pms.vo.Participants;
-import pms.vo.Project;
 
 @Service
 public class ProjectService {
@@ -75,23 +75,37 @@ public class ProjectService {
         }
         
         List<ProjectDto> list = dao.getProjectList(sch);
-//        for(ProjectDto p : list) {
-//        	List<JobMemberDTO> jmlist =  dao2.getParticipants(p.getPid());
-//        	int comp = 0;
-//        	for(JobMemberDTO jm : jmlist) {
-//        		if(jm.getJmstatus().equals("COMP")) {
-//        			comp++;
-//        		}
-//        	}
-//        	int tot = jmlist.size();
-//        	if(tot == 0) {
-//        		p.setProgress(0);
-//        	}
-//        	else {
-//        		p.setProgress(comp * 100 / tot);
-//        	}
-//        	
-//        }
+        int jobcomp = 0;
+		for (ProjectDto p : list) {
+			List<JobDTO> jlist = dao2.getJobPlan(p.getPid());
+			for(JobDTO j : jlist) {
+				List<JobMemberDTO> jmlist = dao2.getJobMember(j.getId());
+				j.setJmlist(jmlist);
+				int sum = 0;
+				int size = jmlist.size();
+				if(size == 0) {
+					j.setProgress(0);
+				}
+				else {
+					for(int i = 0; i < size; i++) {
+						if(jmlist.get(i).getJmstatus().equals("COMP")) {
+							sum++;
+						}
+					}
+					j.setProgress(sum * 100 / size);
+				}
+				if(j.getProgress() == 100) {
+					jobcomp++;
+				}
+			}
+			if(jlist.size() == 0) {
+				p.setProgress(0);
+			}
+			else {
+				p.setProgress(jobcomp * 100 / jlist.size());
+			}
+			
+		}
         return list;
 
 	}
@@ -147,14 +161,37 @@ public class ProjectService {
         } 
         
         List<ProjectDto> list = dao.getAdProjectList(sch);
-		/*
-		 * for(ProjectDto p : list) { List<JobMemberDTO> jmlist =
-		 * dao2.getJobMember(p.getPid()); int comp = 0; for(JobMemberDTO jm : jmlist) {
-		 * if(jm.getJmstatus().equals("COMP")) { comp++; } } int tot = jmlist.size();
-		 * if(tot == 0) { p.setProgress(0); } else { p.setProgress(comp * 100 / tot); }
-		 * 
-		 * }
-		 */
+        int jobcomp = 0;
+		for (ProjectDto p : list) {
+			List<JobDTO> jlist = dao2.getJobPlan(p.getPid());
+			for(JobDTO j : jlist) {
+				List<JobMemberDTO> jmlist = dao2.getJobMember(j.getId());
+				j.setJmlist(jmlist);
+				int sum = 0;
+				int size = jmlist.size();
+				if(size == 0) {
+					j.setProgress(0);
+				}
+				else {
+					for(int i = 0; i < size; i++) {
+						if(jmlist.get(i).getJmstatus().equals("COMP")) {
+							sum++;
+						}
+					}
+					j.setProgress(sum * 100 / size);
+				}
+				if(j.getProgress() == 100) {
+					jobcomp++;
+				}
+			}
+			if(jlist.size() == 0) {
+				p.setProgress(0);
+			}
+			else {
+				p.setProgress(jobcomp * 100 / jlist.size());
+			}
+			
+		}
         return list;
 
 	}
@@ -169,7 +206,7 @@ public class ProjectService {
 	}
  
 	
-    public Project getProjectDetail(int pid){
+    public ProjectDto getProjectDetail(int pid){
       	return dao.getProjectDetail(pid);
     }
     
@@ -189,7 +226,7 @@ public class ProjectService {
         
      }
     
-    public Project updateProject(ProjectDto upt) {
+    public ProjectDto updateProject(ProjectDto upt) {
         dao.deleteMemberPm(upt.getPid());
         Participants temp = new Participants(upt.getSelectPM(), "PM");
         temp.setPid(upt.getPid());

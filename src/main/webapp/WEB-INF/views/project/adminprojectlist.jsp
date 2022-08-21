@@ -165,9 +165,8 @@
                                 
                   </tr>
               </thead>
-                   <c:forEach var="project" items="${projectList}">
-              <tbody>  
-            
+              <c:forEach var="project" items="${projectList}">
+              <tbody>         
                   <tr ondblclick="goDetail(${project.pid})">
                       <td>
                           ${project.cnt}
@@ -178,35 +177,31 @@
                           </a>
                           <br/>
                           <small>
-                          	등록일: ${project.pregdate}
-                             
+                          	등록일: ${project.pregdate}   
                           </small>
                       </td>
                       <td>
                           <a>
-                          ${project.pstart}
-                          
+                          ${project.pstart} 
                           </a>
                           <br/>
                           <a>
-                          ~ ${project.pend}
-                         
+                          ~ ${project.pend}                        
                           </a>
                       </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" style="width:${project.progress}%">
                               </div>
                           </div>
                           <small>
-                              57% Complete
+                              ${project.progress }
                           </small>
                       </td>
                       <td class="project-state">                         
  		              		<a>
  		              			${project.pstatus}
- 		              		</a>        
-                     
+ 		              		</a>               
                       </td>
                  	
                       <td class="project-actions text-right">

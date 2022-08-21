@@ -207,10 +207,12 @@ var list
                   <label>프로젝트 진행상태</label>
                   		<select name="pstatus" id="pstatus" class="form-control pm-select select2bs4">
 		    				<option selected>${project.pstatus}</option>	
-		    				<option>WAIT</option>		
-		    				<option>PROG</option>		
-		    				<option>COMP</option>		
-		    				<option>CANCEL</option>		
+		    				<option <c:if test="${project.pstatus == 'WAIT'}">selected</c:if>>WAIT</option>		
+		    				<option <c:if test="${project.pstatus == 'PROG'}">selected</c:if>>PROG</option>		
+		    				<c:if test="${project.progress} == 100 ">
+		    				 <option <c:if test="${project.pstatus == 'COMP'}">selected</c:if>>COMP</option>		
+		    				</c:if>
+		    				<option <c:if test="${project.pstatus == 'CANCEL'}">selected</c:if>>CANCEL</option>		
 		                </select>                 
               </div>   
               <div class="form-group">

@@ -74,7 +74,7 @@
             project_seq.currval, #{mid}, sysdate, sysdate)         
     </insert>
 	
-	<select id="getProjectDetail" parameterType="int" resultType="project">
+	<select id="getProjectDetail" parameterType="int" resultType="prjdto">
 		select pid, pname, pcomment, pstart, pend, pstatus
 		from project
 		where pid = #{pid}

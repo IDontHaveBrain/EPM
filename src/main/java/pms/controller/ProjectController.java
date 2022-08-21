@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.ProjectDto;
+import pms.dto.ProjectMemberDTO;
 import pms.dto.ProjectSch;
 import pms.service.ProjectService;
 import pms.vo.Member;
-import pms.vo.Project;
 
 
 
@@ -69,7 +69,7 @@ public class ProjectController {
 	
 	@RequestMapping("updateProject.do")
 	public String updateProject(ProjectDto upt, Model d){	
-		d.addAttribute("project",service.updateProject(upt));	
+		d.addAttribute("project",service.updateProject(upt));		
 		d.addAttribute("proc","upt");
 
 		return "WEB-INF\\views\\project\\projectdetail.jsp";

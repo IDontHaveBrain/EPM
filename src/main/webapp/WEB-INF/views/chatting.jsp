@@ -309,23 +309,19 @@
         <!-- 페이지 구성 시작!! -->
    
            <div class="input-group mb-2 ">
-				<input type="hidden" id="id" value="${mem.name}" class="form-control" />	
-			
+				<input type="hidden" id="id" value="${mem.name}" class="form-control" />			
 				<button type="button" id="enterBtn" class="btn btn-success">채팅입장</button>
 				<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>					
 		  </div>  		
          <div class="card card-primary">
            <div class="card-body">  
-  
-        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-           		
-				<div id="chatArea" class="media media-chat">
-					<div id="chatMessageArea"></div>
-				</div>			
-		
-			
-		</div> 	
-			
+	  
+	        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">         		
+					<div id="chatArea" class="media media-chat">
+						<div id="chatMessageArea"></div>
+					</div>			
+			</div> 	
+				
 		
 		<div class="chat_wrap">
 			<div class="input-group mb-2">

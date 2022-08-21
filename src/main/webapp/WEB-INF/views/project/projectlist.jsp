@@ -193,11 +193,11 @@
                       </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" style="width: ${project.progress}%">
                               </div>
                           </div>
                           <small>
-                              ${project.pstatus} Complete
+                              ${project.progress} Complete
                           </small>
                       </td>
                       <td class="project-state">                         

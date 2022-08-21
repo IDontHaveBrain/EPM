@@ -25,7 +25,7 @@ public interface ProjectDao {
 	public List<Member> getMemberList();
 	public List<ProjectMemberDTO> getPmemberList(int pid); //조회
 	
-	public Project getProjectDetail(int pid);
+	public ProjectDto getProjectDetail(int pid);
 	
 	public void insertProject(ProjectDto ins);	
 	public void insertParticipants(Participants p);
