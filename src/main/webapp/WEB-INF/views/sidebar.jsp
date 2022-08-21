@@ -165,6 +165,16 @@
             </p>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="manage.do?pid=${spid}" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              PM업무
+            </p>
+          </a>
+        </li>
+       
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

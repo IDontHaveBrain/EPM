@@ -13,6 +13,7 @@ import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
 import pms.service.PMService;
 import pms.vo.Member;
+import pms.vo.WorkPageSch;
 
 @Controller
 public class PMController {
@@ -60,16 +61,31 @@ public class PMController {
 		return "pageJsonReport";
 	}
 	@RequestMapping("edit_pp.do")
-	public String editParticipants(@RequestParam(value="pid", defaultValue = "0") int pid, Model d) {
+	public String editParticipants(@RequestParam(value="pid", defaultValue = "0") int pid, HttpServletRequest request, Model d) {
 		if(pid == 0) {
 			return "redirect:projectList.do";
 		}
+		HttpSession session = request.getSession();
+        Member mem = (Member)session.getAttribute("mem");
+        if(mem == null){
+            return "redirect:login.do";
+        }
+        
+        JobMemberDTO jm = new JobMemberDTO();
+        jm.setPid(pid);
+        jm.setMid(mem.getMid());
+        System.out.println(jm.getPid());
+        System.out.println(jm.getMid());
+        String pauth = service.getPauth(jm);
+        if(!pauth.equals("PM")) {
+        	return "redirect:dashboard.do?pid=" + pid;
+        }
 		d.addAttribute("pid", pid);
 		return "WEB-INF\\views\\pm\\editparticipants.jsp";
 	}
 	@RequestMapping("removepp.do")
 	public String removePP(JobMemberDTO jm, Model d) {
-		service.removePP(jm);
+		service.removePP(jm.getPpid());
 		d.addAttribute("pplist", service.getParticipants(jm.getPid()));
 		d.addAttribute("mlist", service.getNonPPMember(jm.getPid()));
 		return "pageJsonReport";
@@ -86,5 +102,39 @@ public class PMController {
 		d.addAttribute("pplist", service.getParticipants(jm.getPid()));
 		d.addAttribute("mlist", service.getNonPPMember(jm.getPid()));
 		return "pageJsonReport";
+	}
+	@RequestMapping("updatejob.do")
+	public String updatejob(JobDTO j) {
+		service.updateJob(j);
+		
+		return "pageJsonReport";
+	}
+	@RequestMapping("deletejob.do")
+	public String deletejob(@RequestParam("id") int jid, Model d) {
+		service.deleteJob(jid);
+		return "pageJsonReport";
+	}
+	@RequestMapping("jobcheck.do")
+	public String jobcheck(WorkPageSch sch, HttpServletRequest request, Model d) {
+		if(sch.getPid() == 0) {
+			return "redirect:projectList.do";
+		}
+		HttpSession session = request.getSession();
+        Member mem = (Member)session.getAttribute("mem");
+        if(mem == null){
+            return "redirect:login.do";
+        }
+        
+        JobMemberDTO jm = new JobMemberDTO();
+        jm.setPid(sch.getPid());
+        jm.setMid(mem.getMid());
+        System.out.println(jm.getPid());
+        System.out.println(jm.getMid());
+        String pauth = service.getPauth(jm);
+        if(!pauth.equals("PM")) {
+        	return "redirect:dashboard.do?pid=" + sch.getPid();
+        }
+		d.addAttribute("wlist", service.getJobCheckList(sch));
+		return "WEB-INF\\views\\pm\\jobcheck.jsp";
 	}
 }

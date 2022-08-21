@@ -60,7 +60,7 @@
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="pmsidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -103,13 +103,7 @@
                   </tr>
                   </thead>
                   <tbody class="pplist">
-                  <c:forEach var="pp" items="${pplist}">
-                  	<tr>
-                  	<td style="display:none;">${pp.mid}</td>
-                    <td>${pp.name}</td>
-                    <td>${pp.email}</td>
-                    <td> <button name="remove" type="button" class="btn btn-primary"> - </button></td></tr>
-                  </c:forEach>
+
                   </tbody>
                 </table>
               	</div>
@@ -117,7 +111,8 @@
               <!-- /.card-body -->
               <form id="reqForm">
               	<input name="mid" type="hidden" value="0"/>
-              	<input name="pid"  value="${pid}"/>
+              	<input name="pid"  type="hidden" value="${pid}"/>
+              	<input name="ppid" type="hidden" value="0"/>
               </form>
               
             </div>
@@ -138,13 +133,7 @@
                   </tr>
                   </thead>
                   <tbody class="mlist">
-                  <c:forEach var="m" items="${mlist}">
-                  	<tr>
-                  	<td style="display:none;">${m.mid}</td>
-                    <td>${m.name }</td>
-                    <td>${m.email }</td>
-                    <td> <button name="add" type="button" class="btn btn-primary"> + </button></td>
-                  </c:forEach>
+
                   </tbody>
                 </table>
               	</div>
@@ -208,8 +197,7 @@ $(document).ready(function(){
 	$(".nav-link").click(function(){
 		var id = $(this).attr("id");
 		if(id != undefined){
-			$("#reqForm").attr("action", "${path}/" + id + ".do?pid=" + ${pid});
-			$("#reqForm").submit();
+			location.href="${path}/" + id + ".do?pid=" + ${pid};
 		}
 	});
 	$(".nav-link").removeClass("active");
@@ -218,8 +206,8 @@ $(document).ready(function(){
 
 function removePP(){
 	if(confirm("선택한 멤버를 프로젝트에서 제외하시겠습니까?")){
-		var mid = $(this).parent().parent().children()[0].innerText;
-		$("input[name=mid]").val(mid);
+		var ppid = $(this).parent().parent().children()[0].innerText;
+		$("input[name=ppid]").val(ppid);		
 		ajaxlist("removepp");
 	}
 }
@@ -244,7 +232,7 @@ function ajaxlist(url){
 			var html2 = "";
 			for(var i = 0; i < pp.length; i++){
 				if(${sessionScope.mem.mid} != pp[i].mid){
-					html1 += "<tr><td style='display:none;'>" + pp[i].mid + "</td><td>" + pp[i].name + "</td><td>" + pp[i].email
+					html1 += "<tr><td style='display:none;'>" + pp[i].ppid + "</td><td>" + pp[i].name + "</td><td>" + pp[i].email
 					+ "</td><td><button name='remove' type='button' class='btn btn-primary'> - </button></td></tr>";
 				}
 			}
