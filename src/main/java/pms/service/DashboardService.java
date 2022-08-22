@@ -49,9 +49,10 @@ public class DashboardService {
     public Integer[] jobProgCount(List<Jobplan> jobList){
         Integer jprogCount[] = {0,0,0,0,0,0};
         for(Jobplan jobplan:jobList) {
-            if (jobplan.getPercent() == 100)
+            System.out.println("현재 퍼센트 : " + jobplan.getPercent());
+            if (jobplan.getPercent() >= 1.0)
                 jprogCount[0]++;
-            else if (jobplan.getPercent() < 100)
+            else if (jobplan.getPercent() < 1.0)
                 jprogCount[1]++;
             jprogCount[5]++;
 

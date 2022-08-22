@@ -29,6 +29,7 @@ public class GlobalService {
                 job.setPercent(0);
             else
                 job.setPercent(comp/(double)all);
+            //System.out.println("우와아! : " + job.getPercent());
         }
         
         return temp;
