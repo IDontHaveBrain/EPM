@@ -55,7 +55,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a id="manage" href="${path}/manage.do" class="nav-link active">
+          <a id="manage" href="#" class="nav-link active">
             <i class="nav-icon fas fa-th"></i>
             <p>
               업무관리
@@ -84,6 +84,14 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               멤버관리
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="dashboard" href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              대시보드
             </p>
           </a>
         </li>
