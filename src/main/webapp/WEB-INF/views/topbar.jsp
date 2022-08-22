@@ -229,7 +229,7 @@ function onlineMembers() {
     }
 
     wsocket2.onclose=function(){
-      alert($("#id").val()+"접속 종료합니다.")
+      //alert($("#id").val()+"접속 종료합니다.")
     }
   }
 </script>
