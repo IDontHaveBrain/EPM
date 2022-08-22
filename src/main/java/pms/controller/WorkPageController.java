@@ -76,9 +76,9 @@ public class WorkPageController {
 	@RequestMapping("deleteWorkPage.do")
 	public String deleteWorkPage(@RequestParam(value = "fid") int fid,
 			@RequestParam(value = "jmid") int jmid,
-			@RequestParam(value = "jid") int jid,Model d) {
+			@RequestParam(value = "jid") int jid,@RequestParam(value = "pid") int pid,Model d) {
 		service.deleteWorkPageFile(fid);
-		return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+		return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid+"&pid="+pid;
 	}
 	@RequestMapping("WorkPageFileinsert.do")
 	public String WorkPageInsertForm() {
@@ -87,9 +87,9 @@ public class WorkPageController {
 	@RequestMapping("WorkPageInsert.do")
 	public String WorkPageInsert(WorkPageFile ins, Model d,
 						@RequestParam(value = "jmid") int jmid,
-						@RequestParam(value = "jid") int jid) {
+						@RequestParam(value = "jid") int jid,@RequestParam(value = "pid") int pid) {
 		service.insertWorkPageFile(ins,jmid);
-			return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid;
+			return "redirect:WorkPageDetail.do?jid="+jid+"&jmid="+jmid+"&pid="+pid;
 	}
 	// 다운로드컨트롤
 	@RequestMapping("download.do")
