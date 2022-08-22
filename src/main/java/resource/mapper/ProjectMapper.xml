@@ -71,7 +71,7 @@
 	
 	<insert id="insertParticipants" parameterType="participants">
       insert into participants values(participants_seq.nextval, #{pauth},
-            project_seq.currval, #{mid}, sysdate, sysdate)         
+            project_seq.currval, #{mid}, sysdate, null)
     </insert>
 	
 	<select id="getProjectDetail" parameterType="int" resultType="prjdto">
