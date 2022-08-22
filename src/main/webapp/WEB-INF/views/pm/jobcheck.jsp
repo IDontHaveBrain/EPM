@@ -266,7 +266,7 @@ function goRisk(jmid,pid){
 		$(".nav-link").click(function(){
 			var id = $(this).attr("id");
 			if(id != undefined){
-				location.href="${path}/" + id + ".do?pid=" + ${pid};
+				location.href="${path}/" + id + ".do?pid=" + ${param.pid};
 			}
 		});
 		$(".nav-link").removeClass("active");
