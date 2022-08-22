@@ -117,7 +117,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="WorkPageList.do" class="btn btn-secondary">취소</a>  
+          <a href="WorkPageList.do?pid=${param.pid}" class="btn btn-secondary">취소</a>  
 		  <button type="button" onclick="delProc()" class="btn btn-danger float-right">삭제</button>            
           <button type="button" onclick="uptProc()" class="btn btn-primary float-right">수정</button>
         </div>
