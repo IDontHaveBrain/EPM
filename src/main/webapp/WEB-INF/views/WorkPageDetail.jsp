@@ -271,14 +271,14 @@
 <script type="text/javascript">
 $("[name=fname]").click(function(){
 	if(confirm("다운로드하시겠습니까?"))
-		return location.href="${path}/download.do?fname="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid};
+		return location.href="${path}/download.do?fname="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid}+"&pid="+${param.pid};
 	else	
 		return false;
 });
 
 $("[name=fid]").click(function(){
 	if(confirm("파일을 삭제 하시겠습니까?")){
-		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid};
+		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid}+"&pid="+${param.pid};
 				
 	}
 	else	
