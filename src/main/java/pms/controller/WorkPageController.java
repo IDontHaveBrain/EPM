@@ -118,6 +118,7 @@ public class WorkPageController {
 	// 이슈사항 등록	
 	@RequestMapping("issueInsertForm2.do")
 	public String WorkPageIssues() {
+		
 		return "WEB-INF\\views\\issue\\issue.jsp";
 	}
 	@RequestMapping("issueInsert2.do")
@@ -153,17 +154,6 @@ public class WorkPageController {
 		
 		return "redirect:WorkPageList.do?pid="+pid;
 	}
-/*
-	// 승인요청
-	@RequestMapping("updateWorkPage.do")
-	public String updateWorkPage(WorkPage upt,Model d,
-					@RequestParam(value = "jmid") int jmid) {
-			service.updateWorkPage(jmid);
-		
-		d.addAttribute("proc","upt");
-		return "redirect:WorkPageList.do?";
-	}
-*/
 
 
 }

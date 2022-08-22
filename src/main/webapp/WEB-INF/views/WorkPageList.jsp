@@ -167,7 +167,7 @@
 				<td style="text-align:center;" >${wl.jmstatus}</td>
                     <td style="text-align:center;" width="5%">
 	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
+	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid},${wl.iid})">		         	
 		         					<i class="fas fa-exclamation"></i>		         				
 	         				</button>	
 	         			</div>	             
@@ -292,8 +292,12 @@ function goDetail(jid,jmid,pid){
 function goiDetail(jmid,pid,iid){
 	location.href="${path}/issueDetail3.do?jmid="+jmid+"&pid="+pid+"&iid="+iid;
 }	
-function goRisk(jmid,pid){
+function goRisk(jmid,pid,iid){
+	if(iid != 0){
+		alert("등록된 이슈가 있습니다!!\n수정사항은 상세화면을 이용해주세요.")
+	}else{
 	location.href="${path}/issueInsertForm2.do?jmid="+jmid+"&pid="+pid;
+	}
 }	
 </script>
 

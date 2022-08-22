@@ -11,7 +11,8 @@
 		FROM 
 		(SELECT ab.*, rownum cnt
 		FROM 
-		(SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno, nvl(g.iprogress,'해당없음') iprogress, g.iid
+		(SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,
+		h.content,h.juptdate,h.jid,g.jmid,g.empno, nvl(g.iprogress,'해당없음') iprogress, g.iid
 		FROM
 		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno, z.iprogress,z.iid
 		FROM 
