@@ -39,10 +39,13 @@ public class CalendarService {
 			list.add(temp);
 		}
 		for(CalendarMember calendar : list){
+			System.out.println("asd : " + calendar.getTitle());
 			calendar.setId(calendar.getMcid());
 			SimpleDateFormat sdf;
 			sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 			sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+			if(calendar.getCstart() == null || calendar.getCend() == null)
+				continue;
 			String datetime = sdf.format(calendar.getCstart());
 			calendar.setStart(datetime);
 			datetime = sdf.format(calendar.getCend());
