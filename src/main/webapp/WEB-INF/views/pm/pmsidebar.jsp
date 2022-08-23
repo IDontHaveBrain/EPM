@@ -19,14 +19,11 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="${path}/pms/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
       <div class="info">
-        <a href="#" class="d-block">${mem.name}</a>
+        <a class="d-block">${mem.name} (${mem.empno})</a>
       </div>
       <div class="col-5">
-          	<button type="button" id="logout" class="btn btn-block btn-danger">Logout</button>
+          	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>
       </div>
     </div>
 

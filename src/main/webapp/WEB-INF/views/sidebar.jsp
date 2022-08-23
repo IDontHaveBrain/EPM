@@ -35,18 +35,8 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <c:choose>
-			<c:when test="${not empty profile.fname}">
-				<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/${profile.fname}" alt="User profile picture" width="160" height="160">
-			</c:when>
-			<c:otherwise>
-				<img class="profile-user-img img-fluid img-circle" src="${path}/profilepics/defaultpic.png" alt="User profile picture">
-			</c:otherwise>
-		</c:choose>
-      </div>
       <div class="info">
-        <a href="#" class="d-block">${mem.name}</a>
+        <a class="d-block">   ${mem.name} (${mem.empno})</a>
       </div>
       <div class="col-5">
           	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>

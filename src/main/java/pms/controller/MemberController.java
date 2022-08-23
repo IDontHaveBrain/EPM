@@ -62,10 +62,10 @@ public class MemberController {
 		if (m.getEmpno() != 0 && m.getPassword() != null) {
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
-			if (mem != null && (mem.getAuth().equals("ADMIN") || mem.getAuth().equals("CEO"))) {
+			if (mem != null && mem.getAuth().equals("ADMIN") || mem.getAuth().equals("CEO") || mem.getAuth().equals("HR") ) {
 				session.setAttribute("mem", mem);
 				return "redirect:adminDashboard.do";
-			} else if (mem != null && !(mem.getAuth().equals("ADMIN") || mem.getAuth().equals("CEO"))) {
+			} else if (mem != null && mem.getAuth() != "ADMIN" && mem.getAuth() != "CEO" && mem.getAuth() != "HR") {
 				session.setAttribute("mem", mem);
 				return "redirect:dashboard.do";
 			} else {
