@@ -68,15 +68,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              이슈확인
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item">
           <a id="edit_pp" href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>

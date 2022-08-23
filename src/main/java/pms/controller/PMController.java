@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
 import pms.service.PMService;
+import pms.service.WorkPageService;
+import pms.vo.Issues;
 import pms.vo.Member;
+import pms.vo.WorkPage;
 import pms.vo.WorkPageSch;
 
 @Controller
 public class PMController {
 	@Autowired(required = false)
 	private PMService service;
+	@Autowired(required = false)
+	private WorkPageService wpservice;
 	// http://localhost:7080/project06/manage.do
 	@RequestMapping("manage.do")
 	public String manage(@RequestParam(value="pid", defaultValue = "0") int pid, HttpServletRequest request, Model d) {
@@ -135,6 +140,41 @@ public class PMController {
         	return "redirect:dashboard.do?pid=" + sch.getPid();
         }
 		d.addAttribute("wlist", service.getJobCheckList(sch));
+		d.addAttribute("pid", sch.getPid());
 		return "WEB-INF\\views\\pm\\jobcheck.jsp";
+	}
+	@RequestMapping("pmissuedetail.do")
+	public String pmIssueDetail(@RequestParam("iid") int iid, Model d) {
+		d.addAttribute("is", wpservice.getWorkIsDetail(new Issues(), iid));
+		return "WEB-INF\\views\\pm\\issueDetail.jsp";
+	}
+	@RequestMapping("treatIssue.do")
+	public String treatIssue(Issues issue, @RequestParam("pid") int pid) {
+		service.treatIssues(issue);
+		return "redirect:jobcheck.do?pid=" + pid;
+	}
+	@RequestMapping("jobcheckDetail.do")
+	public String jobcheckDetail(WorkPage sch, HttpServletRequest request, Model d) {
+		if(sch.getPid() == 0) {
+			return "redirect:projectList.do";
+		}
+		HttpSession session = request.getSession();
+        Member mem = (Member)session.getAttribute("mem");
+        if(mem == null){
+            return "redirect:login.do";
+        }
+        d.addAttribute("workpage", wpservice.getWokrPageDetail(sch, sch.getMid(), sch.getJid()));
+        d.addAttribute("flist", wpservice.getWorkPageFile(sch, sch.getMid(), sch.getJid(), sch.getJmid()));
+		return "WEB-INF\\views\\pm\\jobcheckDetail.jsp";
+	}
+	@RequestMapping("changeJobStatus.do")
+	public String changeJobStatus(JobMemberDTO jm, Model d){
+		service.changeJobStatus(jm);
+		return "redirect:jobcheck.do?pid=" + jm.getPid();
+	}
+	@RequestMapping("jobIssueDetail.do")
+	public String jobIssueDetail(@RequestParam("pid") int pid, @RequestParam("iid") int iid, Model d) {
+		d.addAttribute("is",wpservice.getWorkIsDetail(new Issues(),iid));
+		return "WEB-INF\\views\\pm\\issueDetail.jsp";
 	}
 }

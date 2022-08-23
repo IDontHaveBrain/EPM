@@ -11,7 +11,9 @@
 		<result column="jend" property="end"/>
 	</resultMap>
 	<select id="getJobPlan"	resultMap="getJobPlan" parameterType="int">
-		SELECT jid, jname, TO_CHAR(jstart, 'yyyy-mm-dd') jstart, TO_CHAR(jend, 'yyyy-mm-dd') jend, required, realstart, realend, content, pid, jstatus
+		SELECT jid, jname, TO_CHAR(jstart, 'yyyy-mm-dd') jstart,
+				TO_CHAR(jend, 'yyyy-mm-dd') jend, required,
+				realstart, realend, content, pid, jstatus
 		FROM jobplan
 		WHERE pid = #{pid}
 		ORDER BY jstart
@@ -54,12 +56,15 @@
 		AND exitdate IS NULL
 	</select>
 	<insert id="addJobPlan" parameterType="jobdto">
-		INSERT INTO jobplan(jid, jname, jstart, jend, content, jregdate, juptdate, required, pid)
-		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}), TO_DATE(#{end}), #{content}, sysdate, sysdate, #{required}, #{pid})
+		INSERT INTO jobplan(jid, jname, jstart, jend, content,
+				jregdate, juptdate, required, pid)
+		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}), TO_DATE(#{end}),
+				#{content}, sysdate, sysdate, #{required}, #{pid})
 	</insert>
 	
 	<insert id="addJobMember" parameterType="int">
-		INSERT INTO jobmember VALUES(jobmember_seq.nextval, jobplan_seq.currval, #{ppid}, 0, 'PROG')
+		INSERT INTO jobmember
+		VALUES(jobmember_seq.nextval, jobplan_seq.currval, #{ppid}, 0, 'PROG')
 	</insert>
 	<update id="removePP" parameterType="int">
 		UPDATE participants
@@ -111,9 +116,9 @@
 		FROM 
 		(SELECT ab.*, rownum cnt
 		FROM 
-		(SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno, nvl(g.iprogress,'해당없음') iprogress, g.iid
+		(SELECT g.mid, g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno, nvl(g.iprogress,'해당없음') iprogress, g.iid
 		FROM
-		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno, z.iprogress,z.iid
+		(SELECT e.mid, e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno, z.iprogress,z.iid
 		FROM 
 		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid,c.empno
 		FROM 
@@ -151,4 +156,14 @@
 		AND jmstatus LIKE '%'||#{jmstatus}||'%' 
 		</if>
 	</select>
+	<update id="treatIssues" parameterType="issues">
+		UPDATE issues
+		SET iprogress = #{iprogress}
+			WHERE iid = #{iid}
+	</update>
+	<update id="changeJobStatus" parameterType="jmdto">
+		UPDATE jobmember
+		SET jmstatus = #{jmstatus}
+		WHERE jmid = #{jmid}
+	</update>
 </mapper>
