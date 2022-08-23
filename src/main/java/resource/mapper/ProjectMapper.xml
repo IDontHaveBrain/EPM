@@ -119,6 +119,6 @@
 	</delete>
 	<insert id="insertParticipantsManual" parameterType="participants">
 		insert into participants values(participants_seq.nextval, #{pauth},
-										#{pid}, #{mid}, sysdate, sysdate)
+										#{pid}, #{mid}, sysdate, null)
 	</insert>
 </mapper>
