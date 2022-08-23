@@ -11,6 +11,7 @@ import pms.dao.PMDao;
 import pms.dao.WorkPageDao;
 import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
+import pms.vo.Issues;
 import pms.vo.Project;
 import pms.vo.UpdateJobVO;
 import pms.vo.WorkPage;
@@ -140,5 +141,20 @@ public class PMService {
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
         }
 		return dao.getJobCheckList(sch);
+	}
+	public void treatIssues(Issues issue) {
+		dao.treatIssues(issue);
+	}
+	public void changeJobStatus(JobMemberDTO jm) {
+		dao.changeJobStatus(jm);
+	}
+	public WorkPage getJobDetailList(WorkPage wp) {
+		return dao.getJobDetailList(wp);
+	}
+	public WorkPage getJobFile(WorkPage wp) {
+		return dao.getJobFile(wp);
+	}
+	public Issues getIssues(int pid) {
+		return dao.getIssues(pid);
 	}
 }

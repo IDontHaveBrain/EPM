@@ -51,7 +51,7 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
@@ -119,18 +119,17 @@
                     <th style="text-align:center;" width="7%">담당자 (사원번호)</th>
                     <th style="text-align:center;" width="9%">시작날짜</th>
                     <th style="text-align:center;" width="9%">마감날짜</th>
-                    <th style="text-align:center;" width="13%">업무이름</th>
+                    <th style="text-align:center;" width="15%">업무이름</th>
                     <th style="text-align:center;" width="9%">수정일</th>
                     <th style="text-align:center;" width="5%">진행률</th> 					
                     <th style="text-align:center;" width="5%">승인여부</th>
-                    <th style="text-align:center;" width="2%">이슈사항</th>
                     <th style="text-align:center;" width="2%">이슈상세</th>
                     <th style="text-align:center;" width="5%">이슈처리상태</th>
                   </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="wl" items="${wlist}">
-                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid},${param.pid})">
+                  <tr style="cursor:center;" ondblclick="goDetail(${wl.jid},${wl.jmid},${param.pid}, ${wl.mid })">
                     <td style="text-align:center;">${wl.cnt}</td>
                     <td style="text-align:center;">${wl.name}(${wl.empno})</td>
                     <td style="text-align:center;">
@@ -144,14 +143,7 @@
 				<td style="text-align:center;" >${wl.jmstatus}</td>
                     <td style="text-align:center;" width="5%">
 	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-danger" type="button" onclick="goRisk(${wl.jmid},${param.pid})">		         	
-		         					<i class="fas fa-exclamation"></i>		         				
-	         				</button>	
-	         			</div>	             
-                    </td>
-                    <td style="text-align:center;" width="5%">
-	         			<div class="btn-group-vertical">
-	         				<button class="btn btn-warning" type="button" onclick="goiDetail(${wl.jmid},${param.pid},${wl.iid})">		         	
+	         				<button class="btn btn-warning" type="button" onclick="goiDetail(${param.pid},${wl.iid})">		         	
 		         					<i class="fas fa-folder-open"></i>		         				
 	         				</button>
 	         			</div>	             
@@ -253,14 +245,11 @@ function goPage(cnt){
 	$("form").submit();
 }
 
-function goDetail(jid,jmid,pid){
-	location.href="${path}/WorkPageDetail.do?jid="+jid+"&jmid="+jmid+"&pid="+pid;
+function goDetail(jid,jmid,pid, mid){
+	location.href="${path}/jobcheckDetail.do?jid="+jid+"&jmid="+jmid+"&pid="+pid+"&mid="+mid;
 }	
-function goiDetail(jmid,pid,iid){
-	location.href="${path}/issueDetail3.do?jmid="+jmid+"&pid="+pid+"&iid="+iid;
-}	
-function goRisk(jmid,pid){
-	location.href="${path}/issueInsertForm2.do?jmid="+jmid+"&pid="+pid;
+function goiDetail(pid,iid){
+	location.href="${path}/jobIssueDetail.do?pid="+pid+"&iid="+iid;
 }	
 	$(document).ready(function(){
 		$(".nav-link").click(function(){

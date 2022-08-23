@@ -90,8 +90,8 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.ntitle
-            + "</td>";
+          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" +
+                  "<a href='#modal-dash' data-toggle='modal' data-target='#modal-dash' onclick='getNotice("+ rst.nid +")'>" + rst.ntitle + "</a></td>";
           addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
         });
         //console.log(addHTML);
@@ -106,6 +106,25 @@
         }
         addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageN(' + (nsch.endBlock+1) + ')">&raquo;</a></li>';
         $("#npage").html(addPage);
+      }
+    });
+  }
+
+  function getNotice(nid){
+    $.ajax({
+      url: "${path}/notice.do",
+      data: "nid=" + nid,
+      dataType: "json",
+      success: function (data) {
+        console.log(data)
+        var notice = data.notice;
+        var addHTML = "";
+        var addPage = "";
+        addHTML += "<p>" + notice.ncontent + "</p>";
+        $("#m-title").text(notice.ntitle);
+        $("#m-content").html(addHTML);
+        //console.log(addHTML);
+        //$("#nlist").html(addHTML);
       }
     });
   }
@@ -206,6 +225,28 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
+        <div class="modal fade" id="modal-dash">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="m-title">공지사항</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="m-content">
+                <p>One fine body&hellip;</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
         <div class="row">
           <div class="col-md-12">
             <div class="card">

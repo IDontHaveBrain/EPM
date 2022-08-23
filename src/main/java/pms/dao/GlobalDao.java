@@ -1,10 +1,7 @@
 package pms.dao;
 // pms.dao.GlobalDao
 import org.springframework.stereotype.Repository;
-import pms.vo.Jobplan;
-import pms.vo.Member;
-import pms.vo.Participants;
-import pms.vo.Project;
+import pms.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +19,7 @@ public interface GlobalDao {
     public boolean isAdmin(int mid);
     public List<Member> getPrjMembers(int pid);
     public List<Project> getMyPrjList(int mid);
+    public Notice getNotice(int nid);
     public boolean testMember(Map check);
     public Member getTestMember(int mid);
 }
