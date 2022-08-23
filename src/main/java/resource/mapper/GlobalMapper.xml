@@ -49,4 +49,7 @@
              (select * from PARTICIPANTS pp, MEMBER m where pp.MID = m.MID and m.MID = #{mid}) mm
         where p.PID = mm.PID
     </select>
+    <select id="getNotice" parameterType="int" resultType="notice">
+        select * from NOTICE where NID=#{NID}
+    </select>
 </mapper>

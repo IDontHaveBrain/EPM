@@ -91,4 +91,10 @@ public class DashboardController {
         d.addAttribute("nlist", service.noticePaging(sch ,pid));
         return "pageJsonReport";
     }
+
+    @RequestMapping("notice.do")
+    public String notice(@RequestParam(value = "nid", defaultValue = "0") int nid, Model d){
+        d.addAttribute("notice",gservice.getNotice(nid));
+        return "pageJsonReport";
+    }
 }
