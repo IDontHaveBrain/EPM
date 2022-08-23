@@ -31,14 +31,6 @@ select {
   <link rel="stylesheet" href="${path}/pms/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
-<select class="selLang" id="selLan">
-	<option value=""><spring:message code="chLang"/></option>
-	<option value="ko"><spring:message code="ko"/></option>
-	<option value="en"><spring:message code="en"/></option>
-</select>
-<form id="selLang" class="form-inline" method="post">
-	<input type="hidden" name="lang" value=""/>
-</form>
 <div class="login-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
