@@ -118,7 +118,9 @@ public class DashboardService {
         sch.setCount(	dao.noticeTotCnt(pid) ); // 프로젝트 선택파트 완료시 pid로 변경
         //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
-        sch.setPageSize(3);
+        if(sch.getPageSize() == 0) {
+            sch.setPageSize(3);
+        }
         // 3. 총페이지수 : 데이터건수/한번에 보여주페이지 크기  [1][2][3][4]
         //    ex) 18/5 ==> 3
         //    ex) 18/5.0 (실수) ==> Math.ceil(3.6) : 4.0 ==> 정수형으로 변환하여 4를 총페이지수로 처리

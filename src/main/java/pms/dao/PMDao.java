@@ -38,4 +38,7 @@ public interface PMDao {
 	public WorkPage getJobFile(WorkPage wp);
 	public Issues getIssues(int pid);
 	public List<Notice> getNoticeList(int pid);
+	public void insertNotice(Notice ins);
+	public Notice pmNoticeDetail(int nid);
+	public void updateNotice(Notice upt);
 }

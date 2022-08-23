@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
+import pms.dto.NoticeSch;
+import pms.service.DashboardService;
 import pms.service.PMService;
 import pms.service.WorkPageService;
 import pms.vo.Issues;
 import pms.vo.Member;
+import pms.vo.Notice;
 import pms.vo.WorkPage;
 import pms.vo.WorkPageSch;
 
@@ -24,6 +27,8 @@ public class PMController {
 	private PMService service;
 	@Autowired(required = false)
 	private WorkPageService wpservice;
+	@Autowired(required = false)
+	private DashboardService dbservice;
 	// http://localhost:7080/project06/manage.do
 	@RequestMapping("manage.do")
 	public String manage(@RequestParam(value="pid", defaultValue = "0") int pid, HttpServletRequest request, Model d) {
@@ -178,8 +183,36 @@ public class PMController {
 		return "WEB-INF\\views\\pm\\issueDetail.jsp";
 	}
 	@RequestMapping("noticeList.do")
-	public String noticeList(@RequestParam("pid") int pid, Model d){
-		d.addAttribute(service.getNoticeList(pid));
+	public String noticeList(NoticeSch sch, HttpServletRequest request, Model d){
+		if(sch.getPid() == 0) {
+			return "redirect:projectList.do";
+		}
+		HttpSession session = request.getSession();
+        Member mem = (Member)session.getAttribute("mem");
+        if(mem == null){
+            return "redirect:login.do";
+        }
+		d.addAttribute("nlist", dbservice.noticePaging(sch, sch.getPid()));
+		d.addAttribute("sch", sch);
 		return "WEB-INF\\views\\pm\\noticelist.jsp";
+	}
+	@RequestMapping("insertNoticeForm.do")
+	public String insertNotice(@RequestParam("pid") int pid, Model d) {
+		return "WEB-INF\\views\\pm\\insertNoticeForm.jsp";
+	}
+	@RequestMapping("insertNotice.do")
+	public String insertNotice(Notice ins, Model d) {
+		service.insertNotice(ins);
+		return "redirect:noticeList.do?pid="+ins.getPid();
+	}
+	@RequestMapping("updateNotice.do")
+	public String updateNotice(Notice upt, Model d) {
+		service.updateNotice(upt);
+		return "redirect:noticeList.do?pid="+upt.getPid();
+	}
+	@RequestMapping("noticeDetail.do")
+	public String noticeDetail(Notice n, Model d) {
+		d.addAttribute("notice", service.pmNoticeDetail(n.getNid()));
+		return "WEB-INF\\views\\pm\\noticeDetail.jsp";
 	}
 }
