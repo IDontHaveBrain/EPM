@@ -114,12 +114,12 @@
       		<input type="hidden" name="curPage" value="0"> <!-- 하단 js에 의해서 현재페이지 번호를 전송  -->
 
         <div class="card-header">
-          <h3 class="card-title">Projects</h3>
+           <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
             
 
        
           <div class="card-tools">
-	         <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+	      
 	          <div class="input-group-append">
 	          <span class="text-center input-group-text">총 : ${projectSch.count }건</span>
 				<span class="text-center input-group-text">페이지 크기</span>
@@ -165,11 +165,11 @@
                                 
                   </tr>
               </thead>
-              <c:forEach var="project" items="${projectList}">
+              <c:forEach var="project" items="${projectList}" varStatus="sts">
               <tbody>         
                   <tr ondblclick="goDetail(${project.pid})">
                       <td>
-                          ${project.cnt}
+                          ${sts.index+1}
                       </td>
                       <td>
                           <a>

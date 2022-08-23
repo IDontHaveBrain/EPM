@@ -164,12 +164,12 @@
                                 
                   </tr>
               </thead>
-                   <c:forEach var="project" items="${prjList}">
+                   <c:forEach var="project" items="${prjList}" varStatus="sts">
               <tbody>  
             
                   <tr ondblclick="goDetail(${project.pid})">
                       <td>
-                          ${project.cnt}
+                          ${sts.index+1}
                       </td>
                       <td>
                           <a>
