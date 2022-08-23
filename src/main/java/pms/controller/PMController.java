@@ -177,4 +177,9 @@ public class PMController {
 		d.addAttribute("is",wpservice.getWorkIsDetail(new Issues(),iid));
 		return "WEB-INF\\views\\pm\\issueDetail.jsp";
 	}
+	@RequestMapping("noticeList.do")
+	public String noticeList(@RequestParam("pid") int pid, Model d){
+		d.addAttribute(service.getNoticeList(pid));
+		return "WEB-INF\\views\\pm\\noticelist.jsp";
+	}
 }

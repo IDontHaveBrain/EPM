@@ -58,7 +58,7 @@
 	<insert id="addJobPlan" parameterType="jobdto">
 		INSERT INTO jobplan(jid, jname, jstart, jend, content,
 				jregdate, juptdate, required, pid)
-		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}), TO_DATE(#{end}),
+		VALUES(jobplan_seq.nextval, #{name}, TO_DATE(#{start}, 'yyyy-mm-dd'), TO_DATE(#{end}, 'yyyy-mm-dd'),
 				#{content}, sysdate, sysdate, #{required}, #{pid})
 	</insert>
 	
@@ -166,4 +166,10 @@
 		SET jmstatus = #{jmstatus}
 		WHERE jmid = #{jmid}
 	</update>
+	<select id="getNoticeList" parameterType="int" resultType="Notice">
+		SELECT *
+		FROM notice
+		WHERE pid = #{pid}
+		ORDER BY nuptdate desc
+	</select>
 </mapper>

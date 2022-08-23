@@ -12,6 +12,7 @@ import pms.dao.WorkPageDao;
 import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
 import pms.vo.Issues;
+import pms.vo.Notice;
 import pms.vo.Project;
 import pms.vo.UpdateJobVO;
 import pms.vo.WorkPage;
@@ -156,5 +157,8 @@ public class PMService {
 	}
 	public Issues getIssues(int pid) {
 		return dao.getIssues(pid);
+	}
+	public List<Notice> getNoticeList(int pid){
+		return dao.getNoticeList(pid);
 	}
 }

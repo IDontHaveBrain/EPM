@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import pms.dto.JobDTO;
 import pms.dto.JobMemberDTO;
 import pms.vo.Issues;
+import pms.vo.Notice;
 import pms.vo.Project;
 import pms.vo.UpdateJobVO;
 import pms.vo.WorkPage;
@@ -36,4 +37,5 @@ public interface PMDao {
 	public WorkPage getJobDetailList(WorkPage wp);
 	public WorkPage getJobFile(WorkPage wp);
 	public Issues getIssues(int pid);
+	public List<Notice> getNoticeList(int pid);
 }
