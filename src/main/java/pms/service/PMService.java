@@ -161,4 +161,13 @@ public class PMService {
 	public List<Notice> getNoticeList(int pid){
 		return dao.getNoticeList(pid);
 	}
+	public void insertNotice(Notice ins) {
+		dao.insertNotice(ins);
+	}
+	public Notice pmNoticeDetail(int nid) {
+		return dao.pmNoticeDetail(nid);
+	}
+	public void updateNotice(Notice upt) {
+		dao.updateNotice(upt);
+	}
 }

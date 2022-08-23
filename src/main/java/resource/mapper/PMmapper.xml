@@ -166,10 +166,26 @@
 		SET jmstatus = #{jmstatus}
 		WHERE jmid = #{jmid}
 	</update>
-	<select id="getNoticeList" parameterType="int" resultType="Notice">
+	<select id="getNoticeList" parameterType="int" resultType="notice">
 		SELECT *
 		FROM notice
 		WHERE pid = #{pid}
 		ORDER BY nuptdate desc
 	</select>
+	<select id="pmNoticeDetail" parameterType="int" resultType="notice">
+		SELECT *
+		FROM notice
+		WHERE nid = #{nid}
+	</select>
+	<update id="updateNotice" parameterType="notice">
+		UPDATE notice
+		SET ntitle = #{ntitle},
+			ncontent = #{ncontent},
+			nuptdate = sysdate
+		WHERE nid = #{nid}
+	</update>
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO notice
+		VALUES(notice_seq.nextval, #{pid}, #{ntitle}, #{ncontent}, sysdate, sysdate)
+	</insert>
 </mapper>
