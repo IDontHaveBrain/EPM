@@ -365,7 +365,7 @@
 				var msg = $("#msg").val()
 		
 				
-				wsocket.send("msg:"+id+":"+"<span>"+msg+"</span>"+"&nbsp;&nbsp;&nbsp;<span>"+date+"</span>")
+				wsocket.send("msg:"+id+":"+"<sㄱpan>"+msg+"</span>"+"&nbsp;&nbsp;&nbsp;<span>"+date+"</span>")
 
 				$("#msg").val("").focus()				
 				
