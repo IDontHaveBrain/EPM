@@ -78,8 +78,8 @@
 	<update id="updateJobPlan" parameterType="jobdto">
 		UPDATE jobplan
 				SET jname = #{name},
-					 jstart = #{start},
-					 jend = #{end},
+					 jstart = TO_DATE(#{start}, 'yyyy-mm-dd'),
+					 jend = TO_DATE(#{end}, 'yyyy-mm-dd'),
 					 juptdate = sysdate,
 					 content = #{content}
 		WHERE jid = #{id}
