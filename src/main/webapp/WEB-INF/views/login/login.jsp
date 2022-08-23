@@ -59,7 +59,7 @@ select {
 
       <form action="login.do" id="login" method="post">
         <div class="input-group mb-3">
-          <input type="text" name="empno" id="empno" class="form-control" placeholder="<spring:message code="empno"/>">
+          <input type="number" name="empno" id="empno" class="form-control" placeholder="<spring:message code="empno"/>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
