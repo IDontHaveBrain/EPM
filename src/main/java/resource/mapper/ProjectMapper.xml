@@ -8,6 +8,7 @@
 		 SELECT count(*)
 		 	FROM project j, participants p
 		 where j.pid = p.pid
+		 AND exitdate IS null
 		 and mid = #{mid}	
 		 and 1=1		 
 			 <if test="pname!=null">
@@ -28,6 +29,7 @@
 			select j.*, rownum cnt
 		     from project j, participants p
 		     where j.pid = p.pid
+		     AND exitdate IS null
 		     and mid = #{mid}
 		     	<if test="pname != null">
 					AND pname LIKE '%'||#{pname}||'%'
@@ -41,10 +43,10 @@
 		from (
 			select p.*, rownum cnt
 		     from project p
-		     where 1=1
+		     order by pid
 		     	<if test="pname != null">
 					AND pname LIKE '%'||#{pname}||'%'
-				</if>
+				</if>	
 		     )
 		where cnt between #{start} and #{end}
 	</select>
