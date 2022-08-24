@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pms.dao.GlobalDao;
 import pms.vo.Jobplan;
 import pms.vo.Member;
+import pms.vo.Notice;
 import pms.vo.Project;
 
 @Service
@@ -29,9 +30,12 @@ public class GlobalService {
                 job.setPercent(0);
             else
                 job.setPercent(comp/(double)all);
+            //System.out.println("우와아! : " + job.getPercent());
         }
+        
         return temp;
     }
+
     public boolean isProjectMember(Integer mid, Integer pid) {
         Map<String, Object> map = new HashMap<>();
         map.put("mid", mid);
@@ -52,5 +56,8 @@ public class GlobalService {
     }
     public List<Project> getMyPrjList(int mid) {
         return dao.getMyPrjList(mid);
+    }
+    public Notice getNotice(int nid){
+        return dao.getNotice(nid);
     }
 }

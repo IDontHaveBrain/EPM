@@ -69,7 +69,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">멤버관리</h1>
+            <h1 class="m-0"></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -87,62 +87,70 @@
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
 <div class="row">
-          <div class="col-6">
+          <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">참여중인 멤버</h3>
+                <h2 class="card-title">공지사항</h2>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+              <form class="form"  method="post">
+					<input type="hidden" name="curPage" value="0">
+					<span class="form-control" style="border:none"> </span>	
+					<div class="input-group-append float-right">
+						<span class="text-center input-group-text">페이지 크기</span>
+						<select name="pageSize" class="form-select">
+							<option value="3">3</option>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+						</select>
+					</div>
+					</form>
+					</div>
               		<table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>이름</th>
-                    <th>이메일</th>
-                    <th></th>
+                    <th style="text-align:center;">제목</th>
+                    <th style="text-align:center;">등록일</th>
+                    <th style="text-align:center;">수정일</th>
                   </tr>
                   </thead>
-                  <tbody class="pplist">
-
+                  <tbody class="nlist">
+					<c:forEach var="n" items="${nlist}">
+                  <tr style="cursor:center;" ondblclick="goDetail(${n.nid}, ${param.pid})">
+                    <td style="text-align:center;">${n.ntitle}</td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${n.nregdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                    <td style="text-align:center;">
+                    <fmt:formatDate value="${n.nuptdate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                  </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
+                 <div class="card-footer">
+              		<ul class="pagination justify-content-center">
+				  <li class="page-item"><a class="page-link" href="javascript:goPage(${sch.startBlock-1})">이전</a></li>
+				  <c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
+				  	<li class="page-item ${sch.curPage==cnt?'active':''}">
+				  			<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a></li>
+				  </c:forEach>
+				  <li class="page-item"><a class="page-link" href="javascript:goPage(${sch.endBlock+1})">다음</a></li>
+				</ul>
+					<button class="float-right btn btn-primary" onclick="insertNotice()">공지등록</button>
               	</div>
               	</div>
+              	
+              	</div>
+              	
               <!-- /.card-body -->
-              <form id="reqForm">
-              	<input name="mid" type="hidden" value="0"/>
-              	<input name="pid"  type="hidden" value="${pid}"/>
-              	<input name="ppid" type="hidden" value="0"/>
-              </form>
               
             </div>
-                          		
-			          <div class="col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">참여가능한 멤버</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-<table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>이름</th>
-                    <th>이메일</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody class="mlist">
-
-                  </tbody>
-                </table>
-              	</div>
-              	</div>
-              <!-- /.card-body -->
-            </div>
+                          	
             </div>
         <!-- 페이지 구성 끝!! -->
-      </div><!-- /.container-fluid -->
+<!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
@@ -193,59 +201,33 @@
 <script src="${path}/pms/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <script >
 $(document).ready(function(){
-	ajaxlist("pplist");
 	$(".nav-link").click(function(){
 		var id = $(this).attr("id");
 		if(id != undefined){
-			location.href="${path}/" + id + ".do?pid=" + ${pid};
+			location.href="${path}/" + id + ".do?pid=" + ${param.pid};
 		}
 	});
 	$(".nav-link").removeClass("active");
-	$("#edit_pp").addClass("active");
+	$("#noticeList").addClass("active");
+	$("[name=pageSize]").val("${sch.pageSize}");
+	// 페이지 크기 변경시 마다, controller 단 호출..
+	$("[name=pageSize]").change(function(){
+		$("[name=curPage]").val("1");
+		$("form").submit();
+	});
 });
 
-function removePP(){
-	if(confirm("선택한 멤버를 프로젝트에서 제외하시겠습니까?")){
-		var ppid = $(this).parent().parent().children()[0].innerText;
-		$("input[name=ppid]").val(ppid);		
-		ajaxlist("removepp");
-	}
+function goDetail(nid, pid) {
+	location.href="${path}/noticeDetail.do?pid="+pid+"&nid="+nid;
 }
 
-function addPP(){
-	if(confirm("선택한 멤버를 프로젝트에 참여시키겠습니까?")){
-		var mid = $(this).parent().parent().children()[0].innerText;
-		$("input[name=mid]").val(mid);
-		ajaxlist("addpp");
-	}
+function goPage(cnt){
+	// 요청값으로 현재 클릭한 페이지를 설정하고, 서버에 전달..
+	$("[name=curPage]").val(cnt);
+	$("form").submit();
 }
-
-function ajaxlist(url){
-	$.ajax({
-		url: "${path}/" + url + ".do",
-		data: $("form").serialize(),
-		dataType: "json",
-		success: function(data){
-			var pp = data.pplist;
-			var m = data.mlist;
-			var html1 = "";
-			var html2 = "";
-			for(var i = 0; i < pp.length; i++){
-				if(${sessionScope.mem.mid} != pp[i].mid){
-					html1 += "<tr><td style='display:none;'>" + pp[i].ppid + "</td><td>" + pp[i].name + "</td><td>" + pp[i].email
-					+ "</td><td><button name='remove' type='button' class='btn btn-primary'> - </button></td></tr>";
-				}
-			}
-			for(var i = 0; i < m.length; i++){
-				html2 += "<tr><td style='display:none;'>" + m[i].mid + "</td><td>" + m[i].name + "</td><td>" + m[i].email
-					+ "</td><td><button name='add' type='button' class='btn btn-primary'> + </button></td></tr>";
-			}
-			$("tbody.pplist").html(html1);
-			$("tbody.mlist").html(html2);
-			$("[name=remove]").click(removePP);
-			$("[name=add]").click(addPP);
-		}
-	});
+function insertNotice(){
+	location.href="${path}/insertNoticeForm.do?pid=" + ${param.pid};
 }
   </script>
 </body>

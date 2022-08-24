@@ -23,6 +23,7 @@
 		<typeAlias type="pms.vo.WorkPageSch" alias="workpagesch"/>
 		<typeAlias type="pms.vo.MemberSch" alias="membersch"/>
 		<typeAlias type="pms.vo.MemberProfile" alias="memberprofile"/>
+		<typeAlias type="pms.vo.UpdateJobVO" alias="uptjob"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/mapper/MemberMapper.xml"/>

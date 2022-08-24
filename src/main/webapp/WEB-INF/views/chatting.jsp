@@ -110,7 +110,7 @@
 				var revMsg = msg.substring(4)
 				console.log("#메시지 받기#")
 				console.log(msg)
-				$("#chatMessageArea").append(revMsg+"<br>")	
+				$("#chatMessageArea").append("<span>" + revMsg + "</span>"+"<br>")	
 				// 자동 scolling 처리 로직
 				// 1.  전체 charMessageArea의 입력된 최대 높이 구하기
 				var mx = parseInt($("#chatMessageArea").height())
@@ -309,23 +309,19 @@
         <!-- 페이지 구성 시작!! -->
    
            <div class="input-group mb-2 ">
-				<input type="hidden" id="id" value="${mem.name}" class="form-control" />	
-			
+				<input type="hidden" id="id" value="${mem.name}" class="form-control" />			
 				<button type="button" id="enterBtn" class="btn btn-success">채팅입장</button>
 				<button type="button" id="exitBtn" class="btn btn-danger">나가기</button>					
 		  </div>  		
          <div class="card card-primary">
            <div class="card-body">  
-  
-        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-           		
-				<div id="chatArea" class="media media-chat">
-					<div id="chatMessageArea"></div>
-				</div>			
-		
-			
-		</div> 	
-			
+	  
+	        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">         		
+					<div id="chatArea" class="media media-chat">
+						<div id="chatMessageArea"></div>
+					</div>			
+			</div> 	
+				
 		
 		<div class="chat_wrap">
 			<div class="input-group mb-2">
@@ -348,33 +344,39 @@
 	            return ct;
 	        }
 	        
-			$("time").append( function(){
-				$(this).css("font-size","small");
-			}); //흠 안되네..^_^
+
+	       
+	        
+			
+			var id = $("#id").val()
+			var date = currentTime()
+			
+
 	        
 			$("#msg").keyup(function(){
 				if(event.keyCode==13){
-					wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+$("time").val())
+					wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+date)
 					$(this).val("").focus()
 				}
 				
 			});
 			// 전송 버튼을 클릭시에 메시지 전송
 			$("#sndBtn").click(function(){
-				wsocket.send("msg:"+$("#id").val()+":"+$("#msg").val()+"&nbsp;&nbsp;&nbsp;"+currentTime())
+				var msg = $("#msg").val()
+		
+				
+				wsocket.send("msg:"+id+":"+"<sㄱpan>"+msg+"</span>"+"&nbsp;&nbsp;&nbsp;<span>"+date+"</span>")
+
 				$("#msg").val("").focus()				
 				
 			});
 			
-		
-            
+
 
 		</script>
 		</div>
 	</div>
-		<div class="text-right">
-			<button type="button" onclick="goMain()" class="btn btn-info">메인화면</button>
-		</div>		
+	
 
 		
 	

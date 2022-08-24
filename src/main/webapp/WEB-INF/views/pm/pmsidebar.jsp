@@ -19,14 +19,11 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="${path}/pms/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
       <div class="info">
-        <a href="#" class="d-block">${mem.name}</a>
+        <a class="d-block">${mem.name} (${mem.empno})</a>
       </div>
       <div class="col-5">
-          	<button type="button" id="logout" class="btn btn-block btn-danger">Logout</button>
+          	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>
       </div>
     </div>
 
@@ -47,20 +44,18 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a id="noticeList" href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               공지사항
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a id="manage" href="${path}/manage.do" class="nav-link active">
+          <a id="manage" href="#" class="nav-link active">
             <i class="nav-icon fas fa-th"></i>
             <p>
               업무관리
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
@@ -69,26 +64,22 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               산출물확인
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              이슈확인
-              <span class="right badge badge-danger">New</span>
-            </p>
-          </a>
-        </li>
-
         <li class="nav-item">
           <a id="edit_pp" href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               멤버관리
-              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="dashboard" href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              대시보드
             </p>
           </a>
         </li>

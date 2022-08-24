@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="pms.dao.WorkPageDao">
+
 	<select id="getWorkPageList" resultType="workpage" parameterType="workpagesch">
 		SELECT *
 		FROM
@@ -10,9 +11,10 @@
 		FROM 
 		(SELECT ab.*, rownum cnt
 		FROM 
-		(SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,h.content,h.juptdate,h.jid,g.jmid,g.empno
+		(SELECT g.name,g.progress,g.jmstatus,h.jname,h.jstart,h.jend,g.pname,
+		h.content,h.juptdate,h.jid,g.jmid,g.empno, nvl(g.iprogress,'해당없음') iprogress, g.iid
 		FROM
-		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno
+		(SELECT e.name,f.jid,f.progress,f.jmstatus,e.pname,f.jmid,e.empno, z.iprogress,z.iid
 		FROM 
 		(SELECT c.name,c.pid,c.ppid,d.pid,d.pname,c.mid,c.empno
 		FROM 
@@ -21,9 +23,9 @@
 		WHERE a.mid=b.mid
 		AND a.mid=#{mid}) c, project d
 		WHERE c.pid=d.pid
-		AND c.pid=#{pid}) e,jobmember f
+		AND c.pid=#{pid}) e,jobmember f, ISSUES z
 		WHERE 1=1
-		AND e.ppid=f.ppid
+		AND e.ppid=f.ppid AND z.jmid(+) = f.jmid
 		<if test="jmstatus!=null">
 		AND jmstatus LIKE '%'||#{jmstatus}||'%' 
 		</if> ) g,jobplan h
@@ -132,7 +134,7 @@
 									#{path},
 									#{fname} )
 	</insert>
-	<update id="updateWorkPage" parameterType="int" >
+	<update id="updateWorkPage" parameterType="workpage" >
 		UPDATE jobmember 
 		SET jmstatus='REQ' 
 		WHERE jmid=#{jmid}	
@@ -142,9 +144,32 @@
 		FROM jobfile 
 		WHERE fid = #{fid}	
 	</delete>
-    <insert id="insertIssue" parameterType="issues">
-        INSERT INTO issues values(issues_seq.NEXTVAL, #{ititle}, #{icontent}, #{iprogress}, sysdate, sysdate, #{jmid})
+    <insert id="insertIssue" parameterType="int">
+        INSERT INTO issues values(issues_seq.NEXTVAL,
+        				 #{ititle},
+        				 #{icontent}, 
+        				 #{iprogress}, 
+        				 sysdate, 
+        				 sysdate, 
+        				 #{jmid} )
     </insert>
+	<select id="getWorkIsDetail" parameterType="int" resultType="issues">
+		SELECT *
+		FROM issues
+		WHERE iid = #{iid}
+	</select>
+	<update id="updateIssues" parameterType="issues">
+		UPDATE issues
+		   SET ititle = #{ititle},
+			   icontent = #{icontent},
+			   iuptdate = sysdate
+		WHERE iid = #{iid}	
+	</update>
+	<delete id="deleteIssues" parameterType="int">
+		delete 
+		FROM issues
+		WHERE iid = #{iid}
+	</delete>
 </mapper>
         
         

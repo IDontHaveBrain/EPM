@@ -5,6 +5,12 @@
 <fmt:requestEncoding value="utf-8"/>
 <!DOCTYPE html>
 <html>
+<c:if test="${param.iid == 0}">
+<script type="text/javascript">
+	alert("등록된 이슈가 없습니다!");
+	location.href="WorkPageList.do?pid=${param.pid}";
+</script>
+</c:if>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +78,7 @@
      
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">이슈사항 등록</h3>
+              <h3 class="card-title">이슈사항 수정 및 삭제</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -83,21 +89,26 @@
 
             	
             <div class="card-body">
-             <form action="${path}/issueInsert2.do" class="form" method="post">
-				<input type=hidden name="jmid" value="${param.jmid}"/> 
+             <form action="${path}/uptIssuespage.do" class="form" method="post">
 				<input type=hidden name="pid" value="${param.pid}"/> 
+				<input type=hidden name="iid" value="${param.iid}"/> 
               <div class="form-group">
                 <label for="inputName">제 목</label>
-                <input type="text" name="ititle" value="${param.ititle}" class="form-control">
+                <input type="text" name="ititle" value="${isList.ititle}" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputDescription">이슈사항 내용</label>
-                <textarea name="icontent" class="form-control" rows="4">${param.icontent}</textarea>
+                <textarea name="icontent" class="form-control" rows="4">${isList.icontent}</textarea>
               </div>              
+              <div class="form-group">              
+				<label for="inputDescription">최근 수정일</label>
+			<input  class="form-control" 
+				value='<fmt:formatDate value="${isList.iuptdate}" pattern="yyyy-MM-dd hh:mm:ss"/>' placeholder="작성자 입력하세요" />	
+              </div>
               <div class="form-group"> 
               	<label for="inputProjectLeader">처리현황</label>
                 <select name="iprogress" class="form-control pm-select">
-                  <option value="REQ">대기</option>
+                  <option value="PROG">수정</option>
                 </select> 
               </div>
 			  </form>
@@ -106,8 +117,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="WorkPageList.do" class="btn btn-secondary">취소</a>    
-          <button type="button" onclick="insertProc()" class="btn btn-success float-right">등록</button>
+          <a href="WorkPageList.do?pid=${param.pid}" class="btn btn-secondary">취소</a>  
+		  <button type="button" onclick="delProc()" class="btn btn-danger float-right">삭제</button>            
+          <button type="button" onclick="uptProc()" class="btn btn-primary float-right">수정</button>
         </div>
       </div>
       
@@ -125,32 +137,32 @@
   <!-- /.control-sidebar -->
 <!-- ./wrapper -->
 <script type="text/javascript">
-	function insertProc(){
-		if(confirm("이슈사항 등록 하시겠습니까?")){
+	function uptProc(){
+		if(confirm("이슈사항 수정 하시겠습니까?")){
 			var ititleVal = $("[name=ititle]").val();		
 			if(	ititleVal == ""){
-				alert("제목을 등록하세요");
+				alert("등록된 제목이 없습니다.");
 				$("[name=ititle]").focus();
 				return; 
 			}	
 			var icontentVal = $("[name=icontent]").val();		
 			if(	icontentVal == ""){
-				alert("내용을 등록하세요");
+				alert("등록된 내용이 없습니다.");
 				$("[name=icontent]").focus();
 				return; 
 			}			
-			var iprogressVal = $("[name=iprogress]").val();		
-			if(	iprogressVal == ""){
-				alert("처리현황을 선택하세요");
-				$("[name=iprogress]").focus();
-				return; 
-			}
-			alert("등록이 완료됬습니다.");
-			$("form").attr("action","${path}/issueInsert2.do");
+			alert("수정이 완료됬습니다.");
+			$("form").attr("action","${path}/uptIssuespage.do");
 			$("form").submit();
 			}
 	}
-
+	function delProc(){
+		if(confirm("신청하신 이슈사항을 삭제 하시겠습니까?")){			
+			alert("삭제 완료됬습니다.");
+			$("form").attr("action","${path}/delIssuespage.do");
+			$("form").submit();
+			}
+	}
 	
 </script>
 <!-- jQuery -->

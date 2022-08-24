@@ -31,7 +31,10 @@ public class MemberController {
 	
 	// http://localhost:7080/project06/register.do
 	@RequestMapping("register.do")
-	public String register(Member ins, Model d) {
+	public String register(Member ins, Model d,
+				@RequestParam(value="lang", defaultValue = "") String lang, HttpServletRequest request, HttpServletResponse response) {
+		Locale locale = new Locale(lang);
+		localResolver.setLocale(request, response, locale);
 		if (ins != null && ins.getEmail() != null && ins.getName() != null) {
 			service.register(ins);
 			return "redirect:login.do";
@@ -51,7 +54,7 @@ public class MemberController {
 	
 	@RequestMapping("login.do")
 	public String login(Member m, Model d, 
-					@RequestParam(value="lang", defaultValue = "") String lang,HttpServletRequest request , HttpServletResponse response) {
+					@RequestParam(value="lang", defaultValue = "") String lang, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("선택한 언어:"+lang);
 		Locale locale = new Locale(lang);
 		localResolver.setLocale(request, response, locale);
@@ -59,10 +62,10 @@ public class MemberController {
 		if (m.getEmpno() != 0 && m.getPassword() != null) {
 			Member mem = service.memberLogin(m);
 			HttpSession session = request.getSession();
-			if (mem != null && mem.getAuth().equals("ADMIN")) {
+			if ((mem != null && mem.getAuth().equals("ADMIN")) || (mem != null && mem.getAuth().equals("CEO")) || (mem != null && mem.getAuth().equals("HR")) ) {
 				session.setAttribute("mem", mem);
 				return "redirect:adminDashboard.do";
-			} else if (mem != null && mem.getAuth() != "ADMIN") {
+			} else if ((mem != null && mem.getAuth() != "ADMIN") || (mem != null && mem.getAuth() != "CEO") || (mem != null && mem.getAuth() != "HR") ) {
 				session.setAttribute("mem", mem);
 				return "redirect:dashboard.do";
 			} else {
@@ -175,5 +178,6 @@ public class MemberController {
 		d.addAttribute("proc", "delImg");
 		return "WEB-INF\\views\\member\\mypage.jsp";
 	}
+	
 
 }

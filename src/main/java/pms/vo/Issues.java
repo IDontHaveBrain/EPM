@@ -10,12 +10,11 @@ public class Issues {
     private Date iregdate;
     private Date iuptdate;
     private int jmid;
-    private String name;
-    private String jname;
+    private int pid;
     public Issues() {
     }
 
-    public Issues(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid) {
+    public Issues(int iid, String ititle, String icontent, String iprogress, Date iregdate, Date iuptdate, int jmid,int pid) {
         this.iid = iid;
         this.ititle = ititle;
         this.icontent = icontent;
@@ -23,6 +22,7 @@ public class Issues {
         this.iregdate = iregdate;
         this.iuptdate = iuptdate;
         this.jmid = jmid;
+        this.pid = pid;
     }
     
     public int getIid() {
@@ -81,19 +81,12 @@ public class Issues {
         this.jmid = jmid;
     }
 
-	public String getName() {
-		return name;
+	public int getPid() {
+		return pid;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
-
-	public String getJname() {
-		return jname;
-	}
-
-	public void setJname(String jname) {
-		this.jname = jname;
-	}
+    
 }

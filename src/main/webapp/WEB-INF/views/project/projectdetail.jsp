@@ -75,15 +75,8 @@ var list
 		        	}else{
 		        		addHTML+="<option disabled selected value='"+rst.mid+"'>"+rst.name+"</option>";	
 		        	}
-		        	
-		        	
 		        });
-		 
 				 console.log(pmid)
-	
-
-	        
-			
 				 console.log(list)
 		       
 	  			$("#inputMem").html(pmid);
@@ -94,7 +87,33 @@ var list
 		    });
 		  }
 		  updatePmember();
-		
+      function updateMember(){
+        $.ajax({
+          url: "${path}/ajaxMember.do",
+          data: "",
+          dataType: "json",
+          success: function (data) {
+            console.log(data)
+            list = data.memberList;
+            var addHTML = "";
+            var pmMid = 0;
+            $("#inputMem option").each(function(){
+              var mem = $(this);
+              pmMid = mem.val();
+            });
+
+            $(list).each(function (idx, rst) {
+              if($("#inputPM option:selected").val() == rst.mid)
+                addHTML += "<option disabled selected value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+              else
+                addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+            });
+            var pmsel = $("#inputPM");
+            pmsel.html(addHTML);
+          }
+        });
+      }
+      updateMember();
 		
 		//Initialize Select2 Elements
 	    $('.select2').select2()
@@ -137,12 +156,12 @@ var list
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">프로젝트 수정</h1>
+            <h1 class="m-0">프로젝트 상세화면</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item"><a href="dashboard.do?pid=${param.pid}">Home</a></li>
+              <li class="breadcrumb-item active">프로젝트 상세화면</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -173,25 +192,26 @@ var list
               </div>
               <div class="form-group" >           
                 <label for="inputProjectLeader" >PM</label>
-                    <select id="inputPM" class="form-control pm-select select2bs4" >
+                    <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4" >
 
                     </select>              
               </div>
               <div class="form-group"> 
                   <label>참여 멤버</label>
                   <div class="select2-purple">
-                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">  	
+                   <select id="inputMem" class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;" disabled="disabled">
 	  			   </select> 
               	   </div>  
               </div>	
               <div class="form-group"> 
                   <label>프로젝트 진행상태</label>
                   		<select name="pstatus" id="pstatus" class="form-control pm-select select2bs4">
-		    				<option selected>${project.pstatus}</option>	
-		    				<option>WAIT</option>		
-		    				<option>PROG</option>		
-		    				<option>COMP</option>		
-		    				<option>CANCEL</option>		
+		    				<option <c:if test="${project.pstatus == 'WAIT'}">selected</c:if>>WAIT</option>		
+		    				<option <c:if test="${project.pstatus == 'PROG'}">selected</c:if>>PROG</option>		
+		    				<c:if test="${project.progress} == 100 ">
+		    				 <option <c:if test="${project.pstatus == 'COMP'}">selected</c:if>>COMP</option>		
+		    				</c:if>
+		    				<option <c:if test="${project.pstatus == 'CANCEL'}">selected</c:if>>CANCEL</option>		
 		                </select>                 
               </div>   
               <div class="form-group">
@@ -199,14 +219,13 @@ var list
                 <textarea name="pcomment" id="inputDescription" class="form-control" rows="4">${project.pcomment}</textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">시작일 :</label>
-                <fmt:formatDate value="${project.pstart}"/>
-                <input type="date" name="pstart" id="startDate" value="${project.pstart}" class="form-control">
+                <label for="inputClientCompany">시작일 : ${project.pstart}</label>
+              
+                <input type="date" name="pstart" id="startDate" value="${project.pstart}" pattern="yyyy-MM-dd" class="form-control">
               </div>
 			  <div class="form-group">
-                <label for="inputClientCompany">종료일 :</label>
-                <fmt:formatDate value="${project.pend}"/>
-                <input type="date" name="pend" id="endDate" value="${project.pend}" class="form-control">
+                <label for="inputClientCompany">종료일 : ${project.pend}</label>
+                <input type="date" name="pend" id="endDate" value="${project.pend}" pattern="yyyy-MM-dd" class="form-control">
               </div> 
             
             <!-- /.card-body -->
@@ -215,11 +234,14 @@ var list
       
       <div class="row">
         <div class="col-12">
-          <button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
-          <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+        <c:if test="${sessionScope.mem.auth == 'MEMBER' || sessionScope.mem.auth == 'GUEST'}">
+        	<button type="button" onclick="goMain()" class="btn btn-secondary">취소</button>
+        </c:if>
+        <c:if test="${sessionScope.mem.auth != 'MEMBER' && sessionScope.mem.auth != 'GUEST'}">
+          	  <button type="button" onclick="goAdMain()" class="btn btn-secondary">취소</button>
 	          <button type="button" onclick="deleteProc()" class="btn btn-danger float-right">삭제</button>
 	          <button type="button" onclick="updateProc()" class="btn btn-success float-right">수정</button>
-		  </c:if>
+		</c:if>
         </div>
       </div>
       </div>
@@ -288,9 +310,7 @@ var proc = "${proc}"
 
 	if(proc=="upt"){
 		if(confirm("수정성공!\n조회리스트화면으로 이동하시겠습니까?")){
-			location.href="${path}/adminprojectlist.do";
-		}else{
-			location.href="${path}/projectDetail.do"			
+			location.href="${path}/adminProjectList.do";
 		}
 	}
 	
@@ -303,13 +323,17 @@ function deleteProc(){
  
 	if(proc=="del"){
 		alert("삭제성공!")
-		location.href="${path}/adminprojectlist.do";
+		location.href="${path}/adminProjectList.do";
 	}
 
 
-function goMain(){
-		location.href="${path}/adminprojectlist.do";
+function goAdMain(){
+	location.href="${path}/adminProjectList.do";
 }
+function goMain(){
+	location.href="${path}/projectList.do";
+}
+
 
 
 </script>

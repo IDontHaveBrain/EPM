@@ -90,8 +90,8 @@
         var addHTML = "";
         var addPage = "";
         $(list).each(function (idx, rst) {
-          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" + rst.ntitle
-            + "</td>";
+          addHTML += "<tr><td>" + ((data.noticeSch.curPage-1)*3+(idx + 1)) + "</td><td>" +
+                  "<a href='#modal-dash' data-toggle='modal' data-target='#modal-dash' onclick='getNotice("+ rst.nid +")'>" + rst.ntitle + "</a></td>";
           addHTML += "<td>" + new Date(rst.nuptdate).toLocaleDateString()+ "</td></tr>";
         });
         //console.log(addHTML);
@@ -106,6 +106,25 @@
         }
         addPage += '<li class="page-item"><a class="page-link" href="javascript:goPageN(' + (nsch.endBlock+1) + ')">&raquo;</a></li>';
         $("#npage").html(addPage);
+      }
+    });
+  }
+
+  function getNotice(nid){
+    $.ajax({
+      url: "${path}/notice.do",
+      data: "nid=" + nid,
+      dataType: "json",
+      success: function (data) {
+        console.log(data)
+        var notice = data.notice;
+        var addHTML = "";
+        var addPage = "";
+        addHTML += "<p>" + notice.ncontent + "</p>";
+        $("#m-title").text(notice.ntitle);
+        $("#m-content").html(addHTML);
+        //console.log(addHTML);
+        //$("#nlist").html(addHTML);
       }
     });
   }
@@ -206,6 +225,28 @@
     <section class="content">
       <div class="container-fluid">
         <!-- 페이지 구성 시작!! -->
+        <div class="modal fade" id="modal-dash">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="m-title">공지사항</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="m-content">
+                <p>One fine body&hellip;</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -233,7 +274,26 @@
                   </div>
                 </c:when>
                 <c:otherwise>
-                  <svg id="gantt"></svg>
+                  <div class="row text-center align-items-center justify-content-center align-content-center" style="text-align: center">
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Day');">
+                        Day
+                      </button>
+                    </div>
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Week');">
+                        Week
+                      </button>
+                    </div>
+                    <div class="col-1 m-0 p-0">
+                      <button class="btn btn-block btn-dark btn-sm" onclick="gantt.change_view_mode('Month');">
+                        Month
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <svg id="gantt"></svg>
+                  </div>
                 </c:otherwise>
               </c:choose>
               <c:if test="${empty jlist}">
@@ -394,6 +454,7 @@
                       <li><i class="far fa-circle text-success"></i> 해결</li>
                       <li><i class="far fa-circle text-warning"></i> 해결중</li>
                       <li><i class="far fa-circle text-danger"></i> 해결불가</li>
+                      <li><i class="far fa-circle text-primary"></i> 대기</li>
                     </ul>
                   </div>
                   <!-- /.col -->
@@ -403,7 +464,7 @@
               <!-- /.card-body -->
               <div class="card-footer p-0">
                 <c:choose>
-                  <c:when test="${iprog[3] == 0}">
+                  <c:when test="${iprog[5] == 0}">
                     <ul class="nav nav-pills flex-column">
                       <li class="nav-item">
                         <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
@@ -416,7 +477,7 @@
                         <a href="#" class="nav-link">
                           해결
                           <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${iprog[0]/iprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -424,16 +485,24 @@
                         <a href="#" class="nav-link">
                           해결중
                           <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${iprog[1]/iprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link">
-                          해결불가
+                          반려
                           <span class="float-right text-danger">
                         <i class="fas fa-arrow-down text-sm"></i>
-                        <fmt:formatNumber value="${iprog[2]/iprog[3]*100}" pattern="#.##"/>%</span>
+                        <fmt:formatNumber value="${iprog[2]/iprog[5]*100}" pattern="#.##"/>%</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          검토요청
+                          <span class="float-right text-primary">
+                        <i class="fas fa-arrow-down text-sm"></i>
+                        <fmt:formatNumber value="${iprog[3]/iprog[5]*100}" pattern="#.##"/>%</span>
                         </a>
                       </li>
                     </ul>
@@ -483,7 +552,7 @@
               <!-- /.card-body -->
               <div class="card-footer p-0">
                 <c:choose>
-                  <c:when test="${jprog[3] == 0}">
+                  <c:when test="${jprog[5] == 0}">
                     <ul class="nav nav-pills flex-column">
                       <li class="nav-item">
                         <span class="text-success nav-link">등록된 데이터가 없습니다!</span>
@@ -496,7 +565,7 @@
                         <a href="#" class="nav-link">
                           완료
                           <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-up text-sm"></i> <fmt:formatNumber value="${jprog[0]/jprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -504,7 +573,7 @@
                         <a href="#" class="nav-link">
                           진행중
                           <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[3]*100}" pattern="#.##"/>%
+                        <i class="fas fa-arrow-left text-sm"></i> <fmt:formatNumber value="${jprog[1]/jprog[5]*100}" pattern="#.##"/>%
                       </span>
                         </a>
                       </li>
@@ -560,6 +629,7 @@
 <!-- AdminLTE App -->
 <script src="${path}/pms/dist/js/adminlte.js"></script>
 <script>
+  var gantt
   $(document).ready(function() {
     // 간트차트
     var tasks = [
@@ -576,14 +646,14 @@
       },
       </c:forEach>
     ]
-    var gantt = new Gantt("#gantt", tasks, {
+    gantt = new Gantt("#gantt", tasks, {
       step: 12,
       view_mode: 'Day',
       read_only: true,
       readonly: true
     });
     //$('.gantt .bar-wrapper').css('pointer-events', 'none');
-    gantt.change_view_mode('Week');
+    gantt.change_view_mode('Month');
     gantt.clear();
     gantt.render();
     gantt.bar_being_dragged = true;
@@ -596,12 +666,13 @@
     labels: [
       '해결',
       '해결중',
-      '해결불가',
+      '반려',
+      '검토요청',
     ],
     datasets: [
       {
-        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}],
-        backgroundColor: ['#00a65a', '#f39c12', '#f56954']
+        data: [${iprog[0]}, ${iprog[1]}, ${iprog[2]}, ${iprog[3]}],
+        backgroundColor: ['#00a65a', '#f39c12', '#f56954', '#5464f5']
       }
     ]
   }

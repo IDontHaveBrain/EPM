@@ -32,29 +32,30 @@ public class DashboardService {
     }
     public Integer[] issueProgCount(int pid) {
         List<IssuesDashDto> issueList = getIssueList(pid);
-        Integer iprogCount[] = {0,0,0,0};
+        Integer iprogCount[] = {0,0,0,0,0,0};
         for(IssuesDashDto issue:issueList){
             if(issue.getIprogress().equals("해결") || issue.getIprogress().equals("COMP"))
                 iprogCount[0]++;
             else if (issue.getIprogress().equals("해결중") || issue.getIprogress().equals("PROG"))
                 iprogCount[1]++;
-            else if (issue.getIprogress().equals("해결불가") || issue.getIprogress().equals("REJ"))
+            else if (issue.getIprogress().equals("반려") || issue.getIprogress().equals("REJ"))
                 iprogCount[2]++;
-            iprogCount[3]++;
+            else if (issue.getIprogress().equals("검토요청") || issue.getIprogress().equals("REQ"))
+                iprogCount[3]++;
+            iprogCount[5]++;
         }
         return iprogCount;
     }
-    public Integer[] jobProgCount(int pid){
-        List<Jobplan> jobList = gdao.jobplanListPrj(pid);
-        Integer jprogCount[] = {0,0,0,0};
-        for(Jobplan jobplan:jobList){
-            if(jobplan.getJstatus() != null) {
-                if (jobplan.getJstatus().equals("완료") || jobplan.getJstatus().equals("COMP"))
-                    jprogCount[0]++;
-                else if (jobplan.getJstatus().equals("진행중") || jobplan.getJstatus().equals("PROG"))
-                    jprogCount[1]++;
-                jprogCount[3]++;
-            }
+    public Integer[] jobProgCount(List<Jobplan> jobList){
+        Integer jprogCount[] = {0,0,0,0,0,0};
+        for(Jobplan jobplan:jobList) {
+            System.out.println("현재 퍼센트 : " + jobplan.getPercent());
+            if (jobplan.getPercent() >= 1.0)
+                jprogCount[0]++;
+            else if (jobplan.getPercent() < 1.0)
+                jprogCount[1]++;
+            jprogCount[5]++;
+
         }
         return jprogCount;
     }
@@ -117,7 +118,9 @@ public class DashboardService {
         sch.setCount(	dao.noticeTotCnt(pid) ); // 프로젝트 선택파트 완료시 pid로 변경
         //System.out.println("총건수:"+sch.getCount());
         // 2. 선언한 한번에 보여줄 데이터 건수(요청값)
-        sch.setPageSize(3);
+        if(sch.getPageSize() == 0) {
+            sch.setPageSize(3);
+        }
         // 3. 총페이지수 : 데이터건수/한번에 보여주페이지 크기  [1][2][3][4]
         //    ex) 18/5 ==> 3
         //    ex) 18/5.0 (실수) ==> Math.ceil(3.6) : 4.0 ==> 정수형으로 변환하여 4를 총페이지수로 처리

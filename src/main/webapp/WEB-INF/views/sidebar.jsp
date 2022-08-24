@@ -35,11 +35,8 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="${path}/pms/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
       <div class="info">
-        <a href="#" class="d-block">${mem.name}</a>
+        <a class="d-block">   ${mem.name} (${mem.empno})</a>
       </div>
       <div class="col-5">
           	<a href="${path}/logout.do" class="btn btn-block btn-danger">Logout</a>
@@ -114,29 +111,6 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-book"></i>
-            <p>
-              리스크
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="issueList.do?pid=${spid}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>리스크 목록</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="issueInsertForm.do?pid=${spid}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>리스크 등록</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
           <a href="WorkPageList.do?pid=${spid}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
@@ -188,6 +162,16 @@
             </p>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="manage.do?pid=${spid}" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              PM업무
+            </p>
+          </a>
+        </li>
+       
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

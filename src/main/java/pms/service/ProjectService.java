@@ -6,20 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pms.dao.PMDao;
 import pms.dao.ProjectDao;
+import pms.dto.JobDTO;
+import pms.dto.JobMemberDTO;
 import pms.dto.ProjectDto;
 import pms.dto.ProjectMemberDTO;
 import pms.dto.ProjectSch;
 import pms.vo.Member;
 import pms.vo.Participants;
-import pms.vo.Project;
 
 @Service
 public class ProjectService {
     @Autowired(required = false)
     private ProjectDao dao;
+    @Autowired(required = false)
+    private PMDao dao2;
     
-    public List<Project> getProjectList(ProjectSch sch, int mid){
+    public List<ProjectDto> getProjectList(ProjectSch sch, int mid){
     	sch.setMid(mid);
     	
         // 1. 전체 데이터 건수 설정
@@ -68,13 +72,45 @@ public class ProjectService {
         } else {
             sch.setEndBlock(endBlock);
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
-        } 
+        }
         
-        return dao.getProjectList(sch);
+        List<ProjectDto> list = dao.getProjectList(sch);
+        int jobcomp = 0;
+		for (ProjectDto p : list) {
+			List<JobDTO> jlist = dao2.getJobPlan(p.getPid());
+			for(JobDTO j : jlist) {
+				List<JobMemberDTO> jmlist = dao2.getJobMember(j.getId());
+				j.setJmlist(jmlist);
+				int sum = 0;
+				int size = jmlist.size();
+				if(size == 0) {
+					j.setProgress(0);
+				}
+				else {
+					for(int i = 0; i < size; i++) {
+						if(jmlist.get(i).getJmstatus().equals("COMP")) {
+							sum++;
+						}
+					}
+					j.setProgress(sum * 100 / size);
+				}
+				if(j.getProgress() == 100) {
+					jobcomp++;
+				}
+			}
+			if(jlist.size() == 0) {
+				p.setProgress(0);
+			}
+			else {
+				p.setProgress(jobcomp * 100 / jlist.size());
+			}
+			
+		}
+        return list;
 
 	}
     
-    public List<Project> getAdProjectList(ProjectSch sch){
+    public List<ProjectDto> getAdProjectList(ProjectSch sch){
     
         // 1. 전체 데이터 건수 설정
         sch.setCount(	dao.totCnt(sch) ); // 프로젝트 선택파트 완료시 pid로 변경
@@ -124,7 +160,39 @@ public class ProjectService {
             sch.setStartBlock((blocknum - 1) * sch.getBlockSize() + 1);
         } 
         
-        return dao.getAdProjectList(sch);
+        List<ProjectDto> list = dao.getAdProjectList(sch);
+        int jobcomp = 0;
+		for (ProjectDto p : list) {
+			List<JobDTO> jlist = dao2.getJobPlan(p.getPid());
+			for(JobDTO j : jlist) {
+				List<JobMemberDTO> jmlist = dao2.getJobMember(j.getId());
+				j.setJmlist(jmlist);
+				int sum = 0;
+				int size = jmlist.size();
+				if(size == 0) {
+					j.setProgress(0);
+				}
+				else {
+					for(int i = 0; i < size; i++) {
+						if(jmlist.get(i).getJmstatus().equals("COMP")) {
+							sum++;
+						}
+					}
+					j.setProgress(sum * 100 / size);
+				}
+				if(j.getProgress() == 100) {
+					jobcomp++;
+				}
+			}
+			if(jlist.size() == 0) {
+				p.setProgress(0);
+			}
+			else {
+				p.setProgress(jobcomp * 100 / jlist.size());
+			}
+			
+		}
+        return list;
 
 	}
    
@@ -138,7 +206,7 @@ public class ProjectService {
 	}
  
 	
-    public Project getProjectDetail(int pid){
+    public ProjectDto getProjectDetail(int pid){
       	return dao.getProjectDetail(pid);
     }
     
@@ -146,16 +214,24 @@ public class ProjectService {
     public void createProject(ProjectDto ins) {   	
         dao.insertProject(ins);
         
-        dao.insertParticipants(new Participants(ins.getSelectPM(), "PM"));
+        if(ins.getSelectPM()!= 0) 
+        	dao.insertParticipants(new Participants(ins.getSelectPM(), "PM"));
         
-        for(int m:ins.getSelectmember()) { 
-            dao.insertParticipants(new Participants(m, "Developer"));
+        if(ins.getSelectmember() != null) {
+            for(int m:ins.getSelectmember()) { 
+                dao.insertParticipants(new Participants(m, "Developer"));
+            }
         }
+
         
      }
     
-    public Project updateProject(ProjectDto upt) {   	
-        dao.updateProject(upt);       
+    public ProjectDto updateProject(ProjectDto upt) {
+        dao.deleteMemberPm(upt.getPid());
+        Participants temp = new Participants(upt.getSelectPM(), "PM");
+        temp.setPid(upt.getPid());
+        dao.insertParticipantsManual(temp);
+        dao.updateProject(upt);
         return dao.getProjectDetail(upt.getPid()); 
      }
     

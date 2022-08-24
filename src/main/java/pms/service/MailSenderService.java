@@ -1,3 +1,4 @@
+
 package pms.service;
 
 import javax.mail.MessagingException;
@@ -35,7 +36,7 @@ public class MailSenderService {
 			// 4. 내용 설정
 			mmsg.setText("사원번호/임시비밀번호 발급\n" + member.getName() + "님" + "\n사원등록이 완료되었습니다." + "\n사원번호 : "
 					+ member.getEmpno() + "\n임시비밀번호 : " + member.getPassword() + "\n로그인 후 비밀번호 변경을 해주세요."
-					+ "\nhttp://localhost:7080/project06/login.do");
+					+ "\nhttp://216.66.67.160:7080/project06/login.do");
 			// 5. 발송 처리
 			sender.send(mmsg);
 

@@ -60,7 +60,7 @@ public class WorkPageService {
             sch.setStart((sch.getCurPage() - 1) * sch.getPageSize() + 1);
         }
         // 1. 블럭의 크기 지정.
-        sch.setBlockSize(3);
+        sch.setBlockSize(5);
         // 2. 블럭의 번호 지정..
         int blocknum = (int)(Math.ceil(sch.getCurPage()/(double)sch.getBlockSize()));
 
@@ -94,8 +94,8 @@ public class WorkPageService {
 		return dao.getWorkPageFile(filelist);
 	}
 	// 승인요청
-	public void updateWorkPage(int jmid){
-		dao.updateWorkPage(jmid);
+	public void updateWorkPage(WorkPage upt){
+		dao.updateWorkPage(upt);
 	}
 	// 파일삭제
 	public void deleteWorkPageFile(int fid){
@@ -124,4 +124,20 @@ public class WorkPageService {
 			ins.setJmid(jmid);
 		dao.insertIssue(ins);
 	}
+	public Issues getWorkIsDetail(Issues sch,int iid){
+		sch.setIid(iid);
+		return dao.getWorkIsDetail(iid);
+	}
+	
+	public void updateIssues(Issues upt) {
+			//upt.setIid(iid);
+		dao.updateIssues(upt); 
+		//return dao.getWorkIsDetail(upt.getIid());
+	}	
+	
+	public void deleteIssues(int iid) {
+		dao.deleteIssues(iid);
+	}	
+	
+	
 }

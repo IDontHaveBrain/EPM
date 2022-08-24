@@ -27,7 +27,7 @@ select {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Effective PM | 로그인</title>
+  <title>Effective PM | <spring:message code="login"/></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -59,7 +59,7 @@ select {
 
       <form action="login.do" id="login" method="post">
         <div class="input-group mb-3">
-          <input type="text" name="empno" id="empno" class="form-control" placeholder="<spring:message code="empno"/>">
+          <input type="number" name="empno" id="empno" class="form-control" placeholder="<spring:message code="empno"/>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -165,25 +165,20 @@ select {
 	function login() {
 			
 		if ($("#empno").val() == null || $("#empno").val() == "") {
-			alert("사원번호를 입력해주세요.");
-			$("#email").focus();
+			alert("<spring:message code="enterempno"/>");
+			$("#empno").focus();
 			 
 			return false;
 		}
 		
 		if ($("#password").val() == null || $("#password").val() == "") {
-			alert("비밀번호를 입력해주세요.");
+			alert("<spring:message code="enterpw"/>");
 			$("#password").focus();
 			
 			return false;		
 		}
-		
-		if (confirm("로그인하시겠습니까?")) {
-			 
 			$("#login").submit();
 			return false;
-		}
-		
 	}
 	$("#login").keyup(function(){
 		if(event.keyCode==13){
@@ -203,7 +198,7 @@ select {
 			success: function(data){
 				console.log(data);
 				if(data!=="pass"){
-					alert("사원번호와 비밀번호를 확인해주세요.");
+					alert("<spring:message code="loginck"/>");
 				}else{
 					return false;
 				}

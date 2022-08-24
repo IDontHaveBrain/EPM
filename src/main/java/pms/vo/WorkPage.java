@@ -12,6 +12,7 @@ public class WorkPage {
 	private int jmid;
 	private int empno;
 	private int cnt;
+	private String iprogress;
 	private String name;
 	private int progress;
 	private String jmstatus;
@@ -19,6 +20,7 @@ public class WorkPage {
 	private Date jstart;
 	private Date jend;
 	private Date juptdate;
+	private int iid;
 	// 상세화면
 	private String pname;
 	private String content;
@@ -33,7 +35,7 @@ public class WorkPage {
 	}
 	public WorkPage(int mid, int pid, int jid, String name, int progress, String jmstatus, String jname, Date jstart,
 			Date jend, Date juptdate, String pname, String content, MultipartFile report, String fname, Date fregdate,
-			String path, int fid,int jmid,int empno,int cnt) {
+			String path, int fid,int jmid,int empno,int cnt,String iprogress,int iid) {
 		this.mid = mid;
 		this.pid = pid;
 		this.jid = jid;
@@ -54,6 +56,8 @@ public class WorkPage {
 		this.jmid = jmid;
 		this.empno = empno;
 		this.cnt = cnt;
+		this.iprogress = iprogress;
+		this.iid = iid;
 	}
 	public int getMid() {
 		return mid;
@@ -174,6 +178,18 @@ public class WorkPage {
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+	}
+	public String getIprogress() {
+		return iprogress;
+	}
+	public void setIprogress(String iprogress) {
+		this.iprogress = iprogress;
+	}
+	public int getIid() {
+		return iid;
+	}
+	public void setIid(int iid) {
+		this.iid = iid;
 	}
 	
 	

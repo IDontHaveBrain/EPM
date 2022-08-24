@@ -56,11 +56,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="pmsidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -72,7 +72,8 @@
             <h1 class="m-0">업무관리</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-	<button data-toggle="modal" id="modalBox" data-target="#addjobmodal" type="button" class="btn btn-primary float-right"> + </button>
+	<button data-toggle="modal" id="modalBox" data-target="#addjobmodal" type="button" hidden="hidden"> + </button>
+	<button id="jobbtn" type="button" class="btn btn-primary float-right"> + </button>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -94,8 +95,9 @@
         </button>
       </div>
       <div class="modal-body">
-		<form method="post">
+		<form id="jobForm" method="post">
         <input type="hidden" name="pid" value="${pid}"/>
+        <input type="hidden" name="id" value="0"/>
         <div class="card card-primary">
         <div class="card-body">
         	<div class="row">
@@ -150,6 +152,8 @@
       </div>
       <div class="modal-footer"> 
         <button id="addjob" type="button" class="btn btn-primary float-right">등록</button>
+        <button id="updatejob" type="button" class="btn btn-primary float-right" style="display:none;">수정</button>
+        <button id="deletejob" type="button" class="btn btn-danger float-right" style="display:none;">삭제</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
       </div>
     </div>
@@ -232,17 +236,53 @@
 	$(document).ready(function(){
 		$(".nav-link").click(function(){
 			var id = $(this).attr("id");
-			$("form").attr("action", "${path}/" + id + ".do");
-			$("form").submit();
+			if(id != undefined){
+				location.href="${path}/" + id + ".do?pid=" + ${pid};
+			}
+		});
+		$("#jobbtn").click(function(){
+			$("#jobForm")[0].reset();
+			$("#addjob").css("display", "");
+			$("#updatejob").css("display", "none");
+			$("#deletejob").css("display", "none");
+			$('.duallistbox').bootstrapDualListbox('refresh', true);
+			$("#modalBox").click();
 		});
 		$('.duallistbox').bootstrapDualListbox();
 		ganttAjax();
-		$('#addjob').click(function(){
-			console.log($("form").serialize());
-			job = $('#job').val();
+		$("#updatejob").click(function(){
+			var job = $('#job').val();
 			if(job == ''){
 				alert("업무 이름을 입력하세요");
 				$('#job').focus();
+				return;
+			}
+			var start = $("[name=start]").val();
+			var end = $("[name=end]").val();
+			if(start >end) {
+				alert("기간을 다시 확인해주세요");
+				$("#startdate").focus();
+				return;
+			}
+			updateAjax();
+		});
+		$("#deletejob").click(function(){
+			if(confirm("업무를 삭제하시겠습니까?")){
+				deletAjax();
+			}
+		});
+		$("#addjob").click(function(){
+			var job = $('#job').val();
+			if(job == ''){
+				alert("업무 이름을 입력하세요");
+				$('#job').focus();
+				return;
+			}
+			var start = $("[name=start]").val();
+			var end = $("[name=end]").val();
+			if(start >end) {
+				alert("기간을 다시 확인해주세요");
+				$("#startdate").focus();
 				return;
 			}
 			$.ajax({
@@ -254,9 +294,7 @@
 				}
 			});
 			$("#modalBox").click();
-			$('#job').val('');
-			$('#content').val('');
-			$('.duallistbox option').prop('selected', false);
+
 			$('.duallistbox').bootstrapDualListbox('refresh', true);
 		});
 		/* tasks = [
@@ -267,34 +305,7 @@
 				end: '2022-08-10',
 				progress: 20,
 				dependencies: ''
-			  },
-			  {
-					id: 'Task 4',
-					name: '444업무44444',
-					start: '2022-08-09',
-					end: '2022-08-15',
-					progress: 20,
-					dependencies: 'Task 1'
-				  },
-			  	{
-					id: 'Task 2',
-					name: '업무22222',
-					start: '2022-08-05',
-					end: '2022-08-11',
-					progress: 20,
-					dependencies: ''
-				},
-				{
-					id: 'Task 3',
-					name: '업무3333',
-					start: '2022-08-04',
-					end: '2022-08-07',
-					progress: 20,
-					dependencies: ''
-				  }
-				  
-			]
-			gantt = new Gantt("#gantt", tasks); */
+			  }*/
 	  document.querySelector(".chart-controls #day-btn").addEventListener("click", () => {
 		    gantt.change_view_mode("Day");
 		})
@@ -305,10 +316,10 @@
 		    gantt.change_view_mode("Month");
 		})
 		$('#startdate').datetimepicker({
-	        format: 'L'
+	        format: 'YYYY-MM-DD'
 	    });
 	  $('#enddate').datetimepicker({
-	        format: 'L'
+	        format: 'YYYY-MM-DD'
 	    });
 	  $(".nav-link").removeClass("active");
 		$("#manage").addClass("active");
@@ -334,8 +345,62 @@ function ganttAjax(){
 				});
 			}
 			gantt = new Gantt("#gantt", tasks);
+			$("g.bar-wrapper").dblclick(function(){
+				$("#jobForm")[0].reset();
+				$('.duallistbox').bootstrapDualListbox('refresh', true);
+				var tid = $(this).attr("data-id");
+				$("#addjob").css("display", "none");
+				$("#updatejob").css("display", "");
+				$("#deletejob").css("display", "");
+				var seljob;
+				for(var i = 0; i < joblist.length; i++){
+					if(joblist[i].id == tid) {
+						seljob = joblist[i];
+						break;
+					}
+				}
+				$("input[name=id]").val(seljob.id);
+				$("input[name=start]").val(seljob.start);
+				$("input[name=end]").val(seljob.end);
+				var jmlist = seljob.jmlist;
+				console.log(jmlist);
+				var opts = $("[name=ppids] option");
+				for(var i = 0; i < opts.length; i++) {
+					for(var j = 0; j < jmlist.length; j++){
+						if($(opts[i]).attr("value") == jmlist[j].ppid) {
+							$(opts[i]).prop("selected", true);
+						}
+					}
+				}
+				$('.duallistbox').bootstrapDualListbox('refresh', true);
+				$("input[name=name]").val(seljob.name);
+				$("[name=content]").val(seljob.content);
+				$("#modalBox").click();
+			});
 		}
 	});
+}
+function updateAjax(){
+	$.ajax({
+		url: "${path}/updatejob.do",
+		data: $("form").serialize(),
+		dataType: "json",
+		success: function(){
+			alert("업무수정완료");
+			location.href="${path}/manage.do?pid=" + ${pid}
+		}
+	})
+}
+function deletAjax(){
+	$.ajax({
+		url: "${path}/deletejob.do",
+		data: $("form").serialize(),
+		dataType: "json",
+		success: function(){
+			alert("업무삭제완료");
+			location.href="${path}/manage.do?pid=" + ${pid}
+		}
+	})
 }
   </script>
 </body>

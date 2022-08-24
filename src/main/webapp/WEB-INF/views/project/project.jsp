@@ -53,6 +53,7 @@
 <script type="text/javascript">
 var list;
 
+
 	$(document).ready(function(){
 		
 		updateMember();
@@ -67,9 +68,11 @@ var list;
 	    })
 	   
 	    var pmid;
+		
 	    $("select[name=selectPM]").change(function(){  	  
 	  		pmid=$(this).val();
 		});
+	    
 	  	  $("#inputPM").change(function(){
 	  		  console.log("pm변경")
 	  		  var pm = $("#inputPM option:selected").val();
@@ -103,12 +106,24 @@ var list;
 	      success: function (data) {
 	        console.log(data)
 	        list = data.memberList;
+	 
+	  
 	        var addHTML = "";
+	        var addADMINHTML = "";
  
 	        $(list).each(function (idx, rst) {
-	        	addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        
+	        	//if(rst.auth == "ADMIN") {
+	        	//	addADMINHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	//}
+	        	//else{
+	        		addHTML+="<option value='"+rst.mid+"'>"+rst.name+"("+rst.empno+")</option>";
+	        	//}
 	        	
 	        });
+	        
+
+	        
 	        var pmsel = $("#inputPM");
 	        
 	        pmsel.html(pmsel.html() + addHTML);
@@ -170,8 +185,8 @@ var list;
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item"><a href="dashboard.do?pid=${param.pid}">Home</a></li>
+              <li class="breadcrumb-item active">프로젝트 등록</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -194,7 +209,7 @@ var list;
               <div class="form-group">                       
                 <label for="inputProjectLeader">PM</label>
                 <select name="selectPM" id="inputPM" class="form-control pm-select select2bs4">
-    				<option selected disabled>PM 선택</option>
+    				<option selected disabled value="0">PM 선택</option>
 
                 </select>                    
               </div>
@@ -320,20 +335,27 @@ var isInsert = "${isInsert}"
 
 function insertProc(){
 	if(confirm("등록하시겠습니까?")){
-		var pnameVal = $("[name=pname]").val();		
+		var pnameVal = $("[name=pname]").val();	
+	
 		if(	pnameVal == ""){
 			alert("프로젝트명을 등록하세요");
 			$("[name=pname]").focus();
-			return; // 프로세스를 중단 처리
-		}		
+			return; 
+		}
+		
+		var pmVal = $("[name=selectPM]").val();	
+		if(	pmVal == null){
+			alert("PM을 선택하세요");
+			return; 
+		}
+		
 		$("form").submit();
 	}
 }
 
 
-
 function goMain(){
-	location.href="${path}/projectList.do";
+	location.href="${path}/adminProjectList.do";
 }
 
 	

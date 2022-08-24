@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pms.dto.ProjectDto;
+import pms.dto.ProjectMemberDTO;
 import pms.dto.ProjectSch;
 import pms.service.ProjectService;
 import pms.vo.Member;
-import pms.vo.Project;
 
 
 
@@ -28,17 +28,16 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectList.do
 	@RequestMapping("projectList.do")
-	public String projectList(ProjectSch sch,
-							  @RequestParam(value = "mid", defaultValue = "0") int mid,								
+	public String projectList(ProjectSch sch,								
 							  Model d, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
-		Member curMem3 = (Member) request.getSession().getAttribute("mem");
+		Member curMem3 = (Member) session.getAttribute("mem");
 		if (curMem3 == null) {
 			return "redirect:login.do";
 		}
 
-		List<Project> pList = service.getProjectList(sch, curMem3.getMid());
+		List<ProjectDto> pList = service.getProjectList(sch, curMem3.getMid());
 		d.addAttribute("prjList", pList);
 		return "WEB-INF\\views\\project\\projectlist.jsp";
 	}
@@ -70,7 +69,7 @@ public class ProjectController {
 	
 	@RequestMapping("updateProject.do")
 	public String updateProject(ProjectDto upt, Model d){	
-		d.addAttribute("project",service.updateProject(upt));	
+		d.addAttribute("project",service.updateProject(upt));		
 		d.addAttribute("proc","upt");
 
 		return "WEB-INF\\views\\project\\projectdetail.jsp";
@@ -78,7 +77,7 @@ public class ProjectController {
 	
 	// http://localhost:7080/project06/projectDetail.do
 	@RequestMapping("projectDetail.do")
-	public String projectDetail(@RequestParam("pid") int pid, Model d){
+	public String projectDetail(@RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
 		d.addAttribute("project",service.getProjectDetail(pid));
 		d.addAttribute("pmemberList", service.getPmemberList(pid));
 		

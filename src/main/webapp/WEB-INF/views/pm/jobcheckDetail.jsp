@@ -78,11 +78,11 @@
   </div>
 
   <!-- topbar -->
-  <jsp:include page="topbar.jsp"/>
+  <jsp:include page="../topbar.jsp"/>
   <!-- /.topbar -->
 
   <!-- Main Sidebar Container -->
-  <jsp:include page="sidebar.jsp"/>
+  <jsp:include page="pmsidebar.jsp"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -161,12 +161,6 @@
                     <td style="text-align:center" colspan="7">
 	<form enctype="multipart/form-data" action="${path}/WorkPageInsert.do" 
 		 class="form"  method="post">
-			<div class="filebox">
-				<label for="file">파일찾기</label>
-					<input class="upload-name" value="산출물을 등록하세요" placeholder="첨부파일" >					     
-						<input type="file" id="file" name="report">						
-							<input type="button" value="저장하기" onclick="insertProc()" class="btn btn-primary float-center"/>
-           		</div>
            		<tr>
            		<table class="table table-bordered table-striped">
            			<th style="text-align:center">파일이름</th>
@@ -200,7 +194,7 @@
 		<input type=hidden name="jmid" value="${param.jmid}"/> 
 		<input type=hidden name="jid" value="${param.jid}"/> 
 		<input type=hidden name="pid" value="${param.pid}"/> 
-		
+		<input type="hidden" name="jmstatus" value="${wl.jmstatus}"/>
 	</form>
 	
                     </td>
@@ -208,9 +202,12 @@
     <tr><td colspan="7">
 	  <div class="row">
         <div class="col-12">
-          <a href="WorkPageList.do?pid=${param.pid}" class="btn btn-secondary">뒤로가기</a>
-			<input type="button" value="승인요청" onclick="updateProc()" 
+          <a href="jobcheck.do?pid=${param.pid}" class="btn btn-secondary">뒤로가기</a>
+			<input type="button" value="반려" onclick="reject()" 
+					 class="btn btn-danger float-right">
+			<input type="button" value="승인" onclick="complete()" 
 					 class="btn btn-success float-right">
+					 
 			</div>
         </div>
 	</td></tr>
@@ -276,43 +273,33 @@ $("[name=fname]").click(function(){
 		return false;
 });
 
-$("[name=fid]").click(function(){
-	if(confirm("파일을 삭제 하시겠습니까?")){
-		return location.href="${path}/deleteWorkPage.do?fid="+$(this).val()+"&jid="+${param.jid}+"&jmid="+${param.jmid}+"&pid="+${param.pid};
-				
+
+function complete(){
+	if(confirm("승인하시겠습니까?")) {
+		$("[name=jmstatus]").val("COMP");
+		location.href="${path}/changeJobStatus.do?" + $("form").serialize();
 	}
-	else	
-		return false;
-});
-
-
-
-
-function updateProc(){
-	if(confirm("승인요청 하시겠습니까?")){
-		alert("승인요청 처리완료\n승인여부를 확인해주세요.");
-		$("form").attr("action","${path}/updateWorkPage.do");
-		$("form").submit();
+}
+function reject(){
+	if(confirm("반려하시겠습니까?")) {
+		$("[name=jmstatus]").val("REJ");
+		location.href="${path}/changeJobStatus.do?" + $("form").serialize();
 	}
 }
 
-$("#file").on('change',function(){
-	  var fname = $("#file").val();
-	  $(".upload-name").val(fname);
-	});
+
 	
-function insertProc(){
-	if(confirm("저장하시겠습니까?")){
-		var fname = $("#file").val();		
-		if(	fname == ""){
-			alert("등록된 파일이 없습니다.");
-			return false; 
-		}		
-		$("form").attr("action","${path}/WorkPageInsert.do");
-		$("form").submit();
-	}
-}
 
+$(document).ready(function(){
+	$(".nav-link").click(function(){
+		var id = $(this).attr("id");
+		if(id != undefined){
+			location.href="${path}/" + id + ".do?pid=" + ${param.pid};
+		}
+	});
+	$(".nav-link").removeClass("active");
+	$("#jobcheck").addClass("active");
+});
 </script>
 </body>
 </html>

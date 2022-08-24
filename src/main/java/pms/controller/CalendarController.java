@@ -51,7 +51,7 @@ public class CalendarController {
 	public String calPrjList(Model d, HttpServletRequest request){
 		HttpSession session = request.getSession();
 		Member curMem = (Member)request.getSession().getAttribute("mem");
-		if(curMem == null || !curMem.getAuth().equals("ADMIN")){
+		if(curMem == null || !(curMem.getAuth().equals("ADMIN") || curMem.getAuth().equals("CEO"))){
 			return "redirect:login.do";
 		}
 		d.addAttribute("pcallist", service.getCalPrjList());

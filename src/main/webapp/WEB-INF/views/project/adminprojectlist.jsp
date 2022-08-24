@@ -82,7 +82,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Start v1</li>
+              <li class="breadcrumb-item active">전체 프로젝트 목록</li>
             </ol>
           </div><!-- /.col --> 
           
@@ -114,12 +114,12 @@
       		<input type="hidden" name="curPage" value="0"> <!-- 하단 js에 의해서 현재페이지 번호를 전송  -->
 
         <div class="card-header">
-          <h3 class="card-title">Projects</h3>
+           <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
             
 
        
           <div class="card-tools">
-	         <button type="button" onclick="goInsert()" class="btn btn-primary btn-sm">등록</button>
+	      
 	          <div class="input-group-append">
 	          <span class="text-center input-group-text">총 : ${projectSch.count }건</span>
 				<span class="text-center input-group-text">페이지 크기</span>
@@ -165,12 +165,11 @@
                                 
                   </tr>
               </thead>
-                   <c:forEach var="project" items="${projectList}">
-              <tbody>  
-            
+              <c:forEach var="project" items="${projectList}" varStatus="sts">
+              <tbody>         
                   <tr ondblclick="goDetail(${project.pid})">
                       <td>
-                          ${project.cnt}
+                          ${sts.index+1}
                       </td>
                       <td>
                           <a>
@@ -178,35 +177,31 @@
                           </a>
                           <br/>
                           <small>
-                          	Created <fmt:formatDate value="${project.pregdate}"/>
-                             
+                          	등록일: ${project.pregdate}   
                           </small>
                       </td>
                       <td>
                           <a>
-                          <fmt:formatDate value="${project.pstart}"/>
-                          
+                          ${project.pstart} 
                           </a>
                           <br/>
                           <a>
-                          ~ <fmt:formatDate value="${project.pend}"/>
-                         
+                          ~ ${project.pend}                        
                           </a>
                       </td>                     
                       <td class="project_progress">
                           <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" style="width:${project.progress}%">
                               </div>
                           </div>
                           <small>
-                              57% Complete
+                              ${project.progress }
                           </small>
                       </td>
                       <td class="project-state">                         
  		              		<a>
  		              			${project.pstatus}
- 		              		</a>        
-                     
+ 		              		</a>               
                       </td>
                  	
                       <td class="project-actions text-right">

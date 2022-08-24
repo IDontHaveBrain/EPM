@@ -18,14 +18,14 @@ public interface ProjectDao {
 	public int totMemCnt(ProjectSch sch);
 	
 	public int totCnt(ProjectSch sch);
-	public List<Project> getProjectList(ProjectSch sch);
-	public List<Project> getAdProjectList(ProjectSch sch);
+	public List<ProjectDto> getProjectList(ProjectSch sch);
+	public List<ProjectDto> getAdProjectList(ProjectSch sch);
 
 	
 	public List<Member> getMemberList();
 	public List<ProjectMemberDTO> getPmemberList(int pid); //조회
 	
-	public Project getProjectDetail(int pid);
+	public ProjectDto getProjectDetail(int pid);
 	
 	public void insertProject(ProjectDto ins);	
 	public void insertParticipants(Participants p);
@@ -35,4 +35,6 @@ public interface ProjectDao {
 	
 	public void deleteProject(int pid);
 	public void deleteMember(int pid);
+	public void deleteMemberPm(int pid);
+	public void insertParticipantsManual(Participants p);
 }

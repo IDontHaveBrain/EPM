@@ -110,4 +110,11 @@
 		FROM profile
 		WHERE mid = #{mid}
 	</select>
+	
+	<select id="sendTempPassword" resultType="member">
+		SELECT *
+		FROM member
+		WHERE empno = #{empno}
+		AND email = #{email}
+	</select>	
 </mapper>

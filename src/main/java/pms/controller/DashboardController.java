@@ -40,14 +40,17 @@ public class DashboardController {
             return "redirect:projectList.do";
         }
         if(pid == 0){
+            if(curMem.getAuth().equals("ADMIN") || curMem.getAuth().equals("CEO"))
+                return "redirect:adminProjectList.do";
             return "redirect:projectList.do";
         }
         System.out.println(curMem.getEmail());
 
+        List<Jobplan> jobs = gservice.jobplanListPrj(pid);
         Integer iprogCount[] = service.issueProgCount(pid);
-        Integer jprogCount[] = service.jobProgCount(pid);
+        Integer jprogCount[] = service.jobProgCount(jobs);
 
-        d.addAttribute("jlist", gservice.jobplanListPrj(pid));
+        d.addAttribute("jlist", jobs);
         d.addAttribute("nlist", service.noticePaging(nsch,pid));
         d.addAttribute("ilist", service.issuePaging(isch,pid));
         d.addAttribute("iprog", iprogCount);
@@ -86,6 +89,12 @@ public class DashboardController {
                                  @RequestParam(value = "pid", defaultValue = "0") int pid, Model d){
 
         d.addAttribute("nlist", service.noticePaging(sch ,pid));
+        return "pageJsonReport";
+    }
+
+    @RequestMapping("notice.do")
+    public String notice(@RequestParam(value = "nid", defaultValue = "0") int nid, Model d){
+        d.addAttribute("notice",gservice.getNotice(nid));
         return "pageJsonReport";
     }
 }
