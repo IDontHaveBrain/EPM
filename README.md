@@ -15,8 +15,8 @@ Fullcalendar (calendar lib)
 Frappe Gantt (gantt chart lib)  
   
 참여자 -
-탁나래
-조남준
-송우신
-박주연
-김재환
+탁나래, 
+조남준, 
+송우신, 
+박주연, 
+김재환, 
